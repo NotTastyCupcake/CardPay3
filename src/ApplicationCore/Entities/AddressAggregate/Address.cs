@@ -17,6 +17,11 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.AddressAggregate
         public int IdResidenceAddress { get; set; }
         public ResidenceAddressItem ResidenceAddress { get; set; }
 
+        public Address()
+        {
+            // required by EF
+        }
+
         public Address(int idActual, int idMail, int idResidence)
         {
             IdActualAddress = idActual;
