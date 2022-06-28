@@ -26,7 +26,7 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.PersonAggregate
             Id = idPerson;
             LastName = lastName;
             FirstName = firstName;
-            middleName = MiddleName;
+            MiddleName = middleName;
 
             LatinFirstName = latinFirstName;
             LatinLastName = latinLastName;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.ApplicationCore.Entities.AddressAggregate
 {
-    public class Address
+    public class Address : BaseEntity
     {
         public int IdActualAddress { get; set; }
         public ActualAddressItem ActualAddress { get; set; }
@@ -22,8 +22,9 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.AddressAggregate
             // required by EF
         }
 
-        public Address(int idActual, int idMail, int idResidence)
+        public Address(int id, int idActual, int idMail, int idResidence)
         {
+            Id = id;
             IdActualAddress = idActual;
             IdMailAddress = idMail;
             IdResidenceAddress = idResidence;

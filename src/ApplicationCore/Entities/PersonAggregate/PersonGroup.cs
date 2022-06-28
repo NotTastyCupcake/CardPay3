@@ -11,6 +11,8 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.PersonAggregate
     {
         public string NameGroup { get; private set; }
 
+        public ICollection<PersonItem> People { get; private set; }
+
         public PersonGroup(int groupId, string nameGroup)
         {
             Id = groupId;

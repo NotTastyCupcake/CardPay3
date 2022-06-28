@@ -13,7 +13,13 @@ namespace Metcom.CardPay3.Infrastructure.Config
     {
         public void Configure(EntityTypeBuilder<PersonDocument> builder)
         {
-            throw new NotImplementedException();
+            builder.HasKey(ci => ci.Id);
+
+            builder.Property(ci => ci.GenderName)
+                .IsRequired(true);
+
+            builder.Property(ci => ci.ShortGenderName)
+                .IsRequired(true);
         }
     }
 }
