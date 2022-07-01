@@ -1,4 +1,4 @@
-﻿using Metcom.CardPay3.ApplicationCore.Entities.PersonAggregate;
+﻿using Metcom.CardPay3.ApplicationCore.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;

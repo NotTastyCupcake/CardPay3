@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Ardalis.GuardClauses;
 
-namespace Metcom.CardPay3.ApplicationCore.Entities.PersonAggregate
+namespace Metcom.CardPay3.ApplicationCore.Entities
 {
     public class PersonGroup : BaseEntity
     {

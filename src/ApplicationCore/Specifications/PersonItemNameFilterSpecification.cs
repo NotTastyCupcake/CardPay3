@@ -1,5 +1,5 @@
 ﻿using Ardalis.Specification;
-using Metcom.CardPay3.ApplicationCore.Entities.PersonAggregate;
+using Metcom.CardPay3.ApplicationCore.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

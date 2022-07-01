@@ -1,5 +1,7 @@
-﻿using Metcom.CardPay3.ApplicationCore.Entities.AddressAggregate;
-using Metcom.CardPay3.ApplicationCore.Entities.PersonAggregate;
+﻿using Metcom.CardPay3.ApplicationCore.Entities;
+using Metcom.CardPay3.ApplicationCore.Entities.AddressAggregate;
+using Metcom.CardPay3.ApplicationCore.Entities.DocumentAggregate;
+using Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -16,8 +18,8 @@ namespace Metcom.CardPay3.Infrastructure.Data
         DbSet<PersonGroup> Groups { get; set; }
         DbSet<PersonItem> People { get; set; }
         DbSet<PersonGender> Genders { get; set; }
-        DbSet<PersonDocument> Documents { get; set; }
-        DbSet<PersonRequisites> Requisites { get; set; }
+        DbSet<DocumentItem> Documents { get; set; }
+        DbSet<RequisitesItem> Requisites { get; set; }
 
         DbSet<Address> Addresses { get; set; }
         DbSet<ActualAddressItem> ActualAddresses { get; set; }

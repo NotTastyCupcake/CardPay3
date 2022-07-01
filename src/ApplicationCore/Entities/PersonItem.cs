@@ -1,5 +1,7 @@
 ﻿using Ardalis.GuardClauses;
 using Metcom.CardPay3.ApplicationCore.Entities.AddressAggregate;
+using Metcom.CardPay3.ApplicationCore.Entities.DocumentAggregate;
+using Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate;
 using Metcom.CardPay3.ApplicationCore.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -7,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Metcom.CardPay3.ApplicationCore.Entities.PersonAggregate
+namespace Metcom.CardPay3.ApplicationCore.Entities
 {
     public class PersonItem : BaseEntity, IAggregateRoot
     {
@@ -17,8 +19,10 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.PersonAggregate
             string lastName,
             string firstName,
             string middleName,
-            string latinFirstName,
-            string latinLastName,
+            string phoneNum,
+            string jobPhoneNum,
+            string position,
+            string departmentNum,
             int genderId,
             int documentId,
             int requestId)
@@ -28,8 +32,10 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.PersonAggregate
             FirstName = firstName;
             MiddleName = middleName;
 
-            LatinFirstName = latinFirstName;
-            LatinLastName = latinLastName;
+            PhoneNumber = phoneNum;
+            JobPhoneNumber = jobPhoneNum;
+            Position = position;
+            DepartmentNum = departmentNum;
 
             IdGender = genderId;
             IdDocument = documentId;
@@ -39,27 +45,21 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.PersonAggregate
         #region ФИО Сотрудника
         public string LastName { get; private set; }
         public string FirstName { get; private set; }
-        public string MiddleName { get; private set; } 
+        public string MiddleName { get; private set; }
         #endregion
-
-        #region Данные отображения на карте сотрудника
-        /// <summary>
-        /// Имя в латинице
-        /// </summary>
-        public string LatinFirstName { get; private set; }
-        /// <summary>
-        /// Фамилия в латинице
-        /// </summary>
-        public string LatinLastName { get; private set; } 
+        
+        #region Контактные данные
+        public string PhoneNumber { get; private set; }
+        public string JobPhoneNumber { get; private set; }
+        public string Position { get; private set; }
+        public string DepartmentNum { get; private set; } 
         #endregion
-
-        public string PhoneNumber { get; set; }
-
+        
         #region Ссылка на объект
         public int IdGender { get; private set; }
         public PersonGender Gender { get; private set; }
         public int IdDocument { get; set; }
-        public PersonDocument Document { get; set; }
+        public DocumentItem Document { get; set; }
         public int IdAddress { get; set; }
         public Address Address { get; set; }
         /// <summary>
@@ -69,7 +69,7 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.PersonAggregate
         /// <summary>
         /// Реквизиты документов человека
         /// </summary>
-        public PersonRequisites Requisites { get; set; } 
+        public RequisitesItem Requisites { get; set; } 
         #endregion
 
         public void UpdateFullName(string lastName, string firstName, string middleName)
@@ -83,14 +83,18 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.PersonAggregate
             MiddleName = middleName;
         }
 
-
-        public void UpdateNameCard(string lastName, string firstName)
+        public void UpdateContactDetails(string phoneNum, string jobPhoneNum, string position, string departmentNum)
         {
-            Guard.Against.NullOrEmpty(lastName, nameof(lastName));
-            Guard.Against.NullOrEmpty(firstName, nameof(firstName));
+            Guard.Against.NullOrEmpty(phoneNum, nameof(phoneNum));
+            Guard.Against.NullOrEmpty(jobPhoneNum, nameof(jobPhoneNum));
+            Guard.Against.NullOrEmpty(position, nameof(position));
+            Guard.Against.NullOrEmpty(departmentNum, nameof(departmentNum));
             
-            LatinLastName = lastName;
-            LatinFirstName = firstName;
+            PhoneNumber = phoneNum;
+            JobPhoneNumber = jobPhoneNum;
+            Position = position;
+            DepartmentNum = departmentNum;
         }
+
     }
 }

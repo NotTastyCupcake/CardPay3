@@ -1,4 +1,4 @@
-﻿using Metcom.CardPay3.ApplicationCore.Entities.PersonAggregate;
+﻿using Metcom.CardPay3.ApplicationCore.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -44,14 +44,6 @@ namespace Metcom.CardPay3.Infrastructure.Config
 
             builder.Property(ci => ci.MiddleName)
                 .IsRequired(true)
-                .HasMaxLength(50);
-
-            builder.Property(ci => ci.LatinLastName)
-                .IsRequired(false)
-                .HasMaxLength(50);
-
-            builder.Property(ci => ci.LatinFirstName)
-                .IsRequired(false)
                 .HasMaxLength(50);
         }
     }

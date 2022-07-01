@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Metcom.CardPay3.ApplicationCore.Entities.PersonAggregate
+namespace Metcom.CardPay3.ApplicationCore.Entities
 {
     public class PersonGender : BaseEntity
     {

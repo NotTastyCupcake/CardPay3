@@ -1,4 +1,4 @@
-﻿using Metcom.CardPay3.ApplicationCore.Entities.PersonAggregate;
+﻿using Metcom.CardPay3.ApplicationCore.Entities;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -16,15 +16,21 @@ namespace Metcom.CardPay3.UnitTests.ApplicationCore.Entities.PersonItemTests
         private string _validLastName = "TestLastName";
         private string _validFirstName = "TestFirstName";
         private string _validMiddleName = "TestMiddleName";
-        private string _validLatinFirstName = "TestFirstLatinName";
-        private string _validLatinLastName = "TestLastLatinName";
         private int _validGenderId = 1;
         private int _validDocumentId = 1;
+        private string _validPhoneNumber = "8888";
+        private string _validJobPhoneNumber = "1111";
+        private string _validPosition = "TestPosition";
+        private string _validDepartmentNum = "TestDepartamentNum";
+        private int _validIdRequest = 1;
 
         [SetUp]
         public void UpdateFullNameSetUp()
         {
-            _testItem = new PersonItem(_validId,_validLastName,_validFirstName, _validMiddleName, _validLatinFirstName, _validLatinLastName, _validGenderId, _validDocumentId);
+            _testItem = new PersonItem(_validId,
+                _validLastName, _validFirstName, _validMiddleName,
+                _validPhoneNumber, _validJobPhoneNumber, _validPosition, _validDepartmentNum,
+                _validGenderId, _validDocumentId, _validIdRequest);
         }
 
         [TestCase("", "", "")]
