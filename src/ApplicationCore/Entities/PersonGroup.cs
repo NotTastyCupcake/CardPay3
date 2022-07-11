@@ -9,21 +9,24 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
 {
     public class PersonGroup : BaseEntity
     {
-        public string NameGroup { get; private set; }
+        public string Name { get; private set; }
 
         public ICollection<PersonItem> People { get; private set; }
+
+        public int IdOrganization { get; set; }
+        public PersonOrganization Organization { get; set; }
 
         public PersonGroup(int groupId, string nameGroup)
         {
             Id = groupId;
-            NameGroup = nameGroup;
+            Name = nameGroup;
         }
 
         public void UpdateNameGroup(string newNameGroup)
         {
             Guard.Against.NullOrEmpty(newNameGroup, nameof(newNameGroup));
 
-            NameGroup = newNameGroup;
+            Name = newNameGroup;
         }
     }
 }

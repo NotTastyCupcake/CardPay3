@@ -17,7 +17,7 @@ namespace Metcom.CardPay3.Infrastructure.Config
 
             builder.HasKey(ci => ci.Id);
 
-            builder.Property(ci => ci.NameGroup)
+            builder.Property(ci => ci.Name)
                 .IsRequired(true);
         }
     }

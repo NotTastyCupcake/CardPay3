@@ -57,19 +57,24 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
         
         #region Ссылка на объект
         public int IdGender { get; private set; }
-        public PersonGender Gender { get; private set; }
         public int IdDocument { get; set; }
-        public DocumentItem Document { get; set; }
         public int IdAddress { get; set; }
-        public Address Address { get; set; }
         /// <summary>
         /// Реквизиты документов человека
         /// </summary>
         public int IdRequisties { get; set; }
+       
+        public PersonGender Gender { get; private set; }
+
+        public PersonGroup PersonGroup { get; set; }
         /// <summary>
         /// Реквизиты документов человека
         /// </summary>
-        public RequisitesItem Requisites { get; set; } 
+        public RequisitesItem Requisites { get; set; }
+
+        public DocumentItem Document { get; set; }
+
+        public Address Address { get; set; }
         #endregion
 
         public void UpdateFullName(string lastName, string firstName, string middleName)
