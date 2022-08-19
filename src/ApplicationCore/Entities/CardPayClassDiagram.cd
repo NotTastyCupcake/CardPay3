@@ -3,12 +3,11 @@
   <Class Name="Metcom.CardPay3.ApplicationCore.Entities.PersonItem">
     <Position X="0.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAMCCAAAAAACggAAQQAAAACAgAAAiAAAAAACAIAo=</HashCode>
+      <HashCode>AAAAAMCCAAAAAACggAAQQAAAACAgAAAiAAAAAACAAAo=</HashCode>
       <FileName>Entities\PersonItem.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Gender" />
-      <Property Name="PersonGroup" />
       <Property Name="Requisites" />
       <Property Name="Document" />
       <Property Name="Address" />
@@ -21,16 +20,6 @@
       <HashCode>AAAAAAAAAAAAAAAAAiAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Entities\PersonGender.cs</FileName>
     </TypeIdentifier>
-  </Class>
-  <Class Name="Metcom.CardPay3.ApplicationCore.Entities.PersonGroup">
-    <Position X="5.75" Y="0.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAIAAAAAAAAAAAAQAAAAAAAAAAAACAAAAIAI=</HashCode>
-      <FileName>Entities\PersonGroup.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Organization" />
-    </ShowAsAssociation>
   </Class>
   <Class Name="Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate.RequisitesItem">
     <Position X="7.5" Y="2.75" Width="1.5" />
@@ -49,15 +38,22 @@
   <Class Name="Metcom.CardPay3.ApplicationCore.Entities.AddressAggregate.Address">
     <Position X="2.5" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAABAAAQAACAAgAAAAAAAAgAAAAAAAAAAAAABAAA=</HashCode>
+      <HashCode>AAAAAABAAAQAACAEgAAAAAAAAgAAAAAAAAAAAAABAAA=</HashCode>
       <FileName>Entities\AddressAggregate\Address.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Metcom.CardPay3.ApplicationCore.Entities.PersonOrganization">
-    <Position X="9" Y="0.5" Width="1.5" />
+    <Position X="7.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAACAAAAAAA=</HashCode>
       <FileName>Entities\PersonOrganization.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Metcom.CardPay3.ApplicationCore.Entities.GroupAggregate.Group">
+    <Position X="9.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAAAAQAAAAQAgBAAAAAAAAACgAAAAAI=</HashCode>
+      <FileName>Entities\GroupAggregate\Group.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

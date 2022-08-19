@@ -15,7 +15,7 @@ namespace Metcom.CardPay3.Infrastructure.Data
 {
     public class PersonContext : DbContext
     {
-        DbSet<PersonGroup> Groups { get; set; }
+        DbSet<Group> Groups { get; set; }
         DbSet<PersonItem> People { get; set; }
         DbSet<PersonGender> Genders { get; set; }
         DbSet<DocumentItem> Documents { get; set; }

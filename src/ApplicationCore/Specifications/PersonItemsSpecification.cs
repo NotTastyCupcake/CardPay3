@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.ApplicationCore.Specifications
 {
-    public class PersonItemsSpecification : Specification<PersonItem>
+    public sealed class PersonItemsSpecification : Specification<PersonItem>
     {
         public PersonItemsSpecification(params int[] ids)
         {

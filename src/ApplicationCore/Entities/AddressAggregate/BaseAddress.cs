@@ -6,37 +6,55 @@ using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.ApplicationCore.Entities.AddressAggregate
 {
-    public abstract class BaseAddress : BaseEntity
+    public class BaseAddress : BaseEntity
     {
-        public string Country { get; set; }
-        public int Postcode { get; set; }
+        #region Поля
+        public string Country { get; private set; }
+        public int Postcode { get; private set; }
         /// <summary>
         /// Регион
         /// </summary>
-        public string State { get; set; }
-        public string District { get; set; }
-        public string City { get; set; }
+        public string State { get; private set; }
+        public string District { get; private set; }
+        public string City { get; private set; }
         /// <summary>
         /// Населенный пункт
         /// </summary>
-        public string Locality { get; set; }
+        public string Locality { get; private set; }
         /// <summary>
         /// Тип улицы
         /// </summary>
-        public string StreetType { get; set; }
-        public string Street { get; set; }
+        public string StreetType { get; private set; }
+        public string Street { get; private set; }
         /// <summary>
         /// Номер дома
         /// </summary>
-        public int NumHome { get; set; }
+        public int NumHome { get; private set; }
         /// <summary>
         /// Номер корпуса
         /// </summary>
-        public int NumCase { get; set; }
+        public int NumCase { get; private set; }
         /// <summary>
         /// Номер квартиры
         /// </summary>
-        public int NumApartment { get; set; }
+        public int NumApartment { get; private set; } 
+        #endregion
+
+        public BaseAddress(string country, int postcode, string state, string district,string city,string locality,string streetType, string street,int numHome,int numCase, int numApartment)
+        {
+            Country = country;
+            Postcode = postcode;
+            State = state;
+            District = district;
+            City = city;
+            Locality = locality;
+            StreetType = streetType;
+            Street = street;
+            NumHome = numHome;
+            NumCase = numCase;
+            NumApartment = numApartment;
+        }
+
 
     }
 }

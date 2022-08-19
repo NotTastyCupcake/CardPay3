@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.Infrastructure.Config
 {
-    public class GroupConfiguration : IEntityTypeConfiguration<PersonGroup>
+    public class GroupConfiguration : IEntityTypeConfiguration<Group>
     {
-        public void Configure(EntityTypeBuilder<PersonGroup> builder)
+        public void Configure(EntityTypeBuilder<Group> builder)
         {
             builder.ToTable("Group");
 

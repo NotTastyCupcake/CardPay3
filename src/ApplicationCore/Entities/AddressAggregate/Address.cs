@@ -1,33 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Metcom.CardPay3.ApplicationCore.Entities.AddressAggregate
+﻿namespace Metcom.CardPay3.ApplicationCore.Entities.AddressAggregate
 {
     public class Address : BaseEntity
     {
-        public int IdActualAddress { get; set; }
-        public ActualAddressItem ActualAddress { get; set; }
+        public int PersonId { get; set; }
 
-        public int IdMailAddress { get; set; }
-        public MailAddressItem MailAddress { get; set; }
+        public int IdActualAddress { get; set; }
+        public BaseAddress ActualAddress { get; set; }
+
 
         public int IdResidenceAddress { get; set; }
-        public ResidenceAddressItem ResidenceAddress { get; set; }
+        public BaseAddress ResidenceAddress { get; set; }
+
+
+        public int IdMailAddress { get; set; }
+        public BaseAddress MailAddress { get; set; }
 
         public Address()
         {
             // required by EF
         }
 
-        public Address(int id, int idActual, int idMail, int idResidence)
+        public Address(int personId)
         {
-            Id = id;
-            IdActualAddress = idActual;
-            IdMailAddress = idMail;
-            IdResidenceAddress = idResidence;
+            PersonId = personId;
+        }
+
+        public void Copy(BaseAddress from, BaseAddress to)
+        {
+            to = from;
         }
         
     }

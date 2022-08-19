@@ -11,9 +11,8 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
         public string GenderName { get; private set; }
         public string ShortGenderName { get; private set; }
 
-        public PersonGender(int genderId, string name, string shortName)
+        public PersonGender(string name, string shortName)
         {
-            Id = genderId;
             GenderName = name;
             ShortGenderName = shortName;
         }

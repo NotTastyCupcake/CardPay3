@@ -21,7 +21,7 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate
         /// </summary>
         public string InsuranceNumber { get; set; }
 
-        #region Данные отображения на карте сотрудника
+        #region Данные о карте сотрудника
         /// <summary>
         /// Имя в латинице
         /// </summary>
@@ -31,10 +31,10 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate
         /// </summary>
         public string LatinLastName { get; set; }
         public string CardNumber { get; set; }
+        public int AccountNumber { get; set; }
         public BankCardType CardType { get; set; }
         public int IdCardType { get; set; }
         #endregion
-
 
         public void UpdateNameCard(string lastName, string firstName)
         {
