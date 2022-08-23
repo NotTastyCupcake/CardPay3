@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.ApplicationCore.Interfaces
 {
-    public interface IRepository<T> : IRepositoryBase<T> where T : class, IAggregateRoot
+    public interface IRepository<T> : IRepositoryBase<T> where T : class
     {
         
     }

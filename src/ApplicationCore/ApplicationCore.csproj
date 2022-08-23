@@ -10,8 +10,4 @@
     <PackageReference Include="Ardalis.Specification" Version="6.1.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
-
 </Project>

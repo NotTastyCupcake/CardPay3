@@ -11,10 +11,10 @@ using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.ApplicationCore.Entities
 {
-    public class PersonItem : BaseEntity, IAggregateRoot
+    public class PersonItem : BaseEntity
     {
 
-        public PersonItem(string lastName, string firstName, string middleName, string phoneNum, string jobPhoneNum, string position, string departmentNum, int genderId, int documentId, int requestId)
+        public PersonItem(int _validId, string lastName, string firstName, string middleName, string phoneNum, string jobPhoneNum, string position, string departmentNum, int genderId, int documentId, int requestId)
         {
             LastName = lastName;
             FirstName = firstName;
