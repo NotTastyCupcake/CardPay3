@@ -1,4 +1,5 @@
 ﻿using Metcom.CardPay3.ApplicationCore.Entities;
+using Metcom.CardPay3.ApplicationCore.Entities.GroupAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;

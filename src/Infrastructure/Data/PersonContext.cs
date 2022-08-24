@@ -1,6 +1,7 @@
 ﻿using Metcom.CardPay3.ApplicationCore.Entities;
 using Metcom.CardPay3.ApplicationCore.Entities.AddressAggregate;
 using Metcom.CardPay3.ApplicationCore.Entities.DocumentAggregate;
+using Metcom.CardPay3.ApplicationCore.Entities.GroupAggregate;
 using Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -22,9 +23,6 @@ namespace Metcom.CardPay3.Infrastructure.Data
         DbSet<RequisitesItem> Requisites { get; set; }
 
         DbSet<Address> Addresses { get; set; }
-        DbSet<ActualAddressItem> ActualAddresses { get; set; }
-        DbSet<MailAddressItem> MailAddresses { get; set; }
-        DbSet<ResidenceAddressItem> ResidenceAddresses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
