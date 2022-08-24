@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.ApplicationCore.Specifications
 {
-    public sealed class PersonItemNameFilterSpecification : Specification<PersonItem>
+    public sealed class PersonItemNameFilterSpecification : Specification<PersonItem>, ISingleResultSpecification<PersonItem>
     {
         public PersonItemNameFilterSpecification(string personFirstName = "", string personLastName = "", string personMiddleName = "")
         {

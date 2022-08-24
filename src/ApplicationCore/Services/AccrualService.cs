@@ -20,10 +20,10 @@ namespace Metcom.CardPay3.ApplicationCore.Services
             _logger = logger;
         }
 
-        public async Task<Accrual> AddItemToBasket(string idOrganization ,int personId, int payDay, decimal amount, int idTypePay, int idOperationType)
+        public async Task<Accrual> AddItemToAccrual(string idOrganization ,int personId, int payDay, decimal amount, int idTypePay, int idOperationType)
         {
             var accrualSpec = new AccrualSpecification(idOrganization);
-            var accrual = await _accrualRepository.GetBySpecAsync(accrualSpec);
+            var accrual = await _accrualRepository.SingleOrDefaultAsync(accrualSpec);
 
             if(accrual == null)
             {
@@ -36,6 +36,8 @@ namespace Metcom.CardPay3.ApplicationCore.Services
             return accrual;
         }
 
+        //TODO: Создать тригер расписания Quartz
+        
         public Task<Accrual> DeleteItem(int personId)
         {
             throw new NotImplementedException();

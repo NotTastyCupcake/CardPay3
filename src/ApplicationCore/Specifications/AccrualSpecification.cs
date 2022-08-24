@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.ApplicationCore.Specifications
 {
-    public sealed class AccrualSpecification : Specification<Accrual>, ISingleResultSpecification
+    public sealed class AccrualSpecification : Specification<Accrual>, ISingleResultSpecification<Accrual>
     {
         public AccrualSpecification(string idOrganization)
         {
