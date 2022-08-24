@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ardalis.GuardClauses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,23 +10,18 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.AccrualAggregate
     public class AccrualItem : BaseEntity
     {
         public int PersonId { get; private set; }
-        public int PayDay { get; private set; }
         public decimal Amount { get; private set; }
-        public int IdPayType { get; private set; }
-        public int IdOperationType { get; private set; }
 
-        public AccrualItem(int personId, int payDay, decimal amount, int idTypePay, int idOperationType)
+        public AccrualItem(int personId, decimal amount)
         {
             PersonId = personId;
-            Amount = amount;
-            IdPayType = idTypePay;
-            IdOperationType = idOperationType;
-            SetPayDay(payDay);
+            SetAmount(amount);
         }
 
-        private void SetPayDay(int payDay)
+        public void SetAmount(decimal amount)
         {
-            PayDay = payDay;
+            Guard.Against.OutOfRange(amount, nameof(amount), 0, decimal.MaxValue);
+            Amount = amount;
         }
 
     }
