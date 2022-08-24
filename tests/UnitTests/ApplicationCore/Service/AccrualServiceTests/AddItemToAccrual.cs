@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Moq;
-using Xunit;
 using NUnit.Framework;
 using Metcom.CardPay3.ApplicationCore.Specifications;
 using Metcom.CardPay3.ApplicationCore.Services;
@@ -16,19 +15,25 @@ namespace Metcom.CardPay3.UnitTests.ApplicationCore.Service.AccrualServiceTests
     public class AddItemToAccrual
     {
         private readonly string _organizationId = "Test Organization";
+        private readonly int _accrualDay = 15;
+        private readonly int _idAccrualType = 1;
+        private readonly int _idOperationType = 1;
+
+        //int accrualDay, int idAccrualType, int idOperationType
+
         private readonly Mock<IRepository<Accrual>> _mockAccrualRepo = new Mock<IRepository<Accrual>>();
         private Accrual Item;
 
         [SetUp]
         public void AddItemToAccrualSetUp()
         {
-            Item = new Accrual(_organizationId);
+            Item = new Accrual(_organizationId, _accrualDay, _idAccrualType, _idOperationType);
         }
 
         [Test]
         public async Task InvokesAccrualRepositoryGetBySpecAsyncOnce()
         {
-            Item.AddItem(1, It.IsAny<int>(), It.IsAny<decimal>(), It.IsAny<int>(), It.IsAny<int>());
+            Item.AddItem(1,It.IsAny<decimal>());
             _mockAccrualRepo.Setup(x => x.SingleOrDefaultAsync(It.IsAny<AccrualSpecification>(), default)).ReturnsAsync(Item);
 
             var accrualService = new AccrualService(_mockAccrualRepo.Object, null);
@@ -40,7 +45,7 @@ namespace Metcom.CardPay3.UnitTests.ApplicationCore.Service.AccrualServiceTests
         [Test]
         public async Task InvokesAccrualRepositoryUpdateAsyncOnce()
         {
-            Item.AddItem(1, It.IsAny<int>(), It.IsAny<decimal>(), It.IsAny<int>(), It.IsAny<int>());
+            Item.AddItem(1, It.IsAny<decimal>());
             _mockAccrualRepo.Setup(x => x.SingleOrDefaultAsync(It.IsAny<AccrualSpecification>(), default)).ReturnsAsync(Item);
 
             var accrualService = new AccrualService(_mockAccrualRepo.Object, null);
