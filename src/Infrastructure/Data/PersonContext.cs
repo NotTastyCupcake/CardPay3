@@ -16,16 +16,20 @@ namespace Metcom.CardPay3.Infrastructure.Data
 {
     public class PersonContext : DbContext
     {
+        public PersonContext(DbContextOptions<PersonContext> options) : base(options)
+        {
+        }
+
         DbSet<Group> Groups { get; set; }
         DbSet<PersonItem> People { get; set; }
         DbSet<PersonGender> Genders { get; set; }
         DbSet<DocumentItem> Documents { get; set; }
         DbSet<RequisitesItem> Requisites { get; set; }
-
         DbSet<Address> Addresses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            base.OnModelCreating(builder);
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
         

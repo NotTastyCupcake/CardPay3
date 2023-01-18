@@ -8,7 +8,6 @@ namespace Metcom.CardPay3.UnitTests.ApplicationCore.Entities.PersonItemTests
     {
         private PersonItem _testItem;
 
-        private int _validId = 1;
         private string _validLastName = "TestLastName";
         private string _validFirstName = "TestFirstName";
         private string _validMiddleName = "TestMiddleName";
@@ -23,7 +22,7 @@ namespace Metcom.CardPay3.UnitTests.ApplicationCore.Entities.PersonItemTests
         [SetUp]
         public void UpdateContactDetailsSetUp()
         {
-            _testItem = new PersonItem(_validId,
+            _testItem = new PersonItem(
                 _validLastName, _validFirstName, _validMiddleName,
                 _validPhoneNumber, _validJobPhoneNumber, _validPosition, _validDepartmentNum,
                 _validGenderId, _validDocumentId, _validIdRequest);

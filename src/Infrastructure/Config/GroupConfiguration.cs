@@ -14,7 +14,6 @@ namespace Metcom.CardPay3.Infrastructure.Config
     {
         public void Configure(EntityTypeBuilder<Group> builder)
         {
-            builder.ToTable("Group");
 
             builder.HasKey(ci => ci.Id);
 

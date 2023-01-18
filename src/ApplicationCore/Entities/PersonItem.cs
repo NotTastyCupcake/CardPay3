@@ -14,7 +14,7 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
     public class PersonItem : BaseEntity
     {
 
-        public PersonItem(int _validId, string lastName, string firstName, string middleName, string phoneNum, string jobPhoneNum, string position, string departmentNum, int genderId, int documentId, int requestId)
+        public PersonItem(string lastName, string firstName, string middleName, string phoneNum, string jobPhoneNum, string position, string departmentNum, int genderId, int documentId, int requestId)
         {
             LastName = lastName;
             FirstName = firstName;
@@ -44,7 +44,7 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
         #region Ссылка на объект
 
         public int IdGender { get; private set; }
-        public PersonGender Gender { get; private set; }
+        public PersonGender? Gender { get; private set; }
 
         /// <summary>
         /// Реквизиты документов человека
@@ -53,13 +53,13 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
         /// <summary>
         /// Реквизиты документов человека
         /// </summary>
-        public RequisitesItem Requisites { get; set; }
+        public RequisitesItem? Requisites { get; set; }
 
         public int IdDocument { get; set; }
-        public DocumentItem Document { get; set; }
+        public DocumentItem? Document { get; set; }
 
         public int IdAddress { get; set; }
-        public Address Address { get; set; }
+        public Address? Address { get; set; }
         #endregion
 
         public void UpdateFullName(string lastName, string firstName, string middleName)

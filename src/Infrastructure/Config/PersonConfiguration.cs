@@ -14,10 +14,7 @@ namespace Metcom.CardPay3.Infrastructure.Config
         public void Configure(EntityTypeBuilder<PersonItem> builder)
         {
 
-            builder.ToTable("People");
-
             builder.Property(ci => ci.Id)
-                .ForSqlServerUseSequenceHiLo("people_hilo")
                 .IsRequired();
 
             builder.HasOne(ci => ci.Document)

@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.ApplicationCore.Entities.AccrualAggregate
 {
+    /// <summary>
+    /// Операция
+    /// </summary>
     public class Accrual : BaseEntity
     {
         private List<AccrualItem> _items = new List<AccrualItem>();

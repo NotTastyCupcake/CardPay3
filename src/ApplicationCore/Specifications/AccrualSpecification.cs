@@ -22,5 +22,12 @@ namespace Metcom.CardPay3.ApplicationCore.Specifications
                 .Where(b => b.Id == idAccrual)
                 .Include(b => b.Items);
         }
+
+        public AccrualSpecification(int accrualDay, decimal totalAmount)
+        {
+            Query
+                .Where(b => b.AccrualDay == accrualDay || b.TotalAmount == totalAmount)
+                .Include(b => b.Items);
+        }
     }
 }

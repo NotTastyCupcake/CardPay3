@@ -13,9 +13,9 @@ namespace Metcom.CardPay3.ApplicationCore.Services
     public class AccrualService : IAccrualService
     {
         private readonly IRepository<Accrual> _accrualRepository;
-        private readonly ILogger _logger;
+        private readonly IAppLogger<AccrualService> _logger;
 
-        public AccrualService(IRepository<Accrual> accrualRepository, ILogger logger)
+        public AccrualService(IRepository<Accrual> accrualRepository, IAppLogger<AccrualService> logger)
         {
             _accrualRepository = accrualRepository;
             _logger = logger;
