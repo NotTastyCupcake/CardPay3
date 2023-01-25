@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,9 @@ namespace Metcom.CardPay3.Infrastructure.Data
 {
     public class PersonContextSeed
     {
-        
+        public static Task SeedAsync(PersonContext catalogContext, ILoggerFactory loggerFactory)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
