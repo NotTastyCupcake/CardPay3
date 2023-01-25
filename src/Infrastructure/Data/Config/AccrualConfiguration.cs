@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Metcom.CardPay3.ApplicationCore.Entities.AccrualAggregate;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Metcom.CardPay3.Infrastructure.Config
+namespace Metcom.CardPay3.Infrastructure.Data.Config
 {
     public class AccrualConfiguration : IEntityTypeConfiguration<Accrual>
     {
