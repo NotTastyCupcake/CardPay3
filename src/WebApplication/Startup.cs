@@ -6,6 +6,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Metcom.CardPay3.Infrastructure.Identity;
+using Metcom.CardPay3.Infrastructure.Services;
+using Metcom.CardPay3.ApplicationCore.Interfaces;
+using Microsoft.AspNetCore.Identity;
 
 namespace Metcom.CardPay3.WebApplication
 {
@@ -26,8 +29,11 @@ namespace Metcom.CardPay3.WebApplication
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<AppIdentityDbContext>();
+
+            services.AddTransient<IEmailSender, EmailSender>();
+
             services.AddControllersWithViews();
             services.AddRazorPages();
         }
@@ -38,7 +44,7 @@ namespace Metcom.CardPay3.WebApplication
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
+                //app.UseDatabaseErrorPage();
             }
             else
             {
