@@ -1,4 +1,5 @@
 ﻿using Metcom.CardPay3.ApplicationCore.Entities;
+using Metcom.CardPay3.ApplicationCore.Entities.AccrualAggregate;
 using Metcom.CardPay3.ApplicationCore.Entities.AddressAggregate;
 using Metcom.CardPay3.ApplicationCore.Entities.DocumentAggregate;
 using Metcom.CardPay3.ApplicationCore.Entities.GroupAggregate;
@@ -25,6 +26,9 @@ namespace Metcom.CardPay3.Infrastructure.Data
         DbSet<DocumentItem> Documents { get; set; }
         DbSet<RequisitesItem> Requisites { get; set; }
         DbSet<Address> Addresses { get; set; }
+
+        DbSet<Accrual> Accruals { get; set; }
+        DbSet<AccrualItem> AccrualItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

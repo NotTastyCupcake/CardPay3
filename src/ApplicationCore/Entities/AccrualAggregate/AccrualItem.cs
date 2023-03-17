@@ -11,7 +11,7 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.AccrualAggregate
     {
         public int PersonId { get; private set; }
         public decimal Amount { get; private set; }
-        public DateTime AccrualData => DateTime.Now;
+        public DateTime Date => DateTime.Now;
 
         public AccrualItem(int personId, decimal amount)
         {

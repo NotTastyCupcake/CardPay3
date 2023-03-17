@@ -17,7 +17,7 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.AccrualAggregate
 
         public string OrganizationId { get; private set; }
         public int AccrualDay { get; private set; }
-        public int IdAccrualType { get; private set; }
+        public int IdType { get; private set; }
         public int IdOperationType { get; private set; }
 
         public decimal TotalAmount => _items.Sum(i => i.Amount);
@@ -26,7 +26,7 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.AccrualAggregate
         {
             OrganizationId = idOrganization;
             SetAccrualDay(accrualDay);
-            IdAccrualType = idAccrualType;
+            IdType = idAccrualType;
             IdOperationType = idOperationType;
         }
 

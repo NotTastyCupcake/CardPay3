@@ -32,8 +32,10 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
         public string LastName { get; private set; }
         public string FirstName { get; private set; }
         public string MiddleName { get; private set; }
+
+        public string FullName => $"{LastName} {FirstName} {MiddleName}";
         #endregion
-        
+
         #region Контактные данные
         public string PhoneNumber { get; private set; }
         public string JobPhoneNumber { get; private set; }
