@@ -23,7 +23,7 @@ namespace Metcom.CardPay3.WebApplication.Services
             _itemRepository = itemRepository;
         }
 
-        public async Task<AccrualViewModel> GetOrCreateAccrualForUser(string organizationId, int accrualDay,
+        public async Task<AccrualViewModel> GetOrCreateAsyncAccrualForUser(string organizationId, int accrualDay,
             int accrualType,
             int accrualOperationType)
         {
@@ -32,12 +32,12 @@ namespace Metcom.CardPay3.WebApplication.Services
 
             if(accrual == null)
             {
-                return await CreateAccrualForOrganization(organizationId, accrualDay, accrualType, accrualOperationType);
+                return await CreateAsyncAccrualForOrganization(organizationId, accrualDay, accrualType, accrualOperationType);
             }
             return await CreateViewModelFromBasket(accrual);
         }
 
-        private async Task<AccrualViewModel> CreateAccrualForOrganization(string organizationId,
+        private async Task<AccrualViewModel> CreateAsyncAccrualForOrganization(string organizationId,
             int accrualDay,
             int accrualType,
             int accrualOperationType)
@@ -62,11 +62,11 @@ namespace Metcom.CardPay3.WebApplication.Services
             viewModel.AccrualDay = accrual.AccrualDay;
             viewModel.IdType = accrual.IdType;
             viewModel.OrganizationId = accrual.OrganizationId;
-            viewModel.Items = await GetAccrualItems(accrual.Items);
+            viewModel.Items = await GetAsyncAccrualItems(accrual.Items);
             return viewModel;
         }
 
-        private async Task<List<AccrualItemViewModel>> GetAccrualItems(IReadOnlyCollection<AccrualItem> accrualItems)
+        private async Task<List<AccrualItemViewModel>> GetAsyncAccrualItems(IReadOnlyCollection<AccrualItem> accrualItems)
         {
             var personItemsSpecification = new PersonItemsSpecification(accrualItems.Select(b => b.PersonId).ToArray());
             var personItems = await _itemRepository.ListAsync(personItemsSpecification);
