@@ -2,8 +2,10 @@
 using Metcom.CardPay3.ApplicationCore.Entities.AccrualAggregate;
 using Metcom.CardPay3.ApplicationCore.Interfaces;
 using Metcom.CardPay3.ApplicationCore.Specifications;
+using Metcom.CardPay3.Infrastructure.Identity;
 using Metcom.CardPay3.WebApplication.Interfaces;
 using Metcom.CardPay3.WebApplication.Pages.Accrual;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,24 +17,32 @@ namespace Metcom.CardPay3.WebApplication.Services
     public class AccrualViewModelService : IAccrualViewModelService
     {
         private readonly IRepository<Accrual> _accrualRepository;
-        public readonly IRepository<PersonItem> _itemRepository;
+        private readonly IRepository<PersonItem> _itemRepository;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public AccrualViewModelService(IRepository<Accrual> accrualRepository, IRepository<PersonItem> itemRepository)
+        
+        public AccrualViewModelService(IRepository<Accrual> accrualRepository, 
+            IRepository<PersonItem> itemRepository, UserManager<ApplicationUser> userManager)
         {
             _accrualRepository = accrualRepository;
             _itemRepository = itemRepository;
+            _userManager = userManager;
         }
 
-        public async Task<AccrualViewModel> GetOrCreateAsyncAccrualForUser(string organizationId, int accrualDay,
-            int accrualType,
-            int accrualOperationType)
+        public async Task<AccrualViewModel> GetOrCreateAsyncAccrualForUser(string userName)
         {
-            var accrualSpec = new AccrualSpecification(organizationId);
+
+            var user = await _userManager.FindByNameAsync(userName);
+
+            var accrualSpec = new AccrualSpecification(user.IdOrganization.ToString());
             var accrual = (await _accrualRepository.ListAsync(accrualSpec)).FirstOrDefault();
 
             if(accrual == null)
             {
-                return await CreateAsyncAccrualForOrganization(organizationId, accrualDay, accrualType, accrualOperationType);
+                return await CreateAsyncAccrualForOrganization(accrual.OrganizationId, 
+                    accrual.AccrualDay, 
+                    accrual.IdType, 
+                    accrual.IdOperationType);
             }
             return await CreateViewModelFromBasket(accrual);
         }
