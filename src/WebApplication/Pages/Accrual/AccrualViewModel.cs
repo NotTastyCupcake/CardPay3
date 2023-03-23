@@ -10,9 +10,10 @@ namespace Metcom.CardPay3.WebApplication.Pages.Accrual
     {
         public int Id { get; set; }
         public List<AccrualItemViewModel> Items { get; set; } = new List<AccrualItemViewModel>();
-        public string OrganizationId { get; set; }
+        public int OrganizationId { get; set; }
         public int AccrualDay { get; set; }
-        public int IdType { get; set; }
+        public int IdAccrualType { get; set; }
+        public int IdOperationType { get; set; }
 
         public decimal TotalAmount()
         {

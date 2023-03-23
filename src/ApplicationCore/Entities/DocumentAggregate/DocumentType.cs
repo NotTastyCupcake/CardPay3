@@ -13,5 +13,10 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.DocumentAggregate
         {
             DocumentName = name;
         }
+
+        public DocumentType()
+        {
+            // required by EF
+        }
     }
 }

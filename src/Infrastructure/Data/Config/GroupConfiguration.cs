@@ -14,11 +14,21 @@ namespace Metcom.CardPay3.Infrastructure.Data.Config
     {
         public void Configure(EntityTypeBuilder<Group> builder)
         {
-
             builder.HasKey(ci => ci.Id);
 
+            builder.Property(ci => ci.Id)
+                .UseHiLo("person_group_hilo")
+                .IsRequired();
+
+            var navigation = builder.Metadata.FindNavigation(nameof(Group.Items));
+            navigation?.SetPropertyAccessMode(PropertyAccessMode.Field);
+
             builder.Property(ci => ci.Name)
-                .IsRequired(true);
+                .IsRequired();
+
+            builder.HasOne(ci => ci.Organization)
+                .WithMany()
+                .HasForeignKey(ci => ci.IdOrganization);
         }
     }
 }

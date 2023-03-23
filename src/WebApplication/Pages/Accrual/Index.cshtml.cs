@@ -43,12 +43,12 @@ namespace Metcom.CardPay3.WebApplication.Pages.Accrual
             }
             await SetAccrualModelAsync();
 
-            //TODO: Добавить параметры
             await _accrualService.AddItemToAccrual(AccrualModel.OrganizationId,
                 accrualDetails.PersonId,
                 accrualDetails.Date.Day, 
                 accrualDetails.Amouth,
-                AccrualModel.IdType);
+                AccrualModel.IdAccrualType,
+                AccrualModel.IdOperationType);
 
             await SetAccrualModelAsync();
 

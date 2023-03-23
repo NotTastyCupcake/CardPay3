@@ -34,20 +34,20 @@ namespace Metcom.CardPay3.WebApplication.Services
 
             var user = await _userManager.FindByNameAsync(userName);
 
-            var accrualSpec = new AccrualSpecification(user.IdOrganization.ToString());
+            var accrualSpec = new AccrualSpecification(idOrganization: user.IdOrganization);
             var accrual = (await _accrualRepository.ListAsync(accrualSpec)).FirstOrDefault();
 
             if(accrual == null)
             {
-                return await CreateAsyncAccrualForOrganization(accrual.OrganizationId, 
+                return await CreateAsyncAccrualForOrganization(accrual.IdOrganization, 
                     accrual.AccrualDay, 
-                    accrual.IdType, 
+                    accrual.IdAccruaType, 
                     accrual.IdOperationType);
             }
             return await CreateViewModelFromBasket(accrual);
         }
 
-        private async Task<AccrualViewModel> CreateAsyncAccrualForOrganization(string organizationId,
+        private async Task<AccrualViewModel> CreateAsyncAccrualForOrganization(int organizationId,
             int accrualDay,
             int accrualType,
             int accrualOperationType)
@@ -60,8 +60,9 @@ namespace Metcom.CardPay3.WebApplication.Services
                 Id = accrual.Id,
                 Items = new List<AccrualItemViewModel>(),
                 AccrualDay = accrual.AccrualDay,
-                IdType = accrual.IdType,
-                OrganizationId = accrual.OrganizationId
+                IdAccrualType = accrual.IdAccruaType,
+                OrganizationId = accrual.IdOrganization,
+                IdOperationType = accrual.IdOperationType
             };
         }
 
@@ -70,20 +71,21 @@ namespace Metcom.CardPay3.WebApplication.Services
             var viewModel = new AccrualViewModel();
             viewModel.Id = accrual.Id;
             viewModel.AccrualDay = accrual.AccrualDay;
-            viewModel.IdType = accrual.IdType;
-            viewModel.OrganizationId = accrual.OrganizationId;
+            viewModel.IdAccrualType = accrual.IdAccruaType;
+            viewModel.OrganizationId = accrual.IdOrganization;
+            viewModel.IdOperationType = accrual.IdOperationType;
             viewModel.Items = await GetAsyncAccrualItems(accrual.Items);
             return viewModel;
         }
 
         private async Task<List<AccrualItemViewModel>> GetAsyncAccrualItems(IReadOnlyCollection<AccrualItem> accrualItems)
         {
-            var personItemsSpecification = new PersonItemsSpecification(accrualItems.Select(b => b.PersonId).ToArray());
+            var personItemsSpecification = new PersonItemsSpecification(accrualItems.Select(b => b.IdPerson).ToArray());
             var personItems = await _itemRepository.ListAsync(personItemsSpecification);
 
             var items = accrualItems.Select(accrualItem =>
             {
-                var personItem = personItems.First(c => c.Id == accrualItem.PersonId);
+                var personItem = personItems.First(c => c.Id == accrualItem.IdPerson);
 
                 var accrualItemViewModel = new AccrualItemViewModel
                 {

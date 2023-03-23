@@ -9,8 +9,8 @@ namespace Metcom.CardPay3.ApplicationCore.Interfaces
 {
     public interface IAccrualService
     {
-        Task TransferAccrualAsync(string oldIdOrganization, string newIdOrganization);
-        Task<Accrual> AddItemToAccrual(string idOrganization, int personId, int accrualDay, decimal amount, int idAccrualType, int idOperationType);
+        Task TransferAccrualAsync(int oldIdOrganization, int newIdOrganization);
+        Task<Accrual> AddItemToAccrual(int idOrganization, int personId, int accrualDay, decimal amount, int idAccrualType, int idOperationType);
         Task<Accrual> DeleteItem(int accrualId, int personId);
         Task<Accrual> SetAmounts(int accrualId, Dictionary<string, decimal> amounts);
         Task DeleteAccrual(int accrualId);

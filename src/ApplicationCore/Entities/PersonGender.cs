@@ -16,5 +16,9 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
             GenderName = name;
             ShortGenderName = shortName;
         }
+        public PersonGender()
+        {
+            // required by EF
+        }
     }
 }
