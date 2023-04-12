@@ -9,9 +9,6 @@ namespace Metcom.CardPay3.WebApplication.Interfaces
 {
     public interface IAccrualViewModelService
     {
-        Task<AccrualViewModel> GetOrCreateAccrualForUser(string organizationId,
-            int accrualDay,
-            int accrualType,
-            int accrualOperationType);
+        Task<AccrualViewModel> GetOrCreateAsyncAccrualForUser(string userName);
     }
 }

@@ -22,5 +22,9 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.DocumentAggregate
             IssuedBy = issuedBy;
             SubdivisionCode = subdivisionCode;
         }
+        public DocumentItem()
+        {
+            // required by EF
+        }
     }
 }

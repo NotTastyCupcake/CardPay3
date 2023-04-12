@@ -13,12 +13,22 @@ namespace Metcom.CardPay3.Infrastructure.Data.Config
     {
         public void Configure(EntityTypeBuilder<Accrual> builder)
         {
+            builder.ToTable("Accrual");
+
             var navigation = builder.Metadata.FindNavigation(nameof(Accrual.Items));
             navigation?.SetPropertyAccessMode(PropertyAccessMode.Field);
 
-            builder.Property(b => b.Id)
-                .IsRequired()
-                .HasMaxLength(256);
+            builder.HasOne(ci => ci.Organization)
+                .WithMany()
+                .HasForeignKey(ci => ci.IdOrganization);
+
+            builder.HasOne(ci => ci.OperationType)
+                .WithMany()
+                .HasForeignKey(ci => ci.IdOperationType);
+
+            builder.Property(b => b.AccrualDay)
+                .IsRequired(true)
+                .HasMaxLength(3);
         }
     }
 }

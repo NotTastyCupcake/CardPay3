@@ -5,18 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Metcom.CardPay3.ApplicationCore.Entities
+namespace Metcom.CardPay3.ApplicationCore.Entities.AccrualAggregate
 {
-    public class PersonOrganization : BaseEntity
+    public class OperationType : BaseEntity
     {
         public string Name { get; private set; }
-        public PersonOrganization(string name)
+        public OperationType(string name)
         {
             Name = name;
         }
 
-        
-        public PersonOrganization()
+        public OperationType()
         {
             // required by EF
         }

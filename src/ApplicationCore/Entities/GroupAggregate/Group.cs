@@ -16,10 +16,17 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.GroupAggregate
         public string Name { get; private set; }
         public int Quantity => _items.Count;
 
+        public PersonOrganization Organization { get; private set; }
+
         public Group(int organizationId, string nameGroup)
         {
             IdOrganization = organizationId;
             Name = nameGroup;
+        }
+
+        public Group()
+        {
+            // required by EF
         }
 
         public void AddItem(int personItemId)

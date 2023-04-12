@@ -14,9 +14,6 @@ namespace Metcom.CardPay3.Infrastructure.Data.Config
         public void Configure(EntityTypeBuilder<PersonItem> builder)
         {
 
-            builder.Property(ci => ci.Id)
-                .IsRequired();
-
             builder.HasOne(ci => ci.Document)
                 .WithOne()
                 .HasForeignKey<PersonItem>(ci => ci.IdDocument)
@@ -29,6 +26,11 @@ namespace Metcom.CardPay3.Infrastructure.Data.Config
             builder.HasOne(ci => ci.Gender)
                 .WithOne()
                 .HasForeignKey<PersonItem>(ci => ci.IdGender)
+                .IsRequired(true);
+
+            builder.HasOne(ci => ci.Organization)
+                .WithOne()
+                .HasForeignKey<PersonItem>(ci => ci.IdOrganization)
                 .IsRequired(true);
 
             builder.Property(ci => ci.LastName)

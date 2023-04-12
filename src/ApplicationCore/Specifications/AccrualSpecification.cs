@@ -10,12 +10,6 @@ namespace Metcom.CardPay3.ApplicationCore.Specifications
 {
     public sealed class AccrualSpecification : Specification<Accrual>, ISingleResultSpecification<Accrual>
     {
-        public AccrualSpecification(string idOrganization)
-        {
-            Query
-                .Where(b => b.OrganizationId == idOrganization)
-                .Include(b => b.Items);
-        }
         public AccrualSpecification(int idAccrual)
         {
             Query
@@ -23,10 +17,10 @@ namespace Metcom.CardPay3.ApplicationCore.Specifications
                 .Include(b => b.Items);
         }
 
-        public AccrualSpecification(int accrualDay, decimal totalAmount)
+        public AccrualSpecification(int? idOrganization = null, int? accrualDay = null, decimal? totalAmount = null)
         {
             Query
-                .Where(b => b.AccrualDay == accrualDay || b.TotalAmount == totalAmount)
+                .Where(b => b.AccrualDay == accrualDay || b.TotalAmount == totalAmount || b.IdOrganization == idOrganization)
                 .Include(b => b.Items);
         }
     }
