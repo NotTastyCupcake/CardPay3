@@ -11,7 +11,7 @@ namespace Metcom.CardPay3.Infrastructure.Data
     {
         public static Task SeedAsync(PersonContext catalogContext, ILoggerFactory loggerFactory)
         {
-            // TODO:
+            // TODO: Добавить примеры клиентов
             return Task.CompletedTask;
         }
     }
