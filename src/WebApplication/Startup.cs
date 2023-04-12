@@ -12,6 +12,10 @@ using Microsoft.AspNetCore.Identity;
 using Metcom.CardPay3.Infrastructure.Data;
 using Microsoft.AspNetCore.Http;
 using System;
+using Metcom.CardPay3.Infrastructure.Logging;
+using Metcom.CardPay3.WebApplication.Services;
+using Metcom.CardPay3.ApplicationCore.Services;
+using Metcom.CardPay3.WebApplication.Interfaces;
 
 namespace Metcom.CardPay3.WebApplication
 {
@@ -32,6 +36,8 @@ namespace Metcom.CardPay3.WebApplication
 
             // use real ms database
             ConfigureMsSqlDatabases(services);
+
+            ConfigureServices(services);
         }
 
         public void ConfigureMsSqlDatabases(IServiceCollection services)
@@ -48,11 +54,18 @@ namespace Metcom.CardPay3.WebApplication
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            ConfigureDevelopmentServices(services);
             ConfigureCookieSettings(services);
             CreateIdentityIfNotCreated(services);
-            
 
+            services.AddScoped(typeof(IReadRepository<>), typeof(EfRepository<>));
+            services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
+
+            services.AddScoped<IAccrualService, AccrualService>();
+
+            services.AddScoped<IAccrualViewModelService, AccrualViewModelService>();
+
+            services.Configure<CardPaySettings>(Configuration);
+            services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
             services.AddTransient<IEmailSender, EmailSender>();
 
             services.AddControllersWithViews();
