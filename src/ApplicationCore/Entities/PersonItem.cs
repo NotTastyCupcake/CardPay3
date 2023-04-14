@@ -27,22 +27,28 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
             IdDocument = documentId;
             IdRequisties = requestId;
         }
+        public PersonItem()
+        {
+            // required by EF
+        }
 
         #region ФИО Сотрудника
         public string LastName { get; private set; }
         public string FirstName { get; private set; }
         public string MiddleName { get; private set; }
+
+        public string FullName => $"{LastName} {FirstName} {MiddleName}";
         #endregion
-        
+
         #region Контактные данные
         public string PhoneNumber { get; private set; }
         public string JobPhoneNumber { get; private set; }
         public string Position { get; private set; }
-        public string DepartmentNum { get; private set; } 
+        public string DepartmentNum { get; private set; }
         #endregion
-        
-        #region Ссылка на объект
 
+        #region Ссылка на объект
+        #nullable enable
         public int IdGender { get; private set; }
         public PersonGender? Gender { get; private set; }
 
@@ -60,6 +66,10 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
 
         public int IdAddress { get; set; }
         public Address? Address { get; set; }
+
+        public int IdOrganization { get; set; }
+        public PersonOrganization? Organization { get; set; }
+        #nullable disable
         #endregion
 
         public void UpdateFullName(string lastName, string firstName, string middleName)

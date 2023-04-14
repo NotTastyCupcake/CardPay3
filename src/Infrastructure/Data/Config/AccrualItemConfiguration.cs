@@ -17,8 +17,12 @@ namespace Metcom.CardPay3.Infrastructure.Data.Config
                 .IsRequired(true)
                 .HasColumnType("decimal(18,2)");
 
-            builder.Property(bi => bi.AccrualData)
+            builder.Property(bi => bi.Date)
                 .IsRequired(true);
+
+            builder.HasOne(ci => ci.Person)
+                .WithMany()
+                .HasForeignKey(ci => ci.IdPerson);
         }
     }
 }

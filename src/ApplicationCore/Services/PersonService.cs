@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Metcom.CardPay3
+namespace Metcom.CardPay3.ApplicationCore.Services
 {
-    public class CardPaySettings
+    public class PersonService
     {
-        #nullable enable
-        public string? CardPayBaseUrl { get; set; }
+        
     }
 }

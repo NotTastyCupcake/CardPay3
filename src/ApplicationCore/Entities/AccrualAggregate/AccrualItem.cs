@@ -9,14 +9,21 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.AccrualAggregate
 {
     public class AccrualItem : BaseEntity
     {
-        public int PersonId { get; private set; }
+        public int IdPerson { get; private set; }
+        public PersonItem Person { get; private set; }
+
         public decimal Amount { get; private set; }
-        public DateTime AccrualData => DateTime.Now;
+        public DateTime Date { get; private set; } = DateTime.Now;
 
         public AccrualItem(int personId, decimal amount)
         {
-            PersonId = personId;
+            IdPerson = personId;
             SetAmount(amount);
+        }
+
+        public AccrualItem()
+        {
+            // required by EF
         }
 
         public void SetAmount(decimal amount)

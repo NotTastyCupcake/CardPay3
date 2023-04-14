@@ -1,4 +1,5 @@
 ﻿using Metcom.CardPay3.ApplicationCore.Entities;
+using Metcom.CardPay3.ApplicationCore.Entities.AccrualAggregate;
 using Metcom.CardPay3.ApplicationCore.Entities.AddressAggregate;
 using Metcom.CardPay3.ApplicationCore.Entities.DocumentAggregate;
 using Metcom.CardPay3.ApplicationCore.Entities.GroupAggregate;
@@ -14,17 +15,23 @@ namespace Metcom.CardPay3.Infrastructure.Data
             : base(options)
         {
         }
+
         public PersonContext()
         {
             Database.EnsureCreated();
         }
 
-        DbSet<Group> Groups { get; set; }
-        DbSet<PersonItem> People { get; set; }
-        DbSet<PersonGender> Genders { get; set; }
-        DbSet<DocumentItem> Documents { get; set; }
-        DbSet<RequisitesItem> Requisites { get; set; }
-        DbSet<Address> Addresses { get; set; }
+        public DbSet<PersonItem> People { get; set; }
+        public DbSet<Group> Groups { get; set; }
+        public DbSet<PersonOrganization> Organizations { get; set; }
+        public DbSet<PersonGender> Genders { get; set; }
+        public DbSet<DocumentItem> Documents { get; set; }
+        public DbSet<RequisitesItem> Requisites { get; set; }
+        public DbSet<Address> Addresses { get; set; }
+
+        public DbSet<Accrual> Accruals { get; set; }
+        public DbSet<AccrualItem> AccrualItems { get; set; }
+        public DbSet<OperationType> Operations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

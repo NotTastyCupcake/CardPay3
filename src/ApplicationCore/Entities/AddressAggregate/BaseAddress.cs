@@ -55,6 +55,10 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.AddressAggregate
             NumApartment = numApartment;
         }
 
+        public BaseAddress()
+        {
+            // required by EF
+        }
 
     }
 }

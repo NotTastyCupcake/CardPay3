@@ -21,10 +21,10 @@ namespace Metcom.CardPay3.ApplicationCore.Services
             _logger = logger;
         }
 
-        public async Task<Accrual> AddItemToAccrual(string idOrganization ,int personId, int accrualDay, decimal amount, int idAccrualType, int idOperationType)
+        public async Task<Accrual> AddItemToAccrual(int idOrganization ,int personId, int accrualDay, decimal amount, int idAccrualType, int idOperationType)
         {
 
-            var accrualSpec = new AccrualSpecification(idOrganization);
+            var accrualSpec = new AccrualSpecification(idOrganization: idOrganization);
             var accrual = await _accrualRepository.SingleOrDefaultAsync(accrualSpec);
 
             if(accrual == null)
@@ -64,10 +64,10 @@ namespace Metcom.CardPay3.ApplicationCore.Services
             await _accrualRepository.DeleteAsync(accrual);
         }
 
-        //TODO: Создать тригер расписания Quartz
-        public async Task TransferAccrualAsync(string oldIdOrganization, string newIdOrganization)
+        //TODO: Создать триггер расписания Quartz
+        public async Task TransferAccrualAsync(int oldIdOrganization, int newIdOrganization)
         {
-            var oldAccrualSpec = new AccrualSpecification(oldIdOrganization);
+            var oldAccrualSpec = new AccrualSpecification(idOrganization: oldIdOrganization);
             var accrual = await _accrualRepository.SingleOrDefaultAsync(oldAccrualSpec);
 
             if(accrual == null) { return; }
