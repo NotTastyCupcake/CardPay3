@@ -48,7 +48,7 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
         #endregion
 
         #region Ссылка на объект
-        #nullable enable
+#nullable enable
         public int IdGender { get; private set; }
         public PersonGender? Gender { get; private set; }
 
@@ -65,7 +65,7 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
         public DocumentItem? Document { get; set; }
 
         public int IdAddress { get; set; }
-        public Address? Address { get; set; }
+        public Address[]? Addresses { get; set; }
 
         public int IdOrganization { get; set; }
         public PersonOrganization? Organization { get; set; }

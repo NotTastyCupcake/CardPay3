@@ -51,29 +51,6 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "BaseAddress",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Country = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Postcode = table.Column<int>(type: "int", nullable: false),
-                    State = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    District = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    City = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Locality = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    StreetType = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Street = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NumHome = table.Column<int>(type: "int", nullable: false),
-                    NumCase = table.Column<int>(type: "int", nullable: false),
-                    NumApartment = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BaseAddress", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "DocumentType",
                 columns: table => new
                 {
@@ -132,9 +109,7 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DivisionId = table.Column<int>(type: "int", nullable: true),
                     IdDivision = table.Column<int>(type: "int", nullable: false),
-                    CurrencyId = table.Column<int>(type: "int", nullable: true),
                     IdCurrency = table.Column<int>(type: "int", nullable: false),
                     INN = table.Column<int>(type: "int", nullable: false),
                     InsuranceNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -142,67 +117,29 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                     LatinLastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CardNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AccountNumber = table.Column<int>(type: "int", nullable: false),
-                    CardTypeId = table.Column<int>(type: "int", nullable: true),
                     IdCardType = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Requisites", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Requisites_BankCardType_CardTypeId",
-                        column: x => x.CardTypeId,
+                        name: "FK_Requisites_BankCardType_IdCardType",
+                        column: x => x.IdCardType,
                         principalTable: "BankCardType",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Requisites_BankCurrency_CurrencyId",
-                        column: x => x.CurrencyId,
+                        name: "FK_Requisites_BankCurrency_IdCurrency",
+                        column: x => x.IdCurrency,
                         principalTable: "BankCurrency",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Requisites_BankDivision_DivisionId",
-                        column: x => x.DivisionId,
+                        name: "FK_Requisites_BankDivision_IdDivision",
+                        column: x => x.IdDivision,
                         principalTable: "BankDivision",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Addresses",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    PersonId = table.Column<int>(type: "int", nullable: false),
-                    IdActualAddress = table.Column<int>(type: "int", nullable: false),
-                    ActualAddressId = table.Column<int>(type: "int", nullable: true),
-                    IdResidenceAddress = table.Column<int>(type: "int", nullable: false),
-                    ResidenceAddressId = table.Column<int>(type: "int", nullable: true),
-                    IdMailAddress = table.Column<int>(type: "int", nullable: false),
-                    MailAddressId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Addresses", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Addresses_BaseAddress_ActualAddressId",
-                        column: x => x.ActualAddressId,
-                        principalTable: "BaseAddress",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Addresses_BaseAddress_MailAddressId",
-                        column: x => x.MailAddressId,
-                        principalTable: "BaseAddress",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Addresses_BaseAddress_ResidenceAddressId",
-                        column: x => x.ResidenceAddressId,
-                        principalTable: "BaseAddress",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -211,7 +148,6 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TypeId = table.Column<int>(type: "int", nullable: true),
                     IdType = table.Column<int>(type: "int", nullable: false),
                     DataIssued = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IssuedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -221,11 +157,11 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Documents", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Documents_DocumentType_TypeId",
-                        column: x => x.TypeId,
+                        name: "FK_Documents_DocumentType_IdType",
+                        column: x => x.IdType,
                         principalTable: "DocumentType",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -290,7 +226,6 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                     DepartmentNum = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IdGender = table.Column<int>(type: "int", nullable: false),
                     IdRequisties = table.Column<int>(type: "int", nullable: false),
-                    RequisitesId = table.Column<int>(type: "int", nullable: true),
                     IdDocument = table.Column<int>(type: "int", nullable: false),
                     IdAddress = table.Column<int>(type: "int", nullable: false),
                     IdOrganization = table.Column<int>(type: "int", nullable: false)
@@ -298,12 +233,6 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_People", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_People_Addresses_IdAddress",
-                        column: x => x.IdAddress,
-                        principalTable: "Addresses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_People_Documents_IdDocument",
                         column: x => x.IdDocument,
@@ -323,11 +252,11 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_People_Requisites_RequisitesId",
-                        column: x => x.RequisitesId,
+                        name: "FK_People_Requisites_IdRequisties",
+                        column: x => x.IdRequisties,
                         principalTable: "Requisites",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -378,6 +307,36 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Addresses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IdPerson = table.Column<int>(type: "int", nullable: false),
+                    Country = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Postcode = table.Column<int>(type: "int", nullable: false),
+                    State = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    District = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Locality = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    StreetType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Street = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NumHome = table.Column<int>(type: "int", nullable: false),
+                    NumCase = table.Column<int>(type: "int", nullable: false),
+                    NumApartment = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Addresses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Addresses_People_IdPerson",
+                        column: x => x.IdPerson,
+                        principalTable: "People",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Accrual_IdOperationType",
                 table: "Accrual",
@@ -399,24 +358,15 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                 column: "IdPerson");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Addresses_ActualAddressId",
+                name: "IX_Addresses_IdPerson",
                 table: "Addresses",
-                column: "ActualAddressId");
+                column: "IdPerson");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Addresses_MailAddressId",
-                table: "Addresses",
-                column: "MailAddressId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Addresses_ResidenceAddressId",
-                table: "Addresses",
-                column: "ResidenceAddressId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Documents_TypeId",
+                name: "IX_Documents_IdType",
                 table: "Documents",
-                column: "TypeId");
+                column: "IdType",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_GroupItem_GroupId",
@@ -427,12 +377,6 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                 name: "IX_Groups_IdOrganization",
                 table: "Groups",
                 column: "IdOrganization");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_People_IdAddress",
-                table: "People",
-                column: "IdAddress",
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_People_IdDocument",
@@ -453,30 +397,37 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_People_RequisitesId",
+                name: "IX_People_IdRequisties",
                 table: "People",
-                column: "RequisitesId");
+                column: "IdRequisties",
+                unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Requisites_CardTypeId",
+                name: "IX_Requisites_IdCardType",
                 table: "Requisites",
-                column: "CardTypeId");
+                column: "IdCardType",
+                unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Requisites_CurrencyId",
+                name: "IX_Requisites_IdCurrency",
                 table: "Requisites",
-                column: "CurrencyId");
+                column: "IdCurrency",
+                unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Requisites_DivisionId",
+                name: "IX_Requisites_IdDivision",
                 table: "Requisites",
-                column: "DivisionId");
+                column: "IdDivision",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "AccrualItems");
+
+            migrationBuilder.DropTable(
+                name: "Addresses");
 
             migrationBuilder.DropTable(
                 name: "GroupItem");
@@ -494,9 +445,6 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                 name: "Operations");
 
             migrationBuilder.DropTable(
-                name: "Addresses");
-
-            migrationBuilder.DropTable(
                 name: "Documents");
 
             migrationBuilder.DropTable(
@@ -507,9 +455,6 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Organizations");
-
-            migrationBuilder.DropTable(
-                name: "BaseAddress");
 
             migrationBuilder.DropTable(
                 name: "DocumentType");
