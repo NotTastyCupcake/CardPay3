@@ -4,16 +4,14 @@ using Metcom.CardPay3.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Metcom.CardPay3.Infrastructure.Migrations.Person
+namespace Metcom.CardPay3.Infrastructure.Migrations
 {
     [DbContext(typeof(PersonContext))]
-    [Migration("20230322124147_Person")]
-    partial class Person
+    partial class PersonContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

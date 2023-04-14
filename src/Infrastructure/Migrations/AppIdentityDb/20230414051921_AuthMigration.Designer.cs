@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Metcom.CardPay3.Infrastructure.Migrations
+namespace Metcom.CardPay3.Infrastructure.Migrations.AppIdentityDb
 {
     [DbContext(typeof(AppIdentityDbContext))]
-    [Migration("20230322102845_Identity")]
-    partial class Identity
+    [Migration("20230414051921_AuthMigration")]
+    partial class AuthMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

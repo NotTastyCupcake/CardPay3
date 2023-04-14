@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Metcom.CardPay3.Infrastructure.Migrations.Person
+namespace Metcom.CardPay3.Infrastructure.Migrations
 {
-    public partial class Person : Migration
+    public partial class PersonMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
