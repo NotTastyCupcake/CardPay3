@@ -1,0 +1,21 @@
+﻿using Metcom.CardPay3.ApplicationCore.Entities;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Metcom.CardPay3.WebApplication.ViewModels
+{
+    public class PersonIndexViewModel
+    {
+        public IEnumerable<PersonItemViewModel> Persons { get; set; }
+
+        public IEnumerable<SelectListItem> Organization { get; set; }
+
+        public int? OrganizationFilterApplied { get; set; }
+
+        public PaginationInfoViewModel PaginationInfo { get; set; }
+    }
+}

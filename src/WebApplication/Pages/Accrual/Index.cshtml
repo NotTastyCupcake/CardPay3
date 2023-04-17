@@ -2,5 +2,40 @@
 @model Metcom.CardPay3.WebApplication.Pages.Accrual.IndexModel
 @{
     //TODO: Создать форму
+    ViewData["Title"] = "Accrual";
 }
+<section>
+    <div class="container">
+
+    </div>
+</section>
  
+<div class="container">
+    @if(Model.AccrualModel.Items.Any())
+    {
+        <form method="post">
+            <article class="row">
+                <br />
+                <section class="col-xs-3">TEST1</section>
+                <section class="col-xs-3 hidden-lg-down"></section>
+                <section class="col-xs-2">TEST2</section>
+                <section class="col-xs-2">TEST3</section>
+                <section class="col-xs-2">TEST4</section>
+            </article>
+            <div class="row">
+                @for(int i = 0; i < Model.AccrualModel.Items.Count; i++)
+                {
+                    var item = Model.AccrualModel.Items[i];
+                    <article class="row">
+                        <div>
+                            <section class="col-xs-3">@item.FullName</section>
+                            <section class="col-xs-3">@item.Amouth</section>
+                            <section class="col-xs-3">@item.Date</section>
+                        </div>
+                    </article>
+                }
+            </div>
+
+        </form>
+    }
+</div>
