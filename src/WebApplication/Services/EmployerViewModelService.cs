@@ -13,35 +13,35 @@ using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.WebApplication.Services
 {
-    public class PersonViewModelService : IPersonViewModelService
+    public class EmployerViewModelService : IEmployerViewModelService
     {
-        private readonly ILogger<PersonViewModelService> _logger;
-        private readonly IRepository<PersonItem> _itemRepository;
-        private readonly IRepository<PersonOrganization> _organizationRepository;
+        private readonly ILogger<EmployerViewModelService> _logger;
+        private readonly IRepository<Employer> _itemRepository;
+        private readonly IRepository<Organization> _organizationRepository;
 
-        public PersonViewModelService(
+        public EmployerViewModelService(
             ILoggerFactory loggerFactory,
-            IRepository<PersonItem> itemRepository,
-            IRepository<PersonOrganization> organizationRepository)
+            IRepository<Employer> itemRepository,
+            IRepository<Organization> organizationRepository)
         {
-            _logger = loggerFactory.CreateLogger<PersonViewModelService>();
+            _logger = loggerFactory.CreateLogger<EmployerViewModelService>();
             _itemRepository = itemRepository;
             _organizationRepository = organizationRepository;
         }
 
-        public async Task<PersonIndexViewModel> GetEmployers(int pageIndex, int itemsPage, int? organizationId)
+        public async Task<EmployerIndexViewModel> GetEmployers(int pageIndex, int itemsPage, int? organizationId)
         {
             _logger.LogInformation("GetEmployers called.");
 
-            var filterSpecification = new PersonItemsSpecification(organizationId);
-            var filterPaginatedSpecification = new PersonFilterPaginatedSpecification(pageIndex, itemsPage, organizationId);
+            var filterSpecification = new EmployersSpecification(organizationId);
+            var filterPaginatedSpecification = new EmployerFilterPaginatedSpecification(pageIndex, itemsPage, organizationId);
 
             var itemsOnPage = await _itemRepository.ListAsync(filterPaginatedSpecification);
             var totalItems = await _itemRepository.CountAsync(filterSpecification);
 
-            var viewModel = new PersonIndexViewModel()
+            var viewModel = new EmployerIndexViewModel()
             {
-                Persons = itemsOnPage.Select(i => new PersonItemViewModel()
+                Employers = itemsOnPage.Select(i => new EmployerItemViewModel()
                 {
                     Id = i.Id,
                     Name = i.FullName,
@@ -79,7 +79,7 @@ namespace Metcom.CardPay3.WebApplication.Services
             {
                 new SelectListItem() { Value = null, Text = "All", Selected = true }
             };
-            foreach (PersonOrganization organization in organizations)
+            foreach (Organization organization in organizations)
             {
                 items.Add(new SelectListItem() { Value = organization.Id.ToString(), Text = organization.Name });
             }

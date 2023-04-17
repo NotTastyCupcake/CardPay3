@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.WebApplication.ViewModels
 {
-    public class PersonIndexViewModel
+    public class EmployerIndexViewModel
     {
-        public IEnumerable<PersonItemViewModel> Persons { get; set; }
+        public IEnumerable<EmployerItemViewModel> Employers { get; set; }
 
         public IEnumerable<SelectListItem> Organization { get; set; }
 

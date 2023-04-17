@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.WebApplication.Controllers.Api
 {
-    public class PersonController : BaseApiController
+    public class EmployerController : BaseApiController
     {
 
     }

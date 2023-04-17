@@ -2,11 +2,11 @@
 using NUnit.Framework;
 using System;
 
-namespace Metcom.CardPay3.UnitTests.ApplicationCore.Entities.PersonItemTests
+namespace Metcom.CardPay3.UnitTests.ApplicationCore.Entities.EmployerItemTests
 {
     public class UpdateContactDetails
     {
-        private PersonItem _testItem;
+        private Employer _testItem;
 
         private string _validLastName = "TestLastName";
         private string _validFirstName = "TestFirstName";
@@ -22,7 +22,7 @@ namespace Metcom.CardPay3.UnitTests.ApplicationCore.Entities.PersonItemTests
         [SetUp]
         public void UpdateContactDetailsSetUp()
         {
-            _testItem = new PersonItem(
+            _testItem = new Employer(
                 _validLastName, _validFirstName, _validMiddleName,
                 _validPhoneNumber, _validJobPhoneNumber, _validPosition, _validDepartmentNum,
                 _validGenderId, _validDocumentId, _validIdRequest);

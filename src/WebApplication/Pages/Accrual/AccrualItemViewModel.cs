@@ -9,7 +9,7 @@ namespace Metcom.CardPay3.WebApplication.Pages.Accrual
     public class AccrualItemViewModel
     {
         public int Id { get; set; }
-        public int PersonId { get; set; }
+        public int EmployerId { get; set; }
         public string FullName { get; set; }
         public decimal Amouth { get; set; }
         public DateTime Date { get; set; }

@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.Infrastructure.Data
 {
-    public class PersonContextSeed
+    public class EmployerContextSeed
     {
-        public static Task SeedAsync(PersonContext catalogContext, ILoggerFactory loggerFactory)
+        public static Task SeedAsync(EmployerContext catalogContext, ILoggerFactory loggerFactory)
         {
             // TODO: Добавить примеры клиентов
             return Task.CompletedTask;

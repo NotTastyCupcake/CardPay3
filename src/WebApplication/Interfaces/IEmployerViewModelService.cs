@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.WebApplication.Interfaces
 {
-    public interface IPersonViewModelService
+    public interface IEmployerViewModelService
     {
-        public Task<PersonIndexViewModel> GetEmployers(int pageIndex, int itemsPage, int? organizationId);
+        public Task<EmployerIndexViewModel> GetEmployers(int pageIndex, int itemsPage, int? organizationId);
 
         public Task<IEnumerable<SelectListItem>> GetOrganizations();
         public Task<IEnumerable<SelectListItem>> GetGroups();

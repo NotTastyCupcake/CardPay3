@@ -11,10 +11,10 @@ using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.ApplicationCore.Entities
 {
-    public class PersonItem : BaseEntity
+    public class Employer : BaseEntity
     {
 
-        public PersonItem(string lastName, string firstName, string middleName, string phoneNum, string jobPhoneNum, string position, string departmentNum, int genderId, int documentId, int requestId)
+        public Employer(string lastName, string firstName, string middleName, string phoneNum, string jobPhoneNum, string position, string departmentNum, int genderId, int documentId, int requestId)
         {
             LastName = lastName;
             FirstName = firstName;
@@ -27,7 +27,7 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
             IdDocument = documentId;
             IdRequisties = requestId;
         }
-        public PersonItem()
+        public Employer()
         {
             // required by EF
         }
@@ -50,7 +50,7 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
         #region Ссылка на объект
 #nullable enable
         public int IdGender { get; private set; }
-        public PersonGender? Gender { get; private set; }
+        public Gender? Gender { get; private set; }
 
         /// <summary>
         /// Реквизиты документов человека
@@ -68,7 +68,7 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
         public Address[]? Addresses { get; set; }
 
         public int IdOrganization { get; set; }
-        public PersonOrganization? Organization { get; set; }
+        public Organization? Organization { get; set; }
         #nullable disable
         #endregion
 

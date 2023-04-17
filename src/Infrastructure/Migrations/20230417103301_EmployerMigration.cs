@@ -3,12 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Metcom.CardPay3.Infrastructure.Migrations
 {
-    public partial class PersonMigration : Migration
+    public partial class EmployerMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateSequence(
-                name: "person_group_hilo",
+                name: "employer_group_hilo",
                 incrementBy: 10);
 
             migrationBuilder.CreateTable(
@@ -212,7 +212,7 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "People",
+                name: "Employers",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -232,27 +232,27 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_People", x => x.Id);
+                    table.PrimaryKey("PK_Employers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_People_Documents_IdDocument",
+                        name: "FK_Employers_Documents_IdDocument",
                         column: x => x.IdDocument,
                         principalTable: "Documents",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_People_Genders_IdGender",
+                        name: "FK_Employers_Genders_IdGender",
                         column: x => x.IdGender,
                         principalTable: "Genders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_People_Organizations_IdOrganization",
+                        name: "FK_Employers_Organizations_IdOrganization",
                         column: x => x.IdOrganization,
                         principalTable: "Organizations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_People_Requisites_IdRequisties",
+                        name: "FK_Employers_Requisites_IdRequisties",
                         column: x => x.IdRequisties,
                         principalTable: "Requisites",
                         principalColumn: "Id",
@@ -265,7 +265,7 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    PersonId = table.Column<int>(type: "int", nullable: false),
+                    EmployerId = table.Column<int>(type: "int", nullable: false),
                     GroupId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -285,7 +285,7 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    IdPerson = table.Column<int>(type: "int", nullable: false),
+                    IdEmployer = table.Column<int>(type: "int", nullable: false),
                     Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     AccrualId = table.Column<int>(type: "int", nullable: true)
@@ -300,9 +300,9 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_AccrualItems_People_IdPerson",
-                        column: x => x.IdPerson,
-                        principalTable: "People",
+                        name: "FK_AccrualItems_Employers_IdEmployer",
+                        column: x => x.IdEmployer,
+                        principalTable: "Employers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -313,7 +313,7 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    IdPerson = table.Column<int>(type: "int", nullable: false),
+                    IdEmployer = table.Column<int>(type: "int", nullable: false),
                     Country = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Postcode = table.Column<int>(type: "int", nullable: false),
                     State = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -330,9 +330,9 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Addresses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Addresses_People_IdPerson",
-                        column: x => x.IdPerson,
-                        principalTable: "People",
+                        name: "FK_Addresses_Employers_IdEmployer",
+                        column: x => x.IdEmployer,
+                        principalTable: "Employers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -353,19 +353,43 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                 column: "AccrualId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AccrualItems_IdPerson",
+                name: "IX_AccrualItems_IdEmployer",
                 table: "AccrualItems",
-                column: "IdPerson");
+                column: "IdEmployer");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Addresses_IdPerson",
+                name: "IX_Addresses_IdEmployer",
                 table: "Addresses",
-                column: "IdPerson");
+                column: "IdEmployer");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Documents_IdType",
                 table: "Documents",
                 column: "IdType",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Employers_IdDocument",
+                table: "Employers",
+                column: "IdDocument",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Employers_IdGender",
+                table: "Employers",
+                column: "IdGender",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Employers_IdOrganization",
+                table: "Employers",
+                column: "IdOrganization",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Employers_IdRequisties",
+                table: "Employers",
+                column: "IdRequisties",
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -377,30 +401,6 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                 name: "IX_Groups_IdOrganization",
                 table: "Groups",
                 column: "IdOrganization");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_People_IdDocument",
-                table: "People",
-                column: "IdDocument",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_People_IdGender",
-                table: "People",
-                column: "IdGender",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_People_IdOrganization",
-                table: "People",
-                column: "IdOrganization",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_People_IdRequisties",
-                table: "People",
-                column: "IdRequisties",
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Requisites_IdCardType",
@@ -436,7 +436,7 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                 name: "Accrual");
 
             migrationBuilder.DropTable(
-                name: "People");
+                name: "Employers");
 
             migrationBuilder.DropTable(
                 name: "Groups");
@@ -469,7 +469,7 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                 name: "BankDivision");
 
             migrationBuilder.DropSequence(
-                name: "person_group_hilo");
+                name: "employer_group_hilo");
         }
     }
 }

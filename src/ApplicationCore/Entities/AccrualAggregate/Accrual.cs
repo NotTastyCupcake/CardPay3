@@ -18,7 +18,7 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.AccrualAggregate
 
         #region Ссылки на объект
         public int IdOrganization { get; private set; }
-        public PersonOrganization Organization { get; private set; }
+        public Organization Organization { get; private set; }
 
         public int IdAccruaType { get; private set; }
 
@@ -44,18 +44,18 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.AccrualAggregate
             // required by EF
         }
 
-        public void AddItem(int personId, decimal amount)
+        public void AddItem(int employerId, decimal amount)
         {
-            if (!Items.Any(i => i.IdPerson == personId))
+            if (!Items.Any(i => i.IdEmployer == employerId))
             {
-                _items.Add(new AccrualItem(personId, amount));
+                _items.Add(new AccrualItem(employerId, amount));
                 return;
             }
         }
 
-        public void RemovePerson(int personId)
+        public void RemoveEmployer(int employerId)
         {
-            _items.RemoveAll(i => i.IdPerson == personId);
+            _items.RemoveAll(i => i.IdEmployer == employerId);
         }
 
         public void SetNewOrganizationId(int organizationId)

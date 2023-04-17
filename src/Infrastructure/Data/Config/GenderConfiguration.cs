@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.Infrastructure.Data.Config
 {
-    public class GenderConfiguration : IEntityTypeConfiguration<PersonGender>
+    public class GenderConfiguration : IEntityTypeConfiguration<Gender>
     {
-        public void Configure(EntityTypeBuilder<PersonGender> builder)
+        public void Configure(EntityTypeBuilder<Gender> builder)
         {
             builder.HasKey(ci => ci.Id);
 

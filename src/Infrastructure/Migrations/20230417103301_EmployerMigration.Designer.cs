@@ -4,14 +4,16 @@ using Metcom.CardPay3.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Metcom.CardPay3.Infrastructure.Migrations
 {
-    [DbContext(typeof(PersonContext))]
-    partial class PersonContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(EmployerContext))]
+    [Migration("20230417103301_EmployerMigration")]
+    partial class EmployerMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -19,7 +21,7 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                 .HasAnnotation("ProductVersion", "5.0.17")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.HasSequence("person_group_hilo")
+            modelBuilder.HasSequence("employer_group_hilo")
                 .IncrementsBy(10);
 
             modelBuilder.Entity("Metcom.CardPay3.ApplicationCore.Entities.AccrualAggregate.Accrual", b =>
@@ -67,14 +69,14 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("IdPerson")
+                    b.Property<int>("IdEmployer")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AccrualId");
 
-                    b.HasIndex("IdPerson");
+                    b.HasIndex("IdEmployer");
 
                     b.ToTable("AccrualItems");
                 });
@@ -110,7 +112,7 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                     b.Property<string>("District")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("IdPerson")
+                    b.Property<int>("IdEmployer")
                         .HasColumnType("int");
 
                     b.Property<string>("Locality")
@@ -139,7 +141,7 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdPerson");
+                    b.HasIndex("IdEmployer");
 
                     b.ToTable("Addresses");
                 });
@@ -186,69 +188,7 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                     b.ToTable("DocumentType");
                 });
 
-            modelBuilder.Entity("Metcom.CardPay3.ApplicationCore.Entities.GroupAggregate.Group", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:HiLoSequenceName", "person_group_hilo")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.SequenceHiLo);
-
-                    b.Property<int>("IdOrganization")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdOrganization");
-
-                    b.ToTable("Groups");
-                });
-
-            modelBuilder.Entity("Metcom.CardPay3.ApplicationCore.Entities.GroupAggregate.GroupItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("GroupId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PersonId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GroupId");
-
-                    b.ToTable("GroupItem");
-                });
-
-            modelBuilder.Entity("Metcom.CardPay3.ApplicationCore.Entities.PersonGender", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("GenderName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ShortGenderName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Genders");
-                });
-
-            modelBuilder.Entity("Metcom.CardPay3.ApplicationCore.Entities.PersonItem", b =>
+            modelBuilder.Entity("Metcom.CardPay3.ApplicationCore.Entities.Employer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -311,10 +251,72 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                     b.HasIndex("IdRequisties")
                         .IsUnique();
 
-                    b.ToTable("People");
+                    b.ToTable("Employers");
                 });
 
-            modelBuilder.Entity("Metcom.CardPay3.ApplicationCore.Entities.PersonOrganization", b =>
+            modelBuilder.Entity("Metcom.CardPay3.ApplicationCore.Entities.Gender", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("GenderName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShortGenderName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Genders");
+                });
+
+            modelBuilder.Entity("Metcom.CardPay3.ApplicationCore.Entities.GroupAggregate.Group", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:HiLoSequenceName", "employer_group_hilo")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.SequenceHiLo);
+
+                    b.Property<int>("IdOrganization")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdOrganization");
+
+                    b.ToTable("Groups");
+                });
+
+            modelBuilder.Entity("Metcom.CardPay3.ApplicationCore.Entities.GroupAggregate.GroupItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("EmployerId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("GroupId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GroupId");
+
+                    b.ToTable("GroupItem");
+                });
+
+            modelBuilder.Entity("Metcom.CardPay3.ApplicationCore.Entities.Organization", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -431,7 +433,7 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Metcom.CardPay3.ApplicationCore.Entities.PersonOrganization", "Organization")
+                    b.HasOne("Metcom.CardPay3.ApplicationCore.Entities.Organization", "Organization")
                         .WithMany()
                         .HasForeignKey("IdOrganization")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -448,24 +450,24 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                         .WithMany("Items")
                         .HasForeignKey("AccrualId");
 
-                    b.HasOne("Metcom.CardPay3.ApplicationCore.Entities.PersonItem", "Person")
+                    b.HasOne("Metcom.CardPay3.ApplicationCore.Entities.Employer", "Employer")
                         .WithMany()
-                        .HasForeignKey("IdPerson")
+                        .HasForeignKey("IdEmployer")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Person");
+                    b.Navigation("Employer");
                 });
 
             modelBuilder.Entity("Metcom.CardPay3.ApplicationCore.Entities.AddressAggregate.Address", b =>
                 {
-                    b.HasOne("Metcom.CardPay3.ApplicationCore.Entities.PersonItem", "Person")
+                    b.HasOne("Metcom.CardPay3.ApplicationCore.Entities.Employer", "Employer")
                         .WithMany("Addresses")
-                        .HasForeignKey("IdPerson")
+                        .HasForeignKey("IdEmployer")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Person");
+                    b.Navigation("Employer");
                 });
 
             modelBuilder.Entity("Metcom.CardPay3.ApplicationCore.Entities.DocumentAggregate.DocumentItem", b =>
@@ -479,9 +481,44 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                     b.Navigation("Type");
                 });
 
+            modelBuilder.Entity("Metcom.CardPay3.ApplicationCore.Entities.Employer", b =>
+                {
+                    b.HasOne("Metcom.CardPay3.ApplicationCore.Entities.DocumentAggregate.DocumentItem", "Document")
+                        .WithOne()
+                        .HasForeignKey("Metcom.CardPay3.ApplicationCore.Entities.Employer", "IdDocument")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Metcom.CardPay3.ApplicationCore.Entities.Gender", "Gender")
+                        .WithOne()
+                        .HasForeignKey("Metcom.CardPay3.ApplicationCore.Entities.Employer", "IdGender")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Metcom.CardPay3.ApplicationCore.Entities.Organization", "Organization")
+                        .WithOne()
+                        .HasForeignKey("Metcom.CardPay3.ApplicationCore.Entities.Employer", "IdOrganization")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate.RequisitesItem", "Requisites")
+                        .WithOne()
+                        .HasForeignKey("Metcom.CardPay3.ApplicationCore.Entities.Employer", "IdRequisties")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Document");
+
+                    b.Navigation("Gender");
+
+                    b.Navigation("Organization");
+
+                    b.Navigation("Requisites");
+                });
+
             modelBuilder.Entity("Metcom.CardPay3.ApplicationCore.Entities.GroupAggregate.Group", b =>
                 {
-                    b.HasOne("Metcom.CardPay3.ApplicationCore.Entities.PersonOrganization", "Organization")
+                    b.HasOne("Metcom.CardPay3.ApplicationCore.Entities.Organization", "Organization")
                         .WithMany()
                         .HasForeignKey("IdOrganization")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -495,41 +532,6 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                     b.HasOne("Metcom.CardPay3.ApplicationCore.Entities.GroupAggregate.Group", null)
                         .WithMany("Items")
                         .HasForeignKey("GroupId");
-                });
-
-            modelBuilder.Entity("Metcom.CardPay3.ApplicationCore.Entities.PersonItem", b =>
-                {
-                    b.HasOne("Metcom.CardPay3.ApplicationCore.Entities.DocumentAggregate.DocumentItem", "Document")
-                        .WithOne()
-                        .HasForeignKey("Metcom.CardPay3.ApplicationCore.Entities.PersonItem", "IdDocument")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Metcom.CardPay3.ApplicationCore.Entities.PersonGender", "Gender")
-                        .WithOne()
-                        .HasForeignKey("Metcom.CardPay3.ApplicationCore.Entities.PersonItem", "IdGender")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Metcom.CardPay3.ApplicationCore.Entities.PersonOrganization", "Organization")
-                        .WithOne()
-                        .HasForeignKey("Metcom.CardPay3.ApplicationCore.Entities.PersonItem", "IdOrganization")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate.RequisitesItem", "Requisites")
-                        .WithOne()
-                        .HasForeignKey("Metcom.CardPay3.ApplicationCore.Entities.PersonItem", "IdRequisties")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Document");
-
-                    b.Navigation("Gender");
-
-                    b.Navigation("Organization");
-
-                    b.Navigation("Requisites");
                 });
 
             modelBuilder.Entity("Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate.RequisitesItem", b =>
@@ -564,14 +566,14 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                     b.Navigation("Items");
                 });
 
+            modelBuilder.Entity("Metcom.CardPay3.ApplicationCore.Entities.Employer", b =>
+                {
+                    b.Navigation("Addresses");
+                });
+
             modelBuilder.Entity("Metcom.CardPay3.ApplicationCore.Entities.GroupAggregate.Group", b =>
                 {
                     b.Navigation("Items");
-                });
-
-            modelBuilder.Entity("Metcom.CardPay3.ApplicationCore.Entities.PersonItem", b =>
-                {
-                    b.Navigation("Addresses");
                 });
 #pragma warning restore 612, 618
         }

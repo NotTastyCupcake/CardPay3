@@ -8,8 +8,8 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.AddressAggregate
 {
     public class Address : BaseEntity
     {
-        public int IdPerson { get; set; }
-        public PersonItem Person { get; set; }
+        public int IdEmployer { get; set; }
+        public Employer Employer { get; set; }
 
         #region Поля
         public string Country { get; private set; }

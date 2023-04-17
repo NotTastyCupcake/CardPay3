@@ -9,34 +9,34 @@ using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.Infrastructure.Data.Config
 {
-    public class PersonConfiguration : IEntityTypeConfiguration<PersonItem>
+    public class EmployerConfiguration : IEntityTypeConfiguration<Employer>
     {
-        public void Configure(EntityTypeBuilder<PersonItem> builder)
+        public void Configure(EntityTypeBuilder<Employer> builder)
         {
 
             builder.HasOne(ci => ci.Document)
                 .WithOne()
-                .HasForeignKey<PersonItem>(ci => ci.IdDocument)
+                .HasForeignKey<Employer>(ci => ci.IdDocument)
                 .IsRequired(true);
 
             builder.HasMany(ci => ci.Addresses)
-                .WithOne(ci => ci.Person)
-                .HasForeignKey(ci => ci.IdPerson)
+                .WithOne(ci => ci.Employer)
+                .HasForeignKey(ci => ci.IdEmployer)
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(ci => ci.Gender)
                 .WithOne()
-                .HasForeignKey<PersonItem>(ci => ci.IdGender)
+                .HasForeignKey<Employer>(ci => ci.IdGender)
                 .IsRequired(true);
 
             builder.HasOne(ci => ci.Organization)
                 .WithOne()
-                .HasForeignKey<PersonItem>(ci => ci.IdOrganization)
+                .HasForeignKey<Employer>(ci => ci.IdOrganization)
                 .IsRequired(true);
 
             builder.HasOne(ci => ci.Requisites)
                 .WithOne()
-                .HasForeignKey<PersonItem>(ci => ci.IdRequisties)
+                .HasForeignKey<Employer>(ci => ci.IdRequisties)
                 .IsRequired(true);
 
             builder.Property(ci => ci.LastName)

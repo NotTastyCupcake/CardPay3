@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Metcom.CardPay3.Infrastructure.Migrations.AppIdentityDb
 {
-    public partial class AuthMigration : Migration
+    public partial class Auth : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

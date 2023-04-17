@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.WebApplication.ViewModels
 {
-    public class PersonItemViewModel
+    public class EmployerItemViewModel
     {
         public int Id { get; set; }
         public string Name { get; set; }

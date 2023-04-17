@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.Infrastructure.Data.Config
 {
-    public class OrganizationConfiguration : IEntityTypeConfiguration<PersonOrganization>
+    public class OrganizationConfiguration : IEntityTypeConfiguration<Organization>
     {
-        public void Configure(EntityTypeBuilder<PersonOrganization> builder)
+        public void Configure(EntityTypeBuilder<Organization> builder)
         {
             builder.HasKey(oi => oi.Id);
 

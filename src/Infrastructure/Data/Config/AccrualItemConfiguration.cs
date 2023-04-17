@@ -20,9 +20,9 @@ namespace Metcom.CardPay3.Infrastructure.Data.Config
             builder.Property(bi => bi.Date)
                 .IsRequired(true);
 
-            builder.HasOne(ci => ci.Person)
+            builder.HasOne(ci => ci.Employer)
                 .WithMany()
-                .HasForeignKey(ci => ci.IdPerson);
+                .HasForeignKey(ci => ci.IdEmployer);
         }
     }
 }

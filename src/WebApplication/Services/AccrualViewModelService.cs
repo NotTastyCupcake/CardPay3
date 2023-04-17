@@ -17,12 +17,12 @@ namespace Metcom.CardPay3.WebApplication.Services
     public class AccrualViewModelService : IAccrualViewModelService
     {
         private readonly IRepository<Accrual> _accrualRepository;
-        private readonly IRepository<PersonItem> _itemRepository;
+        private readonly IRepository<Employer> _itemRepository;
         private readonly UserManager<ApplicationUser> _userManager;
 
         
         public AccrualViewModelService(IRepository<Accrual> accrualRepository, 
-            IRepository<PersonItem> itemRepository, UserManager<ApplicationUser> userManager)
+            IRepository<Employer> itemRepository, UserManager<ApplicationUser> userManager)
         {
             _accrualRepository = accrualRepository;
             _itemRepository = itemRepository;
@@ -80,19 +80,19 @@ namespace Metcom.CardPay3.WebApplication.Services
 
         private async Task<List<AccrualItemViewModel>> GetAsyncAccrualItems(IReadOnlyCollection<AccrualItem> accrualItems)
         {
-            var personItemsSpecification = new PersonItemsSpecification(accrualItems.Select(b => b.IdPerson).ToArray());
-            var personItems = await _itemRepository.ListAsync(personItemsSpecification);
+            var employerItemsSpecification = new EmployersSpecification(accrualItems.Select(b => b.IdEmployer).ToArray());
+            var employerItems = await _itemRepository.ListAsync(employerItemsSpecification);
 
             var items = accrualItems.Select(accrualItem =>
             {
-                var personItem = personItems.First(c => c.Id == accrualItem.IdPerson);
+                var employerItem = employerItems.First(c => c.Id == accrualItem.IdEmployer);
 
                 var accrualItemViewModel = new AccrualItemViewModel
                 {
                     Id = accrualItem.Id,
-                    FullName = personItem.FullName,
+                    FullName = employerItem.FullName,
                     Amouth = accrualItem.Amount,
-                    PersonId = personItem.Id,
+                    EmployerId = employerItem.Id,
                     Date = accrualItem.Date
                 };
                 return accrualItemViewModel;
