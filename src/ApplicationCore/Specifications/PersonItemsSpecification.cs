@@ -14,5 +14,10 @@ namespace Metcom.CardPay3.ApplicationCore.Specifications
         {
             Query.Where(c => ids.Contains(c.Id));
         }
+
+        public PersonItemsSpecification(int? organizationId)
+        {
+            Query.Where(p => (!organizationId.HasValue || p.IdOrganization == organizationId));
+        }
     }
 }
