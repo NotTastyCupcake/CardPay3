@@ -72,8 +72,4 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.AccrualAggregate
             AccrualDay = accrualDay;
         }
     }
-
-    public class Class1
-    {
-    }
 }
