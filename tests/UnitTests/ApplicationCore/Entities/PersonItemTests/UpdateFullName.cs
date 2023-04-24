@@ -17,7 +17,7 @@ namespace Metcom.CardPay3.UnitTests.ApplicationCore.Entities.EmployerItemTests
         private string _validJobPhoneNumber = "1111";
         private string _validPosition = "TestPosition";
         private string _validDepartmentNum = "TestDepartamentNum";
-        private int _validIdRequest = 1;
+        private int _validIdOrganization = 1;
 
         [SetUp]
         public void UpdateFullNameSetUp()
@@ -25,7 +25,7 @@ namespace Metcom.CardPay3.UnitTests.ApplicationCore.Entities.EmployerItemTests
             _testItem = new Employer(
                 _validLastName, _validFirstName, _validMiddleName,
                 _validPhoneNumber, _validJobPhoneNumber, _validPosition, _validDepartmentNum,
-                _validGenderId, _validDocumentId, _validIdRequest);
+                _validGenderId, _validDocumentId, _validIdOrganization);
         }
 
         [TestCase("", "", "")]
