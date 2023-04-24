@@ -14,7 +14,7 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
     public class Employer : BaseEntity
     {
 
-        public Employer(string lastName, string firstName, string middleName, string phoneNum, string jobPhoneNum, string position, string departmentNum, int genderId, int documentId, int requestId)
+        public Employer(string lastName, string firstName, string middleName, string phoneNum, string jobPhoneNum, string position, string departmentNum, int genderId, int documentId, int organizationId)
         {
             LastName = lastName;
             FirstName = firstName;
@@ -25,7 +25,7 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
             DepartmentNum = departmentNum;
             IdGender = genderId;
             IdDocument = documentId;
-            IdRequisties = requestId;
+            IdOrganization = organizationId;
         }
         public Employer()
         {
@@ -50,24 +50,19 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
         #region Ссылка на объект
 #nullable enable
         public int IdGender { get; private set; }
-        public Gender? Gender { get; private set; }
+        public Gender Gender { get; private set; }
 
         /// <summary>
         /// Реквизиты документов человека
         /// </summary>
-        public int IdRequisties { get; set; }
-        /// <summary>
-        /// Реквизиты документов человека
-        /// </summary>
-        public RequisitesItem? Requisites { get; set; }
+        public ICollection<RequisitesItem> Requisites { get; set; }
 
-        public int IdDocument { get; set; }
+        public int? IdDocument { get; set; }
         public DocumentItem? Document { get; set; }
 
-        public int IdAddress { get; set; }
-        public Address[]? Addresses { get; set; }
+        public ICollection<Address> Addresses { get; set; }
 
-        public int IdOrganization { get; set; }
+        public int? IdOrganization { get; set; }
         public Organization? Organization { get; set; }
         #nullable disable
         #endregion

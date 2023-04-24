@@ -8,8 +8,8 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.AddressAggregate
 {
     public class Address : BaseEntity
     {
-        public int IdEmployer { get; set; }
-        public Employer Employer { get; set; }
+        public int? IdEmployer { get; private set; }
+        public Employer? Employer { get; private set; }
 
         #region Поля
         public string Country { get; private set; }
@@ -43,7 +43,7 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.AddressAggregate
         public int NumApartment { get; private set; } 
         #endregion
 
-        public Address(string country, int postcode, string state, string district,string city,string locality,string streetType, string street,int numHome,int numCase, int numApartment)
+        public Address(string country, int postcode, string state, string district,string city,string locality,string streetType, string street,int numHome,int numCase, int numApartment, int idEmployer)
         {
             Country = country;
             Postcode = postcode;
@@ -56,6 +56,7 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.AddressAggregate
             NumHome = numHome;
             NumCase = numCase;
             NumApartment = numApartment;
+            IdEmployer = idEmployer;
         }
 
         public Address()
