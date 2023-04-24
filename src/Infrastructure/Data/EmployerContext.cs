@@ -25,8 +25,15 @@ namespace Metcom.CardPay3.Infrastructure.Data
         public DbSet<Group> Groups { get; set; }
         public DbSet<Organization> Organizations { get; set; }
         public DbSet<Gender> Genders { get; set; }
+
         public DbSet<DocumentItem> Documents { get; set; }
+        public DbSet<DocumentType> DocumentTypes { get; set; }
+
+        public DbSet<BankDivision> Banks { get; set; }
+        public DbSet<BankCurrency> Currencies { get; set; }
+        public DbSet<BankCardType> CardTypes { get; set; }
         public DbSet<RequisitesItem> Requisites { get; set; }
+
         public DbSet<Address> Addresses { get; set; }
 
         public DbSet<Accrual> Accruals { get; set; }

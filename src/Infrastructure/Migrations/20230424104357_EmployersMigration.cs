@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Metcom.CardPay3.Infrastructure.Migrations
 {
-    public partial class EmployerMigration : Migration
+    public partial class EmployersMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,33 +12,7 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                 incrementBy: 10);
 
             migrationBuilder.CreateTable(
-                name: "BankCardType",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    NameType = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BankCardType", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "BankCurrency",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    NameCurrency = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BankCurrency", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "BankDivision",
+                name: "Banks",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -47,11 +21,37 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BankDivision", x => x.Id);
+                    table.PrimaryKey("PK_Banks", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "DocumentType",
+                name: "CardTypes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NameType = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CardTypes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Currencies",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NameCurrency = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Currencies", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DocumentTypes",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -60,7 +60,7 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DocumentType", x => x.Id);
+                    table.PrimaryKey("PK_DocumentTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -116,28 +116,28 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                     LatinFirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LatinLastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CardNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AccountNumber = table.Column<int>(type: "int", nullable: false),
+                    AccountNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IdCardType = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Requisites", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Requisites_BankCardType_IdCardType",
-                        column: x => x.IdCardType,
-                        principalTable: "BankCardType",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Requisites_BankCurrency_IdCurrency",
-                        column: x => x.IdCurrency,
-                        principalTable: "BankCurrency",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Requisites_BankDivision_IdDivision",
+                        name: "FK_Requisites_Banks_IdDivision",
                         column: x => x.IdDivision,
-                        principalTable: "BankDivision",
+                        principalTable: "Banks",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Requisites_CardTypes_IdCardType",
+                        column: x => x.IdCardType,
+                        principalTable: "CardTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Requisites_Currencies_IdCurrency",
+                        column: x => x.IdCurrency,
+                        principalTable: "Currencies",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -157,9 +157,9 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Documents", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Documents_DocumentType_IdType",
+                        name: "FK_Documents_DocumentTypes_IdType",
                         column: x => x.IdType,
-                        principalTable: "DocumentType",
+                        principalTable: "DocumentTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -227,7 +227,7 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                     IdGender = table.Column<int>(type: "int", nullable: false),
                     IdRequisties = table.Column<int>(type: "int", nullable: false),
                     IdDocument = table.Column<int>(type: "int", nullable: false),
-                    IdAddress = table.Column<int>(type: "int", nullable: false),
+                    IdAddress = table.Column<int>(type: "int", nullable: true),
                     IdOrganization = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -313,7 +313,7 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    IdEmployer = table.Column<int>(type: "int", nullable: false),
+                    IdEmployer = table.Column<int>(type: "int", nullable: true),
                     Country = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Postcode = table.Column<int>(type: "int", nullable: false),
                     State = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -457,16 +457,16 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                 name: "Organizations");
 
             migrationBuilder.DropTable(
-                name: "DocumentType");
+                name: "DocumentTypes");
 
             migrationBuilder.DropTable(
-                name: "BankCardType");
+                name: "Banks");
 
             migrationBuilder.DropTable(
-                name: "BankCurrency");
+                name: "CardTypes");
 
             migrationBuilder.DropTable(
-                name: "BankDivision");
+                name: "Currencies");
 
             migrationBuilder.DropSequence(
                 name: "employer_group_hilo");

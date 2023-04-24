@@ -110,7 +110,7 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                     b.Property<string>("District")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("IdEmployer")
+                    b.Property<int?>("IdEmployer")
                         .HasColumnType("int");
 
                     b.Property<string>("Locality")
@@ -183,7 +183,7 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DocumentType");
+                    b.ToTable("DocumentTypes");
                 });
 
             modelBuilder.Entity("Metcom.CardPay3.ApplicationCore.Entities.Employer", b =>
@@ -201,19 +201,22 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("IdAddress")
+                    b.Property<int?>("IdAddress")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdDocument")
+                    b.Property<int?>("IdDocument")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int>("IdGender")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdOrganization")
+                    b.Property<int?>("IdOrganization")
+                        .IsRequired()
                         .HasColumnType("int");
 
-                    b.Property<int>("IdRequisties")
+                    b.Property<int?>("IdRequisties")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("JobPhoneNumber")
@@ -342,7 +345,7 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BankCardType");
+                    b.ToTable("CardTypes");
                 });
 
             modelBuilder.Entity("Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate.BankCurrency", b =>
@@ -357,7 +360,7 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BankCurrency");
+                    b.ToTable("Currencies");
                 });
 
             modelBuilder.Entity("Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate.BankDivision", b =>
@@ -372,7 +375,7 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BankDivision");
+                    b.ToTable("Banks");
                 });
 
             modelBuilder.Entity("Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate.RequisitesItem", b =>
@@ -382,8 +385,8 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AccountNumber")
-                        .HasColumnType("int");
+                    b.Property<string>("AccountNumber")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CardNumber")
                         .HasColumnType("nvarchar(max)");
@@ -462,8 +465,7 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                     b.HasOne("Metcom.CardPay3.ApplicationCore.Entities.Employer", "Employer")
                         .WithMany("Addresses")
                         .HasForeignKey("IdEmployer")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Employer");
                 });
