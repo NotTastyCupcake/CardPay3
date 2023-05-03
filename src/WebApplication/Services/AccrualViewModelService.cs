@@ -41,7 +41,7 @@ namespace Metcom.CardPay3.WebApplication.Services
             if(accrual == null)
             {
                 return await CreateAsyncAccrualForOrganization(user.IdOrganization, 
-                    DateTime.Now.Day, 
+                    DateTime.Now.AddMonths(1), 
                     1, 
                     1);
             }
@@ -49,7 +49,7 @@ namespace Metcom.CardPay3.WebApplication.Services
         }
 
         private async Task<AccrualViewModel> CreateAsyncAccrualForOrganization(int organizationId,
-            int accrualDay,
+            DateTime accrualDay,
             int accrualType,
             int accrualOperationType)
         {

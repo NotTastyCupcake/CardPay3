@@ -19,7 +19,7 @@
                     <h5 class="card-title">Список сотрудников</h5>
                     <p class="card-text">Управления списком сотрудников организации</p>
                     <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                    <a asp-area="Employe" asp-page="/Employe/Index" class="btn btn-primary">Переход</a>
+                    <a asp-page="/Employe/Index" class="btn btn-primary">Переход</a>
                 </div>
             </div>
             <div class="card">
@@ -28,8 +28,7 @@
                     <h5 class="card-title">Платежи</h5>
                     <p class="card-text">Управление опирациями платежей организации</p>
                     <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                    <a asp-area="Accrual" asp-page="/Accrual/Index" class="btn btn-primary">Переход</a>
-                    @await Component.InvokeAsync("Accrual", User.Identity.Name)
+                    <a asp-page="/Accrual/Index" class="btn btn-primary">Переход</a>
                 </div>
             </div>
             <div class="card">

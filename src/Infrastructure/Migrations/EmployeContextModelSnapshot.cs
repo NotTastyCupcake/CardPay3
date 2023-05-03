@@ -29,9 +29,9 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AccrualDay")
+                    b.Property<DateTime>("AccrualDay")
                         .HasMaxLength(3)
-                        .HasColumnType("int");
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("IdAccruaType")
                         .HasColumnType("int");
@@ -111,7 +111,6 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("IdEmployer")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Locality")
@@ -461,8 +460,7 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                     b.HasOne("Metcom.CardPay3.ApplicationCore.Entities.Employe", "Employer")
                         .WithMany("Addresses")
                         .HasForeignKey("IdEmployer")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Employer");
                 });

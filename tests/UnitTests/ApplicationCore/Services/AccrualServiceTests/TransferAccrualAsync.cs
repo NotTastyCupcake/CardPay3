@@ -13,7 +13,7 @@ namespace Metcom.CardPay3.UnitTests.ApplicationCore.Service.AccrualServiceTests
     public class TransferAccrualAsync
     {
         private readonly int _organizationId = 1;
-        private readonly int _accrualDay = 15;
+        private readonly DateTime _accrualDay = DateTime.Now;
         private readonly int _idAccrualType = 1;
         private readonly int _idOperationType = 1;
 

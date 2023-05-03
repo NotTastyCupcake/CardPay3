@@ -11,7 +11,7 @@ namespace Metcom.CardPay3.WebApplication.ViewModels
         public int Id { get; set; }
         public List<AccrualItemViewModel> Items { get; set; } = new List<AccrualItemViewModel>();
         public int OrganizationId { get; set; }
-        public int AccrualDay { get; set; }
+        public DateTime AccrualDay { get; set; }
         public int IdAccrualType { get; set; }
         public int IdOperationType { get; set; }
 

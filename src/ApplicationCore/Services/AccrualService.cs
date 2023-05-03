@@ -21,7 +21,7 @@ namespace Metcom.CardPay3.ApplicationCore.Services
             _logger = logger;
         }
 
-        public async Task<Accrual> AddItemToAccrual(int idOrganization ,int employerId, int accrualDay, decimal amount, int idAccrualType, int idOperationType)
+        public async Task<Accrual> AddItemToAccrual(int idOrganization ,int employerId, DateTime accrualDay, decimal amount, int idAccrualType, int idOperationType)
         {
 
             var accrualSpec = new AccrualSpecification(idOrganization: idOrganization.ToString());

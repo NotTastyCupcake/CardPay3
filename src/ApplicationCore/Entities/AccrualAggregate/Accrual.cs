@@ -26,15 +26,15 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.AccrualAggregate
         public OperationType OperationType { get; set; }
         #endregion
 
-        public int AccrualDay { get; private set; }
+        public DateTime AccrualDay { get; private set; }
 
         public decimal TotalAmount => _items.Sum(i => i.Amount);
 
 
-        public Accrual(int idOrganization, int accrualDay, int idAccrualType, int idOperationType)
+        public Accrual(int idOrganization, DateTime accrualDay, int idAccrualType, int idOperationType)
         {
             IdOrganization = idOrganization;
-            SetAccrualDay(accrualDay);
+            AccrualDay = accrualDay;
             IdAccruaType = idAccrualType;
             IdOperationType = idOperationType;
         }
@@ -63,13 +63,6 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.AccrualAggregate
             Guard.Against.OutOfRange(organizationId, nameof(organizationId), 1, int.MaxValue);
 
             IdOrganization = organizationId;
-        }
-
-        public void SetAccrualDay(int accrualDay)
-        {
-            Guard.Against.OutOfRange(accrualDay, nameof(accrualDay), 1, 31);
-
-            AccrualDay = accrualDay;
         }
     }
 }

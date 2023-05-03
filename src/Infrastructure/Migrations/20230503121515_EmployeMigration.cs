@@ -134,7 +134,7 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                     IdOrganization = table.Column<int>(type: "int", nullable: false),
                     IdAccruaType = table.Column<int>(type: "int", nullable: false),
                     IdOperationType = table.Column<int>(type: "int", nullable: false),
-                    AccrualDay = table.Column<int>(type: "int", maxLength: 3, nullable: false)
+                    AccrualDay = table.Column<DateTime>(type: "datetime2", maxLength: 3, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -266,7 +266,7 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    IdEmployer = table.Column<int>(type: "int", nullable: false),
+                    IdEmployer = table.Column<int>(type: "int", nullable: true),
                     Country = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Postcode = table.Column<int>(type: "int", nullable: false),
                     State = table.Column<string>(type: "nvarchar(max)", nullable: true),
