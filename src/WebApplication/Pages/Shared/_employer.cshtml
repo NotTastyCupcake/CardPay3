@@ -1,0 +1,13 @@
+﻿@model EmployerItemViewModel
+
+<form asp-page="/Employer/Index" method="post">
+    <div class="esh-catalog-name">
+        <span>@Model.Name</span>
+    </div>
+    <div class="esh-catalog-price">
+        <span>@Model.Organization</span>
+    </div>
+    <input type="hidden" asp-for="@Model.Id" name="id" />
+    <input type="hidden" asp-for="@Model.Name" name="name" />
+    <input type="hidden" asp-for="@Model.Organization" name="organization" />
+</form>
