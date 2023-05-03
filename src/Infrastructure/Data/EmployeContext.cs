@@ -9,19 +9,19 @@ using System.Reflection;
 
 namespace Metcom.CardPay3.Infrastructure.Data
 {
-    public class EmployerContext : DbContext
+    public class EmployeContext : DbContext
     {
-        public EmployerContext(DbContextOptions<EmployerContext> options) 
+        public EmployeContext(DbContextOptions<EmployeContext> options) 
             : base(options)
         {
         }
 
-        public EmployerContext()
+        public EmployeContext()
         {
             Database.EnsureCreated();
         }
 
-        public DbSet<Employer> Employers { get; set; }
+        public DbSet<Employe> Employers { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<Organization> Organizations { get; set; }
         public DbSet<Gender> Genders { get; set; }

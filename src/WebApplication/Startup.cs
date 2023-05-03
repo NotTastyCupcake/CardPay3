@@ -46,7 +46,7 @@ namespace Metcom.CardPay3.WebApplication
                 options.UseSqlServer(
                     Configuration.GetConnectionString("IdentityConnection")));
 
-            services.AddDbContext<EmployerContext>(options =>
+            services.AddDbContext<EmployeContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("MainConnection")));
         }

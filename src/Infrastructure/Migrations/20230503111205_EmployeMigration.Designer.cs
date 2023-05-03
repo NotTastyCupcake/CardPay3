@@ -9,9 +9,9 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Metcom.CardPay3.Infrastructure.Migrations
 {
-    [DbContext(typeof(EmployerContext))]
-    [Migration("20230424104357_EmployersMigration")]
-    partial class EmployersMigration
+    [DbContext(typeof(EmployeContext))]
+    [Migration("20230503111205_EmployeMigration")]
+    partial class EmployeMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -113,6 +113,7 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("IdEmployer")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Locality")
@@ -188,7 +189,7 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                     b.ToTable("DocumentTypes");
                 });
 
-            modelBuilder.Entity("Metcom.CardPay3.ApplicationCore.Entities.Employer", b =>
+            modelBuilder.Entity("Metcom.CardPay3.ApplicationCore.Entities.Employe", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -203,9 +204,6 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int?>("IdAddress")
-                        .HasColumnType("int");
-
                     b.Property<int?>("IdDocument")
                         .IsRequired()
                         .HasColumnType("int");
@@ -214,11 +212,6 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<int?>("IdOrganization")
-                        .IsRequired()
-                        .HasColumnType("int");
-
-                    b.Property<int?>("IdRequisties")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("JobPhoneNumber")
@@ -249,10 +242,8 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                         .IsUnique();
 
                     b.HasIndex("IdOrganization")
-                        .IsUnique();
-
-                    b.HasIndex("IdRequisties")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[IdOrganization] IS NOT NULL");
 
                     b.ToTable("Employers");
                 });
@@ -405,6 +396,9 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                     b.Property<int>("IdDivision")
                         .HasColumnType("int");
 
+                    b.Property<int?>("IdEmployer")
+                        .HasColumnType("int");
+
                     b.Property<string>("InsuranceNumber")
                         .HasColumnType("nvarchar(max)");
 
@@ -424,6 +418,8 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
 
                     b.HasIndex("IdDivision")
                         .IsUnique();
+
+                    b.HasIndex("IdEmployer");
 
                     b.ToTable("Requisites");
                 });
@@ -453,7 +449,7 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                         .WithMany("Items")
                         .HasForeignKey("AccrualId");
 
-                    b.HasOne("Metcom.CardPay3.ApplicationCore.Entities.Employer", "Employer")
+                    b.HasOne("Metcom.CardPay3.ApplicationCore.Entities.Employe", "Employer")
                         .WithMany()
                         .HasForeignKey("IdEmployer")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -464,10 +460,11 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
 
             modelBuilder.Entity("Metcom.CardPay3.ApplicationCore.Entities.AddressAggregate.Address", b =>
                 {
-                    b.HasOne("Metcom.CardPay3.ApplicationCore.Entities.Employer", "Employer")
+                    b.HasOne("Metcom.CardPay3.ApplicationCore.Entities.Employe", "Employer")
                         .WithMany("Addresses")
                         .HasForeignKey("IdEmployer")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Employer");
                 });
@@ -483,39 +480,29 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                     b.Navigation("Type");
                 });
 
-            modelBuilder.Entity("Metcom.CardPay3.ApplicationCore.Entities.Employer", b =>
+            modelBuilder.Entity("Metcom.CardPay3.ApplicationCore.Entities.Employe", b =>
                 {
                     b.HasOne("Metcom.CardPay3.ApplicationCore.Entities.DocumentAggregate.DocumentItem", "Document")
                         .WithOne()
-                        .HasForeignKey("Metcom.CardPay3.ApplicationCore.Entities.Employer", "IdDocument")
+                        .HasForeignKey("Metcom.CardPay3.ApplicationCore.Entities.Employe", "IdDocument")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Metcom.CardPay3.ApplicationCore.Entities.Gender", "Gender")
                         .WithOne()
-                        .HasForeignKey("Metcom.CardPay3.ApplicationCore.Entities.Employer", "IdGender")
+                        .HasForeignKey("Metcom.CardPay3.ApplicationCore.Entities.Employe", "IdGender")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Metcom.CardPay3.ApplicationCore.Entities.Organization", "Organization")
                         .WithOne()
-                        .HasForeignKey("Metcom.CardPay3.ApplicationCore.Entities.Employer", "IdOrganization")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate.RequisitesItem", "Requisites")
-                        .WithOne()
-                        .HasForeignKey("Metcom.CardPay3.ApplicationCore.Entities.Employer", "IdRequisties")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Metcom.CardPay3.ApplicationCore.Entities.Employe", "IdOrganization");
 
                     b.Navigation("Document");
 
                     b.Navigation("Gender");
 
                     b.Navigation("Organization");
-
-                    b.Navigation("Requisites");
                 });
 
             modelBuilder.Entity("Metcom.CardPay3.ApplicationCore.Entities.GroupAggregate.Group", b =>
@@ -556,11 +543,18 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Metcom.CardPay3.ApplicationCore.Entities.Employe", "Employer")
+                        .WithMany("Requisites")
+                        .HasForeignKey("IdEmployer")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.Navigation("CardType");
 
                     b.Navigation("Currency");
 
                     b.Navigation("Division");
+
+                    b.Navigation("Employer");
                 });
 
             modelBuilder.Entity("Metcom.CardPay3.ApplicationCore.Entities.AccrualAggregate.Accrual", b =>
@@ -568,9 +562,11 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                     b.Navigation("Items");
                 });
 
-            modelBuilder.Entity("Metcom.CardPay3.ApplicationCore.Entities.Employer", b =>
+            modelBuilder.Entity("Metcom.CardPay3.ApplicationCore.Entities.Employe", b =>
                 {
                     b.Navigation("Addresses");
+
+                    b.Navigation("Requisites");
                 });
 
             modelBuilder.Entity("Metcom.CardPay3.ApplicationCore.Entities.GroupAggregate.Group", b =>

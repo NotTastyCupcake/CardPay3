@@ -11,10 +11,10 @@ using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.ApplicationCore.Entities
 {
-    public class Employer : BaseEntity
+    public class Employe : BaseEntity
     {
 
-        public Employer(string lastName, string firstName, string middleName, string phoneNum, string jobPhoneNum, string position, string departmentNum, int genderId, int documentId, int organizationId)
+        public Employe(string lastName, string firstName, string middleName, string phoneNum, string jobPhoneNum, string position, string departmentNum, int genderId, int documentId, int organizationId)
         {
             LastName = lastName;
             FirstName = firstName;
@@ -27,7 +27,7 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
             IdDocument = documentId;
             IdOrganization = organizationId;
         }
-        public Employer()
+        public Employe()
         {
             // required by EF
         }

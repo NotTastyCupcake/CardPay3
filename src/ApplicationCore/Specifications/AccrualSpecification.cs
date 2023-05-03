@@ -13,14 +13,14 @@ namespace Metcom.CardPay3.ApplicationCore.Specifications
         public AccrualSpecification(int idAccrual)
         {
             Query
-                .Where(b => b.Id == idAccrual)
-                .Include(b => b.Items);
+                .Where(a => a.Id == idAccrual)
+                .Include(a => a.Items);
         }
 
-        public AccrualSpecification(int? idOrganization = null, int? accrualDay = null, decimal? totalAmount = null)
+        public AccrualSpecification(string idOrganization)
         {
             Query
-                .Where(b => b.AccrualDay == accrualDay || b.TotalAmount == totalAmount || b.IdOrganization == idOrganization)
+                .Where(a => a.IdOrganization == int.Parse(idOrganization))
                 .Include(b => b.Items);
         }
     }

@@ -6,7 +6,7 @@ namespace Metcom.CardPay3.UnitTests.ApplicationCore.Entities.EmployerItemTests
 {
     public class UpdateFullName
     {
-        private Employer _testItem;
+        private Employe _testItem;
 
         private string _validLastName = "TestLastName";
         private string _validFirstName = "TestFirstName";
@@ -22,7 +22,7 @@ namespace Metcom.CardPay3.UnitTests.ApplicationCore.Entities.EmployerItemTests
         [SetUp]
         public void UpdateFullNameSetUp()
         {
-            _testItem = new Employer(
+            _testItem = new Employe(
                 _validLastName, _validFirstName, _validMiddleName,
                 _validPhoneNumber, _validJobPhoneNumber, _validPosition, _validDepartmentNum,
                 _validGenderId, _validDocumentId, _validIdOrganization);

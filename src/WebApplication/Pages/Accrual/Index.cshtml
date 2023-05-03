@@ -1,17 +1,17 @@
-﻿@page
+﻿@page "{handler?}"
 @model Metcom.CardPay3.WebApplication.Pages.Accrual.IndexModel
 @{
     //TODO: Создать форму
-    ViewData["Title"] = "Accrual";
+    ViewData["Title"] = "Платеж";
 }
 <section>
     <div class="container">
 
     </div>
 </section>
- 
+
 <div class="container">
-    @if(Model.AccrualModel.Items.Any())
+    @if (Model.AccrualModel.Items.Any())
     {
         <form method="post">
             <article class="row">
@@ -23,7 +23,7 @@
                 <section class="col-xs-2">TEST4</section>
             </article>
             <div class="row">
-                @for(int i = 0; i < Model.AccrualModel.Items.Count; i++)
+                @for (int i = 0; i < Model.AccrualModel.Items.Count; i++)
                 {
                     var item = Model.AccrualModel.Items[i];
                     <article class="row">

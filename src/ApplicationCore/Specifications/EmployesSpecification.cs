@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.ApplicationCore.Specifications
 {
-    public sealed class EmployersSpecification : Specification<Employer>, ISingleResultSpecification<Employer>
+    public sealed class EmployesSpecification : Specification<Employe>, ISingleResultSpecification<Employe>
     {
-        public EmployersSpecification(params int[] ids)
+        public EmployesSpecification(params int[] ids)
         {
             Query.Where(c => ids.Contains(c.Id));
         }
 
-        public EmployersSpecification(int? organizationId)
+        public EmployesSpecification(int? organizationId)
         {
             Query.Where(p => (!organizationId.HasValue || p.IdOrganization == organizationId));
         }

@@ -16,12 +16,12 @@ namespace Metcom.CardPay3.WebApplication.Services
     public class EmployerViewModelService : IEmployerViewModelService
     {
         private readonly ILogger<EmployerViewModelService> _logger;
-        private readonly IRepository<Employer> _itemRepository;
+        private readonly IRepository<Employe> _itemRepository;
         private readonly IRepository<Organization> _organizationRepository;
 
         public EmployerViewModelService(
             ILoggerFactory loggerFactory,
-            IRepository<Employer> itemRepository,
+            IRepository<Employe> itemRepository,
             IRepository<Organization> organizationRepository)
         {
             _logger = loggerFactory.CreateLogger<EmployerViewModelService>();
@@ -33,7 +33,7 @@ namespace Metcom.CardPay3.WebApplication.Services
         {
             _logger.LogInformation("GetEmployers called.");
 
-            var filterSpecification = new EmployersSpecification(organizationId);
+            var filterSpecification = new EmployesSpecification(organizationId);
             var filterPaginatedSpecification = new EmployerFilterPaginatedSpecification(pageIndex, itemsPage, organizationId);
 
             var itemsOnPage = await _itemRepository.ListAsync(filterPaginatedSpecification);

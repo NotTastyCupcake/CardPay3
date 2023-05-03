@@ -13,9 +13,9 @@ using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.Infrastructure.Data
 {
-    public class EmployerContextSeed
+    public class EmployeContextSeed
     {
-        public async static Task SeedAsync(EmployerContext employerContext, 
+        public async static Task SeedAsync(EmployeContext employerContext, 
             ILoggerFactory loggerFactory)
         {
             try
@@ -59,26 +59,11 @@ namespace Metcom.CardPay3.Infrastructure.Data
 
                     await employerContext.SaveChangesAsync();
                 }
+
                 if (!employerContext.CardTypes.Any())
                 {
                     employerContext.CardTypes.AddRange(
                         GetPreconfiguredBankCardTypes());
-
-                    await employerContext.SaveChangesAsync();
-                }
-
-                if (!employerContext.Requisites.Any())
-                {
-                    employerContext.Requisites.AddRange(
-                        GetPreconfiguredRequisites());
-
-                    await employerContext.SaveChangesAsync();
-                }
-
-                if (!employerContext.Addresses.Any())
-                {
-                    employerContext.Addresses.AddRange(
-                        GetPreconfiguredAddresses());
 
                     await employerContext.SaveChangesAsync();
                 }
@@ -115,10 +100,26 @@ namespace Metcom.CardPay3.Infrastructure.Data
 
                     await employerContext.SaveChangesAsync();
                 }
+
+                if (!employerContext.Requisites.Any())
+                {
+                    employerContext.Requisites.AddRange(
+                        GetPreconfiguredRequisites());
+
+                    await employerContext.SaveChangesAsync();
+                }
+
+                if (!employerContext.Addresses.Any())
+                {
+                    employerContext.Addresses.AddRange(
+                        GetPreconfiguredAddresses());
+
+                    await employerContext.SaveChangesAsync();
+                }
             }
             catch (Exception ex)
             {
-                var log = loggerFactory.CreateLogger<EmployerContextSeed>();
+                var log = loggerFactory.CreateLogger<EmployeContextSeed>();
                 log.LogError(ex.Message);
                 await SeedAsync(employerContext, loggerFactory);
             }
@@ -219,11 +220,11 @@ namespace Metcom.CardPay3.Infrastructure.Data
             };
         }
 
-        private static IEnumerable<Employer> GetPreconfiguredEmployers()
+        private static IEnumerable<Employe> GetPreconfiguredEmployers()
         {
-            return new List<Employer>()
+            return new List<Employe>()
             {
-                new Employer("Иванов", "Иван", "Иванович", "TEST_PHONE", "TEST_JOB", "TEST_POSITION", "TEST_DEPATMENT_NUM", 1, 1, 1)
+                new Employe("Иванов", "Иван", "Иванович", "TEST_PHONE", "TEST_JOB", "TEST_POSITION", "TEST_DEPATMENT_NUM", 1, 1, 1)
             };
         }
     }

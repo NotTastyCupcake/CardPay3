@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Metcom.CardPay3.ApplicationCore.Interfaces;
 using Metcom.CardPay3.Infrastructure.Identity;
 using Metcom.CardPay3.WebApplication.Interfaces;
+using Metcom.CardPay3.WebApplication.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

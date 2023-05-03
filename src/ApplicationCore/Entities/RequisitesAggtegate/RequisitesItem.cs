@@ -10,7 +10,7 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate
     public class RequisitesItem : BaseEntity
     {
         public int? IdEmployer { get; private set; }
-        public Employer? Employer { get; private set; }
+        public Employe? Employer { get; private set; }
 
         public RequisitesItem()
         {

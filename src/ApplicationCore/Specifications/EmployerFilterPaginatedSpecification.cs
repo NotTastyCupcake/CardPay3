@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.ApplicationCore.Specifications
 {
-    public class EmployerFilterPaginatedSpecification : Specification<Employer>
+    public class EmployerFilterPaginatedSpecification : Specification<Employe>
     {
         public EmployerFilterPaginatedSpecification(int skip, int take, int? organizationId)
             : base()

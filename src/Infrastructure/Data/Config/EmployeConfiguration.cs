@@ -9,38 +9,38 @@ using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.Infrastructure.Data.Config
 {
-    public class EmployerConfiguration : IEntityTypeConfiguration<Employer>
+    public class EmployeConfiguration : IEntityTypeConfiguration<Employe>
     {
-        public void Configure(EntityTypeBuilder<Employer> builder)
+        public void Configure(EntityTypeBuilder<Employe> builder)
         {
 
             builder.HasOne(ci => ci.Document)
                 .WithOne()
-                .HasForeignKey<Employer>(ci => ci.IdDocument)
+                .HasForeignKey<Employe>(ci => ci.IdDocument)
                 .IsRequired(true);
 
             builder.HasMany(ci => ci.Addresses)
                 .WithOne(ci => ci.Employer)
                 .HasForeignKey(ci => ci.IdEmployer)
-                .IsRequired(true)
+                .IsRequired(false)
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(ci => ci.Gender)
                 .WithOne()
-                .HasForeignKey<Employer>(ci => ci.IdGender)
+                .HasForeignKey<Employe>(ci => ci.IdGender)
                 .IsRequired(true);
 
             builder.HasMany(ci => ci.Requisites)
                 .WithOne(ci => ci.Employer)
                 .HasForeignKey(ci => ci.IdEmployer)
-                .IsRequired(true)
+                .IsRequired(false)
                 .OnDelete(DeleteBehavior.Cascade);
 
 
             builder.HasOne(ci => ci.Organization)
                 .WithOne()
-                .HasForeignKey<Employer>(ci => ci.IdOrganization)
-                .IsRequired(true);
+                .HasForeignKey<Employe>(ci => ci.IdOrganization)
+                .IsRequired(false);
 
             builder.Property(ci => ci.LastName)
                 .IsRequired(true)
