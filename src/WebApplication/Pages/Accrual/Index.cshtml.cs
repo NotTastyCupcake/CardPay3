@@ -47,7 +47,7 @@ namespace Metcom.CardPay3.WebApplication.Pages.Accrual
             await _accrualService.AddItemToAccrual(AccrualModel.OrganizationId,
                 accrualDetails.EmployerId,
                 accrualDetails.Date, 
-                accrualDetails.Amouth,
+                accrualDetails.Amount,
                 AccrualModel.IdAccrualType,
                 AccrualModel.IdOperationType);
 

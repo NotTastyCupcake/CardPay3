@@ -17,7 +17,7 @@ namespace Metcom.CardPay3.WebApplication.ViewModels
 
         public decimal TotalAmount()
         {
-            return Math.Round(Items.Sum(x => x.Amouth), 2);
+            return Math.Round(Items.Sum(x => x.Amount), 2);
         }
     }
 }

@@ -92,7 +92,7 @@ namespace Metcom.CardPay3.WebApplication.Services
                 {
                     Id = accrualItem.Id,
                     FullName = employerItem.FullName,
-                    Amouth = accrualItem.Amount,
+                    Amount = accrualItem.Amount,
                     EmployerId = employerItem.Id,
                     Date = accrualItem.Date
                 };
