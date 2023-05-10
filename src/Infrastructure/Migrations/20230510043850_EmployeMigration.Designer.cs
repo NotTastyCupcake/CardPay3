@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Metcom.CardPay3.Infrastructure.Migrations
 {
     [DbContext(typeof(EmployeContext))]
-    [Migration("20230503121515_EmployeMigration")]
+    [Migration("20230510043850_EmployeMigration")]
     partial class EmployeMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -226,6 +226,9 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<int?>("OrganizationId1")
+                        .HasColumnType("int");
+
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
@@ -243,6 +246,8 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                     b.HasIndex("IdOrganization")
                         .IsUnique()
                         .HasFilter("[IdOrganization] IS NOT NULL");
+
+                    b.HasIndex("OrganizationId1");
 
                     b.ToTable("Employers");
                 });
@@ -496,6 +501,10 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                         .WithOne()
                         .HasForeignKey("Metcom.CardPay3.ApplicationCore.Entities.Employe", "IdOrganization");
 
+                    b.HasOne("Metcom.CardPay3.ApplicationCore.Entities.Organization", null)
+                        .WithMany("Employes")
+                        .HasForeignKey("OrganizationId1");
+
                     b.Navigation("Document");
 
                     b.Navigation("Gender");
@@ -570,6 +579,11 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
             modelBuilder.Entity("Metcom.CardPay3.ApplicationCore.Entities.GroupAggregate.Group", b =>
                 {
                     b.Navigation("Items");
+                });
+
+            modelBuilder.Entity("Metcom.CardPay3.ApplicationCore.Entities.Organization", b =>
+                {
+                    b.Navigation("Employes");
                 });
 #pragma warning restore 612, 618
         }

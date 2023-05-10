@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Metcom.CardPay3.Infrastructure.Migrations.AppIdentityDb
 {
     [DbContext(typeof(AppIdentityDbContext))]
-    [Migration("20230424101820_AuthMigration")]
+    [Migration("20230510043922_AuthMigration")]
     partial class AuthMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
