@@ -36,7 +36,6 @@ namespace Metcom.CardPay3.Infrastructure.Data.Config
                 .IsRequired(false)
                 .OnDelete(DeleteBehavior.Cascade);
 
-
             builder.HasOne(ci => ci.Organization)
                 .WithOne()
                 .HasForeignKey<Employe>(ci => ci.IdOrganization)

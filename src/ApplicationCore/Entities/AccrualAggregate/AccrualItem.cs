@@ -10,7 +10,7 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.AccrualAggregate
     public class AccrualItem : BaseEntity
     {
         public int IdEmployer { get; private set; }
-        public Employe Employer { get; private set; }
+        public virtual Employe Employer { get; private set; }
 
         public decimal Amount { get; private set; }
         public DateTime Date { get; private set; } = DateTime.Now;

@@ -9,7 +9,7 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.AddressAggregate
     public class Address : BaseEntity
     {
         public int? IdEmployer { get; private set; }
-        public Employe? Employer { get; private set; }
+        public virtual Employe? Employer { get; private set; }
 
         #region Поля
         public string Country { get; private set; }

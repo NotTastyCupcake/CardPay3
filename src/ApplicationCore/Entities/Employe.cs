@@ -50,20 +50,20 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
         #region Ссылка на объект
 #nullable enable
         public int IdGender { get; private set; }
-        public Gender Gender { get; private set; }
+        public virtual Gender Gender { get; private set; }
 
         /// <summary>
         /// Реквизиты документов человека
         /// </summary>
-        public ICollection<RequisitesItem> Requisites { get; set; }
+        public virtual ICollection<RequisitesItem> Requisites { get; set; }
 
         public int? IdDocument { get; set; }
-        public DocumentItem? Document { get; set; }
+        public virtual DocumentItem? Document { get; set; }
 
-        public ICollection<Address> Addresses { get; set; }
+        public virtual ICollection<Address> Addresses { get; set; }
 
         public int? IdOrganization { get; set; }
-        public Organization? Organization { get; set; }
+        public virtual Organization? Organization { get; set; }
         #nullable disable
         #endregion
 
