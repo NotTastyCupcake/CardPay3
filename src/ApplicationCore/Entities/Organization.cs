@@ -7,16 +7,18 @@ using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.ApplicationCore.Entities
 {
-    public class PersonOrganization : BaseEntity
+    public class Organization : BaseEntity
     {
+        public virtual ICollection<Employe> Employes { get; private set; }
         public string Name { get; private set; }
-        public PersonOrganization(string name)
+
+        public Organization(string name)
         {
             Name = name;
         }
 
         
-        public PersonOrganization()
+        public Organization()
         {
             // required by EF
         }

@@ -8,7 +8,7 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.DocumentAggregate
 {
     public class DocumentItem : BaseEntity
     {
-        public DocumentType Type { get; private set; }
+        public virtual DocumentType Type { get; private set; }
         public int IdType { get; private set; }
 
         public DateTime DataIssued { get; private set; }

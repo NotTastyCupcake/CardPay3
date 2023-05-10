@@ -21,10 +21,10 @@ namespace Metcom.CardPay3.ApplicationCore.Services
             _logger = logger;
         }
 
-        public async Task<Accrual> AddItemToAccrual(int idOrganization ,int personId, int accrualDay, decimal amount, int idAccrualType, int idOperationType)
+        public async Task<Accrual> AddItemToAccrual(int idOrganization ,int employerId, DateTime accrualDay, decimal amount, int idAccrualType, int idOperationType)
         {
 
-            var accrualSpec = new AccrualSpecification(idOrganization: idOrganization);
+            var accrualSpec = new AccrualSpecification(idOrganization: idOrganization.ToString());
             var accrual = await _accrualRepository.SingleOrDefaultAsync(accrualSpec);
 
             if(accrual == null)
@@ -32,20 +32,20 @@ namespace Metcom.CardPay3.ApplicationCore.Services
                 accrual = new Accrual(idOrganization, accrualDay, idAccrualType, idOperationType);
                 await _accrualRepository.AddAsync(accrual);
             }
-            accrual.AddItem(personId, amount);
+            accrual.AddItem(employerId, amount);
 
             await _accrualRepository.UpdateAsync(accrual);
             return accrual;
         }
 
-        public async Task<Accrual> DeleteItem(int accrualId, int personId)
+        public async Task<Accrual> DeleteItem(int accrualId, int employerId)
         {
 
             var accrual = await _accrualRepository.GetByIdAsync(accrualId);
 
             if (accrual == null) { return null; }
 
-            accrual.RemovePerson(personId);
+            accrual.RemoveEmployer(employerId);
 
             await _accrualRepository.UpdateAsync(accrual);
             return accrual;
@@ -67,7 +67,7 @@ namespace Metcom.CardPay3.ApplicationCore.Services
         //TODO: Создать триггер расписания Quartz
         public async Task TransferAccrualAsync(int oldIdOrganization, int newIdOrganization)
         {
-            var oldAccrualSpec = new AccrualSpecification(idOrganization: oldIdOrganization);
+            var oldAccrualSpec = new AccrualSpecification(idOrganization: oldIdOrganization.ToString());
             var accrual = await _accrualRepository.SingleOrDefaultAsync(oldAccrualSpec);
 
             if(accrual == null) { return; }

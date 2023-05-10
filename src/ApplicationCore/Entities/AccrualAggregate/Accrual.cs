@@ -12,29 +12,29 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.AccrualAggregate
     /// </summary>
     public class Accrual : BaseEntity
     {
-        private List<AccrualItem> _items = new List<AccrualItem>();
+        private readonly List<AccrualItem> _items = new List<AccrualItem>();
 
-        public IReadOnlyCollection<AccrualItem> Items => _items.AsReadOnly();
+        public virtual IReadOnlyCollection<AccrualItem> Items => _items.AsReadOnly();
 
         #region Ссылки на объект
         public int IdOrganization { get; private set; }
-        public PersonOrganization Organization { get; private set; }
+        public virtual Organization Organization { get; private set; }
 
         public int IdAccruaType { get; private set; }
 
         public int IdOperationType { get; private set; }
-        public OperationType OperationType { get; set; }
+        public virtual OperationType OperationType { get; set; }
         #endregion
 
-        public int AccrualDay { get; private set; }
+        public DateTime AccrualDay { get; private set; }
 
         public decimal TotalAmount => _items.Sum(i => i.Amount);
 
 
-        public Accrual(int idOrganization, int accrualDay, int idAccrualType, int idOperationType)
+        public Accrual(int idOrganization, DateTime accrualDay, int idAccrualType, int idOperationType)
         {
             IdOrganization = idOrganization;
-            SetAccrualDay(accrualDay);
+            AccrualDay = accrualDay;
             IdAccruaType = idAccrualType;
             IdOperationType = idOperationType;
         }
@@ -44,18 +44,18 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.AccrualAggregate
             // required by EF
         }
 
-        public void AddItem(int personId, decimal amount)
+        public void AddItem(int employerId, decimal amount)
         {
-            if (!Items.Any(i => i.IdPerson == personId))
+            if (!Items.Any(i => i.IdEmployer == employerId))
             {
-                _items.Add(new AccrualItem(personId, amount));
+                _items.Add(new AccrualItem(employerId, amount));
                 return;
             }
         }
 
-        public void RemovePerson(int personId)
+        public void RemoveEmployer(int employerId)
         {
-            _items.RemoveAll(i => i.IdPerson == personId);
+            _items.RemoveAll(i => i.IdEmployer == employerId);
         }
 
         public void SetNewOrganizationId(int organizationId)
@@ -64,16 +64,5 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.AccrualAggregate
 
             IdOrganization = organizationId;
         }
-
-        public void SetAccrualDay(int accrualDay)
-        {
-            Guard.Against.OutOfRange(accrualDay, nameof(accrualDay), 1, 31);
-
-            AccrualDay = accrualDay;
-        }
-    }
-
-    public class Class1
-    {
     }
 }

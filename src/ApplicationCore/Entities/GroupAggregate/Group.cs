@@ -12,11 +12,11 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.GroupAggregate
         public int IdOrganization { get; private set; }
 
         private readonly List<GroupItem> _items = new List<GroupItem>();
-        public IReadOnlyCollection<GroupItem> Items => _items.AsReadOnly();
+        public virtual IReadOnlyCollection<GroupItem> Items => _items.AsReadOnly();
         public string Name { get; private set; }
         public int Quantity => _items.Count;
 
-        public PersonOrganization Organization { get; private set; }
+        public virtual Organization Organization { get; private set; }
 
         public Group(int organizationId, string nameGroup)
         {
@@ -29,18 +29,18 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.GroupAggregate
             // required by EF
         }
 
-        public void AddItem(int personItemId)
+        public void AddItem(int employerItemId)
         {
-            if(!Items.Any(i => i.PersonId == personItemId))
+            if(!Items.Any(i => i.EmployerId == employerItemId))
             {
-                _items.Add(new GroupItem(personItemId));
+                _items.Add(new GroupItem(employerItemId));
                 return;
             }
         }
 
-        public void DeleteItem(int personItemId)
+        public void DeleteItem(int employerItemId)
         {
-            var existingItem = Items.FirstOrDefault(i => i.PersonId == personItemId);
+            var existingItem = Items.FirstOrDefault(i => i.EmployerId == employerItemId);
             _items.Remove(existingItem);
         }
 

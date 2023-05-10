@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.ApplicationCore.Entities
 {
-    public class PersonGender : BaseEntity
+    public class Gender : BaseEntity
     {
         public string GenderName { get; private set; }
         public string ShortGenderName { get; private set; }
 
-        public PersonGender(string name, string shortName)
+        public Gender(string name, string shortName)
         {
             GenderName = name;
             ShortGenderName = shortName;
         }
-        public PersonGender()
+        public Gender()
         {
             // required by EF
         }

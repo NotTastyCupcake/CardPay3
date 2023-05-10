@@ -26,8 +26,8 @@ namespace Metcom.CardPay3.WebApplication
                 var loggerFactory = services.GetRequiredService<ILoggerFactory>();
                 try
                 {
-                    var catalogContext = services.GetRequiredService<PersonContext>();
-                    await PersonContextSeed.SeedAsync(catalogContext, loggerFactory);
+                    var catalogContext = services.GetRequiredService<EmployeContext>();
+                    await EmployeContextSeed.SeedAsync(catalogContext, loggerFactory);
 
                     var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
                     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();

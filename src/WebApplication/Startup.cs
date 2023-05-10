@@ -46,7 +46,7 @@ namespace Metcom.CardPay3.WebApplication
                 options.UseSqlServer(
                     Configuration.GetConnectionString("IdentityConnection")));
 
-            services.AddDbContext<PersonContext>(options =>
+            services.AddDbContext<EmployeContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("MainConnection")));
         }
@@ -63,6 +63,7 @@ namespace Metcom.CardPay3.WebApplication
             services.AddScoped<IAccrualService, AccrualService>();
 
             services.AddScoped<IAccrualViewModelService, AccrualViewModelService>();
+            services.AddScoped<IEmployerViewModelService, EmployerViewModelService>();
 
             services.Configure<CardPaySettings>(Configuration);
             services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));

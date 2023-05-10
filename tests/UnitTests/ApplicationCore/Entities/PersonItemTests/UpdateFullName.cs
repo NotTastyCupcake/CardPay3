@@ -2,11 +2,11 @@
 using NUnit.Framework;
 using System;
 
-namespace Metcom.CardPay3.UnitTests.ApplicationCore.Entities.PersonItemTests
+namespace Metcom.CardPay3.UnitTests.ApplicationCore.Entities.EmployerItemTests
 {
     public class UpdateFullName
     {
-        private PersonItem _testItem;
+        private Employe _testItem;
 
         private string _validLastName = "TestLastName";
         private string _validFirstName = "TestFirstName";
@@ -17,15 +17,15 @@ namespace Metcom.CardPay3.UnitTests.ApplicationCore.Entities.PersonItemTests
         private string _validJobPhoneNumber = "1111";
         private string _validPosition = "TestPosition";
         private string _validDepartmentNum = "TestDepartamentNum";
-        private int _validIdRequest = 1;
+        private int _validIdOrganization = 1;
 
         [SetUp]
         public void UpdateFullNameSetUp()
         {
-            _testItem = new PersonItem(
+            _testItem = new Employe(
                 _validLastName, _validFirstName, _validMiddleName,
                 _validPhoneNumber, _validJobPhoneNumber, _validPosition, _validDepartmentNum,
-                _validGenderId, _validDocumentId, _validIdRequest);
+                _validGenderId, _validDocumentId, _validIdOrganization);
         }
 
         [TestCase("", "", "")]

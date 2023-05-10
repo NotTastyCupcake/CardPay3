@@ -8,11 +8,13 @@ using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.ApplicationCore.Specifications
 {
-    public sealed class PersonItemsSpecification : Specification<PersonItem>, ISingleResultSpecification<PersonItem>
+    public class OrganizationSpecification : Specification<Organization>
     {
-        public PersonItemsSpecification(params int[] ids)
+        public OrganizationSpecification(int idOrganization)
         {
-            Query.Where(c => ids.Contains(c.Id));
+            Query
+                .Where(a => a.Id == idOrganization);
         }
+
     }
 }

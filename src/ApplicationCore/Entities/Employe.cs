@@ -11,10 +11,10 @@ using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.ApplicationCore.Entities
 {
-    public class PersonItem : BaseEntity
+    public class Employe : BaseEntity
     {
 
-        public PersonItem(string lastName, string firstName, string middleName, string phoneNum, string jobPhoneNum, string position, string departmentNum, int genderId, int documentId, int requestId)
+        public Employe(string lastName, string firstName, string middleName, string phoneNum, string jobPhoneNum, string position, string departmentNum, int genderId, int documentId, int organizationId)
         {
             LastName = lastName;
             FirstName = firstName;
@@ -25,9 +25,9 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
             DepartmentNum = departmentNum;
             IdGender = genderId;
             IdDocument = documentId;
-            IdRequisties = requestId;
+            IdOrganization = organizationId;
         }
-        public PersonItem()
+        public Employe()
         {
             // required by EF
         }
@@ -48,27 +48,22 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
         #endregion
 
         #region Ссылка на объект
-        #nullable enable
+#nullable enable
         public int IdGender { get; private set; }
-        public PersonGender? Gender { get; private set; }
+        public virtual Gender Gender { get; private set; }
 
         /// <summary>
         /// Реквизиты документов человека
         /// </summary>
-        public int IdRequisties { get; set; }
-        /// <summary>
-        /// Реквизиты документов человека
-        /// </summary>
-        public RequisitesItem? Requisites { get; set; }
+        public virtual ICollection<RequisitesItem> Requisites { get; set; }
 
-        public int IdDocument { get; set; }
-        public DocumentItem? Document { get; set; }
+        public int? IdDocument { get; set; }
+        public virtual DocumentItem? Document { get; set; }
 
-        public int IdAddress { get; set; }
-        public Address? Address { get; set; }
+        public virtual ICollection<Address> Addresses { get; set; }
 
-        public int IdOrganization { get; set; }
-        public PersonOrganization? Organization { get; set; }
+        public int? IdOrganization { get; set; }
+        public virtual Organization? Organization { get; set; }
         #nullable disable
         #endregion
 

@@ -8,10 +8,10 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.GroupAggregate
 {
     public class GroupItem : BaseEntity
     {
-        public int PersonId { get; private set; }
-        public GroupItem(int personItemId)
+        public int EmployerId { get; private set; }
+        public GroupItem(int employerItemId)
         {
-            PersonId = personItemId;
+            EmployerId = employerItemId;
         }
         public GroupItem()
         {

@@ -9,24 +9,31 @@ using System.Reflection;
 
 namespace Metcom.CardPay3.Infrastructure.Data
 {
-    public class PersonContext : DbContext
+    public class EmployeContext : DbContext
     {
-        public PersonContext(DbContextOptions<PersonContext> options) 
+        public EmployeContext(DbContextOptions<EmployeContext> options) 
             : base(options)
         {
         }
 
-        public PersonContext()
+        public EmployeContext()
         {
             Database.EnsureCreated();
         }
 
-        public DbSet<PersonItem> People { get; set; }
+        public DbSet<Employe> Employers { get; set; }
         public DbSet<Group> Groups { get; set; }
-        public DbSet<PersonOrganization> Organizations { get; set; }
-        public DbSet<PersonGender> Genders { get; set; }
+        public DbSet<Organization> Organizations { get; set; }
+        public DbSet<Gender> Genders { get; set; }
+
         public DbSet<DocumentItem> Documents { get; set; }
+        public DbSet<DocumentType> DocumentTypes { get; set; }
+
+        public DbSet<BankDivision> Banks { get; set; }
+        public DbSet<BankCurrency> Currencies { get; set; }
+        public DbSet<BankCardType> CardTypes { get; set; }
         public DbSet<RequisitesItem> Requisites { get; set; }
+
         public DbSet<Address> Addresses { get; set; }
 
         public DbSet<Accrual> Accruals { get; set; }
@@ -38,7 +45,12 @@ namespace Metcom.CardPay3.Infrastructure.Data
             base.OnModelCreating(builder);
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
-        
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            base.OnConfiguring(optionsBuilder);
+            optionsBuilder.UseLazyLoadingProxies();
+        } 
     }
     
 }

@@ -15,7 +15,7 @@ namespace Metcom.CardPay3.UnitTests.ApplicationCore.Service.AccrualServiceTests
     public class AddItemToAccrual
     {
         private readonly int _organizationId = 1;
-        private readonly int _accrualDay = 15;
+        private readonly DateTime _accrualDay = DateTime.Now;
         private readonly int _idAccrualType = 1;
         private readonly int _idOperationType = 1;
 
@@ -36,7 +36,7 @@ namespace Metcom.CardPay3.UnitTests.ApplicationCore.Service.AccrualServiceTests
 
             var accrualService = new AccrualService(_mockAccrualRepo.Object, null);
 
-            await accrualService.AddItemToAccrual(Item.IdOrganization, 1, 15, 1.50m, 1, 1);
+            await accrualService.AddItemToAccrual(Item.IdOrganization, 1, DateTime.Now, 1.50m, 1, 1);
             _mockAccrualRepo.Verify(x => x.SingleOrDefaultAsync(It.IsAny<AccrualSpecification>(), default), Times.Once);
         }
 
@@ -48,7 +48,7 @@ namespace Metcom.CardPay3.UnitTests.ApplicationCore.Service.AccrualServiceTests
 
             var accrualService = new AccrualService(_mockAccrualRepo.Object, null);
 
-            await accrualService.AddItemToAccrual(Item.IdOrganization, 1, 15, 1.50m, 1, 1);
+            await accrualService.AddItemToAccrual(Item.IdOrganization, 1, DateTime.Now, 1.50m, 1, 1);
 
             _mockAccrualRepo.Verify(x => x.UpdateAsync(Item, default), Times.Once);
         }

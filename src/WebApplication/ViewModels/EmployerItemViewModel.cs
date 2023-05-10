@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.WebApplication.ViewModels
 {
-    public class AccrualComponentViewModel
+    public class EmployerItemViewModel
     {
-        public int AccrualDay { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Organization { get; set; }
     }
 }
