@@ -13,6 +13,5 @@ namespace Metcom.CardPay3.WebApplication.Interfaces
         public Task<EmployerIndexViewModel> GetEmployers(int pageIndex, int itemsPage, int? organizationId);
 
         public Task<IEnumerable<SelectListItem>> GetOrganizations();
-        public Task<IEnumerable<SelectListItem>> GetGroups();
     }
 }

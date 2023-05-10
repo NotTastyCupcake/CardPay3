@@ -34,7 +34,7 @@ namespace Metcom.CardPay3.WebApplication.Services
             _logger.LogInformation("GetEmployers called.");
 
             var filterSpecification = new EmployesSpecification(organizationId);
-            var filterPaginatedSpecification = new EmployerFilterPaginatedSpecification(pageIndex, itemsPage, organizationId);
+            var filterPaginatedSpecification = new EmployerFilterPaginatedSpecification(itemsPage * pageIndex, itemsPage, organizationId);
 
             var itemsOnPage = await _itemRepository.ListAsync(filterPaginatedSpecification);
             var totalItems = await _itemRepository.CountAsync(filterSpecification);
@@ -62,12 +62,6 @@ namespace Metcom.CardPay3.WebApplication.Services
             viewModel.PaginationInfo.Previous = (viewModel.PaginationInfo.ActualPage == 0) ? "is-disabled" : "";
 
             return viewModel;
-        }
-
-        public Task<IEnumerable<SelectListItem>> GetGroups()
-        {
-            //TODO: Группы сотрудников
-            throw new NotImplementedException();
         }
 
         public async Task<IEnumerable<SelectListItem>> GetOrganizations()

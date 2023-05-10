@@ -1,0 +1,25 @@
+﻿@model EmployerIndexViewModel;
+@{
+    ViewData["Title"] = "Список сотрудников";
+}
+<div class="card-deck">
+    @foreach (var item in Model.Employers)
+    {
+        <div class="card">
+            @*<img src="..." class="card-img-top" alt="...">*@
+            <div class="card-body">
+                <h5 class="card-title">@item.Name</h5>
+                <p class="card-text">@item.Organization</p>
+                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            </div>
+        </div>
+    }
+</div>
+<div class="btn-group btn-group-toggle" data-toggle="buttons">
+    <label class="btn btn-secondary active">
+        <input type="radio" name="options" id="option1" autocomplete="off" checked> Создать
+    </label>
+    <label class="btn btn-secondary">
+        <input type="radio" name="options" id="option3" autocomplete="off"> Назад
+    </label>
+</div>

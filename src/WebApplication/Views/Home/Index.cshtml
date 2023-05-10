@@ -1,0 +1,35 @@
+﻿﻿@{
+    ViewData["Title"] = "Главная страница";
+
+}
+
+<div class="text-center">
+    <h1 class="display-4">Добро пожаловать!</h1>
+    <p><a> CardPay3 </a></p>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Список сотрудников</h5>
+                    <a class="btn btn-primary" asp-area="" asp-controller="Employe" asp-action="Index">Перейти</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Список операций</h5>
+                    <a class="btn btn-primary" asp-area="" asp-controller="Accrual" asp-action="Index">Перейти</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Интеграция с 1С</h5>
+                    <a class="btn btn-primary disabled" asp-area="" asp-controller="IntegrationOneC" asp-action="Index" aria-disabled="true" >Перейти</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
