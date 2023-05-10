@@ -3,6 +3,7 @@ using Metcom.CardPay3.ApplicationCore.Interfaces;
 using Metcom.CardPay3.ApplicationCore.Specifications;
 using Metcom.CardPay3.WebApplication.Interfaces;
 using Metcom.CardPay3.WebApplication.ViewModels;
+using Metcom.CardPay3.WebApplication.ViewModels.Employe;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using System;
@@ -29,7 +30,7 @@ namespace Metcom.CardPay3.WebApplication.Services
             _organizationRepository = organizationRepository;
         }
 
-        public async Task<EmployerIndexViewModel> GetEmployers(int pageIndex, int itemsPage, int? organizationId)
+        public async Task<EmployeIndexViewModel> GetEmployers(int pageIndex, int itemsPage, int? organizationId)
         {
             _logger.LogInformation("GetEmployers called.");
 
@@ -39,7 +40,7 @@ namespace Metcom.CardPay3.WebApplication.Services
             var itemsOnPage = await _itemRepository.ListAsync(filterPaginatedSpecification);
             var totalItems = await _itemRepository.CountAsync(filterSpecification);
 
-            var viewModel = new EmployerIndexViewModel()
+            var viewModel = new EmployeIndexViewModel()
             {
                 Employers = itemsOnPage.Select(i => new EmployerItemViewModel()
                 {
@@ -58,10 +59,15 @@ namespace Metcom.CardPay3.WebApplication.Services
                 }
 
             };
-            viewModel.PaginationInfo.Next = (viewModel.PaginationInfo.ActualPage == viewModel.PaginationInfo.TotalPages - 1) ? "is-disabled" : "";
-            viewModel.PaginationInfo.Previous = (viewModel.PaginationInfo.ActualPage == 0) ? "is-disabled" : "";
+            viewModel.PaginationInfo.Next = (viewModel.PaginationInfo.ActualPage == viewModel.PaginationInfo.TotalPages - 1) ? "disabled" : "";
+            viewModel.PaginationInfo.Previous = (viewModel.PaginationInfo.ActualPage == 0) ? "disabled" : "";
 
             return viewModel;
+        }
+
+        public async Task CreateEmployer()
+        {
+
         }
 
         public async Task<IEnumerable<SelectListItem>> GetOrganizations()

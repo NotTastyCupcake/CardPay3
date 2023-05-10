@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Metcom.CardPay3.WebApplication.ViewModels
+namespace Metcom.CardPay3.WebApplication.ViewModels.Employe
 {
-    public class EmployerIndexViewModel
+    public class EmployeIndexViewModel
     {
         public IEnumerable<EmployerItemViewModel> Employers { get; set; }
 
