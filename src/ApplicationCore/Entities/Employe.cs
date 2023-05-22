@@ -14,7 +14,17 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
     public class Employe : BaseEntity
     {
 
-        public Employe(string lastName, string firstName, string middleName, string phoneNum, string jobPhoneNum, string position, string departmentNum, int genderId, int documentId, int organizationId)
+        public Employe(
+            string lastName,  
+            string firstName, 
+            string middleName,
+            string phoneNum, 
+            string jobPhoneNum, 
+            string position, 
+            string departmentNum, 
+            int genderId, 
+            int documentId, 
+            int organizationId)
         {
             LastName = lastName;
             FirstName = firstName;
