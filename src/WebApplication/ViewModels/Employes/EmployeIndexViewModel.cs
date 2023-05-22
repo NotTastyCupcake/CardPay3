@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Metcom.CardPay3.WebApplication.ViewModels.Employe
+namespace Metcom.CardPay3.WebApplication.ViewModels.Employes
 {
     public class EmployeIndexViewModel
     {

@@ -3,7 +3,7 @@ using Metcom.CardPay3.ApplicationCore.Interfaces;
 using Metcom.CardPay3.ApplicationCore.Specifications;
 using Metcom.CardPay3.WebApplication.Interfaces;
 using Metcom.CardPay3.WebApplication.ViewModels;
-using Metcom.CardPay3.WebApplication.ViewModels.Employe;
+using Metcom.CardPay3.WebApplication.ViewModels.Employes;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using System;
@@ -19,15 +19,18 @@ namespace Metcom.CardPay3.WebApplication.Services
         private readonly ILogger<EmployerViewModelService> _logger;
         private readonly IRepository<Employe> _itemRepository;
         private readonly IRepository<Organization> _organizationRepository;
+        private readonly IRepository<Gender> _genderRepository;
 
         public EmployerViewModelService(
             ILoggerFactory loggerFactory,
             IRepository<Employe> itemRepository,
-            IRepository<Organization> organizationRepository)
+            IRepository<Organization> organizationRepository,
+            IRepository<Gender> genderRepository)
         {
             _logger = loggerFactory.CreateLogger<EmployerViewModelService>();
             _itemRepository = itemRepository;
             _organizationRepository = organizationRepository;
+            _genderRepository = genderRepository;
         }
 
         public async Task<EmployeIndexViewModel> GetEmployers(int pageIndex, int itemsPage, int? organizationId)
@@ -65,8 +68,33 @@ namespace Metcom.CardPay3.WebApplication.Services
             return viewModel;
         }
 
-        public async Task CreateEmployer()
+        public async Task<EmployerDetailsViewModel> GetEmploye(int idEmploye)
         {
+            _logger.LogInformation("GetEmploye called.");
+
+            var item = await _itemRepository.GetByIdAsync(idEmploye);
+
+            var viewModel = new EmployerDetailsViewModel()
+            {
+                Id = item.Id,
+                FirstName = item.FirstName,
+                MiddleName = item.MiddleName,
+                LastName = item.LastName,
+                DepartmentNum = item.DepartmentNum,
+                Gender = item.Gender.GenderName,
+                JobPhoneNumber = item.JobPhoneNumber,
+                NameOrganization = item.Organization.Name,
+                PhoneNumber = item.PhoneNumber,
+                Position = item.Position
+            };
+
+            return viewModel;
+        }
+
+        public async Task CreateEmployer(Employe model)
+        {
+            _logger.LogInformation("CreateEmployer called.");
+
 
         }
 
@@ -79,9 +107,24 @@ namespace Metcom.CardPay3.WebApplication.Services
             {
                 new SelectListItem() { Value = null, Text = "All", Selected = true }
             };
-            foreach (Organization organization in organizations)
+            foreach (var organization in organizations)
             {
                 items.Add(new SelectListItem() { Value = organization.Id.ToString(), Text = organization.Name });
+            }
+
+            return items;
+        }
+
+        public async Task<IEnumerable<SelectListItem>> GetGenders()
+        {
+            _logger.LogInformation("GetGenders called.");
+            var genders = await _genderRepository.ListAsync();
+
+            var items = new List<SelectListItem>();
+
+            foreach (var gender in genders)
+            {
+                items.Add(new SelectListItem() { Value = gender.Id.ToString(), Text = gender.GenderName });
             }
 
             return items;

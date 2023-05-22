@@ -1,5 +1,5 @@
 ﻿using Metcom.CardPay3.WebApplication.ViewModels;
-using Metcom.CardPay3.WebApplication.ViewModels.Employe;
+using Metcom.CardPay3.WebApplication.ViewModels.Employes;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,10 @@ namespace Metcom.CardPay3.WebApplication.Interfaces
     public interface IEmployerViewModelService
     {
         public Task<EmployeIndexViewModel> GetEmployers(int pageIndex, int itemsPage, int? organizationId);
+        public Task<EmployerDetailsViewModel> GetEmploye(int idEmploye);
 
         public Task<IEnumerable<SelectListItem>> GetOrganizations();
+        public Task<IEnumerable<SelectListItem>> GetGenders();
+        
     }
 }

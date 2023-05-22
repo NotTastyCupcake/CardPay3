@@ -41,19 +41,24 @@ namespace Metcom.CardPay3.WebApplication.Controllers
         public async Task<IActionResult> Index(int? organizationFilterApplied, int? page)
         {
             var itemsPage = 10;
-            var employeModel = _service.GetEmployers(page ?? 0, itemsPage, organizationFilterApplied ?? 1);
-            return View(employeModel.Result);
+            var employeModel = await _service.GetEmployers(page ?? 0, itemsPage, organizationFilterApplied ?? 1);
+            return View(employeModel);
         }
 
+        [HttpGet]
         // GET: EmployController/Details/5
         public async Task<IActionResult> Details(int id)
         {
-            return View();
+            var vm = await _service.GetEmploye(id);
+            return PartialView("Details", vm);
         }
 
         // GET: EmployController/Create
         public async Task<IActionResult> Create()
         {
+            var vm = await _service.GetGenders();
+            ViewBag.Genders = vm;
+
             return View();
         }
 
