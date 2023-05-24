@@ -56,16 +56,14 @@ namespace Metcom.CardPay3.WebApplication.Controllers
         // GET: EmployController/Create
         public async Task<IActionResult> Create()
         {
-            var vm = await _service.GetGenders();
-            ViewBag.Genders = vm;
-
+            ViewBag.Genders = await _service.GetGenders();
             return View();
         }
 
         // POST: EmployController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(IFormCollection collection)
+        public async Task<IActionResult> Create([Bind("IdPerson,FirstName,LastName,Age,Gender,IdDepartment,IdLanguage")] MainPersonModel mainPersonModel)
         {
             try
             {

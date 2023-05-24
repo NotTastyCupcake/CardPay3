@@ -68,20 +68,24 @@ namespace Metcom.CardPay3.WebApplication.Services
             return viewModel;
         }
 
-        public async Task<EmployerDetailsViewModel> GetEmploye(int idEmploye)
+        public async Task<EmployerViewModel> GetEmploye(int idEmploye)
         {
             _logger.LogInformation("GetEmploye called.");
 
             var item = await _itemRepository.GetByIdAsync(idEmploye);
 
-            var viewModel = new EmployerDetailsViewModel()
+            var viewModel = new EmployerViewModel()
             {
                 Id = item.Id,
                 FirstName = item.FirstName,
                 MiddleName = item.MiddleName,
                 LastName = item.LastName,
                 DepartmentNum = item.DepartmentNum,
-                Gender = item.Gender.GenderName,
+                Gender = new EmployeGenderViewModel() 
+                    { 
+                        GenderName = item.Gender.GenderName,
+                        Id = item.Gender.Id
+                    },
                 JobPhoneNumber = item.JobPhoneNumber,
                 NameOrganization = item.Organization.Name,
                 PhoneNumber = item.PhoneNumber,
@@ -91,7 +95,7 @@ namespace Metcom.CardPay3.WebApplication.Services
             return viewModel;
         }
 
-        public async Task CreateEmployer(Employe model)
+        public async Task CreateEmployer(EmployeGenderViewModel model)
         {
             _logger.LogInformation("CreateEmployer called.");
 

@@ -12,7 +12,7 @@ namespace Metcom.CardPay3.WebApplication.Interfaces
     public interface IEmployerViewModelService
     {
         public Task<EmployeIndexViewModel> GetEmployers(int pageIndex, int itemsPage, int? organizationId);
-        public Task<EmployerDetailsViewModel> GetEmploye(int idEmploye);
+        public Task<EmployerViewModel> GetEmploye(int idEmploye);
 
         public Task<IEnumerable<SelectListItem>> GetOrganizations();
         public Task<IEnumerable<SelectListItem>> GetGenders();

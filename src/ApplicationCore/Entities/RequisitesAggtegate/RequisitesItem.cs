@@ -68,6 +68,8 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate
         public int IdCardType { get; private set; }
         #endregion
 
+        //TODO: Создать поле статуса передачи реквезитов
+
         public void UpdateCard(string lastName, string firstName, string cardNumber, string accountNumber, int idCardType)
         {
             Guard.Against.NullOrEmpty(lastName, nameof(lastName));
