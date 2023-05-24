@@ -50,7 +50,7 @@ namespace Metcom.CardPay3.WebApplication.Controllers
         public async Task<IActionResult> Details(int id)
         {
             var vm = await _service.GetEmploye(id);
-            return PartialView("Details", vm);
+            return PartialView("_Details_Modal", vm);
         }
 
         // GET: EmployController/Create
