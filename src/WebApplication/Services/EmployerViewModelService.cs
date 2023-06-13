@@ -1,9 +1,12 @@
 ﻿using Metcom.CardPay3.ApplicationCore.Entities;
+using Metcom.CardPay3.ApplicationCore.Entities.DocumentAggregate;
 using Metcom.CardPay3.ApplicationCore.Interfaces;
 using Metcom.CardPay3.ApplicationCore.Specifications;
+using Metcom.CardPay3.Infrastructure.Identity;
 using Metcom.CardPay3.WebApplication.Interfaces;
 using Metcom.CardPay3.WebApplication.ViewModels;
 using Metcom.CardPay3.WebApplication.ViewModels.Employes;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using System;
@@ -17,20 +20,28 @@ namespace Metcom.CardPay3.WebApplication.Services
     public class EmployerViewModelService : IEmployerViewModelService
     {
         private readonly ILogger<EmployerViewModelService> _logger;
+        private readonly UserManager<ApplicationUser> _userManager;
+
         private readonly IRepository<Employe> _itemRepository;
         private readonly IRepository<Organization> _organizationRepository;
         private readonly IRepository<Gender> _genderRepository;
+        private readonly IRepository<DocumentType> _documentTypeRepository;
 
         public EmployerViewModelService(
             ILoggerFactory loggerFactory,
+            UserManager<ApplicationUser> userManager,
             IRepository<Employe> itemRepository,
             IRepository<Organization> organizationRepository,
-            IRepository<Gender> genderRepository)
+            IRepository<Gender> genderRepository,
+            IRepository<DocumentType> documentTypeRepository)
         {
+
             _logger = loggerFactory.CreateLogger<EmployerViewModelService>();
+            _userManager = userManager;
             _itemRepository = itemRepository;
             _organizationRepository = organizationRepository;
             _genderRepository = genderRepository;
+            _documentTypeRepository = documentTypeRepository;
         }
 
         public async Task<EmployeIndexViewModel> GetEmployers(int pageIndex, int itemsPage, int? organizationId)
@@ -95,13 +106,6 @@ namespace Metcom.CardPay3.WebApplication.Services
             return viewModel;
         }
 
-        public async Task CreateEmployer(EmployeGenderViewModel model)
-        {
-            _logger.LogInformation("CreateEmployer called.");
-
-
-        }
-
         public async Task<IEnumerable<SelectListItem>> GetOrganizations()
         {
             _logger.LogInformation("GetOrganizations called.");
@@ -133,5 +137,19 @@ namespace Metcom.CardPay3.WebApplication.Services
 
             return items;
         }
+        public async Task<IEnumerable<SelectListItem>> GetDocumentTypes()
+        {
+            _logger.LogInformation("GetDocumentType called.");
+            var types = await _documentTypeRepository.ListAsync();
+
+            var items = new List<SelectListItem>();
+            foreach (var type in types)
+            {
+                items.Add(new SelectListItem() { Value = type.Id.ToString(), Text = type.DocumentName });
+            }
+
+            return items;
+        }
+
     }
 }

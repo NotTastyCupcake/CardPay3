@@ -16,6 +16,9 @@ using Metcom.CardPay3.Infrastructure.Logging;
 using Metcom.CardPay3.WebApplication.Services;
 using Metcom.CardPay3.ApplicationCore.Services;
 using Metcom.CardPay3.WebApplication.Interfaces;
+using Metcom.CardPay3.ApplicationCore.Interfaces.ServicesInterfaces;
+using Metcom.CardPay3.ApplicationCore.Interfaces.ServicesInterfaces.Builder;
+using Metcom.CardPay3.ApplicationCore.Services.Builder;
 
 namespace Metcom.CardPay3.WebApplication
 {
@@ -61,6 +64,9 @@ namespace Metcom.CardPay3.WebApplication
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
 
             services.AddScoped<IAccrualService, AccrualService>();
+            services.AddScoped<IEmployeService, EmployeService>();
+
+            services.AddScoped<IEmployeBuilder, EmployeBuilder>();
 
             services.AddScoped<IAccrualViewModelService, AccrualViewModelService>();
             services.AddScoped<IEmployerViewModelService, EmployerViewModelService>();

@@ -16,6 +16,6 @@ namespace Metcom.CardPay3.WebApplication.Interfaces
 
         public Task<IEnumerable<SelectListItem>> GetOrganizations();
         public Task<IEnumerable<SelectListItem>> GetGenders();
-        
+        public Task<IEnumerable<SelectListItem>> GetDocumentTypes();
     }
 }

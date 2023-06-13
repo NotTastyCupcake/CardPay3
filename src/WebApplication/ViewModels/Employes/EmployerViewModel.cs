@@ -28,8 +28,6 @@ namespace Metcom.CardPay3.WebApplication.ViewModels.Employes
         /// </summary>
         public virtual ICollection<EmployeRequisitesViewModel>? Requisites { get; set; }
 
-        public virtual EmployeDocumentViewModel? Document { get; set; }
-
         public virtual ICollection<EmployeAddressViewModel>? Addresses { get; set; }
         #nullable disable
         #endregion
