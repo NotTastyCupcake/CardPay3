@@ -11,25 +11,25 @@ namespace Metcom.CardPay3.WebApplication.ViewModels.Employes
     {
         #region ФИО Сотрудника
         [Required(ErrorMessage ="Введите фамилию сотрудника")]
-        public string LastName { get; private set; }
+        public string LastName { get; set; }
         [Display(Name = "Имя")]
         [StringLength(20, MinimumLength = 2, ErrorMessage = "Текст должен содержать от 2 - 20 символов")]
         [RegularExpression(@"^[а-яА-Я]{1,20}$", ErrorMessage = "Здесь должен быть текст на русском")]
         [Required(ErrorMessage = "Введите имя сотрудника")]
-        public string FirstName { get; private set; }
-        public string MiddleName { get; private set; }
+        public string FirstName { get; set; }
+        public string MiddleName { get; set; }
         #endregion
 
         #region Контактные данные
-        public string PhoneNumber { get; private set; }
-        public string JobPhoneNumber { get; private set; }
-        public string Position { get; private set; }
-        public string DepartmentNum { get; private set; }
+        public string PhoneNumber { get; set; }
+        public string JobPhoneNumber { get; set; }
+        public string Position { get; set; }
+        public string DepartmentNum { get; set; }
         #endregion
 
         #region Ссылка на объект
 #nullable enable
-        public int IdGender { get; private set; }
+        public int IdGender { get; set; }
 #nullable disable
         #endregion
 

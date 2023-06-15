@@ -64,7 +64,7 @@ namespace Metcom.CardPay3.WebApplication.Controllers
             ViewBag.Genders = await _viewModelservice.GetGenders();
             ViewBag.DocumentTypes = await _viewModelservice.GetDocumentTypes();
 
-            return PartialView("_Create_Modal");
+            return PartialView("_Create_Model");
         }
 
         // POST: EmployController/Create
@@ -91,15 +91,15 @@ namespace Metcom.CardPay3.WebApplication.Controllers
                     ViewBag.Genders = await _viewModelservice.GetGenders();
                     ViewBag.DocumentTypes = await _viewModelservice.GetDocumentTypes();
 
-                    return View("_Create_Modal", employerModel);
+                    return View("_Create_Model", employerModel);
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 ViewBag.Genders = await _viewModelservice.GetGenders();
                 ViewBag.DocumentTypes = await _viewModelservice.GetDocumentTypes();
 
-                return View("_Create_Modal");
+                return View("_Create_Model");
             }
         }
 
