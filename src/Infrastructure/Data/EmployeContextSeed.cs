@@ -29,13 +29,13 @@ namespace Metcom.CardPay3.Infrastructure.Data
                     await employerContext.SaveChangesAsync();
                 }
 
-                if (!employerContext.Groups.Any())
-                {
-                    employerContext.Groups.AddRange(
-                        GetPreconfiguredGroups());
+                //if (!employerContext.Groups.Any())
+                //{
+                //    employerContext.Groups.AddRange(
+                //        GetPreconfiguredGroups());
 
-                    await employerContext.SaveChangesAsync();
-                }
+                //    await employerContext.SaveChangesAsync();
+                //}
 
                 if (!employerContext.Genders.Any())
                 {
@@ -85,37 +85,37 @@ namespace Metcom.CardPay3.Infrastructure.Data
                 }
 
 
-                if (!employerContext.Documents.Any())
-                {
-                    employerContext.Documents.AddRange(
-                        GetPreconfiguredDocuments());
+                //if (!employerContext.Documents.Any())
+                //{
+                //    employerContext.Documents.AddRange(
+                //        GetPreconfiguredDocuments());
 
-                    await employerContext.SaveChangesAsync();
-                }
+                //    await employerContext.SaveChangesAsync();
+                //}
 
-                if (!employerContext.Employers.Any())
-                {
-                    employerContext.Employers.AddRange(
-                        GetPreconfiguredEmployers());
+                //if (!employerContext.Employers.Any())
+                //{
+                //    employerContext.Employers.AddRange(
+                //        GetPreconfiguredEmployers());
 
-                    await employerContext.SaveChangesAsync();
-                }
+                //    await employerContext.SaveChangesAsync();
+                //}
 
-                if (!employerContext.Requisites.Any())
-                {
-                    employerContext.Requisites.AddRange(
-                        GetPreconfiguredRequisites());
+                //if (!employerContext.Requisites.Any())
+                //{
+                //    employerContext.Requisites.AddRange(
+                //        GetPreconfiguredRequisites());
 
-                    await employerContext.SaveChangesAsync();
-                }
+                //    await employerContext.SaveChangesAsync();
+                //}
 
-                if (!employerContext.Addresses.Any())
-                {
-                    employerContext.Addresses.AddRange(
-                        GetPreconfiguredAddresses());
+                //if (!employerContext.Addresses.Any())
+                //{
+                //    employerContext.Addresses.AddRange(
+                //        GetPreconfiguredAddresses());
 
-                    await employerContext.SaveChangesAsync();
-                }
+                //    await employerContext.SaveChangesAsync();
+                //}
             }
             catch (Exception ex)
             {
@@ -130,8 +130,8 @@ namespace Metcom.CardPay3.Infrastructure.Data
         {
             return new List<DocumentType>()
             {
-                new DocumentType("ПАО \"МЕТКОМБАНК\""),
-                new DocumentType("ОАО \"ТЕСТ\"")
+                new DocumentType("Военный билет"),
+                new DocumentType("Паспорт")
             };
         }
 

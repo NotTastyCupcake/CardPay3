@@ -32,7 +32,7 @@ namespace Metcom.CardPay3.WebApplication.ViewModels.Employes
         public int IdGender { get; set; }
 #nullable disable
         #endregion
-
+        [Required(ErrorMessage = "Выбирите тип документа")]
         public int IdType { get; set; }
 
         public DateTime DataIssued { get; set; }

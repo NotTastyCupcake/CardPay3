@@ -57,16 +57,18 @@ namespace Metcom.CardPay3.ApplicationCore.Services
 
             int organizationId)
         {
-            var document = new DocumentItem(idTypeDocument, dataIssuedDocument, issuedByDocument, subdivisionCodeDocument);
-            await _documentRepository.AddAsync(document);
 
             var genderSpec = new EmployeGenderSpecification(idGender);
             var gender = await _genderRepository.SingleOrDefaultAsync(genderSpec);
 
-            if(gender == null)
+            if (gender == null)
             {
                 throw new Exception("Unknow gender");
             }
+
+            //FIXME: Падает в ошибка при создаании документа 
+            var document = new DocumentItem(idTypeDocument, dataIssuedDocument, issuedByDocument, subdivisionCodeDocument);
+            await _documentRepository.AddAsync(document);
 
             _builder.CreateEmploye(lastName, firstName, middleName, phoneNum, jobPhoneNum, position, departmentNum, gender, document, organizationId);
             _employe = _builder.GetEmploye();
