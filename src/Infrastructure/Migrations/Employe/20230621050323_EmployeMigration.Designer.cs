@@ -7,10 +7,10 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Metcom.CardPay3.Infrastructure.Migrations
+namespace Metcom.CardPay3.Infrastructure.Migrations.Employe
 {
     [DbContext(typeof(EmployeContext))]
-    [Migration("20230510043850_EmployeMigration")]
+    [Migration("20230621050323_EmployeMigration")]
     partial class EmployeMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -167,8 +167,7 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdType")
-                        .IsUnique();
+                    b.HasIndex("IdType");
 
                     b.ToTable("Documents");
                 });
@@ -181,6 +180,7 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("DocumentName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -226,9 +226,6 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int?>("OrganizationId1")
-                        .HasColumnType("int");
-
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
@@ -240,14 +237,9 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                     b.HasIndex("IdDocument")
                         .IsUnique();
 
-                    b.HasIndex("IdGender")
-                        .IsUnique();
+                    b.HasIndex("IdGender");
 
-                    b.HasIndex("IdOrganization")
-                        .IsUnique()
-                        .HasFilter("[IdOrganization] IS NOT NULL");
-
-                    b.HasIndex("OrganizationId1");
+                    b.HasIndex("IdOrganization");
 
                     b.ToTable("Employers");
                 });
@@ -475,8 +467,8 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
             modelBuilder.Entity("Metcom.CardPay3.ApplicationCore.Entities.DocumentAggregate.DocumentItem", b =>
                 {
                     b.HasOne("Metcom.CardPay3.ApplicationCore.Entities.DocumentAggregate.DocumentType", "Type")
-                        .WithOne()
-                        .HasForeignKey("Metcom.CardPay3.ApplicationCore.Entities.DocumentAggregate.DocumentItem", "IdType")
+                        .WithMany("Documents")
+                        .HasForeignKey("IdType")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -492,18 +484,14 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("Metcom.CardPay3.ApplicationCore.Entities.Gender", "Gender")
-                        .WithOne()
-                        .HasForeignKey("Metcom.CardPay3.ApplicationCore.Entities.Employe", "IdGender")
+                        .WithMany()
+                        .HasForeignKey("IdGender")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Metcom.CardPay3.ApplicationCore.Entities.Organization", "Organization")
-                        .WithOne()
-                        .HasForeignKey("Metcom.CardPay3.ApplicationCore.Entities.Employe", "IdOrganization");
-
-                    b.HasOne("Metcom.CardPay3.ApplicationCore.Entities.Organization", null)
                         .WithMany("Employes")
-                        .HasForeignKey("OrganizationId1");
+                        .HasForeignKey("IdOrganization");
 
                     b.Navigation("Document");
 
@@ -567,6 +555,11 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
             modelBuilder.Entity("Metcom.CardPay3.ApplicationCore.Entities.AccrualAggregate.Accrual", b =>
                 {
                     b.Navigation("Items");
+                });
+
+            modelBuilder.Entity("Metcom.CardPay3.ApplicationCore.Entities.DocumentAggregate.DocumentType", b =>
+                {
+                    b.Navigation("Documents");
                 });
 
             modelBuilder.Entity("Metcom.CardPay3.ApplicationCore.Entities.Employe", b =>

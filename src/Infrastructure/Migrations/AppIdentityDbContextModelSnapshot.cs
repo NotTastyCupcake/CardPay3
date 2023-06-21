@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Metcom.CardPay3.Infrastructure.Migrations.AppIdentityDb
+namespace Metcom.CardPay3.Infrastructure.Migrations
 {
     [DbContext(typeof(AppIdentityDbContext))]
     partial class AppIdentityDbContextModelSnapshot : ModelSnapshot

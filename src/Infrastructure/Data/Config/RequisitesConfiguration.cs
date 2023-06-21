@@ -13,6 +13,7 @@ namespace Metcom.CardPay3.Infrastructure.Data.Config
     {
         public void Configure(EntityTypeBuilder<RequisitesItem> builder)
         {
+            builder.HasKey(ci => ci.Id);
 
             builder.HasOne(ci => ci.Division)
                 .WithOne()

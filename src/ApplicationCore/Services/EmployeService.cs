@@ -67,9 +67,14 @@ namespace Metcom.CardPay3.ApplicationCore.Services
             }
 
             //FIXME: Падает в ошибка при создаании документа 
-            var document = new DocumentItem(idTypeDocument, dataIssuedDocument, issuedByDocument, subdivisionCodeDocument);
-            await _documentRepository.AddAsync(document);
-
+            var documentSpec = new DocumentItemSpecification(issuedByDocument, subdivisionCodeDocument, idTypeDocument, dataIssuedDocument);
+            var document = await _documentRepository.SingleOrDefaultAsync(documentSpec);
+            if (document == null)
+            {
+                document = new DocumentItem(idTypeDocument, dataIssuedDocument, issuedByDocument, subdivisionCodeDocument);
+                await _documentRepository.AddAsync(document);
+            }
+            
             _builder.CreateEmploye(lastName, firstName, middleName, phoneNum, jobPhoneNum, position, departmentNum, gender, document, organizationId);
             _employe = _builder.GetEmploye();
             await _employeRepository.AddAsync(_employe);

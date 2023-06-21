@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Metcom.CardPay3.Infrastructure.Migrations.AppIdentityDb
+namespace Metcom.CardPay3.Infrastructure.Migrations
 {
-    public partial class AuthMigration : Migration
+    public partial class IdentityMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

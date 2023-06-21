@@ -14,6 +14,8 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.DocumentAggregate
             DocumentName = name;
         }
 
+        public virtual ICollection<DocumentItem> Documents { get; set; }
+
         public DocumentType()
         {
             // required by EF
