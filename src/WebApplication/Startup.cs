@@ -16,6 +16,9 @@ using Metcom.CardPay3.Infrastructure.Logging;
 using Metcom.CardPay3.WebApplication.Services;
 using Metcom.CardPay3.ApplicationCore.Services;
 using Metcom.CardPay3.WebApplication.Interfaces;
+using Metcom.CardPay3.ApplicationCore.Interfaces.ServicesInterfaces;
+using Metcom.CardPay3.ApplicationCore.Interfaces.ServicesInterfaces.Builder;
+using Metcom.CardPay3.ApplicationCore.Services.Builder;
 
 namespace Metcom.CardPay3.WebApplication
 {
@@ -51,6 +54,17 @@ namespace Metcom.CardPay3.WebApplication
                     Configuration.GetConnectionString("MainConnection")));
         }
 
+        private void ConfigureInMemoryDatabases(IServiceCollection services)
+        {
+            // use in-memory database
+            services.AddDbContext<EmployeContext>(c =>
+                c.UseInMemoryDatabase("Catalog"));
+
+            // Add Identity DbContext
+            services.AddDbContext<AppIdentityDbContext>(options =>
+                options.UseInMemoryDatabase("Identity"));
+        }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -61,6 +75,9 @@ namespace Metcom.CardPay3.WebApplication
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
 
             services.AddScoped<IAccrualService, AccrualService>();
+            services.AddScoped<IEmployeService, EmployeService>();
+
+            services.AddScoped<IEmployeBuilder, EmployeBuilder>();
 
             services.AddScoped<IAccrualViewModelService, AccrualViewModelService>();
             services.AddScoped<IEmployerViewModelService, EmployerViewModelService>();

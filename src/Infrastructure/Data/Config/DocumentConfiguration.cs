@@ -15,10 +15,12 @@ namespace Metcom.CardPay3.Infrastructure.Data.Config
 
         public void Configure(EntityTypeBuilder<DocumentItem> builder)
         {
+            builder.HasKey(ci => ci.Id);
 
             builder.HasOne(ci => ci.Type)
-                .WithOne()
-                .HasForeignKey<DocumentItem>(ci => ci.IdType);
+                .WithMany(e => e.Documents)
+                .HasForeignKey(d => d.IdType)
+                .IsRequired(true);
 
         }
     }

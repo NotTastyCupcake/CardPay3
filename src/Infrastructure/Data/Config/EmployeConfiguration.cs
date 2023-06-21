@@ -13,6 +13,7 @@ namespace Metcom.CardPay3.Infrastructure.Data.Config
     {
         public void Configure(EntityTypeBuilder<Employe> builder)
         {
+            builder.HasKey(ci => ci.Id);
 
             builder.HasOne(ci => ci.Document)
                 .WithOne()
@@ -26,8 +27,8 @@ namespace Metcom.CardPay3.Infrastructure.Data.Config
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(ci => ci.Gender)
-                .WithOne()
-                .HasForeignKey<Employe>(ci => ci.IdGender)
+                .WithMany()
+                .HasForeignKey(ci => ci.IdGender)
                 .IsRequired(true);
 
             builder.HasMany(ci => ci.Requisites)
@@ -37,8 +38,8 @@ namespace Metcom.CardPay3.Infrastructure.Data.Config
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(ci => ci.Organization)
-                .WithOne()
-                .HasForeignKey<Employe>(ci => ci.IdOrganization)
+                .WithMany(o => o.Employes)
+                .HasForeignKey(ci => ci.IdOrganization)
                 .IsRequired(false);
 
             builder.Property(ci => ci.LastName)

@@ -14,7 +14,17 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
     public class Employe : BaseEntity
     {
 
-        public Employe(string lastName, string firstName, string middleName, string phoneNum, string jobPhoneNum, string position, string departmentNum, int genderId, int documentId, int organizationId)
+        public Employe(
+            string lastName,  
+            string firstName, 
+            string middleName,
+            string phoneNum, 
+            string jobPhoneNum, 
+            string position, 
+            string departmentNum, 
+            int genderId, 
+            int documentId, 
+            int organizationId)
         {
             LastName = lastName;
             FirstName = firstName;
@@ -27,6 +37,7 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
             IdDocument = documentId;
             IdOrganization = organizationId;
         }
+
         public Employe()
         {
             // required by EF
@@ -50,7 +61,7 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
         #region Ссылка на объект
 #nullable enable
         public int IdGender { get; private set; }
-        public virtual Gender Gender { get; private set; }
+        public virtual Gender Gender { get; set; }
 
         /// <summary>
         /// Реквизиты документов человека

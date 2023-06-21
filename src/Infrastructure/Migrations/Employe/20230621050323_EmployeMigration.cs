@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Metcom.CardPay3.Infrastructure.Migrations
+namespace Metcom.CardPay3.Infrastructure.Migrations.Employe
 {
     public partial class EmployeMigration : Migration
     {
@@ -56,7 +56,7 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DocumentName = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    DocumentName = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -187,8 +187,7 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                     DepartmentNum = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IdGender = table.Column<int>(type: "int", nullable: false),
                     IdDocument = table.Column<int>(type: "int", nullable: false),
-                    IdOrganization = table.Column<int>(type: "int", nullable: true),
-                    OrganizationId1 = table.Column<int>(type: "int", nullable: true)
+                    IdOrganization = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -208,12 +207,6 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_Employers_Organizations_IdOrganization",
                         column: x => x.IdOrganization,
-                        principalTable: "Organizations",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Employers_Organizations_OrganizationId1",
-                        column: x => x.OrganizationId1,
                         principalTable: "Organizations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -371,8 +364,7 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Documents_IdType",
                 table: "Documents",
-                column: "IdType",
-                unique: true);
+                column: "IdType");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Employers_IdDocument",
@@ -383,20 +375,12 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Employers_IdGender",
                 table: "Employers",
-                column: "IdGender",
-                unique: true);
+                column: "IdGender");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Employers_IdOrganization",
                 table: "Employers",
-                column: "IdOrganization",
-                unique: true,
-                filter: "[IdOrganization] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Employers_OrganizationId1",
-                table: "Employers",
-                column: "OrganizationId1");
+                column: "IdOrganization");
 
             migrationBuilder.CreateIndex(
                 name: "IX_GroupItem_GroupId",

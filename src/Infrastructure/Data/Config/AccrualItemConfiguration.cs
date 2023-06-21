@@ -13,6 +13,7 @@ namespace Metcom.CardPay3.Infrastructure.Data.Config
     {
         public void Configure(EntityTypeBuilder<AccrualItem> builder)
         {
+            builder.HasKey(ci => ci.Id);
             builder.Property(bi => bi.Amount)
                 .IsRequired(true)
                 .HasColumnType("decimal(18,2)");

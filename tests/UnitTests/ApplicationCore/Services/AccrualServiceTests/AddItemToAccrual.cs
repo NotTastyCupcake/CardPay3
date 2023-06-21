@@ -25,18 +25,22 @@ namespace Metcom.CardPay3.UnitTests.ApplicationCore.Service.AccrualServiceTests
         [SetUp]
         public void AddItemToAccrualSetUp()
         {
+            // Arrange
             Item = new Accrual(_organizationId, _accrualDay, _idAccrualType, _idOperationType);
         }
 
         [Test]
         public async Task InvokesAccrualRepositoryGetBySpecAsyncOnce()
         {
+            // Act
             Item.AddItem(1,It.IsAny<decimal>());
             _mockAccrualRepo.Setup(x => x.SingleOrDefaultAsync(It.IsAny<AccrualSpecification>(), default)).ReturnsAsync(Item);
 
             var accrualService = new AccrualService(_mockAccrualRepo.Object, null);
 
             await accrualService.AddItemToAccrual(Item.IdOrganization, 1, DateTime.Now, 1.50m, 1, 1);
+
+            // Assert
             _mockAccrualRepo.Verify(x => x.SingleOrDefaultAsync(It.IsAny<AccrualSpecification>(), default), Times.Once);
         }
 

@@ -15,6 +15,8 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.AccrualAggregate
         public decimal Amount { get; private set; }
         public DateTime Date { get; private set; } = DateTime.Now;
 
+        //TODO: Создать поле статуса платежа
+
         public AccrualItem(int employerId, decimal amount)
         {
             IdEmployer = employerId;
