@@ -11,7 +11,7 @@ namespace Metcom.CardPay3.WebApplication.ViewModels
         public int Id { get; set; }
         public int EmployerId { get; set; }
         public string FullName { get; set; }
-        public decimal Amouth { get; set; }
+        public decimal Amount { get; set; }
         public DateTime Date { get; set; }
     }
 }

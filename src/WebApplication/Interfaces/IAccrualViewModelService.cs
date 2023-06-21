@@ -1,4 +1,4 @@
-﻿using Metcom.CardPay3.WebApplication.Pages.Accrual;
+﻿using Metcom.CardPay3.WebApplication.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;

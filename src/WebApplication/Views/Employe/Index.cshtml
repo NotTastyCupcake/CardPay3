@@ -1,0 +1,57 @@
+﻿@model EmployeIndexViewModel
+@{
+    ViewData["Title"] = "Список сотрудников";
+}
+<section>
+    <div class="container">
+        <form method="get">
+            <label data-title="organization">
+                <select asp-for="@Model.OrganizationFilterApplied" asp-items="@Model.Organization"></select>
+            </label>
+            <input />
+        </form>
+    </div>
+</section>
+
+<div id="modDialog" class="modal fade">
+    <div id="dialogContent" class="modal-dialog"></div>
+</div>
+
+<div class="container">
+    @if (Model.Employers.Any())
+    {
+        <partial name="_pagination" for="PaginationInfo" />
+
+        <div class="card-deck">
+            @foreach (var item in Model.Employers)
+            {
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Name</h5>
+                        <p class="card-text">@item.Organization</p>
+                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+
+                        <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id" onclick="openModel(event, this)" role="button" aria-pressed="true">Подробней</a>
+                        <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.Id" role="button" aria-pressed="true">Изменить</a>
+                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id" role="button" aria-pressed="true">Удалить</a>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="container">
+            Сотрудники не найдены
+        </div>
+    }
+
+</div>
+
+<section>
+    <div class="container">
+        <a class="btn btn-primary float-right" asp-action="Create" onclick="openModel(event, this)" role="button" aria-pressed="true">Добавить</a>
+    </div>
+</section>
+
+<script type="text/javascript" src="~/js/detailModal.js" asp-append-version="true"></script>

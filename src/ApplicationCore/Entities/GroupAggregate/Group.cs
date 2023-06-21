@@ -12,11 +12,11 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.GroupAggregate
         public int IdOrganization { get; private set; }
 
         private readonly List<GroupItem> _items = new List<GroupItem>();
-        public IReadOnlyCollection<GroupItem> Items => _items.AsReadOnly();
+        public virtual IReadOnlyCollection<GroupItem> Items => _items.AsReadOnly();
         public string Name { get; private set; }
         public int Quantity => _items.Count;
 
-        public Organization Organization { get; private set; }
+        public virtual Organization Organization { get; private set; }
 
         public Group(int organizationId, string nameGroup)
         {

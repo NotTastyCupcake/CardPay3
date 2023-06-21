@@ -4,7 +4,7 @@ using Metcom.CardPay3.ApplicationCore.Interfaces;
 using Metcom.CardPay3.ApplicationCore.Specifications;
 using Metcom.CardPay3.Infrastructure.Identity;
 using Metcom.CardPay3.WebApplication.Interfaces;
-using Metcom.CardPay3.WebApplication.Pages.Accrual;
+using Metcom.CardPay3.WebApplication.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -17,12 +17,12 @@ namespace Metcom.CardPay3.WebApplication.Services
     public class AccrualViewModelService : IAccrualViewModelService
     {
         private readonly IRepository<Accrual> _accrualRepository;
-        private readonly IRepository<Employer> _itemRepository;
+        private readonly IRepository<Employe> _itemRepository;
         private readonly UserManager<ApplicationUser> _userManager;
 
         
         public AccrualViewModelService(IRepository<Accrual> accrualRepository, 
-            IRepository<Employer> itemRepository, UserManager<ApplicationUser> userManager)
+            IRepository<Employe> itemRepository, UserManager<ApplicationUser> userManager)
         {
             _accrualRepository = accrualRepository;
             _itemRepository = itemRepository;
@@ -34,21 +34,21 @@ namespace Metcom.CardPay3.WebApplication.Services
 
             var user = await _userManager.FindByNameAsync(userName);
 
-            var accrualSpec = new AccrualSpecification(idOrganization: user.IdOrganization);
+            var accrualSpec = new AccrualSpecification(idOrganization: user.IdOrganization.ToString());
             var accrual = (await _accrualRepository.ListAsync(accrualSpec)).FirstOrDefault();
 
             if(accrual == null)
             {
-                return await CreateAsyncAccrualForOrganization(accrual.IdOrganization, 
-                    accrual.AccrualDay, 
-                    accrual.IdAccruaType, 
-                    accrual.IdOperationType);
+                return await CreateAsyncAccrualForOrganization(user.IdOrganization, 
+                    DateTime.Now.AddMonths(1), 
+                    1, 
+                    1);
             }
             return await CreateViewModelFromBasket(accrual);
         }
 
         private async Task<AccrualViewModel> CreateAsyncAccrualForOrganization(int organizationId,
-            int accrualDay,
+            DateTime accrualDay,
             int accrualType,
             int accrualOperationType)
         {
@@ -80,7 +80,7 @@ namespace Metcom.CardPay3.WebApplication.Services
 
         private async Task<List<AccrualItemViewModel>> GetAsyncAccrualItems(IReadOnlyCollection<AccrualItem> accrualItems)
         {
-            var employerItemsSpecification = new EmployersSpecification(accrualItems.Select(b => b.IdEmployer).ToArray());
+            var employerItemsSpecification = new EmployesSpecification(accrualItems.Select(b => b.IdEmployer).ToArray());
             var employerItems = await _itemRepository.ListAsync(employerItemsSpecification);
 
             var items = accrualItems.Select(accrualItem =>
@@ -91,7 +91,7 @@ namespace Metcom.CardPay3.WebApplication.Services
                 {
                     Id = accrualItem.Id,
                     FullName = employerItem.FullName,
-                    Amouth = accrualItem.Amount,
+                    Amount = accrualItem.Amount,
                     EmployerId = employerItem.Id,
                     Date = accrualItem.Date
                 };

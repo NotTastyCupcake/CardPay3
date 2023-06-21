@@ -10,7 +10,7 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate
     public class RequisitesItem : BaseEntity
     {
         public int? IdEmployer { get; private set; }
-        public Employer? Employer { get; private set; }
+        public virtual Employe? Employer { get; private set; }
 
         public RequisitesItem()
         {
@@ -41,9 +41,9 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate
             IdEmployer = idEmployer;
         }
 
-        public BankDivision Division { get; private set; }
+        public virtual BankDivision Division { get; private set; }
         public int IdDivision { get; private set; }
-        public BankCurrency Currency { get; private set; }
+        public virtual BankCurrency Currency { get; private set; }
         public int IdCurrency { get; private set; }
         
 
@@ -64,9 +64,11 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate
         public string LatinLastName { get; private set; }
         public string CardNumber { get; private set; }
         public string AccountNumber { get; private set; }
-        public BankCardType? CardType { get; private set; }
+        public virtual BankCardType? CardType { get; private set; }
         public int IdCardType { get; private set; }
         #endregion
+
+        //TODO: Создать поле статуса передачи реквезитов
 
         public void UpdateCard(string lastName, string firstName, string cardNumber, string accountNumber, int idCardType)
         {

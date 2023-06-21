@@ -13,6 +13,7 @@ namespace Metcom.CardPay3.Infrastructure.Data.Config
     {
         public void Configure(EntityTypeBuilder<Accrual> builder)
         {
+            builder.HasKey(ci => ci.Id);
             builder.ToTable("Accrual");
 
             var navigation = builder.Metadata.FindNavigation(nameof(Accrual.Items));

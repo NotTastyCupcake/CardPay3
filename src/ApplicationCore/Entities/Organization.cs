@@ -9,7 +9,9 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
 {
     public class Organization : BaseEntity
     {
+        public virtual ICollection<Employe> Employes { get; private set; }
         public string Name { get; private set; }
+
         public Organization(string name)
         {
             Name = name;

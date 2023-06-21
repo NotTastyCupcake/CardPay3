@@ -12,29 +12,29 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.AccrualAggregate
     /// </summary>
     public class Accrual : BaseEntity
     {
-        private List<AccrualItem> _items = new List<AccrualItem>();
+        private readonly List<AccrualItem> _items = new List<AccrualItem>();
 
-        public IReadOnlyCollection<AccrualItem> Items => _items.AsReadOnly();
+        public virtual IReadOnlyCollection<AccrualItem> Items => _items.AsReadOnly();
 
         #region Ссылки на объект
         public int IdOrganization { get; private set; }
-        public Organization Organization { get; private set; }
+        public virtual Organization Organization { get; private set; }
 
         public int IdAccruaType { get; private set; }
 
         public int IdOperationType { get; private set; }
-        public OperationType OperationType { get; set; }
+        public virtual OperationType OperationType { get; set; }
         #endregion
 
-        public int AccrualDay { get; private set; }
+        public DateTime AccrualDay { get; private set; }
 
         public decimal TotalAmount => _items.Sum(i => i.Amount);
 
 
-        public Accrual(int idOrganization, int accrualDay, int idAccrualType, int idOperationType)
+        public Accrual(int idOrganization, DateTime accrualDay, int idAccrualType, int idOperationType)
         {
             IdOrganization = idOrganization;
-            SetAccrualDay(accrualDay);
+            AccrualDay = accrualDay;
             IdAccruaType = idAccrualType;
             IdOperationType = idOperationType;
         }
@@ -63,13 +63,6 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.AccrualAggregate
             Guard.Against.OutOfRange(organizationId, nameof(organizationId), 1, int.MaxValue);
 
             IdOrganization = organizationId;
-        }
-
-        public void SetAccrualDay(int accrualDay)
-        {
-            Guard.Against.OutOfRange(accrualDay, nameof(accrualDay), 1, 31);
-
-            AccrualDay = accrualDay;
         }
     }
 }
