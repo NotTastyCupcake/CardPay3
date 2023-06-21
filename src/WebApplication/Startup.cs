@@ -54,6 +54,17 @@ namespace Metcom.CardPay3.WebApplication
                     Configuration.GetConnectionString("MainConnection")));
         }
 
+        private void ConfigureInMemoryDatabases(IServiceCollection services)
+        {
+            // use in-memory database
+            services.AddDbContext<EmployeContext>(c =>
+                c.UseInMemoryDatabase("Catalog"));
+
+            // Add Identity DbContext
+            services.AddDbContext<AppIdentityDbContext>(options =>
+                options.UseInMemoryDatabase("Identity"));
+        }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
