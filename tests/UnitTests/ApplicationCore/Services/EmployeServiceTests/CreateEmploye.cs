@@ -41,7 +41,7 @@ namespace Metcom.CardPay3.UnitTests.ApplicationCore.Services.EmployeServiceTests
         //private readonly string SubdivisionCodeDocument = "Test SubdivisionCodeDocument";
         private readonly int _organizationId = 0;
 
-        [Test]
+        //[Test]
         public async Task InvokesEmployeRepositoryGetBySpecAsyncOnce()
         {
             //TODO: Создать юнит тест
