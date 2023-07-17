@@ -8,4 +8,11 @@
     <RootNamespace>Metcom.CardPay3.WpfApplication</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
+    <Folder Include="Models\" />
+    <Folder Include="Services\" />
+    <Folder Include="ViewModels\" />
+  </ItemGroup>
+
 </Project>
