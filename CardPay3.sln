@@ -25,6 +25,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{4AAE6D09-852A-44F7-8A47-DDC75A742639}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfApplication", "src\UI\WpfApplication\WpfApplication.csproj", "{66FDD9B0-045A-42C4-8CAD-465567FB7135}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{2C0AB5DB-A2E1-4620-98F9-02008BE4713C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C0AB5DB-A2E1-4620-98F9-02008BE4713C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C0AB5DB-A2E1-4620-98F9-02008BE4713C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66FDD9B0-045A-42C4-8CAD-465567FB7135}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66FDD9B0-045A-42C4-8CAD-465567FB7135}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66FDD9B0-045A-42C4-8CAD-465567FB7135}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66FDD9B0-045A-42C4-8CAD-465567FB7135}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -57,6 +63,7 @@ Global
 		{3F9B07C7-1475-4438-83E9-F852A1F59765} = {4AAE6D09-852A-44F7-8A47-DDC75A742639}
 		{2C0AB5DB-A2E1-4620-98F9-02008BE4713C} = {C24092DF-B3A7-4AAD-B152-545B939E80E1}
 		{4AAE6D09-852A-44F7-8A47-DDC75A742639} = {C24092DF-B3A7-4AAD-B152-545B939E80E1}
+		{66FDD9B0-045A-42C4-8CAD-465567FB7135} = {4AAE6D09-852A-44F7-8A47-DDC75A742639}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C9DCED69-76EE-4F9E-8D0E-1534A4090268}
