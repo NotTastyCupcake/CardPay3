@@ -7,6 +7,19 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-
+        <Menu Height="25" VerticalAlignment="Top">
+            <MenuItem Header="File">
+                <MenuItem Header="New Project" ></MenuItem>
+                <MenuItem Header="Open Project" >
+                    <MenuItem Header="WinForms"></MenuItem>
+                    <MenuItem Header="WPF" ></MenuItem>
+                </MenuItem>
+                <Separator />
+                <MenuItem Header="Exit" ></MenuItem>
+            </MenuItem>
+            <MenuItem Header="Edit" ></MenuItem>
+            <MenuItem Header="View" ></MenuItem>
+        </Menu>
+        <ComboBox x:Name="Organizations" DisplayMemberPath="Name" SelectedValuePath="Id" Width="300" Height="20"/>
     </Grid>
 </Window>
