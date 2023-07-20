@@ -41,12 +41,13 @@ namespace Metcom.CardPay3.Infrastructure.Data
         public DbSet<AccrualItem> AccrualItems { get; set; }
         public DbSet<OperationType> Operations { get; set; }
 
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
-
+        //TODO: Inegration test https://www.thinktecture.com/en/entity-framework-core/entity-framework-core7-n1-queries-problem/
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
