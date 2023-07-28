@@ -8,28 +8,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Metcom.CardPay3.WpfApplication
+namespace Metcom.CardPay3.WpfApplication;
+public class AppBootstrapper : ReactiveObject, IScreen
 {
-    public class AppBootstrapper : ReactiveObject, IScreen
+    public RoutingState Router { get; private set; }
+
+    public AppBootstrapper()
     {
-        public RoutingState Router { get; private set; }
+        // View "StackTrace"
+        Router = new RoutingState();
 
-        public AppBootstrapper()
-        {
-            // View "StackTrace"
-            Router = new RoutingState();
+        //// This is our main window host
+        //Locator.CurrentMutable.RegisterLazySingleton(() => this, typeof(IScreen));
 
-            //// This is our main window host
-            //Locator.CurrentMutable.RegisterLazySingleton(() => this, typeof(IScreen));
-
-            //// Repositories
-            //Locator.CurrentMutable.Register(() => typeof(EfRepository<>), typeof(IRepository<>));
+        //// Repositories
+        //Locator.CurrentMutable.Register(() => typeof(EfRepository<>), typeof(IRepository<>));
 
 
-
-
-        }
 
 
     }
+
+
 }

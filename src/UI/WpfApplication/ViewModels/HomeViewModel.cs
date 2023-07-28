@@ -14,19 +14,17 @@ using System.Threading.Channels;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Metcom.CardPay3.WpfApplication.ViewModels
+namespace Metcom.CardPay3.WpfApplication.ViewModels;
+public class HomeViewModel : ReactiveObject
 {
-    public class HomeViewModel : ReactiveObject
+    public ObservableCollection<Organization> Organizations { get; set; }
+    public Organization Organization { get; set; }
+    public ReactiveCommand<Organization, Window> Employes;
+    public HomeViewModel()
     {
-        public ObservableCollection<Organization> Organizations { get; set; }
-        public Organization Organization { get; set; }
-        public ReactiveCommand<Organization, Window> Employes;
-        public HomeViewModel()
-        {
-            Organizations = new ObservableCollection<Organization>
+        Organizations = new ObservableCollection<Organization>
             {
                 new Organization("Test Organization")
             };
-        }
     }
 }

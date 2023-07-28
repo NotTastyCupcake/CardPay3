@@ -17,29 +17,28 @@ using ReactiveUI;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 
-namespace Metcom.CardPay3.WpfApplication
+namespace Metcom.CardPay3.WpfApplication;
+/// <summary>
+/// Interaction logic for MainWindow.xaml
+/// </summary>
+public partial class MainWindow : Window, IViewFor<HomeViewModel>
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : Window, IViewFor<HomeViewModel>
+    public static readonly DependencyProperty ViewModelProperty = DependencyProperty
+        .Register(nameof(ViewModel), typeof(HomeViewModel), typeof(MainWindow));
+
+    public MainWindow()
     {
-        public static readonly DependencyProperty ViewModelProperty = DependencyProperty
-            .Register(nameof(ViewModel), typeof(HomeViewModel), typeof(MainWindow));
-
-        public MainWindow()
-        {
-            InitializeComponent();
-            ViewModel = new HomeViewModel();
-            //TODO: Добавить значение "Создать организацию"
-            this.WhenActivated(disposable => { 
-                this.OneWayBind(this.ViewModel, 
-                                vm => vm.Organizations,
-                                view => view.Organizations.ItemsSource)
-                .DisposeWith(disposable); });
-        }
-
-        public HomeViewModel ViewModel { get => (HomeViewModel)GetValue(ViewModelProperty); set => SetValue(ViewModelProperty, value); }
-        object IViewFor.ViewModel { get => ViewModel; set => ViewModel = (HomeViewModel)value; }
+        InitializeComponent();
+        ViewModel = new HomeViewModel();
+        //TODO: Добавить значение "Создать организацию"
+        this.WhenActivated(disposable => {
+            this.OneWayBind(this.ViewModel,
+                            vm => vm.Organizations,
+                            view => view.Organizations.ItemsSource)
+            .DisposeWith(disposable);
+        });
     }
+
+    public HomeViewModel ViewModel { get => (HomeViewModel)GetValue(ViewModelProperty); set => SetValue(ViewModelProperty, value); }
+    object IViewFor.ViewModel { get => ViewModel; set => ViewModel = (HomeViewModel)value; }
 }
