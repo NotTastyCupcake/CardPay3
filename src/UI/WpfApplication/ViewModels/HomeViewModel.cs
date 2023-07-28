@@ -15,13 +15,18 @@ using System.Threading.Tasks;
 using System.Windows;
 
 namespace Metcom.CardPay3.WpfApplication.ViewModels;
-public class HomeViewModel : ReactiveObject
+public class HomeViewModel : ReactiveObject, IScreen
 {
+    public RoutingState Router { get; }
+
     public ObservableCollection<Organization> Organizations { get; set; }
     public Organization Organization { get; set; }
+
     public ReactiveCommand<Organization, Window> Employes;
     public HomeViewModel()
     {
+        Router = new RoutingState();
+
         Organizations = new ObservableCollection<Organization>
             {
                 new Organization("Test Organization")
