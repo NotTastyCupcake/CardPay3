@@ -8,7 +8,7 @@ using System.Windows;
 
 namespace Metcom.CardPay3.WpfApplication
 {
-    public IServiceProvider Container { get; private set; }
+    //public IServiceProvider Container { get; private set; }
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>

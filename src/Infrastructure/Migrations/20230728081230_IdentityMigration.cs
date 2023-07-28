@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
+#nullable disable
+
 namespace Metcom.CardPay3.Infrastructure.Migrations
 {
     public partial class IdentityMigration : Migration
