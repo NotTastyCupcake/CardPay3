@@ -98,7 +98,7 @@ namespace Metcom.CardPay3.WebApplication.Controllers
             {
                 ViewBag.Genders = await _viewModelservice.GetGenders();
                 ViewBag.DocumentTypes = await _viewModelservice.GetDocumentTypes();
-
+                _logger.LogError(exception: ex, "Ошибка!");
                 return View("_Create_Model");
             }
         }
