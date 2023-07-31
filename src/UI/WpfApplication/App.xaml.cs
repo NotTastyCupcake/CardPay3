@@ -1,4 +1,9 @@
-﻿using Metcom.CardPay3.Infrastructure.Data;
+﻿using Metcom.CardPay3.ApplicationCore.Interfaces.ServicesInterfaces.Builder;
+using Metcom.CardPay3.ApplicationCore.Interfaces.ServicesInterfaces;
+using Metcom.CardPay3.ApplicationCore.Interfaces;
+using Metcom.CardPay3.ApplicationCore.Services.Builder;
+using Metcom.CardPay3.ApplicationCore.Services;
+using Metcom.CardPay3.Infrastructure.Data;
 using Metcom.CardPay3.Infrastructure.Identity;
 using Metcom.CardPay3.WpfApplication.ViewModels;
 using Microsoft.AspNetCore.Identity;
@@ -19,6 +24,8 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using Metcom.CardPay3.Infrastructure.Logging;
+using Metcom.CardPay3.Infrastructure.Services;
 
 namespace Metcom.CardPay3.WpfApplication;
 
@@ -34,11 +41,11 @@ public partial class App// : Application
 
     public App()
     {
-        Task.Run( async() => { await Initialize(); }).GetAwaiter().GetResult();
+        Initialize();
         /* Some other initialization stuff */
     }
 
-    private async Task Initialize()
+    private void Initialize()
     {
         var builder = new ConfigurationBuilder()
              .SetBasePath(Directory.GetCurrentDirectory())
@@ -74,12 +81,12 @@ public partial class App// : Application
             try
             {
                 var catalogContext = services.GetRequiredService<EmployeContext>();
-                await EmployeContextSeed.SeedAsync(catalogContext, loggerFactory);
+                Task.Run(() => EmployeContextSeed.SeedAsync(catalogContext, loggerFactory));
 
-                //var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
-                //var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-                //var identityContext = services.GetRequiredService<AppIdentityDbContext>();
-                //await AppIdentityDbContextSeed.SeedAsync(identityContext, userManager, roleManager);
+                var MainWindow = (MainWindow)services.GetRequiredService<IViewFor<HomeViewModel>>();
+                MainWindow.Show();
+
+
             }
             catch (Exception ex)
             {
@@ -119,14 +126,28 @@ public partial class App// : Application
 
     private void ConfigureServices(IServiceCollection services)
     {
+        services.AddScoped(typeof(IReadRepository<>), typeof(EfRepository<>));
+        services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
+
+        services.AddScoped<IAccrualService, AccrualService>();
+        services.AddScoped<IEmployeService, EmployeService>();
+
+        services.AddScoped<IEmployeBuilder, EmployeBuilder>();
+
+        services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
+        services.AddTransient<IEmailSender, EmailSender>();
+
+
         // register your personal services here, for example
         services.AddSingleton<HomeViewModel>(); //Implements IScreen
 
         // this passes IScreen resolution through to the previous viewmodel registration.
         // this is to prevent multiple instances by mistake.
-        services.AddSingleton<IScreen, HomeViewModel>(x => x.GetRequiredService<HomeViewModel>());
+        services.AddSingleton<IRoutableViewModel, HomeViewModel>(x => x.GetRequiredService<HomeViewModel>());
 
         services.AddSingleton<IViewFor<HomeViewModel>, MainWindow>();
+
+
 
         //alternatively search assembly for `IRoutedViewFor` implementations
         //see https://reactiveui.net/docs/handbook/routing to learn more about routing in RxUI

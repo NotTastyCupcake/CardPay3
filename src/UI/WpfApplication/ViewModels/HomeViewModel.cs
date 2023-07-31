@@ -15,21 +15,18 @@ using System.Threading.Tasks;
 using System.Windows;
 
 namespace Metcom.CardPay3.WpfApplication.ViewModels;
-public class HomeViewModel : ReactiveObject, IScreen
+public class HomeViewModel : ReactiveObject, IRoutableViewModel
 {
-    public RoutingState Router { get; }
+    public string UrlPathSegment { get { return "Home"; } }
+    public IScreen HostScreen { get; protected set; }
+
 
     public ObservableCollection<Organization> Organizations { get; set; }
     public Organization Organization { get; set; }
-
     public ReactiveCommand<Organization, Window> Employes;
-    public HomeViewModel()
-    {
-        Router = new RoutingState();
 
-        Organizations = new ObservableCollection<Organization>
-            {
-                new Organization("Test Organization")
-            };
+    public HomeViewModel(IScreen screen = null)
+    {
+        HostScreen = screen;
     }
 }

@@ -26,10 +26,10 @@ public partial class MainWindow : Window, IViewFor<HomeViewModel>
     public static readonly DependencyProperty ViewModelProperty = DependencyProperty
         .Register(nameof(ViewModel), typeof(HomeViewModel), typeof(MainWindow));
 
-    public MainWindow()
+    public MainWindow(HomeViewModel viewModel)
     {
         InitializeComponent();
-        ViewModel = new HomeViewModel();
+        ViewModel = viewModel;
         //TODO: Добавить значение "Создать организацию"
         this.WhenActivated(disposable => {
             this.OneWayBind(this.ViewModel,
