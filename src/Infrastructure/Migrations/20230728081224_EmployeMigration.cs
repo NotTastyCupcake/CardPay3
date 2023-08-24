@@ -1,7 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Metcom.CardPay3.Infrastructure.Migrations.Employe
+#nullable disable
+
+namespace Metcom.CardPay3.Infrastructure.Migrations
 {
     public partial class EmployeMigration : Migration
     {
@@ -208,8 +210,7 @@ namespace Metcom.CardPay3.Infrastructure.Migrations.Employe
                         name: "FK_Employers_Organizations_IdOrganization",
                         column: x => x.IdOrganization,
                         principalTable: "Organizations",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -228,8 +229,7 @@ namespace Metcom.CardPay3.Infrastructure.Migrations.Employe
                         name: "FK_GroupItem_Groups_GroupId",
                         column: x => x.GroupId,
                         principalTable: "Groups",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -250,8 +250,7 @@ namespace Metcom.CardPay3.Infrastructure.Migrations.Employe
                         name: "FK_AccrualItems_Accrual_AccrualId",
                         column: x => x.AccrualId,
                         principalTable: "Accrual",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_AccrualItems_Employers_IdEmployer",
                         column: x => x.IdEmployer,
