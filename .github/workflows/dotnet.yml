@@ -12,9 +12,9 @@ jobs:
     runs-on: windows
 
     steps:
-    - uses: https://github.com/actions/checkout@v3
+    - uses: https://gitea.com/actions/checkout@v3
     - name: Setup .NET
-      uses: https://github.com/actions/setup-dotnet@v2
+      uses: https://gitea.com/actions/setup-dotnet@v2
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
