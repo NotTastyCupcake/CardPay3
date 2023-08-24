@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using ReactiveUI;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using Splat;
 
 namespace Metcom.CardPay3.WpfApplication;
 /// <summary>
@@ -26,10 +27,13 @@ public partial class MainWindow : Window, IViewFor<HomeViewModel>
     public static readonly DependencyProperty ViewModelProperty = DependencyProperty
         .Register(nameof(ViewModel), typeof(HomeViewModel), typeof(MainWindow));
 
-    public MainWindow(HomeViewModel viewModel)
+    public MainWindow(HomeViewModel viewModel = null)
     {
+        ViewModel = viewModel ?? Locator.Current.GetService<HomeViewModel>();
+
         InitializeComponent();
-        ViewModel = viewModel;
+        
+
         //TODO: Добавить значение "Создать организацию"
         this.WhenActivated(disposable => {
             this.OneWayBind(this.ViewModel,

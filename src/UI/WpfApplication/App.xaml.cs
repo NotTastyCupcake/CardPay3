@@ -26,6 +26,10 @@ using System.Threading.Tasks;
 using System.Windows;
 using Metcom.CardPay3.Infrastructure.Logging;
 using Metcom.CardPay3.Infrastructure.Services;
+using Metcom.CardPay3.ApplicationCore.Entities;
+using Metcom.CardPay3.ApplicationCore.Entities.AccrualAggregate;
+using Metcom.CardPay3.WpfApplication.Interfaces;
+using Metcom.CardPay3.WpfApplication.Services;
 
 namespace Metcom.CardPay3.WpfApplication;
 
@@ -68,7 +72,7 @@ public partial class App// : Application
             {
                 loggingBuilder.AddSplat();
             })
-            .UseEnvironment(Environments.Development)
+            //.UseEnvironment(Environments.Development)
             .Build();
 
         Container = host.Services;
@@ -115,9 +119,9 @@ public partial class App// : Application
 
     private void ConfigureMsSqlDatabases(IServiceCollection services)
     {
-        services.AddDbContext<AppIdentityDbContext>(options =>
-            options.UseSqlServer(
-                Configuration.GetConnectionString("IdentityConnection")));
+        //services.AddDbContext<AppIdentityDbContext>(options =>
+        //    options.UseSqlServer(
+        //        Configuration.GetConnectionString("IdentityConnection")));
 
         services.AddDbContext<EmployeContext>(options =>
             options.UseSqlServer(
@@ -129,8 +133,12 @@ public partial class App// : Application
         services.AddScoped(typeof(IReadRepository<>), typeof(EfRepository<>));
         services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
 
+        services.AddScoped<IRepository<Organization>, EfRepository<Organization>>();
+
         services.AddScoped<IAccrualService, AccrualService>();
         services.AddScoped<IEmployeService, EmployeService>();
+
+        services.AddScoped<IHomeViewModelService, HomeViewModelService>();
 
         services.AddScoped<IEmployeBuilder, EmployeBuilder>();
 
