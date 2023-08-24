@@ -46,10 +46,10 @@ public class HomeViewModel : ReactiveObject, IRoutableViewModel
         _logger = logger ?? Locator.Current.GetService<ILogger<HomeViewModel>>();
         _viewModelService = viewModelService ?? Locator.Current.GetService<IHomeViewModelService>();
 
-        Task.Run(() => Inintialize());
+        Task.Run(() => Initialize());
     }
 
-    private async Task Inintialize()
+    private async Task Initialize()
     {
         _logger.LogInformation("Inintialize HomeViewModel.");
 
