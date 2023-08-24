@@ -47,6 +47,7 @@ public class HomeViewModel : ReactiveObject, IRoutableViewModel
         _viewModelService = viewModelService ?? Locator.Current.GetService<IHomeViewModelService>();
 
         Task.Run(() => Initialize());
+
     }
 
     private async Task Initialize()
