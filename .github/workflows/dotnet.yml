@@ -14,7 +14,7 @@ jobs:
     steps:
     - uses: https://gitea.com/actions/checkout@v3
     - name: Setup .NET
-      uses: https://gitea.com/actions/setup-dotnet@v2
+      uses: https://github.com/actions/setup-dotnet@v2
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
