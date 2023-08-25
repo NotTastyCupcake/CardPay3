@@ -29,17 +29,50 @@ public partial class MainWindow : Window, IViewFor<HomeViewModel>
 
     public MainWindow(HomeViewModel viewModel = null)
     {
-        ViewModel = viewModel ?? Locator.Current.GetService<HomeViewModel>();
-
         InitializeComponent();
-        
 
-        //TODO: Добавить значение "Создать организацию"
-        this.WhenActivated(disposable => {
+        ViewModel = viewModel ?? Locator.Current.GetService<HomeViewModel>();
+        DataContext = ViewModel;
+        
+        this.WhenActivated(disposable => 
+        {
+
+            // Двунаправленная привязка значения позиции клапана. Конверторы значений свойства в модели и в представлении: FloatToStringConverter, StringToFloatConverter
             this.OneWayBind(this.ViewModel,
-                            vm => vm.Organizations,
-                            view => view.Organizations.ItemsSource)
+                vm => vm.Organizations,
+                view => view.Organizations.ItemsSource)
             .DisposeWith(disposable);
+
+            this.Bind(this.ViewModel,
+                vm => vm.SelectedOrganization,
+                view => view.Organizations.SelectedItem)
+            .DisposeWith(disposable);
+
+            //enable buttons
+            this.OneWayBind(this.ViewModel,
+                vm => vm.IsRealOrganization,
+                view => view.EmployeeListButton.IsEnabled)
+            .DisposeWith(disposable);
+
+            this.OneWayBind(this.ViewModel,
+                vm => vm.IsRealOrganization,
+                view => view.AccryalListButton.IsEnabled)
+            .DisposeWith(disposable);
+
+            /* Привязка команд к кнопкам */
+            this.BindCommand(this.ViewModel,
+                vm => vm.RoutingEmployeeCommand,
+                view => view.EmployeeListButton)
+            .DisposeWith(disposable);
+
+            this.BindCommand(this.ViewModel,
+                vm => vm.RoutingAccrualCommand,
+                view => view.AccryalListButton)
+            .DisposeWith(disposable);
+
+
+
+
         });
     }
 
