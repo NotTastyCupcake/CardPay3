@@ -30,6 +30,7 @@ using Metcom.CardPay3.ApplicationCore.Entities;
 using Metcom.CardPay3.ApplicationCore.Entities.AccrualAggregate;
 using Metcom.CardPay3.WpfApplication.Interfaces;
 using Metcom.CardPay3.WpfApplication.Services;
+using Metcom.CardPay3.WpfApplication.Views;
 
 namespace Metcom.CardPay3.WpfApplication;
 
@@ -49,7 +50,7 @@ public partial class App// : Application
         /* Some other initialization stuff */
     }
 
-    private void Initialize()
+    private async void Initialize()
     {
         var builder = new ConfigurationBuilder()
              .SetBasePath(Directory.GetCurrentDirectory())
@@ -85,7 +86,7 @@ public partial class App// : Application
             try
             {
                 var catalogContext = services.GetRequiredService<EmployeContext>();
-                Task.Run(() => EmployeContextSeed.SeedAsync(catalogContext, loggerFactory));
+                await EmployeContextSeed.SeedAsync(catalogContext, loggerFactory);
 
                 var MainWindow = (MainWindow)services.GetRequiredService<IViewFor<HomeViewModel>>();
                 MainWindow.Show();
@@ -133,12 +134,11 @@ public partial class App// : Application
         services.AddScoped(typeof(IReadRepository<>), typeof(EfRepository<>));
         services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
 
-        services.AddScoped<IRepository<Organization>, EfRepository<Organization>>();
-
         services.AddScoped<IAccrualService, AccrualService>();
         services.AddScoped<IEmployeService, EmployeService>();
 
         services.AddScoped<IHomeViewModelService, HomeViewModelService>();
+        services.AddScoped<IEmployeViewModelService, EmployeViewModelService>();
 
         services.AddScoped<IEmployeBuilder, EmployeBuilder>();
 
@@ -148,19 +148,15 @@ public partial class App// : Application
 
         // register your personal services here, for example
         services.AddSingleton<HomeViewModel>(); //Implements IScreen
-
         // this passes IScreen resolution through to the previous viewmodel registration.
         // this is to prevent multiple instances by mistake.
-        services.AddSingleton<IRoutableViewModel, HomeViewModel>(x => x.GetRequiredService<HomeViewModel>());
-
+        services.AddSingleton<IScreen, HomeViewModel>(x => x.GetRequiredService<HomeViewModel>());
         services.AddSingleton<IViewFor<HomeViewModel>, MainWindow>();
-
-
 
         //alternatively search assembly for `IRoutedViewFor` implementations
         //see https://reactiveui.net/docs/handbook/routing to learn more about routing in RxUI
-        //services.AddTransient<IViewFor<SecondaryViewModel>, SecondaryPage>();
-        //services.AddTransient<SecondaryViewModel>();
+        services.AddTransient<IViewFor<EmployeeListViewModel>, EmployeListView>();
+        services.AddTransient<EmployeeListViewModel>();
     }
 
 }
