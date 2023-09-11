@@ -12,6 +12,9 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.AddressAggregate
         public virtual Employe? Employer { get; private set; }
 
         #region Поля
+
+        public string FullName => $"{Postcode}, {Country}, {State}, {City},ул. {Street},д. {NumHome}";
+
         public string Country { get; private set; }
         public int Postcode { get; private set; }
         /// <summary>
