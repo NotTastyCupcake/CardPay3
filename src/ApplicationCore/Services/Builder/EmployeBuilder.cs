@@ -45,8 +45,10 @@ namespace Metcom.CardPay3.ApplicationCore.Services.Builder
                 _logger.LogWarning("Empty Address");
                 return;
             }
-            _employe.Addresses = new List<Address>();
-            _employe.Addresses.Add(employeAddress);
+            _employe.Addresses = new List<Address>
+            {
+                employeAddress
+            };
 
         }
 
@@ -57,8 +59,10 @@ namespace Metcom.CardPay3.ApplicationCore.Services.Builder
                 _logger.LogWarning("Empty Requisites");
                 return;
             }
-            _employe.Requisites = new List<RequisitesItem>();
-            _employe.Requisites.Add(employeRequisites);
+            _employe.Requisites = new List<RequisitesItem>
+            {
+                employeRequisites
+            };
         }
 
         public Employe GetEmploye()
