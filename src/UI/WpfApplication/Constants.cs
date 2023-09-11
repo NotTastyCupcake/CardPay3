@@ -10,7 +10,7 @@ namespace Metcom.CardPay3.WpfApplication
     {
         public enum RoutingIDs
         {
-            Main,
+            Menu,
             AccrualList,
             EmployeeList,
             CreateOrganization

@@ -29,9 +29,10 @@ namespace Metcom.CardPay3.WpfApplication.Services
             _logger.LogInformation("GetOrganizations called.");
             var organizations = await _organizationRepository.ListAsync();
 
-            var items = new ObservableCollection<Organization>();
-            items.AddRange(organizations);
-            items.Add(new Organization("Создать организацию."));
+            var items = new ObservableCollection<Organization>(organizations)
+            {
+                new Organization("Создать организацию.")
+            };
 
             return items;
         }

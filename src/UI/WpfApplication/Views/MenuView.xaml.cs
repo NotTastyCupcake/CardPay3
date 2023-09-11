@@ -20,36 +20,27 @@ using System.Windows.Shapes;
 namespace Metcom.CardPay3.WpfApplication.Views
 {
     /// <summary>
-    /// Логика взаимодействия для EmployeListView.xaml
+    /// Логика взаимодействия для MenuView.xaml
     /// </summary>
-    public partial class EmployeListView
+    public partial class MenuView : IViewFor<MenuViewModel>
     {
-        public EmployeListView(EmployeeListViewModel viewModel = null)
+        public MenuView(MenuViewModel viewModel = null)
         {
-            ViewModel = viewModel ?? Locator.Current.GetService<EmployeeListViewModel>();
+            ViewModel = viewModel ?? Locator.Current.GetService<MenuViewModel>();
             DataContext = ViewModel;
 
             InitializeComponent();
-
-
             this.WhenActivated(disposable =>
             {
-                this.OneWayBind(this.ViewModel,
-                    vm => vm.Employes,
-                    view => view.Employes.ItemsSource)
-                .DisposeWith(disposable);
-
-                this.Bind(this.ViewModel,
-                    vm => vm.SelectedEmploye,
-                    view => view.Employes.SelectedItem)
-                .DisposeWith(disposable);
-
+                /* Привязка команд к кнопкам */
                 this.BindCommand(this.ViewModel,
-                    vm => vm.RoutingAddEmployeeCommand,
-                    view => view.CreateEmployeButton)
-                .DisposeWith(disposable);
-
+                    vm => vm.RoutingEmployeeCommand,
+                    view => view.EmployeeListButton)
+                    .DisposeWith(disposable);
             });
+
+                
+
         }
     }
 }

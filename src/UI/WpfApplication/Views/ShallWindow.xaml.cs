@@ -22,18 +22,16 @@ namespace Metcom.CardPay3.WpfApplication;
 /// <summary>
 /// Interaction logic for MainWindow.xaml
 /// </summary>
-public partial class MainWindow : Window, IViewFor<HomeViewModel>
+public partial class ShellWindow : IViewFor<HomeViewModel>
 {
-    public static readonly DependencyProperty ViewModelProperty = DependencyProperty
-        .Register(nameof(ViewModel), typeof(HomeViewModel), typeof(MainWindow));
 
-    public MainWindow(HomeViewModel viewModel = null)
+    public ShellWindow(HomeViewModel viewModel = null)
     {
-        InitializeComponent();
-
         ViewModel = viewModel ?? Locator.Current.GetService<HomeViewModel>();
         DataContext = ViewModel;
-        
+
+        InitializeComponent();
+
         this.WhenActivated(disposable => 
         {
 
@@ -48,34 +46,20 @@ public partial class MainWindow : Window, IViewFor<HomeViewModel>
                 view => view.Organizations.SelectedItem)
             .DisposeWith(disposable);
 
-            //enable buttons
-            this.OneWayBind(this.ViewModel,
-                vm => vm.IsRealOrganization,
-                view => view.EmployeeListButton.IsEnabled)
-            .DisposeWith(disposable);
-
-            this.OneWayBind(this.ViewModel,
-                vm => vm.IsRealOrganization,
-                view => view.AccryalListButton.IsEnabled)
-            .DisposeWith(disposable);
 
             /* Привязка команд к кнопкам */
             this.BindCommand(this.ViewModel,
-                vm => vm.RoutingEmployeeCommand,
-                view => view.EmployeeListButton)
+                vm => vm.RoutingGoBackCommand,
+                view => view.GoBackButton)
             .DisposeWith(disposable);
 
-            this.BindCommand(this.ViewModel,
-                vm => vm.RoutingAccrualCommand,
-                view => view.AccryalListButton)
-            .DisposeWith(disposable);
-
-
-
+            // routing
+            this.OneWayBind(ViewModel,
+                    x => x.Router,
+                    x => x.RoutedViewHost.Router)
+                .DisposeWith(disposable);
 
         });
     }
 
-    public HomeViewModel ViewModel { get => (HomeViewModel)GetValue(ViewModelProperty); set => SetValue(ViewModelProperty, value); }
-    object IViewFor.ViewModel { get => ViewModel; set => ViewModel = (HomeViewModel)value; }
 }

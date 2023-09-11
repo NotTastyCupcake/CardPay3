@@ -50,5 +50,17 @@ namespace Metcom.CardPay3.WpfApplication.Services
 
             return items.ToObservableChangeSet(t => t.Id).AsObservableCache();
         }
+
+
+        public async Task<ReadOnlyObservableCollection<Gender>> GetGenders()
+        {
+            _logger.LogInformation("GetGenders called.");
+
+            var employes = await _genderRepository.ListAsync();
+            var items = new ObservableCollection<Gender>(employes);
+
+            return new ReadOnlyObservableCollection<Gender>(items);
+        }
+
     }
 }

@@ -4,14 +4,22 @@ using DynamicData.Binding;
 using Metcom.CardPay3.ApplicationCore.Entities;
 using Metcom.CardPay3.ApplicationCore.Interfaces;
 using Metcom.CardPay3.WpfApplication.Interfaces;
+using Metcom.CardPay3.WpfApplication.ViewModels.Employes;
+using Metcom.CardPay3.WpfApplication.Views.Employes;
 using Microsoft.Extensions.Logging;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using Splat;
 using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.Metrics;
+using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 
@@ -39,12 +47,16 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
             _itemRepository = itemRepository;
 
             HostScreen = screen;
+            
+            // commands
+            RoutingAddEmployeeCommand = ReactiveCommand.Create(delegate ()
+            {
+                HostScreen.Router.Navigate.Execute(Locator.Current.GetService<AddEmployeViewModel>());
+            });
 
+            //Init collection
             ReadOnlyObservableCollection<Employe> bindingData;
-
-
-
-            var items = Task.Run(() => _employeViewModelService.GetEmployes(1)).Result;
+            var items = Task.Run(() => _employeViewModelService.GetEmployes(SelectedOrganization?.Id)).Result;
 
             _cleanUp = items.Connect()
                 .Sort(SortExpressionComparer<Employe>.Ascending(t => t.FullName))
@@ -53,15 +65,40 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
 
             Employes = bindingData;
 
+            Task.Run(() => Initialize());
         }
+
+        private async Task Initialize()
+        {
+            _logger.LogInformation("Inintialize EmployeeListViewModel.");
+
+            this.WhenAnyValue(vm => vm.SelectedEmploye).Subscribe(_ => EditEmploye());
+        }
+
+        private void EditEmploye()
+        {
+            //TODO: Вызов формы изминения
+        }
+        #region commands
+        public ReactiveCommand<int, Unit> RoutingEditEmployeeCommand { get; }
+        public ReactiveCommand<Unit, Unit> RoutingAddEmployeeCommand { get; }
+        public ReactiveCommand<int, Unit> RoutingDetaleEmployeeCommand { get; }
+        public ReactiveCommand<int, Unit> RoutingDeleteEmployeeCommand { get; }
+        #endregion
 
         #region Properties
         public ReadOnlyObservableCollection<Employe> Employes { get; }
+
+        [Reactive]
+        public Employe SelectedEmploye { get; set; }
+
+        [Reactive]
+        public Organization SelectedOrganization { get; set; }
+        #endregion
 
         public void Dispose()
         {
             _cleanUp.Dispose();
         }
-        #endregion
     }
 }
