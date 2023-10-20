@@ -2,7 +2,9 @@
 using DynamicData;
 using DynamicData.Binding;
 using Metcom.CardPay3.ApplicationCore.Entities;
+using Metcom.CardPay3.ApplicationCore.Entities.AddressAggregate;
 using Metcom.CardPay3.ApplicationCore.Interfaces;
+using Metcom.CardPay3.Infrastructure.Data;
 using Metcom.CardPay3.WpfApplication.Interfaces;
 using Metcom.CardPay3.WpfApplication.ViewModels.Employes;
 using Metcom.CardPay3.WpfApplication.Views.Employes;
@@ -18,6 +20,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.Metrics;
 using System.Reactive;
 using System.Reactive.Linq;
+using System.Reflection.Metadata;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls.Primitives;
@@ -53,12 +56,13 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
             {
                 HostScreen.Router.Navigate.Execute(Locator.Current.GetService<AddEmployeViewModel>());
             });
+            RoutingDeleteEmployeeCommand = ReactiveCommand.Create(DeleteEmploye());
 
             //Init collection
             ReadOnlyObservableCollection<Employe> bindingData;
             var items = Task.Run(() => _employeViewModelService.GetEmployes(SelectedOrganization?.Id)).Result;
 
-            _cleanUp = items.Connect()
+            _cleanUp = items
                 .Sort(SortExpressionComparer<Employe>.Ascending(t => t.FullName))
                 .Bind(out bindingData)
                 .Subscribe();
@@ -72,17 +76,22 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
         {
             _logger.LogInformation("Inintialize EmployeeListViewModel.");
 
-            this.WhenAnyValue(vm => vm.SelectedEmploye).Subscribe(_ => EditEmploye());
+            //this.WhenAnyValue(vm => vm.SelectedEmploye).Subscribe();
         }
 
-        private void EditEmploye()
+        private Action<int> DeleteEmploye()
         {
-            //TODO: Вызов формы изминения
+            return async (int id) =>
+            {
+                var employe = await _itemRepository.GetByIdAsync(id);
+                await _itemRepository.DeleteAsync(employe);
+                await HostScreen.Router.Navigate.Execute(Locator.Current.GetService<AddEmployeViewModel>());
+            };
         }
+
         #region commands
         public ReactiveCommand<int, Unit> RoutingEditEmployeeCommand { get; }
         public ReactiveCommand<Unit, Unit> RoutingAddEmployeeCommand { get; }
-        public ReactiveCommand<int, Unit> RoutingDetaleEmployeeCommand { get; }
         public ReactiveCommand<int, Unit> RoutingDeleteEmployeeCommand { get; }
         #endregion
 

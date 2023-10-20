@@ -63,13 +63,15 @@ public class HomeViewModel : ReactiveObject, IScreen
     private async Task Initialize()
     {
         _logger.LogInformation("Inintialize HomeViewModel.");
-        //exec menu
-        MenuViewModel = Locator.Current.GetService<MenuViewModel>();
-        await Router.Navigate.Execute(MenuViewModel);
 
         Organizations = await _viewModelService.GetOrganizations();
         SelectedOrganization = Organizations.FirstOrDefault();
-        
+
+        //exec menu
+        MenuViewModel = Locator.Current.GetService<MenuViewModel>();
+        MenuViewModel.SelectedOrganization = SelectedOrganization;
+        await Router.Navigate.Execute(MenuViewModel);
+
         this.WhenAnyValue(vm => vm.SelectedOrganization).Subscribe(_ => UpdateOrganization());
         
     }

@@ -59,7 +59,6 @@ namespace Metcom.CardPay3.WpfApplication.Views.Employes
                     view => view.LastNameBlock.Text)
                     .DisposeWith(disposable);
 
-
                 this.Bind(this.ViewModel,
                     vm => vm.Employe.MiddleName,
                     view => view.MiddleNameBlock.Text)

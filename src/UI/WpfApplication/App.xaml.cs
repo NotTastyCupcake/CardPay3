@@ -162,14 +162,14 @@ public partial class App// : Application
         services.AddSingleton<IViewFor<MenuViewModel>, MenuView>();
         services.AddSingleton<MenuViewModel>();
 
-        services.AddSingleton<IViewFor<EmployeeListViewModel>, EmployeListView>();
-        services.AddSingleton<EmployeeListViewModel>();
+        services.AddTransient<IViewFor<EmployeeListViewModel>, EmployeListView>();
+        services.AddTransient<EmployeeListViewModel>();
 
-        services.AddSingleton<IViewFor<AddEmployeViewModel>, AddEmployeWindow>();
-        services.AddSingleton<AddEmployeViewModel>();
+        services.AddScoped<IViewFor<AddEmployeViewModel>, AddEmployeWindow>();
+        services.AddScoped<AddEmployeViewModel>();
 
-        services.AddSingleton<IViewFor<AddressViewModel>, AddAddressView>();
-        services.AddSingleton<AddressViewModel>();
+        services.AddScoped<IViewFor<AddressViewModel>, AddAddressView>();
+        services.AddScoped<AddressViewModel>();
 
     }
 

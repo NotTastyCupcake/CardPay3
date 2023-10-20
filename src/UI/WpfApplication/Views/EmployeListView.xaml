@@ -17,37 +17,20 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
-        <TabControl Grid.Row="1" SelectedItem="{Binding SelectedTabItem}">
+        <TabControl Grid.Row="1">
+            
             <TabItem Name="PersonsTab">
                 <TabItem.Header>
                     <TextBlock Text="Список сотрудников"/>
                 </TabItem.Header>
                 <TabItem.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="Дата увольнения" Command="{Binding OpenDismissalItemWnd}"/>
-                        <MenuItem Header="Изменить" Command="{Binding OpenEditItemWnd}"/>
+                        <MenuItem Header="Удалить" x:Name="DeleteCommand" CommandParameter="{Binding RelativeSource={RelativeSource Self},Path=Id}"/>
+                        <MenuItem Header="Изменить" x:Name="EditCommand" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Parent.DependencyObjectType.Id}"/>
                     </ContextMenu>
                 </TabItem.ContextMenu>
                 <ListView x:Name="Employes">
                     <ListView.View>
-                        <!--<GridView>
-                            <GridViewColumn Header="Имя"                                            
-                                            DisplayMemberBinding="{Binding Path=FirstName}"/>
-                            <GridViewColumn Header="Фамилия"
-                                            DisplayMemberBinding="{Binding Path=LastName}"/>
-                            <GridViewColumn Header="Отчество"
-                                            DisplayMemberBinding="{Binding Path=MiddleName}"/>
-                            <GridViewColumn Header="Должность"
-                                            DisplayMemberBinding="{Binding Path=Position}"/>
-                            <GridViewColumn Header="Оклад"
-                                            DisplayMemberBinding="{Binding Path=Salary}"/>
-                            <GridViewColumn Header="Дата трудоустройства"
-                                            DisplayMemberBinding="{Binding Path=EmploymentDate}"/>
-                            <GridViewColumn Header="Дата увольнения"
-                                            DisplayMemberBinding="{Binding Path=DateOfDismissal}"/>
-
-                        </GridView>-->
-
                         <GridView>
                             <GridViewColumn Header="Имя"                                            
                                             DisplayMemberBinding="{Binding Path=FirstName}"/>
@@ -67,6 +50,7 @@
                     </ListView.View>
                 </ListView>
             </TabItem>
+            
             <TabItem Name="PersonsStat">
                 <TabItem.Header>
                     <TextBlock Text="Статистика"/>
@@ -81,7 +65,9 @@
                     <TextBlock Text="{Binding CountPerson}"/>
                 </StackPanel>
             </TabItem>
+            
         </TabControl>
+        
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
             <Button x:Name="CreateEmployeButton" Content="Новый сотрудник"/>
         </StackPanel>

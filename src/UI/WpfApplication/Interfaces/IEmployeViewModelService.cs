@@ -11,7 +11,9 @@ namespace Metcom.CardPay3.WpfApplication.Interfaces
 {
     public interface IEmployeViewModelService
     {
-        Task<IObservableCache<Employe, int>> GetEmployes(int? organizationId);
+        Task<IObservable<IChangeSet<Employe>>> GetEmployes(int? organizationId);
+        Task<IObservable<IChangeSet<Employe>>> GetEmployes();
         Task<ReadOnlyObservableCollection<Gender>> GetGenders();
+
     }
 }

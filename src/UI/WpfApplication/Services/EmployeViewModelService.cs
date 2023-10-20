@@ -40,15 +40,27 @@ namespace Metcom.CardPay3.WpfApplication.Services
             _logger = logger;
         }
 
-        public async Task<IObservableCache<Employe, int>> GetEmployes(int? organizationId)
+        public async Task<IObservable<IChangeSet<Employe>>> GetEmployes(int? organizationId)
         {
             _logger.LogInformation("GetEmployes called.");
 
             var filterSpecification = new EmployesSpecification(organizationId);
             var employes = await _itemRepository.ListAsync(filterSpecification);
-            var items = new ObservableCollection<Employe>(employes);
+            var items = new SourceList<Employe>();
+            items.AddRange(employes);
 
-            return items.ToObservableChangeSet(t => t.Id).AsObservableCache();
+            return items.Connect();
+        }
+
+        public async Task<IObservable<IChangeSet<Employe>>> GetEmployes()
+        {
+            _logger.LogInformation("GetEmployes called.");
+
+            var employes = await _itemRepository.ListAsync();
+            var items = new SourceList<Employe>();
+            items.AddRange(employes);
+
+            return items.Connect();
         }
 
 

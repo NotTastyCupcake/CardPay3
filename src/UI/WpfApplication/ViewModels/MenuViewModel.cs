@@ -22,7 +22,9 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
 
             RoutingEmployeeCommand = ReactiveCommand.Create(delegate ()
             {
-                HostScreen.Router.Navigate.Execute(Locator.Current.GetService<EmployeeListViewModel>());
+                EmployeeListViewModel = Locator.Current.GetService<EmployeeListViewModel>();
+                EmployeeListViewModel.SelectedOrganization = SelectedOrganization;
+                HostScreen.Router.Navigate.Execute(EmployeeListViewModel);
             });
 
             this.WhenAnyValue(vm => vm.SelectedOrganization).Subscribe(_ => UpdateIsRealOrganization());
@@ -36,6 +38,8 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
         public Organization SelectedOrganization { get; set; }
         [Reactive]
         public bool IsRealOrganization { get; set; }
+
+        public EmployeeListViewModel EmployeeListViewModel { get; set; }
 
         private void UpdateIsRealOrganization()
         {
@@ -51,6 +55,12 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
             else
             {
                 IsRealOrganization = true;
+
+                if(EmployeeListViewModel != null)
+                {
+                    EmployeeListViewModel.SelectedOrganization = SelectedOrganization;
+                }
+
             }
         }
     }
