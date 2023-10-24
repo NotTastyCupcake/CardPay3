@@ -165,8 +165,8 @@ public partial class App// : Application
         services.AddTransient<IViewFor<EmployeeListViewModel>, EmployeListView>();
         services.AddTransient<EmployeeListViewModel>();
 
-        services.AddScoped<IViewFor<AddEmployeViewModel>, AddEmployeWindow>();
-        services.AddScoped<AddEmployeViewModel>();
+        services.AddScoped<IViewFor<EmployeViewModel>, AddEmployeWindow>();
+        services.AddScoped<EmployeViewModel>();
 
         services.AddScoped<IViewFor<AddressViewModel>, AddAddressView>();
         services.AddScoped<AddressViewModel>();

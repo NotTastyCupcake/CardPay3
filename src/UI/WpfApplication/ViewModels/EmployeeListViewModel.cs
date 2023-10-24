@@ -54,17 +54,25 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
             // commands
             RoutingAddEmployeeCommand = ReactiveCommand.Create(delegate ()
             {
-                HostScreen.Router.Navigate.Execute(Locator.Current.GetService<AddEmployeViewModel>());
+                HostScreen.Router.Navigate.Execute(Locator.Current.GetService<EmployeViewModel>());
             });
             RoutingDeleteEmployeeCommand = ReactiveCommand.Create(DeleteEmploye());
+
+            RoutingEditEmployeeCommand = ReactiveCommand.Create(delegate ()
+            {
+                var vm = Locator.Current.GetService<EmployeViewModel>();
+                HostScreen.Router.Navigate.Execute(vm);
+                vm.Employe = SelectedEmploye;
+            });
 
             //Init collection
             ReadOnlyObservableCollection<Employe> bindingData;
             var items = Task.Run(() => _employeViewModelService.GetEmployes(SelectedOrganization?.Id)).Result;
-
+            //TODO: Добавить авто обновление
             _cleanUp = items
                 .Sort(SortExpressionComparer<Employe>.Ascending(t => t.FullName))
                 .Bind(out bindingData)
+                .ObserveOn(RxApp.MainThreadScheduler)
                 .Subscribe();
 
             Employes = bindingData;
@@ -79,20 +87,18 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
             //this.WhenAnyValue(vm => vm.SelectedEmploye).Subscribe();
         }
 
-        private Action<int> DeleteEmploye()
+        private Action DeleteEmploye()
         {
-            return async (int id) =>
+            return async delegate ()
             {
-                var employe = await _itemRepository.GetByIdAsync(id);
-                await _itemRepository.DeleteAsync(employe);
-                await HostScreen.Router.Navigate.Execute(Locator.Current.GetService<AddEmployeViewModel>());
+                await _itemRepository.DeleteAsync(SelectedEmploye);
             };
         }
 
         #region commands
-        public ReactiveCommand<int, Unit> RoutingEditEmployeeCommand { get; }
+        public ReactiveCommand<Unit, Unit> RoutingEditEmployeeCommand { get; }
         public ReactiveCommand<Unit, Unit> RoutingAddEmployeeCommand { get; }
-        public ReactiveCommand<int, Unit> RoutingDeleteEmployeeCommand { get; }
+        public ReactiveCommand<Unit, Unit> RoutingDeleteEmployeeCommand { get; }
         #endregion
 
         #region Properties

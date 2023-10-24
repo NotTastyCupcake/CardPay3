@@ -39,6 +39,12 @@ namespace Metcom.CardPay3.WpfApplication.Views
                     view => view.Employes.ItemsSource)
                 .DisposeWith(disposable);
 
+
+                this.Bind(this.ViewModel,
+                    vm => vm.SelectedEmploye,
+                    view => view.Employes.SelectedItem)
+                .DisposeWith(disposable);
+
                 this.BindCommand(this.ViewModel,
                     vm => vm.RoutingAddEmployeeCommand,
                     view => view.CreateEmployeButton)

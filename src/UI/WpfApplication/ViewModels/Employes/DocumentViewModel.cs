@@ -8,5 +8,6 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
 {
     public class DocumentViewModel
     {
+        //TODO: Создать ViewModel для просмотра/редактирвоания/создания документов
     }
 }

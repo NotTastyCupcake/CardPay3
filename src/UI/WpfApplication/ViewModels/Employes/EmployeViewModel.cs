@@ -26,18 +26,18 @@ using System.Windows.Forms;
 
 namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
 {
-    public class AddEmployeViewModel : ReactiveValidationObject, IRoutableViewModel
+    public class EmployeViewModel : ReactiveValidationObject, IRoutableViewModel
     {
         public string UrlPathSegment { get { return "AddEmployee"; } }
         public IScreen HostScreen { get; protected set; }
 
         private readonly IRepository<Employe> _repository;
-        private readonly ILogger<AddEmployeViewModel> _logger;
+        private readonly ILogger<EmployeViewModel> _logger;
         private readonly IEmployeViewModelService _employeViewModelService;
 
-        public AddEmployeViewModel(
+        public EmployeViewModel(
             IRepository<Employe> repository,
-            ILogger<AddEmployeViewModel> logger,
+            ILogger<EmployeViewModel> logger,
             IEmployeViewModelService viewModelService,
             IScreen screen = null)
         {
@@ -85,6 +85,19 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
         {
             Genders = await _employeViewModelService.GetGenders();
 
+            if(Employe == null)
+            {
+                Employe = new Employe();
+            }
+            else
+            {
+                SelectedGender = Employe.Gender;
+                Document = Employe.Document;
+                Address = await _employeViewModelService.GetAddress(Employe);
+                Requisites = await _employeViewModelService.GetRequisites(Employe);
+                Organization = Employe.Organization;
+            }
+
             this.WhenAnyValue(vm => vm.Employe).Subscribe();
             this.WhenAnyValue(vm => vm.SelectedGender).Subscribe();
             this.WhenAnyValue(vm => vm.Document).Subscribe();
@@ -102,11 +115,12 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
 
         #region properties
         [Reactive]
-        public Employe Employe { get; set; } = new Employe();
+        public Employe Employe { get; set; }
 
         [Reactive]
         public Organization Organization { get; set; }
         [Reactive]
+        //TODO: Убрать авто заполнение, сделать форму создания документа
         public DocumentItem Document { get; set; } = new DocumentItem(1, DateTime.Now, "TEST_ISSUEDBY", "TEST_SUBDIVISION_CODE");
         [Reactive]
         public string DocumentFullName { get; set; } = "<Нет данных>";
