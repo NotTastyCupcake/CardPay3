@@ -25,8 +25,8 @@
                 </TabItem.Header>
                 <TabItem.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="DELETE_COMMAND" x:Name="DeleteCommand" CommandParameter="{Binding RelativeSource={RelativeSource Self}}"/>
-                        <MenuItem Header="EDIT_COMMAND" x:Name="EditCommand" CommandParameter="{Binding RelativeSource={RelativeSource Self}}"/>
+                        <MenuItem Header="DELETE_COMMAND" x:Name="DeleteCommand"/>
+                        <MenuItem Header="EDIT_COMMAND" x:Name="EditCommand"/>
                     </ContextMenu>
                 </TabItem.ContextMenu>
                 <ListView x:Name="Employes">
