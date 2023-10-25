@@ -8,7 +8,7 @@
         x:TypeArguments="vms:HomeViewModel"
         xmlns:local="clr-namespace:Metcom.CardPay3.WpfApplication.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" ShowInTaskbar="True">
+        Title="MainWindow" Height="600" Width="800" ShowInTaskbar="True">
     <Grid>
         <!--<Menu Height="25" VerticalAlignment="Top">
             <MenuItem Header="File">
@@ -45,7 +45,7 @@
             x:Name ="GoBackButton" 
             Grid.Row="0"
             Grid.Column="0"
-            Content="Go back" 
+            Content="GO_BACK_BUTTON" 
             HorizontalAlignment="Left" 
             Width="200"
             VerticalAlignment="Center" 

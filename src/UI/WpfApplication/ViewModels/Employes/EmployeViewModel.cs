@@ -5,6 +5,7 @@ using Metcom.CardPay3.ApplicationCore.Entities.DocumentAggregate;
 using Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate;
 using Metcom.CardPay3.ApplicationCore.Interfaces;
 using Metcom.CardPay3.ApplicationCore.Interfaces.ServicesInterfaces;
+using Metcom.CardPay3.ApplicationCore.Specifications;
 using Metcom.CardPay3.WpfApplication.Interfaces;
 using Metcom.CardPay3.WpfApplication.Views.Employes;
 using Microsoft.Extensions.Logging;
@@ -50,7 +51,7 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
             //Window = Locator.Current.GetService<IViewFor<EmployeeViewModel>>() as Window;
 
             // commands
-            CreateEmploye = ReactiveCommand.Create(CreacteEmployeAndCloseWindowAsync());
+            ActionCommand = ReactiveCommand.Create(ActionAndCloseWindowAsync());
 
             CreateAddress = ReactiveCommand.Create(() =>
             {
@@ -65,7 +66,7 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
 
         }
 
-        private Action CreacteEmployeAndCloseWindowAsync()
+        private Action ActionAndCloseWindowAsync()
         {
             return async delegate ()
             {
@@ -74,8 +75,20 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
                 Employe.Addresses = Address;
                 Employe.Requisites = Requisites;
                 Employe.Organization = Organization;
-                await _repository.AddAsync(Employe);
-                await _repository.SaveChangesAsync();
+
+                //Add
+                if(SelectedOperation == Constants.Operations.Create)
+                {
+                    await _repository.AddAsync(Employe);
+                    await _repository.SaveChangesAsync();
+                }
+                //Edit
+                else if(SelectedOperation == Constants.Operations.Edit)
+                {
+                    await _repository.UpdateAsync(Employe);
+                    await _repository.SaveChangesAsync();
+                }
+
 
                 HostScreen.Router.NavigateBack.Execute();
             };
@@ -85,11 +98,11 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
         {
             Genders = await _employeViewModelService.GetGenders();
 
-            if(Employe == null)
+            if (SelectedOperation == Constants.Operations.Create)
             {
                 Employe = new Employe();
             }
-            else
+            else if (SelectedOperation == Constants.Operations.Edit)
             {
                 SelectedGender = Employe.Gender;
                 Document = Employe.Document;
@@ -108,7 +121,7 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
 
 
         #region commands
-        public ReactiveCommand<Unit, Unit> CreateEmploye { get; }
+        public ReactiveCommand<Unit, Unit> ActionCommand { get; }
         public ReactiveCommand<Unit, DocumentItem> CreateDocument { get; }
         public ReactiveCommand<Unit, Address> CreateAddress { get; }
         #endregion
@@ -136,6 +149,9 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
 
         [Reactive]
         public Gender SelectedGender { get; set; }
+
+        [Reactive]
+        public Constants.Operations SelectedOperation { get; set; }
         #endregion
     }
 }

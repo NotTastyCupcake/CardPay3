@@ -10,7 +10,7 @@
              x:Class="Metcom.CardPay3.WpfApplication.Views.EmployeListView"
              xmlns:model="clr-namespace:Metcom.CardPay3.ApplicationCore.Entities;assembly=ApplicationCore"
              mc:Ignorable="d" 
-             d:DesignHeight="400" d:DesignWidth="800">
+             d:DesignHeight="550" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -21,30 +21,30 @@
             
             <TabItem Name="PersonsTab">
                 <TabItem.Header>
-                    <TextBlock Text="Список сотрудников"/>
+                    <TextBlock Text="EMPLOYES"/>
                 </TabItem.Header>
                 <TabItem.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="Удалить" x:Name="DeleteCommand" CommandParameter="{Binding RelativeSource={RelativeSource Self},Path=Id}"/>
-                        <MenuItem Header="Изменить" x:Name="EditCommand" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Id}"/>
+                        <MenuItem Header="DELETE_COMMAND" x:Name="DeleteCommand" CommandParameter="{Binding RelativeSource={RelativeSource Self}}"/>
+                        <MenuItem Header="EDIT_COMMAND" x:Name="EditCommand" CommandParameter="{Binding RelativeSource={RelativeSource Self}}"/>
                     </ContextMenu>
                 </TabItem.ContextMenu>
                 <ListView x:Name="Employes">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Имя"                                            
+                            <GridViewColumn Header="FIRST_NAME"                                            
                                             DisplayMemberBinding="{Binding Path=FirstName}"/>
-                            <GridViewColumn Header="Фамилия"
+                            <GridViewColumn Header="LAST_NAME"
                                             DisplayMemberBinding="{Binding Path=LastName}"/>
-                            <GridViewColumn Header="Отчество"
+                            <GridViewColumn Header="MIDDLE_NAME"
                                             DisplayMemberBinding="{Binding Path=MiddleName}"/>
-                            <GridViewColumn Header="Должность"
+                            <GridViewColumn Header="POSITION"
                                             DisplayMemberBinding="{Binding Path=Position}"/>
-                            <GridViewColumn Header="Отдел"
+                            <GridViewColumn Header="DEPARTMENT_NUMBER"
                                             DisplayMemberBinding="{Binding Path=DepartmentNum}"/>
-                            <GridViewColumn Header="Пол"
+                            <GridViewColumn Header="GENDER"
                                             DisplayMemberBinding="{Binding Path=Gender.GenderName}"/>
-                            <GridViewColumn Header="Код документа"
+                            <GridViewColumn Header="SUBDIVISION_CODE"
                                             DisplayMemberBinding="{Binding Path=Document.SubdivisionCode}"/>
                         </GridView>
                     </ListView.View>
@@ -53,15 +53,15 @@
             
             <TabItem Name="PersonsStat">
                 <TabItem.Header>
-                    <TextBlock Text="Статистика"/>
+                    <TextBlock Text="STATISTIC"/>
                 </TabItem.Header>
                 <StackPanel Grid.Row="0" Orientation="Vertical"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Width="auto">
-                    <TextBlock Text="Средняя зарплата между всеми сотрудниками:"/>
+                    <TextBlock Text="AVARAGE_SALARY"/>
                     <TextBlock Text="{Binding AverageSalary}"/>
-                    <TextBlock Text="Количество сотрудников:"/>
+                    <TextBlock Text="COUNT_PERSON:"/>
                     <TextBlock Text="{Binding CountPerson}"/>
                 </StackPanel>
             </TabItem>
@@ -69,7 +69,7 @@
         </TabControl>
         
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
-            <Button x:Name="CreateEmployeButton" Content="Новый сотрудник"/>
+            <Button x:Name="CreateEmployeButton" Content="CREATE_EMPLOYE"/>
         </StackPanel>
     </Grid>
 </reactiveUi:ReactiveUserControl>

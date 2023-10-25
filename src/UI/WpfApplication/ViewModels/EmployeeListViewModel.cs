@@ -54,15 +54,28 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
             // commands
             RoutingAddEmployeeCommand = ReactiveCommand.Create(delegate ()
             {
-                HostScreen.Router.Navigate.Execute(Locator.Current.GetService<EmployeViewModel>());
+                var vm = Locator.Current.GetService<EmployeViewModel>();
+                vm.Employe = new Employe();
+                vm.SelectedOperation = Constants.Operations.Create;
+                HostScreen.Router.Navigate.Execute(vm);
+                
             });
             RoutingDeleteEmployeeCommand = ReactiveCommand.Create(DeleteEmploye());
 
             RoutingEditEmployeeCommand = ReactiveCommand.Create(delegate ()
             {
-                var vm = Locator.Current.GetService<EmployeViewModel>();
-                HostScreen.Router.Navigate.Execute(vm);
-                vm.Employe = SelectedEmploye;
+                if(SelectedEmploye == null)
+                {
+
+                }
+                else
+                {
+                    var vm = Locator.Current.GetService<EmployeViewModel>();
+                    vm.Employe = SelectedEmploye;
+                    vm.SelectedOperation = Constants.Operations.Edit;
+                    HostScreen.Router.Navigate.Execute(vm);
+                }
+
             });
 
             //Init collection
