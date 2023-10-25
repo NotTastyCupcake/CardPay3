@@ -1,5 +1,5 @@
 ﻿<reactiveui:ReactiveUserControl 
-        x:Class="Metcom.CardPay3.WpfApplication.Views.Employes.AddEmployeWindow"
+        x:Class="Metcom.CardPay3.WpfApplication.Views.Employes.EmployeWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -9,7 +9,7 @@
         d:DataContext="{d:DesignInstance Type=vms:EmployeViewModel}"
         x:TypeArguments="vms:EmployeViewModel"
         mc:Ignorable="d"
-        d:DesignHeight="400" d:DesignWidth="800" >
+        d:DesignHeight="550" d:DesignWidth="800" >
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
