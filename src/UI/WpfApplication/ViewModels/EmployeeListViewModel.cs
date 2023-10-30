@@ -50,7 +50,22 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
             _itemRepository = itemRepository;
 
             HostScreen = screen;
-            
+
+
+            //Init collection
+            ReadOnlyObservableCollection<Employe> bindingData;
+            var items = Task.Run(() => _employeViewModelService.GetEmployes(SelectedOrganization?.Id)).Result;
+
+            //TODO: Добавить авто обновление
+            _cleanUp = items
+                .Sort(SortExpressionComparer<Employe>.Ascending(t => t.FullName))
+                .Bind(out bindingData)
+                .ObserveOn(RxApp.MainThreadScheduler)
+                .Subscribe();
+
+            Employes = bindingData;
+
+
             // commands
             RoutingAddEmployeeCommand = ReactiveCommand.Create(delegate ()
             {
@@ -78,17 +93,6 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
 
             });
 
-            //Init collection
-            ReadOnlyObservableCollection<Employe> bindingData;
-            var items = Task.Run(() => _employeViewModelService.GetEmployes(SelectedOrganization?.Id)).Result;
-            //TODO: Добавить авто обновление
-            _cleanUp = items
-                .Sort(SortExpressionComparer<Employe>.Ascending(t => t.FullName))
-                .Bind(out bindingData)
-                .ObserveOn(RxApp.MainThreadScheduler)
-                .Subscribe();
-
-            Employes = bindingData;
 
             Task.Run(() => Initialize());
         }
@@ -104,7 +108,17 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
         {
             return async delegate ()
             {
-                await _itemRepository.DeleteAsync(SelectedEmploye);
+                if(SelectedEmploye == null)
+                {
+
+                }
+                else
+                {
+                    await _itemRepository.DeleteAsync(SelectedEmploye);
+                    await _itemRepository.SaveChangesAsync();
+                    System.Windows.Forms.MessageBox.Show("Выбранный сотрудник, удален!");
+                }
+                
             };
         }
 

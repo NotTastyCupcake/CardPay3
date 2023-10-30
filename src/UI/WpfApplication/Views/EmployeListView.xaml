@@ -25,27 +25,27 @@
                 </TabItem.Header>
                 <TabItem.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="DELETE_COMMAND" x:Name="DeleteCommand"/>
-                        <MenuItem Header="EDIT_COMMAND" x:Name="EditCommand"/>
+                        <MenuItem Header="DELETE_COMMAND" Command="{Binding RoutingDeleteEmployeeCommand}"/>
+                        <MenuItem Header="EDIT_COMMAND" Command="{Binding RoutingEditEmployeeCommand}"/>
                     </ContextMenu>
                 </TabItem.ContextMenu>
-                <ListView x:Name="Employes">
+                <ListView ItemsSource="{Binding Employes, Mode=OneWay}" SelectedItem="{Binding SelectedEmploye, Mode=TwoWay}">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="FIRST_NAME"                                            
-                                            DisplayMemberBinding="{Binding Path=FirstName}"/>
+                                            DisplayMemberBinding="{Binding Path=FirstName, Mode=OneWay}"/>
                             <GridViewColumn Header="LAST_NAME"
-                                            DisplayMemberBinding="{Binding Path=LastName}"/>
+                                            DisplayMemberBinding="{Binding Path=LastName, Mode=OneWay}"/>
                             <GridViewColumn Header="MIDDLE_NAME"
-                                            DisplayMemberBinding="{Binding Path=MiddleName}"/>
+                                            DisplayMemberBinding="{Binding Path=MiddleName, Mode=OneWay}"/>
                             <GridViewColumn Header="POSITION"
-                                            DisplayMemberBinding="{Binding Path=Position}"/>
+                                            DisplayMemberBinding="{Binding Path=Position, Mode=OneWay}"/>
                             <GridViewColumn Header="DEPARTMENT_NUMBER"
-                                            DisplayMemberBinding="{Binding Path=DepartmentNum}"/>
+                                            DisplayMemberBinding="{Binding Path=DepartmentNum, Mode=OneWay}"/>
                             <GridViewColumn Header="GENDER"
-                                            DisplayMemberBinding="{Binding Path=Gender.GenderName}"/>
+                                            DisplayMemberBinding="{Binding Path=Gender.GenderName, Mode=OneWay}"/>
                             <GridViewColumn Header="SUBDIVISION_CODE"
-                                            DisplayMemberBinding="{Binding Path=Document.SubdivisionCode}"/>
+                                            DisplayMemberBinding="{Binding Path=Document.SubdivisionCode, Mode=OneWay}"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
@@ -69,7 +69,7 @@
         </TabControl>
         
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
-            <Button x:Name="CreateEmployeButton" Content="CREATE_EMPLOYE"/>
+            <Button Content="CREATE_EMPLOYE" Command="{Binding RoutingAddEmployeeCommand}"/>
         </StackPanel>
     </Grid>
 </reactiveUi:ReactiveUserControl>

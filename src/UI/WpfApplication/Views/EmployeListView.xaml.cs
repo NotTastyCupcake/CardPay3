@@ -30,37 +30,6 @@ namespace Metcom.CardPay3.WpfApplication.Views
             DataContext = ViewModel;
 
             InitializeComponent();
-
-
-            this.WhenActivated(disposable =>
-            {
-                this.OneWayBind(this.ViewModel,
-                    vm => vm.Employes,
-                    view => view.Employes.ItemsSource)
-                .DisposeWith(disposable);
-
-
-                this.Bind(this.ViewModel,
-                    vm => vm.SelectedEmploye,
-                    view => view.Employes.SelectedItem)
-                .DisposeWith(disposable);
-
-                this.BindCommand(this.ViewModel,
-                    vm => vm.RoutingAddEmployeeCommand,
-                    view => view.CreateEmployeButton)
-                .DisposeWith(disposable);
-
-                this.BindCommand(this.ViewModel,
-                    vm => vm.RoutingEditEmployeeCommand,
-                    view => view.EditCommand)
-                    .DisposeWith(disposable);
-
-                this.BindCommand(this.ViewModel,
-                    vm => vm.RoutingDeleteEmployeeCommand,
-                    view => view.DeleteCommand)
-                    .DisposeWith(disposable);
-
-            });
         }
     }
 }
