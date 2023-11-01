@@ -9,6 +9,7 @@ using Metcom.CardPay3.ApplicationCore.Specifications;
 using Metcom.CardPay3.Infrastructure.Identity;
 using Metcom.CardPay3.WpfApplication.Interfaces;
 using Microsoft.Extensions.Logging;
+using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -18,11 +19,10 @@ using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.WpfApplication.Services
 {
-    public class EmployeViewModelService : IEmployeViewModelService
+    public class EmployeViewModelService : ReactiveObject, IEmployeViewModelService
     {
         private readonly ILogger<EmployeViewModelService> _logger;
 
-        private readonly IRepository<Employe> _itemRepository;
         private readonly IRepository<Organization> _organizationRepository;
         private readonly IRepository<Gender> _genderRepository;
         private readonly IRepository<DocumentType> _documentTypeRepository;
@@ -36,36 +36,12 @@ namespace Metcom.CardPay3.WpfApplication.Services
             IRepository<Address> addressRepository,
             ILogger<EmployeViewModelService> logger)
         {
-            _itemRepository = itemRepository;
             _organizationRepository = organizationRepository;
             _documentTypeRepository = documentTypeRepository;
             _genderRepository = genderRepository;
             _addressRepository = addressRepository;
 
             _logger = logger;
-        }
-
-        public async Task<IObservable<IChangeSet<Employe>>> GetEmployes(int? organizationId)
-        {
-            _logger.LogInformation("GetEmployes called.");
-
-            var filterSpecification = new EmployesSpecification(organizationId);
-            var employes = await _itemRepository.ListAsync(filterSpecification);
-            var items = new SourceList<Employe>();
-            items.AddRange(employes);
-
-            return items.Connect();
-        }
-
-        public async Task<IObservable<IChangeSet<Employe>>> GetEmployes()
-        {
-            _logger.LogInformation("GetEmployes called.");
-
-            var employes = await _itemRepository.ListAsync();
-            var items = new SourceList<Employe>();
-            items.AddRange(employes);
-
-            return items.Connect();
         }
 
 

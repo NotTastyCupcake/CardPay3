@@ -30,7 +30,7 @@ using System.Windows.Documents;
 
 namespace Metcom.CardPay3.WpfApplication.ViewModels
 {
-    public class EmployeeListViewModel : ReactiveObject, IRoutableViewModel, IDisposable
+    public class EmployeeListViewModel : ReactiveObject, IRoutableViewModel
     {
         public string UrlPathSegment { get { return "EmployeeList"; } }
         public IScreen HostScreen { get; protected set; }
@@ -43,6 +43,7 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
 
         public EmployeeListViewModel(
             IEmployeViewModelService viewModelService,
+            IEmployeCollectionService employeCollectionService,
             ILogger<EmployeeListViewModel> logger,
             IDataExportService exportService,
             IRepository<Employe> itemRepository,
@@ -56,16 +57,16 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
 
             HostScreen = screen;
 
+            SelectedOrganization = Locator.Current.GetService<MenuViewModel>().SelectedOrganization;
 
             //Init collection
             ReadOnlyObservableCollection<Employe> bindingData;
-            var items = Task.Run(() => _employeViewModelService.GetEmployes(SelectedOrganization?.Id)).Result;
 
-            //TODO: Добавить авто обновление
-            _cleanUp = items
+            employeCollectionService.All.Connect()
                 .Sort(SortExpressionComparer<Employe>.Ascending(t => t.FullName))
-                .Bind(out bindingData)
+                .Filter(e => e.Organization == SelectedOrganization)
                 .ObserveOn(RxApp.MainThreadScheduler)
+                .Bind(out bindingData)
                 .Subscribe();
 
             Employes = bindingData;
@@ -80,6 +81,20 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
 
             Task.Run(() => Initialize());
         }
+
+        private async Task Initialize()
+        {
+            _logger.LogInformation("Inintialize EmployeeListViewModel.");
+
+            //this.WhenAnyValue(vm => vm.SelectedEmploye).Subscribe();
+        }
+
+        #region commands
+        public ReactiveCommand<Unit, Unit> RoutingEditEmployeeCommand { get; }
+        public ReactiveCommand<Unit, Unit> RoutingAddEmployeeCommand { get; }
+        public ReactiveCommand<Unit, Unit> RoutingDeleteEmployeeCommand { get; }
+
+        public ReactiveCommand<Unit, Unit> ExportEmployeeCommand { get; }
 
         private Action CreateEmploye()
         {
@@ -104,6 +119,7 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
                 else
                 {
                     var vm = Locator.Current.GetService<EmployeViewModel>();
+                    //TODO: Убрать передачу, вытягивать через Locator.Current.GetService<MenuViewModel>().SelectedOrganization
                     vm.Employe = SelectedEmploye;
                     vm.SelectedOperation = Constants.Operations.Edit;
                     HostScreen.Router.Navigate.Execute(vm);
@@ -144,21 +160,6 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
                 }
             };
         }
-
-        private async Task Initialize()
-        {
-            _logger.LogInformation("Inintialize EmployeeListViewModel.");
-
-            //this.WhenAnyValue(vm => vm.SelectedEmploye).Subscribe();
-        }
-
-
-        #region commands
-        public ReactiveCommand<Unit, Unit> RoutingEditEmployeeCommand { get; }
-        public ReactiveCommand<Unit, Unit> RoutingAddEmployeeCommand { get; }
-        public ReactiveCommand<Unit, Unit> RoutingDeleteEmployeeCommand { get; }
-
-        public ReactiveCommand<Unit, Unit> ExportEmployeeCommand { get; } 
         #endregion
 
         #region Properties
@@ -170,10 +171,5 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
         [Reactive]
         public Organization SelectedOrganization { get; set; }
         #endregion
-
-        public void Dispose()
-        {
-            _cleanUp.Dispose();
-        }
     }
 }

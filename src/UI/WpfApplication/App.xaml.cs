@@ -145,6 +145,7 @@ public partial class App// : Application
 
         services.AddScoped<IHomeViewModelService, HomeViewModelService>();
         services.AddScoped<IEmployeViewModelService, EmployeViewModelService>();
+        services.AddScoped<IEmployeCollectionService, EmployeCollectionService>();
 
         services.AddScoped<IEmployeBuilder, EmployeBuilder>();
 
