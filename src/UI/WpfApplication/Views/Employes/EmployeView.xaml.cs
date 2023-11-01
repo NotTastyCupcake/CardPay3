@@ -25,10 +25,10 @@ namespace Metcom.CardPay3.WpfApplication.Views.Employes
     /// <summary>
     /// Логика взаимодействия для AddEmployeWindow.xaml
     /// </summary>
-    public partial class EmployeWindow
+    public partial class EmployeView
     {
 
-        public EmployeWindow(EmployeViewModel viewModel = null)
+        public EmployeView(EmployeViewModel viewModel = null)
         {
             ViewModel = viewModel ?? Locator.Current.GetService<EmployeViewModel>();
             DataContext = ViewModel;
