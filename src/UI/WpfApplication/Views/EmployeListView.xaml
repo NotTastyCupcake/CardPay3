@@ -67,9 +67,10 @@
             </TabItem>
             
         </TabControl>
-        
+
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
             <Button Content="CREATE_EMPLOYE" Command="{Binding RoutingAddEmployeeCommand}"/>
+            <Button Content="EXPORT_EMPLOYES" Command="{Binding ExportEmployeeCommand}"/>
         </StackPanel>
     </Grid>
 </reactiveUi:ReactiveUserControl>

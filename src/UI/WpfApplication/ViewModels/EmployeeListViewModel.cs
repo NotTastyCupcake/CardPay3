@@ -9,6 +9,7 @@ using Metcom.CardPay3.WpfApplication.Interfaces;
 using Metcom.CardPay3.WpfApplication.ViewModels.Employes;
 using Metcom.CardPay3.WpfApplication.Views.Employes;
 using Microsoft.Extensions.Logging;
+using Microsoft.Win32;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using Splat;
@@ -18,6 +19,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.Metrics;
+using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Reflection.Metadata;
@@ -35,17 +37,20 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
 
         private readonly IRepository<Employe> _itemRepository;
         private readonly ILogger<EmployeeListViewModel> _logger;
+        private readonly IDataExportService _exportService;
         private readonly IEmployeViewModelService _employeViewModelService;
         private readonly IDisposable _cleanUp;
 
         public EmployeeListViewModel(
             IEmployeViewModelService viewModelService,
             ILogger<EmployeeListViewModel> logger,
+            IDataExportService exportService,
             IRepository<Employe> itemRepository,
             IScreen screen = null)
         {
             _employeViewModelService = viewModelService;
             _logger = logger;
+            _exportService = exportService;
 
             _itemRepository = itemRepository;
 
@@ -67,19 +72,32 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
 
 
             // commands
-            RoutingAddEmployeeCommand = ReactiveCommand.Create(delegate ()
+            RoutingAddEmployeeCommand = ReactiveCommand.Create(CreateEmploye());
+            RoutingDeleteEmployeeCommand = ReactiveCommand.Create(DeleteEmploye());
+            RoutingEditEmployeeCommand = ReactiveCommand.Create(EditEmploye());
+            ExportEmployeeCommand = ReactiveCommand.Create(ExportEmploye());
+
+
+            Task.Run(() => Initialize());
+        }
+
+        private Action CreateEmploye()
+        {
+            return delegate ()
             {
                 var vm = Locator.Current.GetService<EmployeViewModel>();
                 vm.Employe = new Employe();
                 vm.SelectedOperation = Constants.Operations.Create;
                 HostScreen.Router.Navigate.Execute(vm);
-                
-            });
-            RoutingDeleteEmployeeCommand = ReactiveCommand.Create(DeleteEmploye());
 
-            RoutingEditEmployeeCommand = ReactiveCommand.Create(delegate ()
+            };
+        }
+
+        private Action EditEmploye()
+        {
+            return delegate ()
             {
-                if(SelectedEmploye == null)
+                if (SelectedEmploye == null)
                 {
 
                 }
@@ -91,24 +109,14 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
                     HostScreen.Router.Navigate.Execute(vm);
                 }
 
-            });
-
-
-            Task.Run(() => Initialize());
-        }
-
-        private async Task Initialize()
-        {
-            _logger.LogInformation("Inintialize EmployeeListViewModel.");
-
-            //this.WhenAnyValue(vm => vm.SelectedEmploye).Subscribe();
+            };
         }
 
         private Action DeleteEmploye()
         {
             return async delegate ()
             {
-                if(SelectedEmploye == null)
+                if (SelectedEmploye == null)
                 {
 
                 }
@@ -118,14 +126,39 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
                     await _itemRepository.SaveChangesAsync();
                     System.Windows.Forms.MessageBox.Show("Выбранный сотрудник, удален!");
                 }
-                
+
             };
         }
+
+
+        private Action ExportEmploye()
+        {
+            return async delegate ()
+            {
+                SaveFileDialog saveFile = new SaveFileDialog();
+                saveFile.Filter = "Расширяемый язык разметки(*.json)| *.json|";
+                //"Расширяемый язык разметки(*.xml)| *.xml"; //Не понятно как преобразовать List<Employe> в XML без атребутов
+                if (saveFile.ShowDialog() == true)
+                {
+                    await _exportService.ExportDataAsync(saveFile.SafeFileName.Split('.').LastOrDefault(), saveFile.FileName);
+                }
+            };
+        }
+
+        private async Task Initialize()
+        {
+            _logger.LogInformation("Inintialize EmployeeListViewModel.");
+
+            //this.WhenAnyValue(vm => vm.SelectedEmploye).Subscribe();
+        }
+
 
         #region commands
         public ReactiveCommand<Unit, Unit> RoutingEditEmployeeCommand { get; }
         public ReactiveCommand<Unit, Unit> RoutingAddEmployeeCommand { get; }
         public ReactiveCommand<Unit, Unit> RoutingDeleteEmployeeCommand { get; }
+
+        public ReactiveCommand<Unit, Unit> ExportEmployeeCommand { get; } 
         #endregion
 
         #region Properties

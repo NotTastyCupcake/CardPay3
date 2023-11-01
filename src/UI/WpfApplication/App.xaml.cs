@@ -150,7 +150,7 @@ public partial class App// : Application
 
         services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
         services.AddTransient<IEmailSender, EmailSender>();
-
+        services.AddTransient<IDataExportService, DataExportService>();
 
         // register your personal services here, for example
         services.AddSingleton<HomeViewModel>(); //Implements IScreen
