@@ -48,6 +48,8 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
 
             HostScreen = screen;
 
+            Organization = Locator.Current.GetService<MenuViewModel>().SelectedOrganization;
+
             //Window = Locator.Current.GetService<IViewFor<EmployeeViewModel>>() as Window;
 
             // commands
