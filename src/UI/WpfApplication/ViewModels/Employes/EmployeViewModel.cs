@@ -68,6 +68,36 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
 
         }
 
+        private async Task Initialize()
+        {
+            Genders = await _employeViewModelService.GetGenders();
+            SelectedGender = Genders.FirstOrDefault();
+
+            if (SelectedOperation == Constants.Operations.Edit)
+            {
+                SelectedGender = Employe.Gender;
+                Document = Employe.Document;
+                Address = _employeViewModelService.GetAddress(Employe);
+                Requisites = _employeViewModelService.GetRequisites(Employe);
+                Organization = Employe.Organization;
+            }
+
+            this.WhenAnyValue(vm => vm.Employe).Subscribe();
+            this.WhenAnyValue(vm => vm.SelectedGender).Subscribe();
+            this.WhenAnyValue(vm => vm.Document).Subscribe();
+            this.WhenAnyValue(vm => vm.DocumentFullName).Subscribe();
+            this.WhenAnyValue(vm => vm.Address).Subscribe();
+            this.WhenAnyValue(vm => vm.AddressFullName).Subscribe();
+            this.WhenAnyValue(vm => vm.Requisites).Subscribe();
+            this.WhenAnyValue(vm => vm.Organization).Subscribe();
+        }
+
+
+        #region commands
+        public ReactiveCommand<Unit, Unit> ActionCommand { get; }
+        public ReactiveCommand<Unit, DocumentItem> CreateDocument { get; }
+        public ReactiveCommand<Unit, Address> CreateAddress { get; }
+
         private Action ActionAndCloseWindowAsync()
         {
             return async delegate ()
@@ -79,13 +109,13 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
                 Employe.Organization = Organization;
 
                 //Add
-                if(SelectedOperation == Constants.Operations.Create)
+                if (SelectedOperation == Constants.Operations.Create)
                 {
                     await _repository.AddAsync(Employe);
                     await _repository.SaveChangesAsync();
                 }
                 //Edit
-                else if(SelectedOperation == Constants.Operations.Edit)
+                else if (SelectedOperation == Constants.Operations.Edit)
                 {
                     await _repository.UpdateAsync(Employe);
                     await _repository.SaveChangesAsync();
@@ -95,60 +125,29 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
                 HostScreen.Router.NavigateBack.Execute();
             };
         }
-
-        private async Task Initialize()
-        {
-            Genders = await _employeViewModelService.GetGenders();
-
-            if (SelectedOperation == Constants.Operations.Create)
-            {
-                Employe = new Employe();
-            }
-            else if (SelectedOperation == Constants.Operations.Edit)
-            {
-                SelectedGender = Employe.Gender;
-                Document = Employe.Document;
-                Address = await _employeViewModelService.GetAddress(Employe);
-                Requisites = await _employeViewModelService.GetRequisites(Employe);
-                Organization = Employe.Organization;
-            }
-
-            this.WhenAnyValue(vm => vm.Employe).Subscribe();
-            this.WhenAnyValue(vm => vm.SelectedGender).Subscribe();
-            this.WhenAnyValue(vm => vm.Document).Subscribe();
-            this.WhenAnyValue(vm => vm.Address).Subscribe();
-            this.WhenAnyValue(vm => vm.Requisites).Subscribe();
-            this.WhenAnyValue(vm => vm.Organization).Subscribe();
-        }
-
-
-        #region commands
-        public ReactiveCommand<Unit, Unit> ActionCommand { get; }
-        public ReactiveCommand<Unit, DocumentItem> CreateDocument { get; }
-        public ReactiveCommand<Unit, Address> CreateAddress { get; }
         #endregion
 
         #region properties
         [Reactive]
-        public Employe Employe { get; set; }
+        public Employe Employe { get; set; } = new Employe();
 
         [Reactive]
         public Organization Organization { get; set; }
         [Reactive]
         //TODO: Убрать авто заполнение, сделать форму создания документа
-        public DocumentItem Document { get; set; } = new DocumentItem(1, DateTime.Now, "TEST_ISSUEDBY", "TEST_SUBDIVISION_CODE");
-        [Reactive]
-        public string DocumentFullName { get; set; } = "<Нет данных>";
+        public DocumentItem Document { get; set; }
+
+        public string DocumentFullName { get => Document?.FullName ?? "<Нет данных>"; }
         [Reactive]
         public ObservableCollection<Address> Address { get; set; }
-        [Reactive]
-        public string AddressFullName { get; set; } = "<Нет данных>";
+
+        public string AddressFullName { get => Address?.FirstOrDefault().FullName ?? "<Нет данных>"; }
         [Reactive]
         public ObservableCollection<RequisitesItem> Requisites { get; set; }
 
         [Reactive]
         public ReadOnlyObservableCollection<Gender> Genders { get; set; }
-
+        
         [Reactive]
         public Gender SelectedGender { get; set; }
 

@@ -77,17 +77,8 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
             RoutingDeleteEmployeeCommand = ReactiveCommand.Create(DeleteEmploye());
             RoutingEditEmployeeCommand = ReactiveCommand.Create(EditEmploye());
             ExportEmployeeCommand = ReactiveCommand.Create(ExportEmploye());
-
-
-            Task.Run(() => Initialize());
         }
 
-        private async Task Initialize()
-        {
-            _logger.LogInformation("Inintialize EmployeeListViewModel.");
-
-            //this.WhenAnyValue(vm => vm.SelectedEmploye).Subscribe();
-        }
 
         #region commands
         public ReactiveCommand<Unit, Unit> RoutingEditEmployeeCommand { get; }
@@ -152,8 +143,8 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
             return async delegate ()
             {
                 SaveFileDialog saveFile = new SaveFileDialog();
-                saveFile.Filter = "Расширяемый язык разметки(*.json)| *.json|";
-                //"Расширяемый язык разметки(*.xml)| *.xml"; //Не понятно как преобразовать List<Employe> в XML без атребутов
+                saveFile.Filter = "Расширяемый язык разметки(*.json)| *.json";
+                //"|Расширяемый язык разметки(*.xml)| *.xml"; //Не понятно как преобразовать List<Employe> в XML без атребутов
                 if (saveFile.ShowDialog() == true)
                 {
                     await _exportService.ExportDataAsync(saveFile.SafeFileName.Split('.').LastOrDefault(), saveFile.FileName);

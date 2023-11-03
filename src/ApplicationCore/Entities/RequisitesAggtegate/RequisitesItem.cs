@@ -10,7 +10,9 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate
     public class RequisitesItem : BaseEntity
     {
         public int? IdEmployer { get; private set; }
+#pragma warning disable CS8632 // Аннотацию для ссылочных типов, допускающих значения NULL, следует использовать в коде только в контексте аннотаций "#nullable".
         public virtual Employe? Employer { get; private set; }
+#pragma warning restore CS8632 // Аннотацию для ссылочных типов, допускающих значения NULL, следует использовать в коде только в контексте аннотаций "#nullable".
 
         public RequisitesItem()
         {
@@ -64,7 +66,9 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate
         public string LatinLastName { get; private set; }
         public string CardNumber { get; private set; }
         public string AccountNumber { get; private set; }
+#pragma warning disable CS8632 // Аннотацию для ссылочных типов, допускающих значения NULL, следует использовать в коде только в контексте аннотаций "#nullable".
         public virtual BankCardType? CardType { get; private set; }
+#pragma warning restore CS8632 // Аннотацию для ссылочных типов, допускающих значения NULL, следует использовать в коде только в контексте аннотаций "#nullable".
         public int IdCardType { get; private set; }
         #endregion
 

@@ -55,7 +55,7 @@ namespace Metcom.CardPay3.WpfApplication.Services
             return new ReadOnlyObservableCollection<Gender>(items);
         }
 
-        public async Task<ObservableCollection<Address>> GetAddress(Employe employe)
+        public ObservableCollection<Address> GetAddress(Employe employe)
         {
             _logger.LogInformation("GetGenders called.");
 
@@ -65,7 +65,7 @@ namespace Metcom.CardPay3.WpfApplication.Services
             return items;
         }
 
-        public async Task<ObservableCollection<RequisitesItem>> GetRequisites(Employe employe)
+        public ObservableCollection<RequisitesItem> GetRequisites(Employe employe)
         {
             _logger.LogInformation("GetGenders called.");
 

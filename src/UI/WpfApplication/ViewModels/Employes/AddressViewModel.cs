@@ -29,7 +29,15 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
 
 
             CreateAddress = ReactiveCommand.Create(CreateAddressAsync());
+            EditAddress = ReactiveCommand.Create(EditAddressAsync());
         }
+
+
+
+
+        #region commands
+        public ReactiveCommand<Unit, Unit> CreateAddress { get; }
+        public ReactiveCommand<Unit, Unit> EditAddress { get; }
 
         private Action CreateAddressAsync()
         {
@@ -39,8 +47,16 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
                 await _repository.SaveChangesAsync();
             };
         }
-        #region commands
-        public ReactiveCommand<Unit, Unit> CreateAddress { get; }
+
+        private Action EditAddressAsync()
+        {
+            return async delegate ()
+            {
+                await _repository.UpdateAsync(Address);
+                await _repository.SaveChangesAsync();
+            };
+        }
+
         #endregion
 
         #region property
