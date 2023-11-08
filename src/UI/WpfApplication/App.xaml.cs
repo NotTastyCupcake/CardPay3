@@ -169,7 +169,7 @@ public partial class App// : Application
         services.AddScoped<IViewFor<EmployeViewModel>, EmployeView>();
         services.AddScoped<EmployeViewModel>();
 
-        services.AddScoped<IViewFor<AddressViewModel>, AddAddressView>();
+        services.AddScoped<IViewFor<AddressViewModel>, AddressView>();
         services.AddScoped<AddressViewModel>();
 
     }
