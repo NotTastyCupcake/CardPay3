@@ -30,6 +30,10 @@ using Metcom.CardPay3.ApplicationCore.Entities;
 using Metcom.CardPay3.ApplicationCore.Entities.AccrualAggregate;
 using Metcom.CardPay3.WpfApplication.Interfaces;
 using Metcom.CardPay3.WpfApplication.Services;
+using Metcom.CardPay3.WpfApplication.Views;
+using Metcom.CardPay3.WpfApplication.ViewModels.Employes;
+using Metcom.CardPay3.WpfApplication.Views.Employes;
+using System.Windows.Forms;
 
 namespace Metcom.CardPay3.WpfApplication;
 
@@ -42,14 +46,14 @@ public partial class App// : Application
     public IConfiguration Configuration { get; private set;}
 
     public IServiceProvider Container { get; private set; }
-
+    private IHost _host;
     public App()
     {
         Initialize();
         /* Some other initialization stuff */
     }
 
-    private void Initialize()
+    private async void Initialize()
     {
         var builder = new ConfigurationBuilder()
              .SetBasePath(Directory.GetCurrentDirectory())
@@ -57,7 +61,7 @@ public partial class App// : Application
 
         Configuration = builder.Build();
 
-        var host = Host
+        _host = Host
             .CreateDefaultBuilder()
             .ConfigureServices(services =>
             {
@@ -75,22 +79,17 @@ public partial class App// : Application
             //.UseEnvironment(Environments.Development)
             .Build();
 
-        Container = host.Services;
+        Container = _host.Services;
         Container.UseMicrosoftDependencyResolver();
 
-        using (var scope = host.Services.CreateScope())
+        using (var scope = _host.Services.CreateScope())
         {
             var services = scope.ServiceProvider;
             var loggerFactory = services.GetRequiredService<ILoggerFactory>();
             try
             {
                 var catalogContext = services.GetRequiredService<EmployeContext>();
-                Task.Run(() => EmployeContextSeed.SeedAsync(catalogContext, loggerFactory));
-
-                var MainWindow = (MainWindow)services.GetRequiredService<IViewFor<HomeViewModel>>();
-                MainWindow.Show();
-
-
+                await EmployeContextSeed.SeedAsync(catalogContext, loggerFactory);
             }
             catch (Exception ex)
             {
@@ -101,10 +100,18 @@ public partial class App// : Application
 
     }
 
-    //protected override void OnStartup(StartupEventArgs e)
-    //{
+    protected override async void OnStartup(StartupEventArgs e)
+    {
+        await _host.StartAsync();
 
-    //}
+        var mainWindow = _host.Services.GetRequiredService<IViewFor<HomeViewModel>>();
+        if (mainWindow is ShellWindow window)
+        {
+            window.Show();
+        }
+
+        base.OnStartup(e);
+    }
 
     private void ConfigureDevelopmentServices(IServiceCollection services)
     {
@@ -133,34 +140,38 @@ public partial class App// : Application
         services.AddScoped(typeof(IReadRepository<>), typeof(EfRepository<>));
         services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
 
-        services.AddScoped<IRepository<Organization>, EfRepository<Organization>>();
-
         services.AddScoped<IAccrualService, AccrualService>();
         services.AddScoped<IEmployeService, EmployeService>();
 
         services.AddScoped<IHomeViewModelService, HomeViewModelService>();
+        services.AddScoped<IEmployeViewModelService, EmployeViewModelService>();
+        services.AddScoped<IEmployeCollectionService, EmployeCollectionService>();
 
         services.AddScoped<IEmployeBuilder, EmployeBuilder>();
 
         services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
         services.AddTransient<IEmailSender, EmailSender>();
-
+        services.AddTransient<IDataExportService, DataExportService>();
 
         // register your personal services here, for example
         services.AddSingleton<HomeViewModel>(); //Implements IScreen
-
-        // this passes IScreen resolution through to the previous viewmodel registration.
-        // this is to prevent multiple instances by mistake.
-        services.AddSingleton<IRoutableViewModel, HomeViewModel>(x => x.GetRequiredService<HomeViewModel>());
-
-        services.AddSingleton<IViewFor<HomeViewModel>, MainWindow>();
-
-
+        services.AddSingleton<IScreen, HomeViewModel>(x => x.GetRequiredService<HomeViewModel>());
+        services.AddSingleton<IViewFor<HomeViewModel>, ShellWindow>();
 
         //alternatively search assembly for `IRoutedViewFor` implementations
         //see https://reactiveui.net/docs/handbook/routing to learn more about routing in RxUI
-        //services.AddTransient<IViewFor<SecondaryViewModel>, SecondaryPage>();
-        //services.AddTransient<SecondaryViewModel>();
+        services.AddSingleton<IViewFor<MenuViewModel>, MenuView>();
+        services.AddSingleton<MenuViewModel>();
+
+        services.AddTransient<IViewFor<EmployeeListViewModel>, EmployeListView>();
+        services.AddTransient<EmployeeListViewModel>();
+
+        services.AddScoped<IViewFor<EmployeViewModel>, EmployeView>();
+        services.AddScoped<EmployeViewModel>();
+
+        services.AddScoped<IViewFor<AddressViewModel>, AddAddressView>();
+        services.AddScoped<AddressViewModel>();
+
     }
 
 }

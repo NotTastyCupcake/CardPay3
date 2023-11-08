@@ -213,6 +213,7 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
 
                     b.Property<int?>("IdDocument")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<int>("IdGender")

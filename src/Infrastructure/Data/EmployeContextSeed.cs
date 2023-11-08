@@ -121,7 +121,7 @@ namespace Metcom.CardPay3.Infrastructure.Data
             {
                 var log = loggerFactory.CreateLogger<EmployeContextSeed>();
                 log.LogError(ex.Message);
-                await SeedAsync(employerContext, loggerFactory);
+                //await SeedAsync(employerContext, loggerFactory);
             }
 
         }

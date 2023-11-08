@@ -8,12 +8,12 @@ namespace Metcom.CardPay3.WpfApplication
 {
     public class Constants
     {
-        public enum RoutingIDs
+        public enum Operations
         {
-            Main,
-            AccrualList,
-            EmployeeList,
-            CreateOrganization
+            View,
+            Edit,
+            Create,
+            Delete
         }
     }
 }

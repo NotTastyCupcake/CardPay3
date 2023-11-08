@@ -14,28 +14,18 @@ using System.Collections.ObjectModel;
 using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Reactive;
+using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Security;
 using System.Text;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace Metcom.CardPay3.WpfApplication.ViewModels;
-public class HomeViewModel : ReactiveObject, IRoutableViewModel
+public class HomeViewModel : ReactiveObject, IScreen
 {
-    public string UrlPathSegment { get { return "Home"; } }
-    public IScreen HostScreen { get; protected set; }
-
-    [Reactive]
-    public ObservableCollection<Organization> Organizations { get; set; }
-
-    [Reactive]
-    public Organization SelectedOrganization { get; set; }
-
-    [Reactive]
-    public bool IsRealOrganization { get; set; }
-
     private readonly IRepository<Organization> _repository;
     private readonly ILogger<HomeViewModel> _logger;
     private readonly IHomeViewModelService _viewModelService;
@@ -43,66 +33,72 @@ public class HomeViewModel : ReactiveObject, IRoutableViewModel
     public HomeViewModel(
         IRepository<Organization> repository,
         ILogger<HomeViewModel> logger,
-        IHomeViewModelService viewModelService,
-        IScreen screen = null)
+        IHomeViewModelService viewModelService)
     {
-        HostScreen = screen;
+        Router = new RoutingState();
 
         _repository = repository ?? Locator.Current.GetService<IRepository<Organization>>();
         _logger = logger ?? Locator.Current.GetService<ILogger<HomeViewModel>>();
         _viewModelService = viewModelService ?? Locator.Current.GetService<IHomeViewModelService>();
 
         // commands
-        RoutingEmployeeCommand = ReactiveCommand.Create(delegate ()
-        {
-            Router.Navigate.Execute(Locator.Current.GetService<EmployeeListViewModel>());
-        });
-        RoutingAccrualCommand = ReactiveCommand.Create(delegate ()
-        {
-            Router.Navigate.Execute(Locator.Current.GetService<AccrualListViewModel>());
-        });
         RoutingCreateOrganizationCommand = ReactiveCommand.Create(delegate ()
         {
             Router.Navigate.Execute(Locator.Current.GetService<CreateOrganizationViewModel>());
         });
-        RoutingCommand = ReactiveCommand.Create<Constants.RoutingIDs>(ExecuteSidebar);
 
-        Initialize();
+        var canGoBack = this
+            .WhenAnyValue(x => x.Router.NavigationStack.Count)
+            .Select(count => count > 1);
+        RoutingGoBackCommand = ReactiveCommand.CreateFromObservable(() => 
+        Router.NavigateBack.Execute(Unit.Default), canGoBack);
+
+        RoutingCommand = ReactiveCommand.Create<string>(ExecuteSidebar);
+
+        Task.Run(() => Initialize());
     }
 
-    private async void Initialize()
+
+
+    private async Task Initialize()
     {
         _logger.LogInformation("Inintialize HomeViewModel.");
 
         Organizations = await _viewModelService.GetOrganizations();
+        SelectedOrganization = Organizations.FirstOrDefault();
 
-        this.WhenAnyValue(vm => vm.SelectedOrganization).Subscribe(_ => UpdateIsRealOrganization());
+        //exec menu
+        MenuViewModel = Locator.Current.GetService<MenuViewModel>();
+        MenuViewModel.SelectedOrganization = SelectedOrganization;
+        await Router.Navigate.Execute(MenuViewModel);
+
+        this.WhenAnyValue(vm => vm.SelectedOrganization).Subscribe(_ => UpdateOrganization());
+        
     }
 
     public RoutingState Router { get; }
 
     #region commands
-
-    public ReactiveCommand<Unit, Unit> RoutingEmployeeCommand { get; }
     public ReactiveCommand<Unit, Unit> RoutingCreateOrganizationCommand { get; }
-    public ReactiveCommand<Unit, Unit> RoutingAccrualCommand { get; }
+    public ReactiveCommand<Unit, IRoutableViewModel> RoutingGoBackCommand { get; }
 
-    public ReactiveCommand<Constants.RoutingIDs, Unit> RoutingCommand { get; }
+    public ReactiveCommand<string, Unit> RoutingCommand { get; }
 
-    private void ExecuteSidebar(Constants.RoutingIDs parameter)
+    private void ExecuteSidebar(string parameter)
     {
         switch (parameter)
         {
             //case Constants.RoutingIDs.Mods:
             //    Router.Navigate.Execute(Locator.Current.GetService<ModListViewModel>());
             //    break;
-            case Constants.RoutingIDs.AccrualList:
+            case "AccrualList":
                 Router.Navigate.Execute(Locator.Current.GetService<AccrualListViewModel>());
                 break;
-            case Constants.RoutingIDs.EmployeeList:
+            case "EmployeeList":
                 Router.Navigate.Execute(Locator.Current.GetService<EmployeeListViewModel>());
                 break;
-            case Constants.RoutingIDs.Main:
+            case "Menu":
+                Router.Navigate.Execute(Locator.Current.GetService<MenuViewModel>());
                 break;
             //case Constants.RoutingIDs.Search:
             //    Router.Navigate.Execute(Locator.Current.GetService<SearchViewModel>());
@@ -113,20 +109,19 @@ public class HomeViewModel : ReactiveObject, IRoutableViewModel
     }
     #endregion
 
-    private void UpdateIsRealOrganization()
+    #region params
+    [Reactive]
+    public ObservableCollection<Organization> Organizations { get; set; }
+
+    [Reactive]
+    public Organization SelectedOrganization { get; set; }
+
+    public MenuViewModel MenuViewModel { get; set; }
+    #endregion
+
+    private void UpdateOrganization()
     {
-        if (SelectedOrganization == null)
-        {
-            IsRealOrganization = false;
-        }
-        else if (SelectedOrganization.Name == "Создать организацию.")
-        {
-            IsRealOrganization = false;
-            Router.Navigate.Execute(Locator.Current.GetService<CreateOrganizationViewModel>());
-        }
-        else
-        {
-            IsRealOrganization = true;
-        }
+        
+        MenuViewModel.SelectedOrganization = SelectedOrganization;
     }
 }
