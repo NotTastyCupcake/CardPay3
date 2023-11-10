@@ -29,7 +29,7 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
 {
     public class EmployeViewModel : ReactiveValidationObject, IRoutableViewModel
     {
-        public string UrlPathSegment { get { return "AddEmployee"; } }
+        public string UrlPathSegment { get { return "Employee"; } }
         public IScreen HostScreen { get; protected set; }
 
         private readonly IRepository<Employe> _repository;
@@ -55,18 +55,17 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
             // commands
             ActionCommand = ReactiveCommand.Create(ActionAndCloseWindowAsync());
 
-            CreateAddress = ReactiveCommand.Create(() =>
-            {
-                var vm = Locator.Current.GetService<AddressViewModel>();
-                HostScreen.Router.Navigate.Execute(vm);
-                return vm.Address;
-            });
+            CreateAddress = ReactiveCommand.Create(AddressWindow());
+
+            CreateDocument = ReactiveCommand.Create(DocumentWindow());
 
             Task.Run(() => Initialize());
 
             //this.WhenAnyValue(vm => vm.Employe).Subscribe(_ => /*UpdateIsRealOrganization()*/);
 
         }
+
+
 
         private async Task Initialize()
         {
@@ -95,8 +94,8 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
 
         #region commands
         public ReactiveCommand<Unit, Unit> ActionCommand { get; }
-        public ReactiveCommand<Unit, DocumentItem> CreateDocument { get; }
-        public ReactiveCommand<Unit, Address> CreateAddress { get; }
+        public ReactiveCommand<Unit, Unit> CreateDocument { get; }
+        public ReactiveCommand<Unit, Unit> CreateAddress { get; }
 
         private Action ActionAndCloseWindowAsync()
         {
@@ -125,6 +124,23 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
                 HostScreen.Router.NavigateBack.Execute();
             };
         }
+
+        private Action AddressWindow()
+        {
+            return delegate ()
+            {
+                HostScreen.Router.Navigate.Execute(Locator.Current.GetService<AddressViewModel>());
+            };
+        }
+
+        private Action DocumentWindow()
+        {
+            return delegate ()
+            {
+                HostScreen.Router.Navigate.Execute(Locator.Current.GetService<DocumentViewModel>());
+            };
+        }
+
         #endregion
 
         #region properties

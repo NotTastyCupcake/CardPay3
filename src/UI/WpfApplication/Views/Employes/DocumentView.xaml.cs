@@ -21,19 +21,15 @@ namespace Metcom.CardPay3.WpfApplication.Views.Employes
     /// <summary>
     /// Логика взаимодействия для AddAddressView.xaml
     /// </summary>
-    public partial class AddAddressView
+    public partial class DocumentView
     {
-        public AddAddressView(AddressViewModel viewModel = null)
+        public DocumentView(DocumentViewModel viewModel = null)
         {
-            ViewModel = viewModel ?? Locator.Current.GetService<AddressViewModel>();
+            ViewModel = viewModel ?? Locator.Current.GetService<DocumentViewModel>();
             DataContext = ViewModel;
 
             InitializeComponent();
 
-            this.WhenActivated(disposable =>
-            {
-
-            });
         }
     }
 }

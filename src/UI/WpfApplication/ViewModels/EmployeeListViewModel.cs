@@ -39,7 +39,6 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
         private readonly ILogger<EmployeeListViewModel> _logger;
         private readonly IDataExportService _exportService;
         private readonly IEmployeViewModelService _employeViewModelService;
-        private readonly IDisposable _cleanUp;
 
         public EmployeeListViewModel(
             IEmployeViewModelService viewModelService,
