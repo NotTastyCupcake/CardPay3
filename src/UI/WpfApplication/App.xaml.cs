@@ -172,6 +172,8 @@ public partial class App// : Application
         services.AddScoped<IViewFor<AddressViewModel>, AddressView>();
         services.AddScoped<AddressViewModel>();
 
+        services.AddScoped<IViewFor<DocumentViewModel>, DocumentView>();
+        services.AddScoped<DocumentViewModel>();
     }
 
 }
