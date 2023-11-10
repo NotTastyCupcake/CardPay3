@@ -4,6 +4,7 @@ using Metcom.CardPay3.ApplicationCore.Entities;
 using Metcom.CardPay3.ApplicationCore.Interfaces;
 using Metcom.CardPay3.WpfApplication.Interfaces;
 using Microsoft.Extensions.Logging;
+using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.WpfApplication.Services
 {
-    public class HomeViewModelService : IHomeViewModelService
+    public class HomeViewModelService :ReactiveObject , IHomeViewModelService
     {
         private readonly ILogger<HomeViewModelService> _logger;
         private readonly IRepository<Organization> _organizationRepository;
@@ -29,12 +30,10 @@ namespace Metcom.CardPay3.WpfApplication.Services
             _logger.LogInformation("GetOrganizations called.");
             var organizations = await _organizationRepository.ListAsync();
 
-            var items = new ObservableCollection<Organization>
+            var items = new ObservableCollection<Organization>(organizations)
             {
                 new Organization("Создать организацию.")
             };
-
-            items.AddRange(organizations);
 
             return items;
         }

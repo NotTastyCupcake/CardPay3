@@ -19,6 +19,8 @@ namespace Metcom.CardPay3.Infrastructure.Data.Config
                 .WithOne()
                 .HasForeignKey<Employe>(ci => ci.IdDocument)
                 .IsRequired(true);
+            builder.Property(ci => ci.IdDocument)
+                .ValueGeneratedOnAdd();
 
             builder.HasMany(ci => ci.Addresses)
                 .WithOne(ci => ci.Employer)

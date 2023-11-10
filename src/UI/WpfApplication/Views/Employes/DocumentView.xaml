@@ -1,0 +1,15 @@
+﻿<reactiveui:ReactiveUserControl x:Class="Metcom.CardPay3.WpfApplication.Views.Employes.DocumentView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vms="clr-namespace:Metcom.CardPay3.WpfApplication.ViewModels.Employes"
+             xmlns:reactiveui="http://reactiveui.net"
+             x:TypeArguments="vms:DocumentViewModel"
+             xmlns:local="clr-namespace:Metcom.CardPay3.WpfApplication"
+             mc:Ignorable="d" 
+             Height="500" Width="400">
+    <Grid>
+            
+    </Grid>
+</reactiveui:ReactiveUserControl>

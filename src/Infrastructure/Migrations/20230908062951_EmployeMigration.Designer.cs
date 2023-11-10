@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Metcom.CardPay3.Infrastructure.Migrations
 {
     [DbContext(typeof(EmployeContext))]
-    [Migration("20230728081224_EmployeMigration")]
+    [Migration("20230908062951_EmployeMigration")]
     partial class EmployeMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -215,6 +215,7 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
 
                     b.Property<int?>("IdDocument")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<int>("IdGender")
