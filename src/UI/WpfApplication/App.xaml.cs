@@ -1,12 +1,17 @@
-﻿using Metcom.CardPay3.ApplicationCore.Interfaces.ServicesInterfaces.Builder;
+﻿using Metcom.CardPay3.ApplicationCore.Interfaces;
 using Metcom.CardPay3.ApplicationCore.Interfaces.ServicesInterfaces;
-using Metcom.CardPay3.ApplicationCore.Interfaces;
-using Metcom.CardPay3.ApplicationCore.Services.Builder;
+using Metcom.CardPay3.ApplicationCore.Interfaces.ServicesInterfaces.Builder;
 using Metcom.CardPay3.ApplicationCore.Services;
+using Metcom.CardPay3.ApplicationCore.Services.Builder;
 using Metcom.CardPay3.Infrastructure.Data;
-using Metcom.CardPay3.Infrastructure.Identity;
+using Metcom.CardPay3.Infrastructure.Logging;
+using Metcom.CardPay3.Infrastructure.Services;
+using Metcom.CardPay3.WpfApplication.Interfaces;
+using Metcom.CardPay3.WpfApplication.Services;
 using Metcom.CardPay3.WpfApplication.ViewModels;
-using Microsoft.AspNetCore.Identity;
+using Metcom.CardPay3.WpfApplication.ViewModels.Employes;
+using Metcom.CardPay3.WpfApplication.Views;
+using Metcom.CardPay3.WpfApplication.Views.Employes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,23 +22,8 @@ using Splat;
 using Splat.Microsoft.Extensions.DependencyInjection;
 using Splat.Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
-using Metcom.CardPay3.Infrastructure.Logging;
-using Metcom.CardPay3.Infrastructure.Services;
-using Metcom.CardPay3.ApplicationCore.Entities;
-using Metcom.CardPay3.ApplicationCore.Entities.AccrualAggregate;
-using Metcom.CardPay3.WpfApplication.Interfaces;
-using Metcom.CardPay3.WpfApplication.Services;
-using Metcom.CardPay3.WpfApplication.Views;
-using Metcom.CardPay3.WpfApplication.ViewModels.Employes;
-using Metcom.CardPay3.WpfApplication.Views.Employes;
-using System.Windows.Forms;
 
 namespace Metcom.CardPay3.WpfApplication;
 
@@ -43,7 +33,7 @@ namespace Metcom.CardPay3.WpfApplication;
 public partial class App// : Application
 {
 
-    public IConfiguration Configuration { get; private set;}
+    public IConfiguration Configuration { get; private set; }
 
     public IServiceProvider Container { get; private set; }
     private IHost _host;

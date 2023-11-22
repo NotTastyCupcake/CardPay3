@@ -4,8 +4,6 @@ using Metcom.CardPay3.ApplicationCore.Interfaces;
 using Metcom.CardPay3.ApplicationCore.Specifications;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.ApplicationCore.Services
@@ -21,13 +19,13 @@ namespace Metcom.CardPay3.ApplicationCore.Services
             _logger = logger;
         }
 
-        public async Task<Accrual> AddItemToAccrual(int idOrganization ,int employerId, DateTime accrualDay, decimal amount, int idAccrualType, int idOperationType)
+        public async Task<Accrual> AddItemToAccrual(int idOrganization, int employerId, DateTime accrualDay, decimal amount, int idAccrualType, int idOperationType)
         {
 
             var accrualSpec = new AccrualSpecification(idOrganization: idOrganization.ToString());
             var accrual = await _accrualRepository.SingleOrDefaultAsync(accrualSpec);
 
-            if(accrual == null)
+            if (accrual == null)
             {
                 accrual = new Accrual(idOrganization, accrualDay, idAccrualType, idOperationType);
                 await _accrualRepository.AddAsync(accrual);
@@ -70,9 +68,9 @@ namespace Metcom.CardPay3.ApplicationCore.Services
             var oldAccrualSpec = new AccrualSpecification(idOrganization: oldIdOrganization.ToString());
             var accrual = await _accrualRepository.SingleOrDefaultAsync(oldAccrualSpec);
 
-            if(accrual == null) { return; }
+            if (accrual == null) { return; }
 
-            if(_logger != null) 
+            if (_logger != null)
             {
                 _logger.LogInformation($"Updating organization of accrual ID:{accrual.Id} to {newIdOrganization}");
             }
@@ -88,9 +86,9 @@ namespace Metcom.CardPay3.ApplicationCore.Services
             var accrual = await _accrualRepository.GetByIdAsync(accrualId);
             Guard.Against.Null(accrual, nameof(accrual));
 
-            foreach(var item in accrual.Items)
+            foreach (var item in accrual.Items)
             {
-                if(amounts.TryGetValue(item.Id.ToString(), out var amount))
+                if (amounts.TryGetValue(item.Id.ToString(), out var amount))
                 {
                     if (_logger != null) _logger.LogInformation($"Updating amount of item ID:{item.Id} to {amount}.");
                     item.SetAmount(amount);

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Metcom.CardPay3.WebApplication.ViewModels.Employes
+﻿namespace Metcom.CardPay3.WebApplication.ViewModels.Employes
 {
     public class EmployeAddressViewModel
     {
@@ -39,7 +33,7 @@ namespace Metcom.CardPay3.WebApplication.ViewModels.Employes
         /// </summary>
         public int NumApartment { get; set; }
 
-        public string FullName => 
+        public string FullName =>
             $"{StreetType} {Street}, " +
             $"дом {NumHome}, " +
             $"{(NumCase != 0 ? "корпус " + NumCase + ", " : "")}" +

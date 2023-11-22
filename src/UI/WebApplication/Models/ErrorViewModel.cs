@@ -1,5 +1,3 @@
-using System;
-
 namespace Metcom.CardPay3.WebApplication.Models
 {
     public class ErrorViewModel

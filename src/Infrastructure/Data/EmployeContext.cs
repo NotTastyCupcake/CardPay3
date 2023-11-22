@@ -11,7 +11,7 @@ namespace Metcom.CardPay3.Infrastructure.Data
 {
     public class EmployeContext : DbContext
     {
-        public EmployeContext(DbContextOptions<EmployeContext> options) 
+        public EmployeContext(DbContextOptions<EmployeContext> options)
             : base(options)
         {
             Database.EnsureCreated();
@@ -52,7 +52,7 @@ namespace Metcom.CardPay3.Infrastructure.Data
         {
             base.OnConfiguring(optionsBuilder);
             optionsBuilder.UseLazyLoadingProxies();
-        } 
+        }
     }
-    
+
 }

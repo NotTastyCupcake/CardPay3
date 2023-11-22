@@ -4,11 +4,7 @@ using Metcom.CardPay3.ApplicationCore.Entities.DocumentAggregate;
 using Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate;
 using Metcom.CardPay3.ApplicationCore.Interfaces;
 using Metcom.CardPay3.ApplicationCore.Interfaces.ServicesInterfaces.Builder;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.ApplicationCore.Services.Builder
 {
@@ -40,7 +36,7 @@ namespace Metcom.CardPay3.ApplicationCore.Services.Builder
 
         public void SetAddress(Address employeAddress)
         {
-            if(employeAddress == null)
+            if (employeAddress == null)
             {
                 _logger.LogWarning("Empty Address");
                 return;

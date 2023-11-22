@@ -1,12 +1,8 @@
-﻿using NUnit.Framework;
-using Moq;
-using Metcom.CardPay3.ApplicationCore.Specifications;
-using Metcom.CardPay3.ApplicationCore.Services;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Metcom.CardPay3.ApplicationCore.Entities.AccrualAggregate;
 using Metcom.CardPay3.ApplicationCore.Interfaces;
-using Metcom.CardPay3.ApplicationCore.Entities.AccrualAggregate;
+using Moq;
+using NUnit.Framework;
+using System;
 
 namespace Metcom.CardPay3.UnitTests.ApplicationCore.Service.AccrualServiceTests
 {

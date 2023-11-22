@@ -8,14 +8,13 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.Infrastructure.Data
 {
     public class EmployeContextSeed
     {
-        public async static Task SeedAsync(EmployeContext employerContext, 
+        public async static Task SeedAsync(EmployeContext employerContext,
             ILoggerFactory loggerFactory)
         {
             try

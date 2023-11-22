@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Metcom.CardPay3.ApplicationCore.Entities.AddressAggregate
+﻿namespace Metcom.CardPay3.ApplicationCore.Entities.AddressAggregate
 {
     public class Address : BaseEntity
     {
@@ -43,10 +37,10 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.AddressAggregate
         /// <summary>
         /// Номер квартиры
         /// </summary>
-        public int NumApartment { get; private set; } 
+        public int NumApartment { get; private set; }
         #endregion
 
-        public Address(string country, int postcode, string state, string district,string city,string locality,string streetType, string street,int numHome,int numCase, int numApartment, int idEmployer)
+        public Address(string country, int postcode, string state, string district, string city, string locality, string streetType, string street, int numHome, int numCase, int numApartment, int idEmployer)
         {
             Country = country;
             Postcode = postcode;

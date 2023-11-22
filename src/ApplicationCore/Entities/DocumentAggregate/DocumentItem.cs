@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.ApplicationCore.Entities.DocumentAggregate
 {
@@ -18,7 +14,7 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.DocumentAggregate
         public string IssuedBy { get; private set; }
         public string SubdivisionCode { get; private set; }
 
-        public DocumentItem(int idType ,DateTime dataIssued, string issuedBy, string subdivisionCode)
+        public DocumentItem(int idType, DateTime dataIssued, string issuedBy, string subdivisionCode)
         {
             IdType = idType;
             DataIssued = dataIssued;

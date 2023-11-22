@@ -1,20 +1,13 @@
-﻿using Metcom.CardPay3.ApplicationCore.Entities;
-using Metcom.CardPay3.ApplicationCore.Interfaces;
-using Metcom.CardPay3.ApplicationCore.Interfaces.ServicesInterfaces;
-using Metcom.CardPay3.ApplicationCore.Specifications;
+﻿using Metcom.CardPay3.ApplicationCore.Interfaces.ServicesInterfaces;
 using Metcom.CardPay3.Infrastructure.Identity;
 using Metcom.CardPay3.WebApplication.Interfaces;
-using Metcom.CardPay3.WebApplication.ViewModels;
 using Metcom.CardPay3.WebApplication.ViewModels.Employes;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.WebApplication.Controllers
@@ -34,7 +27,7 @@ namespace Metcom.CardPay3.WebApplication.Controllers
             IEmployerViewModelService viewModelService,
             IEmployeService service)
         {
-            
+
             _logger = logger;
             _userManager = userManager;
             _viewModelservice = viewModelService;
@@ -74,7 +67,7 @@ namespace Metcom.CardPay3.WebApplication.Controllers
         {
             try
             {
-                if(ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
                     var user = await _userManager.FindByNameAsync(User.Identity.Name);
 

@@ -1,24 +1,8 @@
-﻿using Metcom.CardPay3.WpfApplication.ViewModels;
-using Metcom.CardPay3.WpfApplication.ViewModels.Employes;
+﻿using Metcom.CardPay3.WpfApplication.ViewModels.Employes;
 using ReactiveUI;
 using Splat;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reactive;
 using System.Reactive.Disposables;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Automation;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Metcom.CardPay3.WpfApplication.Views.Employes
 {

@@ -1,5 +1,4 @@
-﻿using Castle.Core.Logging;
-using Metcom.CardPay3.ApplicationCore.Entities.AccrualAggregate;
+﻿using Metcom.CardPay3.ApplicationCore.Entities.AccrualAggregate;
 using Metcom.CardPay3.ApplicationCore.Interfaces;
 using Microsoft.Extensions.Logging;
 using ReactiveUI;

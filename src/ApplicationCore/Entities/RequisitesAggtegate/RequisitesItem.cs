@@ -1,9 +1,4 @@
 ﻿using Ardalis.GuardClauses;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate
 {
@@ -19,14 +14,14 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate
             //requared for EF
         }
 
-        public RequisitesItem(string latinFirstName, 
-            string latinLastName, 
+        public RequisitesItem(string latinFirstName,
+            string latinLastName,
             string cardNumber,
             string accountNumber,
-            int idCardType, 
-            int inn, 
-            string insuranceNum, 
-            int idDivision, 
+            int idCardType,
+            int inn,
+            string insuranceNum,
+            int idDivision,
             int idCurrency,
             int idEmployer
             )
@@ -47,7 +42,7 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate
         public int IdDivision { get; private set; }
         public virtual BankCurrency Currency { get; private set; }
         public int IdCurrency { get; private set; }
-        
+
 
         public int INN { get; private set; }
         /// <summary>

@@ -1,29 +1,19 @@
-﻿using Castle.Core.Logging;
-using Metcom.CardPay3.ApplicationCore.Entities;
+﻿using Metcom.CardPay3.ApplicationCore.Entities;
 using Metcom.CardPay3.ApplicationCore.Entities.AddressAggregate;
 using Metcom.CardPay3.ApplicationCore.Entities.DocumentAggregate;
 using Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate;
 using Metcom.CardPay3.ApplicationCore.Interfaces;
-using Metcom.CardPay3.ApplicationCore.Interfaces.ServicesInterfaces;
-using Metcom.CardPay3.ApplicationCore.Specifications;
 using Metcom.CardPay3.WpfApplication.Interfaces;
-using Metcom.CardPay3.WpfApplication.Views.Employes;
 using Microsoft.Extensions.Logging;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using ReactiveUI.Validation.Helpers;
 using Splat;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Reactive;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Forms;
 
 namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
 {
@@ -163,7 +153,7 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
 
         [Reactive]
         public ReadOnlyObservableCollection<Gender> Genders { get; set; }
-        
+
         [Reactive]
         public Gender SelectedGender { get; set; }
 

@@ -7,9 +7,6 @@ using Metcom.CardPay3.ApplicationCore.Interfaces.ServicesInterfaces;
 using Metcom.CardPay3.ApplicationCore.Interfaces.ServicesInterfaces.Builder;
 using Metcom.CardPay3.ApplicationCore.Specifications;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.ApplicationCore.Services
@@ -74,7 +71,7 @@ namespace Metcom.CardPay3.ApplicationCore.Services
                 document = new DocumentItem(idTypeDocument, dataIssuedDocument, issuedByDocument, subdivisionCodeDocument);
                 await _documentRepository.AddAsync(document);
             }
-            
+
             _builder.CreateEmploye(lastName, firstName, middleName, phoneNum, jobPhoneNum, position, departmentNum, gender, document, organizationId);
             _employe = _builder.GetEmploye();
             await _employeRepository.AddAsync(_employe);

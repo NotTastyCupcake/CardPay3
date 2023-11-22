@@ -6,7 +6,7 @@ namespace Metcom.CardPay3.ApplicationCore.Interfaces.ServicesInterfaces
 {
     public interface IEmployeService
     {
-        public Employe GetEmploye(); 
+        public Employe GetEmploye();
         public Task CreateEmploye(string lastName,
             string firstName,
             string middleName,
@@ -16,22 +16,22 @@ namespace Metcom.CardPay3.ApplicationCore.Interfaces.ServicesInterfaces
             string departmentNum,
             int idGender,
 
-            int idTypeDocument, 
-            DateTime dataIssuedDocument, 
-            string issuedByDocument, 
+            int idTypeDocument,
+            DateTime dataIssuedDocument,
+            string issuedByDocument,
             string subdivisionCodeDocument,
 
             int organizationId);
-        public Task AddAddress(string country, 
-            int postcode, 
-            string state, 
-            string district, 
+        public Task AddAddress(string country,
+            int postcode,
+            string state,
+            string district,
             string city,
-            string locality, 
-            string streetType, 
-            string street, 
-            int numHome, 
-            int numCase, 
+            string locality,
+            string streetType,
+            string street,
+            int numHome,
+            int numCase,
             int numApartment);
 
     }
