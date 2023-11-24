@@ -17,7 +17,6 @@ namespace Metcom.CardPay3.Infrastructure.Data.Config
             builder.HasOne(ci => ci.Country)
                 .WithMany()
                 .HasForeignKey(ci => ci.IdCountry)
-                .OnDelete(DeleteBehavior.Cascade)
                 .IsRequired(true);
 
             builder.HasOne(ci => ci.State)
