@@ -166,7 +166,7 @@ namespace Metcom.CardPay3.Infrastructure.Data
         {
             return new List<Geographic>()
             {
-                new Geographic("Российская фидерация", "RUS", "643"),
+                new Geographic("Российская фидерация", "RUS", 643),
                 new Geographic("TEST_STATE", "TEST_SHORT_STATE"),
                 new Geographic("TEST_CITY", "TEST_SHORT_CITY"),
                 new Geographic("TEST_LOCALITY", "TEST_SHORT_LOCALITY"),
