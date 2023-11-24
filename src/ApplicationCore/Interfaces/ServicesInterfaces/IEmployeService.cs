@@ -22,17 +22,17 @@ namespace Metcom.CardPay3.ApplicationCore.Interfaces.ServicesInterfaces
             string subdivisionCodeDocument,
 
             int organizationId);
-        public Task AddAddress(string country,
-            int postcode,
-            string state,
-            string district,
-            string city,
-            string locality,
-            string streetType,
-            string street,
-            int numHome,
-            int numCase,
-            int numApartment);
+        public Task AddAddress(int country,
+                               int postcode, 
+                               int state, 
+                               string district, 
+                               int city, 
+                               int locality, 
+                               string streetType, 
+                               int street, 
+                               int numHome, 
+                               int numCase, 
+                               int numApartment);
 
     }
 }

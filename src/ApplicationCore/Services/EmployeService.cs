@@ -77,7 +77,7 @@ namespace Metcom.CardPay3.ApplicationCore.Services
             await _employeRepository.AddAsync(_employe);
         }
 
-        public async Task AddAddress(string country, int postcode, string state, string district, string city, string locality, string streetType, string street, int numHome, int numCase, int numApartment)
+        public async Task AddAddress(int country, int postcode, int state, string district, int city, int locality, string streetType, int street, int numHome, int numCase, int numApartment)
         {
             _builder.SetAddress(new Address(country, postcode, state, district, city, locality, streetType, street, numHome, numCase, numApartment, _employe.Id));
         }
