@@ -2,8 +2,10 @@
 {
     public class Address : BaseEntity
     {
+        #nullable enable
         public int? IdEmployer { get; private set; }
         public virtual Employe? Employer { get; private set; }
+        #nullable disable
 
         #region Поля
 
