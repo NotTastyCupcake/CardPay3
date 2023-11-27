@@ -113,6 +113,10 @@ namespace Metcom.CardPay3.ApplicationCore.Services.Builder
             _employe = new Employe(lastName, firstName, middleName, phoneNum, jobPhoneNum,position,departmentNum,_gender.Id, _document.Id, _organization.Id);
             _employe.Addresses.Add(_address);
             _employe.Requisites.Add(_requisites);
+
+            await _employeRepository.AddAsync(_employe);
+            await _employeRepository.SaveChangesAsync();
+
             return _employe;
         }
     }

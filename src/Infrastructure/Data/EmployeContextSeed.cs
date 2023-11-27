@@ -188,7 +188,8 @@ namespace Metcom.CardPay3.Infrastructure.Data
         {
             return new List<RequisitesItem>()
             {
-                new RequisitesItem("IVAN","IVANOV","0000 0000 0000 0000", "00000", 1,11111,"INSURANCE_NUM", 1, 1, 1)
+                //TODO: Создать пример реквезитов для отправки
+                //new RequisitesItem(1111,"", 1, 1, 1)
             };
         }
 
