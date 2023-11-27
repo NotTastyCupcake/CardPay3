@@ -74,7 +74,6 @@ namespace Metcom.CardPay3.WebApplication
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
 
             services.AddScoped<IAccrualService, AccrualService>();
-            services.AddScoped<IEmployeService, EmployeService>();
 
             services.AddScoped<IEmployeBuilder, EmployeBuilder>();
 
