@@ -54,7 +54,6 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate
         /// Фамилия в латинице
         /// </summary>
         public string LatinLastName { get; private set; }
-        public string CardNumber { get; private set; }
         public string AccountNumber { get; private set; }
 
 #nullable enable
@@ -66,13 +65,11 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate
 
         public Status Status { get; set; }
 
-        public void UpdateCard(string cardNumber, string accountNumber, int idCardType)
+        public void UpdateCard(string accountNumber, int idCardType)
         {
-            Guard.Against.NullOrEmpty(cardNumber, nameof(cardNumber));
             Guard.Against.NullOrEmpty(accountNumber, nameof(accountNumber));
             Guard.Against.OutOfRange(idCardType, nameof(idCardType), 0, int.MaxValue);
 
-            CardNumber = cardNumber;
             AccountNumber = accountNumber;
             IdCardType = idCardType;
 
@@ -84,19 +81,17 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate
             Status = status;
         }
 
-        public void FullUpdateCardData(string lastName, string firstName, string cardNumber, string accountNumber, int idCardType)
+        public void FullUpdateCardData(string lastName, string firstName, string accountNumber, int idCardType)
         {
             Guard.Against.NullOrEmpty(lastName, nameof(lastName));
             Guard.Against.NullOrEmpty(firstName, nameof(firstName));
 
-            Guard.Against.NullOrEmpty(cardNumber, nameof(cardNumber));
             Guard.Against.NullOrEmpty(accountNumber, nameof(accountNumber));
             Guard.Against.OutOfRange(idCardType, nameof(idCardType), 0, int.MaxValue);
 
             LatinLastName = lastName;
             LatinFirstName = firstName;
 
-            CardNumber = cardNumber;
             AccountNumber = accountNumber;
             IdCardType = idCardType;
         }
