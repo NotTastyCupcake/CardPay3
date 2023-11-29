@@ -18,7 +18,7 @@ namespace Metcom.CardPay3.UnitTests.ApplicationCore.Entities.EmployerItemTests
         private string _validPosition = "TestPosition";
         private string _validDepartmentNum = "TestDepartamentNum";
         private int _validIdRequest = 1;
-        private int _validIdOrganization = 1;
+        //private int _validIdOrganization = 1;
 
         [SetUp]
         public void UpdateContactDetailsSetUp()

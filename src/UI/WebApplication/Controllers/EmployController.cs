@@ -1,4 +1,5 @@
 ﻿using Metcom.CardPay3.ApplicationCore.Interfaces.ServicesInterfaces;
+using Metcom.CardPay3.ApplicationCore.Interfaces.ServicesInterfaces.Builder;
 using Metcom.CardPay3.Infrastructure.Identity;
 using Metcom.CardPay3.WebApplication.Interfaces;
 using Metcom.CardPay3.WebApplication.ViewModels.Employes;
@@ -20,12 +21,12 @@ namespace Metcom.CardPay3.WebApplication.Controllers
         private readonly ILogger<EmployeController> _logger;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IEmployerViewModelService _viewModelservice;
-        private readonly IEmployeService _service;
+        private readonly IEmployeBuilder _service;
 
         public EmployeController(ILogger<EmployeController> logger,
             UserManager<ApplicationUser> userManager,
             IEmployerViewModelService viewModelService,
-            IEmployeService service)
+            IEmployeBuilder service)
         {
 
             _logger = logger;
@@ -71,11 +72,13 @@ namespace Metcom.CardPay3.WebApplication.Controllers
                 {
                     var user = await _userManager.FindByNameAsync(User.Identity.Name);
 
-                    await _service.CreateEmploye(employerModel.LastName, employerModel.FirstName, employerModel.MiddleName,
-                       employerModel.PhoneNumber, employerModel.JobPhoneNumber, employerModel.Position, employerModel.DepartmentNum, employerModel.IdGender, employerModel.IdType,
-                       employerModel.DataIssued, employerModel.IssuedBy, employerModel.SubdivisionCode, user.IdOrganization);
+                    var builder = await _service.SetGender(employerModel.IdGender);
+                    await builder.SetDocument(employerModel.IdType,
+                       employerModel.DataIssued, employerModel.IssuedBy, employerModel.SubdivisionCode);
+                    await builder.SetOrganization(user.IdOrganization);
 
-                    var employer = _service.GetEmploye();
+                    var employer = await _service.GetEmploye(employerModel.LastName, employerModel.FirstName, employerModel.MiddleName,
+                       employerModel.PhoneNumber, employerModel.JobPhoneNumber, employerModel.Position, employerModel.DepartmentNum);
 
                     return RedirectToAction(nameof(Index));
                 }
@@ -96,46 +99,46 @@ namespace Metcom.CardPay3.WebApplication.Controllers
             }
         }
 
-        // GET: EmployController/Edit/5
-        public async Task<IActionResult> Edit(int id)
-        {
-            return View();
-        }
+        //// GET: EmployController/Edit/5
+        //public async Task<IActionResult> Edit(int id)
+        //{
+        //    return View();
+        //}
 
-        // POST: EmployController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //// POST: EmployController/Edit/5
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Edit(int id, IFormCollection collection)
+        //{
+        //    try
+        //    {
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
 
-        // GET: EmployController/Delete/5
-        public async Task<IActionResult> Delete(int id)
-        {
-            return View();
-        }
+        //// GET: EmployController/Delete/5
+        //public async Task<IActionResult> Delete(int id)
+        //{
+        //    return View();
+        //}
 
-        // POST: EmployController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //// POST: EmployController/Delete/5
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Delete(int id, IFormCollection collection)
+        //{
+        //    try
+        //    {
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
     }
 }

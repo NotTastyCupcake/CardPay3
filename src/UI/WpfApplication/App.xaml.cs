@@ -131,7 +131,6 @@ public partial class App// : Application
         services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
 
         services.AddScoped<IAccrualService, AccrualService>();
-        services.AddScoped<IEmployeService, EmployeService>();
 
         services.AddScoped<IHomeViewModelService, HomeViewModelService>();
         services.AddScoped<IEmployeViewModelService, EmployeViewModelService>();
