@@ -1,24 +1,23 @@
+using Metcom.CardPay3.ApplicationCore.Interfaces;
+using Metcom.CardPay3.ApplicationCore.Interfaces.ServicesInterfaces;
+using Metcom.CardPay3.ApplicationCore.Interfaces.ServicesInterfaces.Builder;
+using Metcom.CardPay3.ApplicationCore.Services;
+using Metcom.CardPay3.ApplicationCore.Services.Builder;
+using Metcom.CardPay3.Infrastructure.Data;
+using Metcom.CardPay3.Infrastructure.Identity;
+using Metcom.CardPay3.Infrastructure.Logging;
+using Metcom.CardPay3.Infrastructure.Services;
+using Metcom.CardPay3.WebApplication.Interfaces;
+using Metcom.CardPay3.WebApplication.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Metcom.CardPay3.Infrastructure.Identity;
-using Metcom.CardPay3.Infrastructure.Services;
-using Metcom.CardPay3.ApplicationCore.Interfaces;
-using Microsoft.AspNetCore.Identity;
-using Metcom.CardPay3.Infrastructure.Data;
-using Microsoft.AspNetCore.Http;
 using System;
-using Metcom.CardPay3.Infrastructure.Logging;
-using Metcom.CardPay3.WebApplication.Services;
-using Metcom.CardPay3.ApplicationCore.Services;
-using Metcom.CardPay3.WebApplication.Interfaces;
-using Metcom.CardPay3.ApplicationCore.Interfaces.ServicesInterfaces;
-using Metcom.CardPay3.ApplicationCore.Interfaces.ServicesInterfaces.Builder;
-using Metcom.CardPay3.ApplicationCore.Services.Builder;
 
 namespace Metcom.CardPay3.WebApplication
 {
@@ -75,7 +74,6 @@ namespace Metcom.CardPay3.WebApplication
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
 
             services.AddScoped<IAccrualService, AccrualService>();
-            services.AddScoped<IEmployeService, EmployeService>();
 
             services.AddScoped<IEmployeBuilder, EmployeBuilder>();
 
@@ -98,7 +96,7 @@ namespace Metcom.CardPay3.WebApplication
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

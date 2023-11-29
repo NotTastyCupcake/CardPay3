@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.ApplicationCore.Interfaces
 {
@@ -12,6 +9,6 @@ namespace Metcom.CardPay3.ApplicationCore.Interfaces
         /// </summary>
         /// <param name="format">Формат файла</param>
         /// <param name="path">Путь до файла</param>
-        Task ExportDataAsync(string format,string path);
+        Task ExportDataAsync(string format, string path);
     }
 }

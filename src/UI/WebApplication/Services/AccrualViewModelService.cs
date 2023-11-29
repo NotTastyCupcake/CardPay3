@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.WebApplication.Services
@@ -20,8 +19,8 @@ namespace Metcom.CardPay3.WebApplication.Services
         private readonly IRepository<Employe> _itemRepository;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        
-        public AccrualViewModelService(IRepository<Accrual> accrualRepository, 
+
+        public AccrualViewModelService(IRepository<Accrual> accrualRepository,
             IRepository<Employe> itemRepository, UserManager<ApplicationUser> userManager)
         {
             _accrualRepository = accrualRepository;
@@ -37,11 +36,11 @@ namespace Metcom.CardPay3.WebApplication.Services
             var accrualSpec = new AccrualSpecification(idOrganization: user.IdOrganization.ToString());
             var accrual = (await _accrualRepository.ListAsync(accrualSpec)).FirstOrDefault();
 
-            if(accrual == null)
+            if (accrual == null)
             {
-                return await CreateAsyncAccrualForOrganization(user.IdOrganization, 
-                    DateTime.Now.AddMonths(1), 
-                    1, 
+                return await CreateAsyncAccrualForOrganization(user.IdOrganization,
+                    DateTime.Now.AddMonths(1),
+                    1,
                     1);
             }
             return await CreateViewModelFromBasket(accrual);

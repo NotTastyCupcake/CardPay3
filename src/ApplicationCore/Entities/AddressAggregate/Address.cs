@@ -1,37 +1,52 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Metcom.CardPay3.ApplicationCore.Entities.AddressAggregate
+﻿namespace Metcom.CardPay3.ApplicationCore.Entities.AddressAggregate
 {
     public class Address : BaseEntity
     {
+        #nullable enable
         public int? IdEmployer { get; private set; }
         public virtual Employe? Employer { get; private set; }
+        #nullable disable
 
         #region Поля
 
-        public string FullName => $"{Postcode}, {Country}, {State}, {City},ул. {Street},д. {NumHome}";
-
-        public string Country { get; private set; }
+        public string FullName => $"{Postcode}, {Country.Name}, {State.Name}, {City.Name},{StreetType} {Street.Name},д. {NumHome}";
+        /// <summary>
+        /// Индекс
+        /// </summary>
         public int Postcode { get; private set; }
+
+        public int IdCountry { get; private set; }
+        public virtual Geographic Country { get; private set; }
+
+        public int IdState { get; private set; }
         /// <summary>
         /// Регион
         /// </summary>
-        public string State { get; private set; }
+        public virtual Geographic State { get; private set; }
+
+        /// <summary>
+        /// Район
+        /// </summary>
         public string District { get; private set; }
-        public string City { get; private set; }
+
+        public int IdCity { get; private set; }
+        public virtual Geographic City { get; private set; }
+
+
+        public int IdLocality { get; private set; }
         /// <summary>
         /// Населенный пункт
         /// </summary>
-        public string Locality { get; private set; }
+        public virtual Geographic Locality { get; private set; }
+
         /// <summary>
         /// Тип улицы
         /// </summary>
         public string StreetType { get; private set; }
-        public string Street { get; private set; }
+
+        public int IdStreet { get; private set; }
+        public virtual Geographic Street { get; private set; }
+
         /// <summary>
         /// Номер дома
         /// </summary>
@@ -43,19 +58,19 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.AddressAggregate
         /// <summary>
         /// Номер квартиры
         /// </summary>
-        public int NumApartment { get; private set; } 
+        public int NumApartment { get; private set; }
         #endregion
 
-        public Address(string country, int postcode, string state, string district,string city,string locality,string streetType, string street,int numHome,int numCase, int numApartment, int idEmployer)
+        public Address(int idCountry, int postcode, int idState, string district, int idCity, int idLocality, string streetType, int idStreet, int numHome, int numCase, int numApartment, int idEmployer)
         {
-            Country = country;
+            IdCountry = idCountry;
             Postcode = postcode;
-            State = state;
+            IdState = idState;
             District = district;
-            City = city;
-            Locality = locality;
+            IdCity = idCity;
+            IdLocality = idLocality;
             StreetType = streetType;
-            Street = street;
+            IdStreet = idStreet;
             NumHome = numHome;
             NumCase = numCase;
             NumApartment = numApartment;

@@ -1,21 +1,17 @@
-﻿using Castle.Core.Logging;
-using DynamicData;
+﻿using DynamicData;
 using Metcom.CardPay3.ApplicationCore.Entities;
 using Metcom.CardPay3.ApplicationCore.Interfaces;
 using Metcom.CardPay3.WpfApplication.Interfaces;
-using Metcom.CardPay3.WpfApplication.Views.Employes;
 using Microsoft.Extensions.Logging;
 using ReactiveUI;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.WpfApplication.Services
 {
-    public class EmployeCollectionService :ReactiveObject , IEmployeCollectionService
+    public class EmployeCollectionService : ReactiveObject, IEmployeCollectionService
     {
         private readonly ILogger<EmployeCollectionService> _logger;
         private readonly IRepository<Employe> _repository;

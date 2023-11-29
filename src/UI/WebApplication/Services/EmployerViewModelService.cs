@@ -12,7 +12,6 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.WebApplication.Services
@@ -92,11 +91,11 @@ namespace Metcom.CardPay3.WebApplication.Services
                 MiddleName = item.MiddleName,
                 LastName = item.LastName,
                 DepartmentNum = item.DepartmentNum,
-                Gender = new EmployeGenderViewModel() 
-                    { 
-                        GenderName = item.Gender.GenderName,
-                        Id = item.Gender.Id
-                    },
+                Gender = new EmployeGenderViewModel()
+                {
+                    GenderName = item.Gender.GenderName,
+                    Id = item.Gender.Id
+                },
                 JobPhoneNumber = item.JobPhoneNumber,
                 NameOrganization = item.Organization.Name,
                 PhoneNumber = item.PhoneNumber,

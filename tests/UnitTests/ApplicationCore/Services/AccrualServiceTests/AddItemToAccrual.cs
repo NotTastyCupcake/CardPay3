@@ -1,14 +1,11 @@
 ﻿using Metcom.CardPay3.ApplicationCore.Entities.AccrualAggregate;
 using Metcom.CardPay3.ApplicationCore.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Metcom.CardPay3.ApplicationCore.Services;
+using Metcom.CardPay3.ApplicationCore.Specifications;
 using Moq;
 using NUnit.Framework;
-using Metcom.CardPay3.ApplicationCore.Specifications;
-using Metcom.CardPay3.ApplicationCore.Services;
+using System;
+using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.UnitTests.ApplicationCore.Service.AccrualServiceTests
 {
@@ -33,7 +30,7 @@ namespace Metcom.CardPay3.UnitTests.ApplicationCore.Service.AccrualServiceTests
         public async Task InvokesAccrualRepositoryGetBySpecAsyncOnce()
         {
             // Act
-            Item.AddItem(1,It.IsAny<decimal>());
+            Item.AddItem(1, It.IsAny<decimal>());
             _mockAccrualRepo.Setup(x => x.SingleOrDefaultAsync(It.IsAny<AccrualSpecification>(), default)).ReturnsAsync(Item);
 
             var accrualService = new AccrualService(_mockAccrualRepo.Object, null);

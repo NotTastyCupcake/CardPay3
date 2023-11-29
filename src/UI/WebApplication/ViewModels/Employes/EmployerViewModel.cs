@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Metcom.CardPay3.WebApplication.ViewModels.Employes
 {
@@ -22,14 +18,14 @@ namespace Metcom.CardPay3.WebApplication.ViewModels.Employes
 
         #region Ссылка на объект
         public EmployeGenderViewModel Gender { get; set; }
-        #nullable enable
+#nullable enable
         /// <summary>
         /// Реквизиты документов человека
         /// </summary>
         public virtual ICollection<EmployeRequisitesViewModel>? Requisites { get; set; }
 
         public virtual ICollection<EmployeAddressViewModel>? Addresses { get; set; }
-        #nullable disable
+#nullable disable
         #endregion
     }
 }

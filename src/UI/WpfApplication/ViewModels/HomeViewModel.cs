@@ -1,27 +1,16 @@
-﻿using Castle.Core.Logging;
-using DynamicData;
-using Metcom.CardPay3.ApplicationCore.Entities;
+﻿using Metcom.CardPay3.ApplicationCore.Entities;
 using Metcom.CardPay3.ApplicationCore.Interfaces;
 using Metcom.CardPay3.WpfApplication.Interfaces;
 using Microsoft.Extensions.Logging;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
-using ReactiveUI.Wpf;
 using Splat;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
-using System.Reactive.Subjects;
-using System.Security;
-using System.Text;
-using System.Threading.Channels;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
 
 namespace Metcom.CardPay3.WpfApplication.ViewModels;
 public class HomeViewModel : ReactiveObject, IScreen
@@ -50,7 +39,7 @@ public class HomeViewModel : ReactiveObject, IScreen
         var canGoBack = this
             .WhenAnyValue(x => x.Router.NavigationStack.Count)
             .Select(count => count > 1);
-        RoutingGoBackCommand = ReactiveCommand.CreateFromObservable(() => 
+        RoutingGoBackCommand = ReactiveCommand.CreateFromObservable(() =>
         Router.NavigateBack.Execute(Unit.Default), canGoBack);
 
         RoutingCommand = ReactiveCommand.Create<string>(ExecuteSidebar);
@@ -73,7 +62,7 @@ public class HomeViewModel : ReactiveObject, IScreen
         await Router.Navigate.Execute(MenuViewModel);
 
         this.WhenAnyValue(vm => vm.SelectedOrganization).Subscribe(_ => UpdateOrganization());
-        
+
     }
 
     public RoutingState Router { get; }
@@ -121,7 +110,7 @@ public class HomeViewModel : ReactiveObject, IScreen
 
     private void UpdateOrganization()
     {
-        
+
         MenuViewModel.SelectedOrganization = SelectedOrganization;
     }
 }

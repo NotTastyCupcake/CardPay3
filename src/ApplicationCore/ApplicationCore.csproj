@@ -6,12 +6,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Ardalis.GuardClauses" Version="4.0.1" />
-    <PackageReference Include="Ardalis.Specification" Version="6.1.0" />
+    <Compile Remove="Entities\DocumentAggregate\EmployeServiceTests\**" />
+    <EmbeddedResource Remove="Entities\DocumentAggregate\EmployeServiceTests\**" />
+    <None Remove="Entities\DocumentAggregate\EmployeServiceTests\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Entities\DocumentAggregate\EmployeServiceTests\" />
+    <PackageReference Include="Ardalis.GuardClauses" Version="4.0.1" />
+    <PackageReference Include="Ardalis.Specification" Version="6.1.0" />
   </ItemGroup>
 
 </Project>

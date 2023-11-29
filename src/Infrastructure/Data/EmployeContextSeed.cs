@@ -8,14 +8,13 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.Infrastructure.Data
 {
     public class EmployeContextSeed
     {
-        public async static Task SeedAsync(EmployeContext employerContext, 
+        public async static Task SeedAsync(EmployeContext employerContext,
             ILoggerFactory loggerFactory)
         {
             try
@@ -163,11 +162,24 @@ namespace Metcom.CardPay3.Infrastructure.Data
             };
         }
 
+        private static IEnumerable<Geographic> GetPreconfiguredGeographics()
+        {
+            return new List<Geographic>()
+            {
+                new Geographic("Российская фидерация", "RUS", 643),
+                new Geographic("TEST_STATE", "TEST_SHORT_STATE"),
+                new Geographic("TEST_CITY", "TEST_SHORT_CITY"),
+                new Geographic("TEST_LOCALITY", "TEST_SHORT_LOCALITY"),
+                new Geographic("TEST_STREET", "TEST_SHORT_STREET")
+            };
+
+        }
+
         private static IEnumerable<Address> GetPreconfiguredAddresses()
         {
             return new List<Address>()
             {
-                new Address("TEST_COUNTRY", 1, "TEST_STATE", "TEST_DISTRICT", "TEST_CITY", "TEST_LOCATION", "TEST_STREET_TYPE", "TEST_STREET", 1, 1, 1, 1)
+                new Address( 1, 1, 2, "TEST_DISTRICT", 3, 4, "TEST_STREET_TYPE", 5, 1, 1, 1, 1)
             };
 
         }
@@ -176,7 +188,8 @@ namespace Metcom.CardPay3.Infrastructure.Data
         {
             return new List<RequisitesItem>()
             {
-                new RequisitesItem("IVAN","IVANOV","0000 0000 0000 0000", "00000", 1,11111,"INSURANCE_NUM", 1, 1, 1)
+                //TODO: Создать пример реквезитов для отправки
+                //new RequisitesItem(1111,"", 1, 1, 1)
             };
         }
 

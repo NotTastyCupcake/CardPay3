@@ -1,32 +1,19 @@
-﻿using Castle.Core.Logging;
-using DynamicData;
+﻿using DynamicData;
 using DynamicData.Binding;
 using Metcom.CardPay3.ApplicationCore.Entities;
-using Metcom.CardPay3.ApplicationCore.Entities.AddressAggregate;
 using Metcom.CardPay3.ApplicationCore.Interfaces;
-using Metcom.CardPay3.Infrastructure.Data;
 using Metcom.CardPay3.WpfApplication.Interfaces;
 using Metcom.CardPay3.WpfApplication.ViewModels.Employes;
-using Metcom.CardPay3.WpfApplication.Views.Employes;
 using Microsoft.Extensions.Logging;
 using Microsoft.Win32;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using Splat;
 using System;
-using System.CodeDom.Compiler;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
-using System.Reflection.Metadata;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls.Primitives;
-using System.Windows.Documents;
 
 namespace Metcom.CardPay3.WpfApplication.ViewModels
 {

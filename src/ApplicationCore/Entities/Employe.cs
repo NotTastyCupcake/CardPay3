@@ -2,12 +2,7 @@
 using Metcom.CardPay3.ApplicationCore.Entities.AddressAggregate;
 using Metcom.CardPay3.ApplicationCore.Entities.DocumentAggregate;
 using Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate;
-using Metcom.CardPay3.ApplicationCore.Interfaces;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.ApplicationCore.Entities
 {
@@ -15,15 +10,15 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
     {
 
         public Employe(
-            string lastName,  
-            string firstName, 
+            string lastName,
+            string firstName,
             string middleName,
-            string phoneNum, 
-            string jobPhoneNum, 
-            string position, 
-            string departmentNum, 
-            int genderId, 
-            int documentId, 
+            string phoneNum,
+            string jobPhoneNum,
+            string position,
+            string departmentNum,
+            int genderId,
+            int documentId,
             int organizationId)
         {
             LastName = lastName;
@@ -75,7 +70,7 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
 
         public int? IdOrganization { get; set; }
         public virtual Organization? Organization { get; set; }
-        #nullable disable
+#nullable disable
         #endregion
 
         public void UpdateFullName(string lastName, string firstName, string middleName)
@@ -95,7 +90,7 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
             Guard.Against.NullOrEmpty(jobPhoneNum, nameof(jobPhoneNum));
             Guard.Against.NullOrEmpty(position, nameof(position));
             Guard.Against.NullOrEmpty(departmentNum, nameof(departmentNum));
-            
+
             PhoneNumber = phoneNum;
             JobPhoneNumber = jobPhoneNum;
             Position = position;

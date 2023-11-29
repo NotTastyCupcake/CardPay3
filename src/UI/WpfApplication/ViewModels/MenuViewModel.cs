@@ -3,12 +3,7 @@ using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using Splat;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics.Metrics;
-using System.Linq;
 using System.Reactive;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.WpfApplication.ViewModels
 {
@@ -56,7 +51,7 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
             {
                 IsRealOrganization = true;
 
-                if(EmployeeListViewModel != null)
+                if (EmployeeListViewModel != null)
                 {
                     EmployeeListViewModel.SelectedOrganization = SelectedOrganization;
                 }

@@ -8,14 +8,14 @@ namespace Metcom.CardPay3.Infrastructure.Identity
     {
         public static async Task SeedAsync(AppIdentityDbContext identityDbContext, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
-            if(identityDbContext.Database.IsSqlServer())
+            if (identityDbContext.Database.IsSqlServer())
             {
                 identityDbContext.Database.Migrate();
             }
 
             await roleManager.CreateAsync(new IdentityRole("Administrators"));
 
-            var defaultUser = new ApplicationUser { UserName = "demouser@metcom.ru", Email = "demouser@metcom.ru" , EmailConfirmed = true , IdOrganization = 1 };
+            var defaultUser = new ApplicationUser { UserName = "demouser@metcom.ru", Email = "demouser@metcom.ru", EmailConfirmed = true, IdOrganization = 1 };
             await userManager.CreateAsync(defaultUser, "#bZL$N9=8Cym@.#");
 
             string adminUserName = "admin@metcom.ru";

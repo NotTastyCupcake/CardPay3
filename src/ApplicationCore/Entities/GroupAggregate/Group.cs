@@ -1,9 +1,6 @@
-﻿using System;
+﻿using Ardalis.GuardClauses;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Ardalis.GuardClauses;
 
 namespace Metcom.CardPay3.ApplicationCore.Entities.GroupAggregate
 {
@@ -31,7 +28,7 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.GroupAggregate
 
         public void AddItem(int employerItemId)
         {
-            if(!Items.Any(i => i.EmployerId == employerItemId))
+            if (!Items.Any(i => i.EmployerId == employerItemId))
             {
                 _items.Add(new GroupItem(employerItemId));
                 return;

@@ -1,53 +1,43 @@
 ﻿using Ardalis.GuardClauses;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate
 {
     public class RequisitesItem : BaseEntity
     {
+#nullable enable
         public int? IdEmployer { get; private set; }
-#pragma warning disable CS8632 // Аннотацию для ссылочных типов, допускающих значения NULL, следует использовать в коде только в контексте аннотаций "#nullable".
         public virtual Employe? Employer { get; private set; }
-#pragma warning restore CS8632 // Аннотацию для ссылочных типов, допускающих значения NULL, следует использовать в коде только в контексте аннотаций "#nullable".
+#nullable disable
 
-        public RequisitesItem()
-        {
-            //requared for EF
-        }
+        public RequisitesItem(int inn, 
+                              string insuranceNum,
+                              int idDivision,
+                              int idCurrency,
+                              int idCardType,
+                              int idEmployer,
 
-        public RequisitesItem(string latinFirstName, 
-            string latinLastName, 
-            string cardNumber,
-            string accountNumber,
-            int idCardType, 
-            int inn, 
-            string insuranceNum, 
-            int idDivision, 
-            int idCurrency,
-            int idEmployer
-            )
+                              string latinFirstName = null,
+                              string latinLastName = null
+                              )
         {
-            LatinFirstName = latinFirstName;
-            LatinLastName = latinLastName;
-            CardNumber = cardNumber;
-            AccountNumber = accountNumber;
-            IdCardType = idCardType;
             INN = inn;
             InsuranceNumber = insuranceNum;
             IdDivision = idDivision;
             IdCurrency = idCurrency;
+            IdCardType = idCardType;
             IdEmployer = idEmployer;
+
+            LatinFirstName = latinFirstName;
+            LatinLastName = latinLastName;
+            
+            Status = Status.New;
         }
 
         public virtual BankDivision Division { get; private set; }
         public int IdDivision { get; private set; }
         public virtual BankCurrency Currency { get; private set; }
         public int IdCurrency { get; private set; }
-        
+
 
         public int INN { get; private set; }
         /// <summary>
@@ -64,29 +54,44 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate
         /// Фамилия в латинице
         /// </summary>
         public string LatinLastName { get; private set; }
-        public string CardNumber { get; private set; }
         public string AccountNumber { get; private set; }
-#pragma warning disable CS8632 // Аннотацию для ссылочных типов, допускающих значения NULL, следует использовать в коде только в контексте аннотаций "#nullable".
+
+#nullable enable
         public virtual BankCardType? CardType { get; private set; }
-#pragma warning restore CS8632 // Аннотацию для ссылочных типов, допускающих значения NULL, следует использовать в коде только в контексте аннотаций "#nullable".
-        public int IdCardType { get; private set; }
+        public int? IdCardType { get; private set; }
+#nullable disable
+
         #endregion
 
-        //TODO: Создать поле статуса передачи реквезитов
+        public Status Status { get; set; }
 
-        public void UpdateCard(string lastName, string firstName, string cardNumber, string accountNumber, int idCardType)
+        public void UpdateCard(string accountNumber, int idCardType)
+        {
+            Guard.Against.NullOrEmpty(accountNumber, nameof(accountNumber));
+            Guard.Against.OutOfRange(idCardType, nameof(idCardType), 0, int.MaxValue);
+
+            AccountNumber = accountNumber;
+            IdCardType = idCardType;
+
+            Status = Status.Success;
+        }
+
+        public void UpdateStatus(Status status)
+        {
+            Status = status;
+        }
+
+        public void FullUpdateCardData(string lastName, string firstName, string accountNumber, int idCardType)
         {
             Guard.Against.NullOrEmpty(lastName, nameof(lastName));
             Guard.Against.NullOrEmpty(firstName, nameof(firstName));
 
-            Guard.Against.NullOrEmpty(cardNumber, nameof(cardNumber));
             Guard.Against.NullOrEmpty(accountNumber, nameof(accountNumber));
             Guard.Against.OutOfRange(idCardType, nameof(idCardType), 0, int.MaxValue);
 
             LatinLastName = lastName;
             LatinFirstName = firstName;
 
-            CardNumber = cardNumber;
             AccountNumber = accountNumber;
             IdCardType = idCardType;
         }

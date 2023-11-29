@@ -1,15 +1,13 @@
-﻿using Castle.Core.Logging;
-using Metcom.CardPay3.ApplicationCore.Entities.AddressAggregate;
+﻿using Metcom.CardPay3.ApplicationCore.Entities.AddressAggregate;
 using Metcom.CardPay3.ApplicationCore.Interfaces;
 using Microsoft.Extensions.Logging;
 using ReactiveUI;
 using System;
-using System.ComponentModel;
 using System.Reactive;
 
 namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
 {
-    public class AddressViewModel : ReactiveObject , IRoutableViewModel
+    public class AddressViewModel : ReactiveObject, IRoutableViewModel
     {
         public string UrlPathSegment { get { return "AddressView"; } }
         public IScreen HostScreen { get; protected set; }

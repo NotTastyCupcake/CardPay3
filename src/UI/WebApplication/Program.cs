@@ -2,13 +2,10 @@ using Metcom.CardPay3.Infrastructure.Data;
 using Metcom.CardPay3.Infrastructure.Identity;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.WebApplication
@@ -32,7 +29,7 @@ namespace Metcom.CardPay3.WebApplication
                     var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
                     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
                     var identityContext = services.GetRequiredService<AppIdentityDbContext>();
-                    await AppIdentityDbContextSeed.SeedAsync(identityContext,userManager, roleManager);
+                    await AppIdentityDbContextSeed.SeedAsync(identityContext, userManager, roleManager);
                 }
                 catch (Exception ex)
                 {

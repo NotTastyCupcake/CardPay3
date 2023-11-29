@@ -1,15 +1,10 @@
-﻿using Metcom.CardPay3.ApplicationCore.Entities;
-using Metcom.CardPay3.ApplicationCore.Interfaces;
+﻿using Metcom.CardPay3.ApplicationCore.Interfaces;
 using Metcom.CardPay3.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
 
 namespace Metcom.CardPay3.Infrastructure.Services
 {
