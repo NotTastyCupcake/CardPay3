@@ -7,6 +7,7 @@ using Metcom.CardPay3.ApplicationCore.Interfaces.ServicesInterfaces.Builder;
 using Metcom.CardPay3.ApplicationCore.Specifications;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.ApplicationCore.Services.Builder
@@ -47,77 +48,119 @@ namespace Metcom.CardPay3.ApplicationCore.Services.Builder
             _logger = logger; 
         }
 
-        public async Task<IEmployeBuilder> SetGender(int idGender)
-        {
-            var genderSpec = new EmployeGenderSpecification(idGender);
-            var gender = await _genderRepository.SingleOrDefaultAsync(genderSpec);
+        //public async Task<IEmployeBuilder> SetGender(int idGender)
+        //{
+        //    var genderSpec = new EmployeGenderSpecification(idGender);
+        //    var gender = await _genderRepository.SingleOrDefaultAsync(genderSpec);
 
-            if (gender == null)
-            {
-                throw new Exception("Unknow gender");
-            }
+        //    if (gender == null)
+        //    {
+        //        throw new Exception("Unknow gender");
+        //    }
 
-            _gender = gender;
-            return this;
-        }
+        //    _gender = gender;
+        //    return this;
+        //}
 
-        public async Task<IEmployeBuilder> SetDocument(
-            int idTypeDocument,
-            DateTime dataIssuedDocument,
-            string issuedByDocument,
-            string subdivisionCodeDocument)
-        {
+        //public async Task<IEmployeBuilder> SetDocument(
+        //                    int idType,
+        //                    string series,
+        //                    string number,
+        //                    DateTime dataIssued,
+        //                    string issuedBy,
+        //                    string subdivisionCode)
+        //{
 
-            var documentSpec = new DocumentItemSpecification(issuedByDocument, 
-                                                             subdivisionCodeDocument, 
-                                                             idTypeDocument, 
-                                                             dataIssuedDocument);
+        //    var documentSpec = new DocumentItemSpecification(series,
+        //                                                     number,
+        //                                                     idType,
+        //                                                     dataIssued);
 
-            var document = await _documentRepository.SingleOrDefaultAsync(documentSpec);
-            if (document == null)
-            {
-                document = new DocumentItem(idTypeDocument, 
-                                            dataIssuedDocument, 
-                                            issuedByDocument, 
-                                            subdivisionCodeDocument);
+        //    var document = await _documentRepository.SingleOrDefaultAsync(documentSpec);
+        //    if (document == null)
+        //    {
+        //        document = new DocumentItem(idType,
+        //                                    series,
+        //                                    number,
+        //                                    dataIssued,
+        //                                    issuedBy,
+        //                                    subdivisionCode);
 
-                await _documentRepository.AddAsync(document);
-            }
+        //        await _documentRepository.AddAsync(document);
+        //    }
 
-            _document = document;
-            return this;
-        }
+        //    _document = document;
+        //    return this;
+        //}
 
-        public async Task<IEmployeBuilder> SetOrganization(int organizationId)
-        {
-            var organization = await _organizationRepository.GetByIdAsync(organizationId);
-            _organization = organization;
-            return this;
-        }
+        //public async Task<IEmployeBuilder> SetOrganization(int organizationId)
+        //{
+        //    var organization = await _organizationRepository.GetByIdAsync(organizationId);
+        //    _organization = organization;
+        //    return this;
+        //}
 
-        //TODO: Создание реквезитов
-        public async Task<IEmployeBuilder> SetRequisites(RequisitesItem employeRequisites)
-        {
-            _requisites = employeRequisites;
-            return this;
-        }
-        //TODO: Создание аддреса
-        public async Task<IEmployeBuilder> SetAddress(Address employeAddress)
-        {
-            _address = employeAddress;
-            return this;
-        }
+        ////TODO: Создание реквезитов
+        //public async Task<IEmployeBuilder> SetRequisites(RequisitesItem employeRequisites)
+        //{
+        //    _requisites = employeRequisites;
+        //    return this;
+        //}
+        ////TODO: Создание аддреса
+        //public async Task<IEmployeBuilder> SetAddress(Address employeAddress)
+        //{
+        //    _address = employeAddress;
+        //    return this;
+        //}
 
-        public async Task<Employe> GetEmploye(string lastName, string firstName, string middleName, string phoneNum, string jobPhoneNum, string position, string departmentNum)
-        {
-            _employe = new Employe(lastName, firstName, middleName, phoneNum, jobPhoneNum,position,departmentNum,_gender.Id, _document.Id, _organization.Id);
-            _employe.Addresses.Add(_address);
-            _employe.Requisites.Add(_requisites);
+        //public async Task<IEmployeBuilder> SetDocument(IDocumentItem document)
+        //{
+        //    return await this.SetDocument(document.IdType, 
+        //                                  document.Series, 
+        //                                  document.Number, 
+        //                                  document.DataIssued, 
+        //                                  document.IssuedBy, 
+        //                                  document.SubdivisionCode);
+        //}
 
-            await _employeRepository.AddAsync(_employe);
-            await _employeRepository.SaveChangesAsync();
+        //public Task<IEmployeBuilder> SetRequisites(IRequisitesItem employeRequisites)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-            return _employe;
-        }
+        //public Task<IEmployeBuilder> SetAddress(IAddress employeAddress)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public Task<IEmployeBuilder> SetEmploye(string lastName, string firstName, string middleName, string phoneNum, string jobPhoneNum, string position, string departmentNum)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public Task<IEmployeBuilder> SetEmploye(IEmploye employe)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public Task<Employe> GetEmploye()
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public Task<IEmployeBuilder> SetRequisities(int inn, string insuranceNum, int idDivision, int idCurrency, int idCardType, int idEmployer, string latinFirstName = null, string latinLastName = null)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public Task<IEmployeBuilder> SetGender(Gender gender)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public Task<IEmployeBuilder> SetOrganization(Organization organization)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

@@ -2,14 +2,14 @@
 
 namespace Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate
 {
-    public class RequisitesItem : BaseEntity
+    public class RequisitesItem : BaseEntity, IRequisitesItem
     {
 #nullable enable
         public int? IdEmployer { get; private set; }
         public virtual Employe? Employer { get; private set; }
 #nullable disable
 
-        public RequisitesItem(int inn, 
+        public RequisitesItem(int inn,
                               string insuranceNum,
                               int idDivision,
                               int idCurrency,
@@ -29,7 +29,7 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate
 
             LatinFirstName = latinFirstName;
             LatinLastName = latinLastName;
-            
+
             Status = Status.New;
         }
 

@@ -1,11 +1,11 @@
 ﻿namespace Metcom.CardPay3.ApplicationCore.Entities.AddressAggregate
 {
-    public class Address : BaseEntity
+    public class Address : BaseEntity, IAddress
     {
-        #nullable enable
+#nullable enable
         public int? IdEmployer { get; private set; }
         public virtual Employe? Employer { get; private set; }
-        #nullable disable
+#nullable disable
 
         #region Поля
 
@@ -75,6 +75,21 @@
             NumCase = numCase;
             NumApartment = numApartment;
             IdEmployer = idEmployer;
+        }
+
+        public Address(IAddress address)
+        {
+            IdCountry = address.IdCountry;
+            Postcode = address.Postcode;
+            IdState = address.IdState;
+            District = address.District;
+            IdCity = address.IdCity;
+            IdLocality = address.IdLocality;
+            IdStreet = address.IdStreet;
+            NumHome = address.NumHome;
+            NumCase = address.NumCase;
+            NumApartment = address.NumApartment;
+            IdEmployer = address.IdEmployer;
         }
 
         public Address()

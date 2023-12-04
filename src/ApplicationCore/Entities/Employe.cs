@@ -2,17 +2,21 @@
 using Metcom.CardPay3.ApplicationCore.Entities.AddressAggregate;
 using Metcom.CardPay3.ApplicationCore.Entities.DocumentAggregate;
 using Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate;
+using System;
 using System.Collections.Generic;
 
 namespace Metcom.CardPay3.ApplicationCore.Entities
 {
-    public class Employe : BaseEntity
+    public class Employe : BaseEntity, IEmploye
     {
 
         public Employe(
             string lastName,
             string firstName,
             string middleName,
+            DateTime birthdayDate,
+            string nationality,
+            bool resident,
             string phoneNum,
             string jobPhoneNum,
             string position,
@@ -24,6 +28,9 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
             LastName = lastName;
             FirstName = firstName;
             MiddleName = middleName;
+            BirthdayDate = birthdayDate;
+            Resident = resident;
+            Nationality = nationality;
             PhoneNumber = phoneNum;
             JobPhoneNumber = jobPhoneNum;
             Position = position;
@@ -31,6 +38,23 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
             IdGender = genderId;
             IdDocument = documentId;
             IdOrganization = organizationId;
+        }
+
+        public Employe(IEmploye employe)
+        {
+            LastName = employe.LastName;
+            FirstName = employe.FirstName;
+            MiddleName = employe.MiddleName;
+            BirthdayDate = employe.BirthdayDate;
+            Resident = employe.Resident;
+            Nationality = employe.Nationality;
+            PhoneNumber = employe.PhoneNumber;
+            JobPhoneNumber = employe.JobPhoneNumber;
+            Position = employe.Position;
+            DepartmentNum = employe.DepartmentNum;
+            IdGender = employe.IdGender;
+            IdDocument = employe.IdDocument;
+            IdOrganization = employe.IdOrganization;
         }
 
         public Employe()
@@ -46,11 +70,34 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
         public string FullName => $"{LastName} {FirstName} {MiddleName}";
         #endregion
 
+        public DateTime BirthdayDate { get; private set; }
+        /// <summary>
+        /// Резидентность
+        /// </summary>
+        public bool Resident { get; private set; }
+        /// <summary>
+        /// Гражданство
+        /// </summary>
+        public string Nationality { get; private set; }
+
+        /// <summary>
+        /// Номер участника в бонус программе.
+        /// </summary>
+        public string BonusNumber { get; set; }
+
+
         #region Контактные данные
+        /// <summary>
+        /// Личный телефон
+        /// </summary>
         public string PhoneNumber { get; private set; }
+        /// <summary>
+        /// Рабочий телефон
+        /// </summary>
         public string JobPhoneNumber { get; private set; }
         public string Position { get; private set; }
         public string DepartmentNum { get; private set; }
+        public string EMail { get; set; }
         #endregion
 
         #region Ссылка на объект
@@ -66,10 +113,33 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
         public int? IdDocument { get; set; }
         public virtual DocumentItem? Document { get; set; }
 
-        public virtual ICollection<Address> Addresses { get; set; }
+        public int IdJobAddress { get; set; }
+        /// <summary>
+        /// Адрес места работы
+        /// </summary>
+        public virtual Address JobAddress { get; set; }
 
-        public int? IdOrganization { get; set; }
-        public virtual Organization? Organization { get; set; }
+        public int IdBirthdayAddress { get; set; }
+        /// <summary>
+        /// Место рождения
+        /// </summary>
+        public virtual Address BirthdayAddress { get; set; }
+
+        public int IdLegalAddress { get; set; }
+        public Address LegalAddress { get; set; }
+
+        public int IdPostAddress { get; set; }
+        public Address PostAddress { get; set; }
+
+        public int IdOrganization { get; set; }
+        public virtual Organization Organization { get; set; }
+
+
+        public int IdType { get; set; }
+        /// <summary>
+        /// Категория населения
+        /// </summary>
+        public EmployeType Type { get; set; }
 #nullable disable
         #endregion
 
