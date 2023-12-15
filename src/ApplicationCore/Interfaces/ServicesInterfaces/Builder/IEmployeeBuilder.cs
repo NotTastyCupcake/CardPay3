@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.ApplicationCore.Interfaces.ServicesInterfaces.Builder
 {
-    public interface IEmployeBuilder : IEmployeBuilderSendField, IEmployeBuilderSendObj
+    public interface IEmployeeBuilder : IEmployeeBuilderSendField, IEmployeeBuilderSendObj
     {
 
     }

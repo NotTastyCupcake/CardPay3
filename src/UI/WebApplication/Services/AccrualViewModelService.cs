@@ -16,12 +16,12 @@ namespace Metcom.CardPay3.WebApplication.Services
     public class AccrualViewModelService : IAccrualViewModelService
     {
         private readonly IRepository<Accrual> _accrualRepository;
-        private readonly IRepository<Employe> _itemRepository;
+        private readonly IRepository<Employee> _itemRepository;
         private readonly UserManager<ApplicationUser> _userManager;
 
 
         public AccrualViewModelService(IRepository<Accrual> accrualRepository,
-            IRepository<Employe> itemRepository, UserManager<ApplicationUser> userManager)
+            IRepository<Employee> itemRepository, UserManager<ApplicationUser> userManager)
         {
             _accrualRepository = accrualRepository;
             _itemRepository = itemRepository;
@@ -79,12 +79,12 @@ namespace Metcom.CardPay3.WebApplication.Services
 
         private async Task<List<AccrualItemViewModel>> GetAsyncAccrualItems(IReadOnlyCollection<AccrualItem> accrualItems)
         {
-            var employerItemsSpecification = new EmployesSpecification(accrualItems.Select(b => b.IdEmployer).ToArray());
+            var employerItemsSpecification = new EmployesSpecification(accrualItems.Select(b => b.IdEmployee).ToArray());
             var employerItems = await _itemRepository.ListAsync(employerItemsSpecification);
 
             var items = accrualItems.Select(accrualItem =>
             {
-                var employerItem = employerItems.First(c => c.Id == accrualItem.IdEmployer);
+                var employerItem = employerItems.First(c => c.Id == accrualItem.IdEmployee);
 
                 var accrualItemViewModel = new AccrualItemViewModel
                 {

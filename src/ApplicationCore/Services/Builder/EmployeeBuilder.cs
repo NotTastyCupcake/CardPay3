@@ -12,30 +12,30 @@ using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.ApplicationCore.Services.Builder
 {
-    public class EmployeBuilder : IEmployeBuilder
+    public class EmployeeBuilder : IEmployeeBuilder
     {
-        private readonly IRepository<Employe> _employeRepository;
+        private readonly IRepository<Employee> _employeRepository;
         private readonly IRepository<Gender> _genderRepository;
         private readonly IRepository<DocumentItem> _documentRepository;
         private readonly IRepository<RequisitesItem> _requisitesRepository;
         private readonly IRepository<Address> _addressRepository;
         private readonly IRepository<Organization> _organizationRepository;
-        private readonly IAppLogger<EmployeBuilder> _logger;
+        private readonly IAppLogger<EmployeeBuilder> _logger;
 
-        private Employe _employe;
+        private Employee _employee;
         private Gender _gender;
         private DocumentItem _document;
         private Organization _organization;
         private RequisitesItem _requisites;
         private Address _address;
 
-        public EmployeBuilder(IRepository<Employe> employeRepository,
+        public EmployeeBuilder(IRepository<Employee> employeRepository,
             IRepository<Gender> genderRepository,
             IRepository<DocumentItem> documentRepository,
             IRepository<RequisitesItem> requisitesRepository,
             IRepository<Address> addressRepository,
             IRepository<Organization> organizationRepository, 
-            IAppLogger<EmployeBuilder> logger)
+            IAppLogger<EmployeeBuilder> logger)
         {
 
             _employeRepository = employeRepository;

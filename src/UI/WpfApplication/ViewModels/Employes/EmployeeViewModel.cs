@@ -17,19 +17,19 @@ using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
 {
-    public class EmployeViewModel : ReactiveValidationObject, IRoutableViewModel
+    public class EmployeeViewModel : ReactiveValidationObject, IRoutableViewModel
     {
         public string UrlPathSegment { get { return "Employee"; } }
         public IScreen HostScreen { get; protected set; }
 
-        private readonly IRepository<Employe> _repository;
-        private readonly ILogger<EmployeViewModel> _logger;
-        private readonly IEmployeViewModelService _employeViewModelService;
+        private readonly IRepository<Employee> _repository;
+        private readonly ILogger<EmployeeViewModel> _logger;
+        private readonly IEmployeeViewModelService _employeViewModelService;
 
-        public EmployeViewModel(
-            IRepository<Employe> repository,
-            ILogger<EmployeViewModel> logger,
-            IEmployeViewModelService viewModelService,
+        public EmployeeViewModel(
+            IRepository<Employee> repository,
+            ILogger<EmployeeViewModel> logger,
+            IEmployeeViewModelService viewModelService,
             IScreen screen = null)
         {
             _repository = repository;
@@ -64,14 +64,14 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
 
             if (SelectedOperation == Constants.Operations.Edit)
             {
-                SelectedGender = Employe.Gender;
-                Document = Employe.Document;
-                Address = _employeViewModelService.GetAddress(Employe);
-                Requisites = _employeViewModelService.GetRequisites(Employe);
-                Organization = Employe.Organization;
+                SelectedGender = Employee.Gender;
+                Document = Employee.Document;
+                Address = _employeViewModelService.GetAddress(Employee);
+                Requisites = _employeViewModelService.GetRequisites(Employee);
+                Organization = Employee.Organization;
             }
 
-            this.WhenAnyValue(vm => vm.Employe).Subscribe();
+            this.WhenAnyValue(vm => vm.Employee).Subscribe();
             this.WhenAnyValue(vm => vm.SelectedGender).Subscribe();
             this.WhenAnyValue(vm => vm.Document).Subscribe();
             this.WhenAnyValue(vm => vm.DocumentFullName).Subscribe();
@@ -91,22 +91,23 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
         {
             return async delegate ()
             {
-                Employe.Gender = SelectedGender;
-                Employe.Document = Document;
-                Employe.Addresses = Address;
-                Employe.Requisites = Requisites;
-                Employe.Organization = Organization;
+                Employee.Gender = SelectedGender;
+                Employee.Document = Document;
+                //TODO: Заполнение адресов в отдельном окне
+                //Employee.Addresses = Address;
+                Employee.Requisites = Requisites;
+                Employee.Organization = Organization;
 
                 //Add
                 if (SelectedOperation == Constants.Operations.Create)
                 {
-                    await _repository.AddAsync(Employe);
+                    await _repository.AddAsync(Employee);
                     await _repository.SaveChangesAsync();
                 }
                 //Edit
                 else if (SelectedOperation == Constants.Operations.Edit)
                 {
-                    await _repository.UpdateAsync(Employe);
+                    await _repository.UpdateAsync(Employee);
                     await _repository.SaveChangesAsync();
                 }
 
@@ -135,7 +136,7 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
 
         #region properties
         [Reactive]
-        public Employe Employe { get; set; } = new Employe();
+        public Employee Employee { get; set; } = new Employee();
 
         [Reactive]
         public Organization Organization { get; set; }

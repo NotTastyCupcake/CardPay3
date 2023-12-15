@@ -133,10 +133,10 @@ public partial class App// : Application
         services.AddScoped<IAccrualService, AccrualService>();
 
         services.AddScoped<IHomeViewModelService, HomeViewModelService>();
-        services.AddScoped<IEmployeViewModelService, EmployeViewModelService>();
-        services.AddScoped<IEmployeCollectionService, EmployeCollectionService>();
+        services.AddScoped<IEmployeeViewModelService, EmployeeViewModelService>();
+        services.AddScoped<IEmployeeCollectionService, EmployeeCollectionService>();
 
-        services.AddScoped<IEmployeBuilder, EmployeBuilder>();
+        services.AddScoped<IEmployeeBuilder, EmployeeBuilder>();
 
         services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
         services.AddTransient<IEmailSender, EmailSender>();
@@ -152,11 +152,11 @@ public partial class App// : Application
         services.AddSingleton<IViewFor<MenuViewModel>, MenuView>();
         services.AddSingleton<MenuViewModel>();
 
-        services.AddTransient<IViewFor<EmployeeListViewModel>, EmployeListView>();
+        services.AddTransient<IViewFor<EmployeeListViewModel>, EmployeeListView>();
         services.AddTransient<EmployeeListViewModel>();
 
-        services.AddScoped<IViewFor<EmployeViewModel>, EmployeView>();
-        services.AddScoped<EmployeViewModel>();
+        services.AddScoped<IViewFor<EmployeeViewModel>, EmployeeView>();
+        services.AddScoped<EmployeeViewModel>();
 
         services.AddScoped<IViewFor<AddressViewModel>, AddressView>();
         services.AddScoped<AddressViewModel>();

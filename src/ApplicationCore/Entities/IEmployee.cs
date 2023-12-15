@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Metcom.CardPay3.ApplicationCore.Entities
 {
-    public interface IEmploye
+    public interface IEmployee
     {
         Address BirthdayAddress { get; }
         DateTime BirthdayDate { get; }
@@ -37,7 +37,7 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
         Address PostAddress { get; }
         ICollection<RequisitesItem> Requisites { get;}
         bool Resident { get; }
-        EmployeType Type { get; }
+        EmployeeType Type { get; }
 
     }
 }

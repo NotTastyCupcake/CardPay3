@@ -3,8 +3,8 @@
     public class Address : BaseEntity, IAddress
     {
 #nullable enable
-        public int? IdEmployer { get; private set; }
-        public virtual Employe? Employer { get; private set; }
+        public int? IdEmployee { get; private set; }
+        public virtual Employee? Employee { get; private set; }
 #nullable disable
 
         #region Поля
@@ -74,7 +74,7 @@
             NumHome = numHome;
             NumCase = numCase;
             NumApartment = numApartment;
-            IdEmployer = idEmployer;
+            IdEmployee = idEmployer;
         }
 
         public Address(IAddress address)
@@ -89,7 +89,7 @@
             NumHome = address.NumHome;
             NumCase = address.NumCase;
             NumApartment = address.NumApartment;
-            IdEmployer = address.IdEmployer;
+            IdEmployee = address.IdEmployee;
         }
 
         public Address()

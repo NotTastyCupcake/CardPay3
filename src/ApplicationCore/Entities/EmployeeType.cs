@@ -7,14 +7,14 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
     /// <summary>
     /// Категория населения
     /// </summary>
-    public class EmployeType : BaseEntity
+    public class EmployeeType : BaseEntity
     {
 #nullable enable
         public int? IdEmploye { get; set; }
-        public virtual Employe? Employe { get; set; }
+        public virtual Employee? Employee { get; set; }
 #nullable disable
 
-        public EmployeType(int code, string name)
+        public EmployeeType(int code, string name)
         {
             Code = code;
             Name = name;

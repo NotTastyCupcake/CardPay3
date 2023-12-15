@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.ApplicationCore.Interfaces.ServicesInterfaces.Builder
 {
-    public interface IEmployeBuilderSendField
+    public interface IEmployeeBuilderSendField
     {
-        public Task<IEmployeBuilder> SetGender(int idGender);
-        public Task<IEmployeBuilder> SetOrganization(int organizationId);
-        public Task<IEmployeBuilder> SetDocument(int idType,
+        public Task<IEmployeeBuilder> SetGender(int idGender);
+        public Task<IEmployeeBuilder> SetOrganization(int organizationId);
+        public Task<IEmployeeBuilder> SetDocument(int idType,
                                                 string series,
                                                 string number,
                                                 DateTime dataIssued,
                                                 string issuedBy,
                                                 string subdivisionCode);
-        public Task<IEmployeBuilder> SetRequisities(int inn,
+        public Task<IEmployeeBuilder> SetRequisities(int inn,
                                                     string insuranceNum,
                                                     int idDivision,
                                                     int idCurrency,
@@ -26,7 +26,7 @@ namespace Metcom.CardPay3.ApplicationCore.Interfaces.ServicesInterfaces.Builder
                                                     string latinFirstName = null,
                                                     string latinLastName = null);
 
-        public Task<IEmployeBuilder> SetAddress(int idCountry,
+        public Task<IEmployeeBuilder> SetAddress(int idCountry,
                                                 int postcode,
                                                 int idState,
                                                 string district,
@@ -39,13 +39,13 @@ namespace Metcom.CardPay3.ApplicationCore.Interfaces.ServicesInterfaces.Builder
                                                 int numApartment,
                                                 int idEmployer);
 
-        public Task<IEmployeBuilder> SetEmploye(string lastName,
+        public Task<IEmployeeBuilder> SetEmployee(string lastName,
                                                 string firstName,
                                                 string middleName,
                                                 string phoneNum,
                                                 string jobPhoneNum,
                                                 string position,
                                                 string departmentNum);
-        public Task<Employe> GetEmploye();
+        public Task<Employee> GetEmployee();
     }
 }

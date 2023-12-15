@@ -21,12 +21,12 @@ namespace Metcom.CardPay3.WebApplication.Controllers
         private readonly ILogger<EmployeController> _logger;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IEmployerViewModelService _viewModelservice;
-        private readonly IEmployeBuilder _service;
+        private readonly IEmployeeBuilder _service;
 
         public EmployeController(ILogger<EmployeController> logger,
             UserManager<ApplicationUser> userManager,
             IEmployerViewModelService viewModelService,
-            IEmployeBuilder service)
+            IEmployeeBuilder service)
         {
 
             _logger = logger;

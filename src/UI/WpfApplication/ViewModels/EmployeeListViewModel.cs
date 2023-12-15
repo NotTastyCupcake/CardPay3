@@ -22,17 +22,17 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
         public string UrlPathSegment { get { return "EmployeeList"; } }
         public IScreen HostScreen { get; protected set; }
 
-        private readonly IRepository<Employe> _itemRepository;
+        private readonly IRepository<Employee> _itemRepository;
         private readonly ILogger<EmployeeListViewModel> _logger;
         private readonly IDataExportService _exportService;
-        private readonly IEmployeViewModelService _employeViewModelService;
+        private readonly IEmployeeViewModelService _employeViewModelService;
 
         public EmployeeListViewModel(
-            IEmployeViewModelService viewModelService,
-            IEmployeCollectionService employeCollectionService,
+            IEmployeeViewModelService viewModelService,
+            IEmployeeCollectionService employeCollectionService,
             ILogger<EmployeeListViewModel> logger,
             IDataExportService exportService,
-            IRepository<Employe> itemRepository,
+            IRepository<Employee> itemRepository,
             IScreen screen = null)
         {
             _employeViewModelService = viewModelService;
@@ -46,10 +46,10 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
             SelectedOrganization = Locator.Current.GetService<MenuViewModel>().SelectedOrganization;
 
             //Init collection
-            ReadOnlyObservableCollection<Employe> bindingData;
+            ReadOnlyObservableCollection<Employee> bindingData;
 
             employeCollectionService.All.Connect()
-                .Sort(SortExpressionComparer<Employe>.Ascending(t => t.FullName))
+                .Sort(SortExpressionComparer<Employee>.Ascending(t => t.FullName))
                 .Filter(e => e.Organization == SelectedOrganization)
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Bind(out bindingData)
@@ -62,7 +62,7 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
             RoutingAddEmployeeCommand = ReactiveCommand.Create(CreateEmploye());
             RoutingDeleteEmployeeCommand = ReactiveCommand.Create(DeleteEmploye());
             RoutingEditEmployeeCommand = ReactiveCommand.Create(EditEmploye());
-            ExportEmployeeCommand = ReactiveCommand.Create(ExportEmploye());
+            ExportEmployeeCommand = ReactiveCommand.Create(ExportEmployee());
         }
 
 
@@ -77,8 +77,8 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
         {
             return delegate ()
             {
-                var vm = Locator.Current.GetService<EmployeViewModel>();
-                vm.Employe = new Employe();
+                var vm = Locator.Current.GetService<EmployeeViewModel>();
+                vm.Employee = new Employee();
                 vm.SelectedOperation = Constants.Operations.Create;
                 HostScreen.Router.Navigate.Execute(vm);
 
@@ -95,9 +95,9 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
                 }
                 else
                 {
-                    var vm = Locator.Current.GetService<EmployeViewModel>();
+                    var vm = Locator.Current.GetService<EmployeeViewModel>();
                     //TODO: Убрать передачу, вытягивать через Locator.Current.GetService<MenuViewModel>().SelectedOrganization
-                    vm.Employe = SelectedEmploye;
+                    vm.Employee = SelectedEmploye;
                     vm.SelectedOperation = Constants.Operations.Edit;
                     HostScreen.Router.Navigate.Execute(vm);
                 }
@@ -124,7 +124,7 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
         }
 
 
-        private Action ExportEmploye()
+        private Action ExportEmployee()
         {
             return async delegate ()
             {
@@ -140,10 +140,10 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
         #endregion
 
         #region Properties
-        public ReadOnlyObservableCollection<Employe> Employes { get; }
+        public ReadOnlyObservableCollection<Employee> Employes { get; }
 
         [Reactive]
-        public Employe SelectedEmploye { get; set; }
+        public Employee SelectedEmploye { get; set; }
 
         [Reactive]
         public Organization SelectedOrganization { get; set; }

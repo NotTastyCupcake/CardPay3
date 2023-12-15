@@ -6,8 +6,8 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.AccrualAggregate
     {
         decimal Amount { get; }
         DateTime Date { get; }
-        Employe Employer { get; }
-        int IdEmployer { get; }
+        Employee Employee { get; }
+        int IdEmployee { get; }
 
     }
 }

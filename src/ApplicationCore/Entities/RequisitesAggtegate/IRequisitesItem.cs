@@ -6,7 +6,7 @@
         BankCardType CardType { get; }
         BankCurrency Currency { get; }
         BankDivision Division { get; }
-        Employe Employer { get; }
+        Employee Employee { get; }
         int? IdCardType { get; }
         int IdCurrency { get; }
         int IdDivision { get; }

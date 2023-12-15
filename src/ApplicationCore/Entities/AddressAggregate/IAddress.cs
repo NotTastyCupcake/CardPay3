@@ -5,11 +5,11 @@
         Geographic City { get; }
         Geographic Country { get; }
         string District { get; }
-        Employe Employer { get; }
+        Employee Employee { get; }
         string FullName { get; }
         int IdCity { get; }
         int IdCountry { get; }
-        int? IdEmployer { get; }
+        int? IdEmployee { get; }
         int IdLocality { get; }
         int IdState { get; }
         int IdStreet { get; }

@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Metcom.CardPay3.ApplicationCore.Specifications
 {
-    public sealed class EmployerNameFilterSpecification : Specification<Employe>, ISingleResultSpecification<Employe>
+    public sealed class EmployerNameFilterSpecification : Specification<Employee>, ISingleResultSpecification<Employee>
     {
         public EmployerNameFilterSpecification(string employerFirstName = "", string employerLastName = "", string employerMiddleName = "")
         {

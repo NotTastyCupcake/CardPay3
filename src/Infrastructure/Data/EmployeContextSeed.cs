@@ -129,8 +129,9 @@ namespace Metcom.CardPay3.Infrastructure.Data
         {
             return new List<DocumentType>()
             {
-                new DocumentType("Военный билет"),
-                new DocumentType("Паспорт")
+                //TODO: Типы документов
+                //new DocumentType("Военный билет"),
+                //new DocumentType("Паспорт")
             };
         }
 
@@ -138,8 +139,9 @@ namespace Metcom.CardPay3.Infrastructure.Data
         {
             return new List<DocumentItem>()
             {
-                new DocumentItem(1,DateTime.Now,"TEST_ISSUED_BY","TEST_SUBDIVISION"),
-                new DocumentItem(1,DateTime.Now,"TEST_ISSUED_BY2","TEST_SUBDIVISION2")
+                //TODO: Пример документа
+                //new DocumentItem(1,DateTime.Now,"TEST_ISSUED_BY","TEST_SUBDIVISION"),
+                //new DocumentItem(1,DateTime.Now,"TEST_ISSUED_BY2","TEST_SUBDIVISION2")
             };
         }
 
@@ -236,12 +238,13 @@ namespace Metcom.CardPay3.Infrastructure.Data
             };
         }
 
-        private static IEnumerable<Employe> GetPreconfiguredEmployers()
+        private static IEnumerable<Employee> GetPreconfiguredEmployers()
         {
-            return new List<Employe>()
+            return new List<Employee>()
             {
-                new Employe("Иванов", "Иван", "Иванович", "TEST_PHONE", "TEST_JOB", "TEST_POSITION", "TEST_DEPATMENT_NUM", 2, 1, 1),
-                new Employe("Иванова", "Аня", "Ивановна", "TEST_PHONE", "TEST_JOB", "TEST_POSITION", "TEST_DEPATMENT_NUM", 1, 2, 1)
+                //TODO: Примеры сотрудников
+                //new Employee("Иванов", "Иван", "Иванович", "TEST_PHONE", "TEST_JOB", "TEST_POSITION", "TEST_DEPATMENT_NUM", 2, 1, 1),
+                //new Employee("Иванова", "Аня", "Ивановна", "TEST_PHONE", "TEST_JOB", "TEST_POSITION", "TEST_DEPATMENT_NUM", 1, 2, 1)
             };
         }
     }

@@ -22,7 +22,7 @@ namespace Metcom.CardPay3.Infrastructure.Data
 
         }
 
-        public DbSet<Employe> Employers { get; set; }
+        public DbSet<Employee> Employers { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<Organization> Organizations { get; set; }
         public DbSet<Gender> Genders { get; set; }

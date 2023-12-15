@@ -5,6 +5,6 @@ namespace Metcom.CardPay3.WpfApplication.Interfaces
 {
     public interface IEmployeCollectionService
     {
-        SourceCache<Employe, int> All { get; }
+        SourceCache<Employee, int> All { get; }
     }
 }

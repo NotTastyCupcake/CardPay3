@@ -9,10 +9,10 @@ namespace Metcom.CardPay3.WpfApplication.Interfaces
     /// <summary>
     /// Сервис управление сотрудником
     /// </summary>
-    public interface IEmployeViewModelService
+    public interface IEmployeeViewModelService
     {
         Task<ReadOnlyObservableCollection<Gender>> GetGenders();
-        ObservableCollection<Address> GetAddress(Employe employe);
-        ObservableCollection<RequisitesItem> GetRequisites(Employe employe);
+        ObservableCollection<Address> GetAddress(Employee employee);
+        ObservableCollection<RequisitesItem> GetRequisites(Employee employee);
     }
 }

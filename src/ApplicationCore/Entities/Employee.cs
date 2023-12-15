@@ -7,10 +7,10 @@ using System.Collections.Generic;
 
 namespace Metcom.CardPay3.ApplicationCore.Entities
 {
-    public class Employe : BaseEntity, IEmploye
+    public class Employee : BaseEntity, IEmployee
     {
 
-        public Employe(
+        public Employee(
             string lastName,
             string firstName,
             string middleName,
@@ -40,24 +40,24 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
             IdOrganization = organizationId;
         }
 
-        public Employe(IEmploye employe)
+        public Employee(IEmployee employee)
         {
-            LastName = employe.LastName;
-            FirstName = employe.FirstName;
-            MiddleName = employe.MiddleName;
-            BirthdayDate = employe.BirthdayDate;
-            Resident = employe.Resident;
-            Nationality = employe.Nationality;
-            PhoneNumber = employe.PhoneNumber;
-            JobPhoneNumber = employe.JobPhoneNumber;
-            Position = employe.Position;
-            DepartmentNum = employe.DepartmentNum;
-            IdGender = employe.IdGender;
-            IdDocument = employe.IdDocument;
-            IdOrganization = employe.IdOrganization;
+            LastName = employee.LastName;
+            FirstName = employee.FirstName;
+            MiddleName = employee.MiddleName;
+            BirthdayDate = employee.BirthdayDate;
+            Resident = employee.Resident;
+            Nationality = employee.Nationality;
+            PhoneNumber = employee.PhoneNumber;
+            JobPhoneNumber = employee.JobPhoneNumber;
+            Position = employee.Position;
+            DepartmentNum = employee.DepartmentNum;
+            IdGender = employee.IdGender;
+            IdDocument = employee.IdDocument;
+            IdOrganization = employee.IdOrganization;
         }
 
-        public Employe()
+        public Employee()
         {
             // required by EF
         }
@@ -134,12 +134,19 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
         public int IdOrganization { get; set; }
         public virtual Organization Organization { get; set; }
 
+        public List<Address> Addresses
+        {
+            get
+            {
+                return new List<Address>() { LegalAddress, PostAddress, JobAddress };
+            }
+        }
 
         public int IdType { get; set; }
         /// <summary>
         /// Категория населения
         /// </summary>
-        public EmployeType Type { get; set; }
+        public EmployeeType Type { get; set; }
 #nullable disable
         #endregion
 

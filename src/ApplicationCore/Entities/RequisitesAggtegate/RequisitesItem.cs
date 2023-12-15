@@ -6,7 +6,7 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate
     {
 #nullable enable
         public int? IdEmployer { get; private set; }
-        public virtual Employe? Employer { get; private set; }
+        public virtual Employee? Employee { get; private set; }
 #nullable disable
 
         public RequisitesItem(int inn,
