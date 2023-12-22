@@ -7,12 +7,6 @@ namespace Metcom.CardPay3.ApplicationCore.Specifications
 {
     public class DocumentItemSpecification : Specification<DocumentItem>, ISingleResultSpecification<DocumentItem>
     {
-        public DocumentItemSpecification(int idDocument)
-        {
-            Query
-                .Where(a => a.Id == idDocument);
-        }
-
         public DocumentItemSpecification(string series, string number, int idType, DateTime dateIssued)
         {
             Query

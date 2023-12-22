@@ -21,31 +21,32 @@ namespace Metcom.CardPay3.ApplicationCore.Interfaces.ServicesInterfaces.Builder
                                                     int idDivision,
                                                     int idCurrency,
                                                     int idCardType,
-                                                    int idEmployer,
 
                                                     string latinFirstName = null,
                                                     string latinLastName = null);
 
-        public Task<IEmployeeBuilder> SetAddress(int idCountry,
-                                                int postcode,
-                                                int idState,
-                                                string district,
-                                                int idCity,
-                                                int idLocality,
-                                                string streetType,
-                                                int idStreet,
-                                                int numHome,
-                                                int numCase,
-                                                int numApartment,
-                                                int idEmployer);
+        public Task<IEmployeeBuilder> SetLegalAddress(int idCountry,
+                                                    int postcode,
+                                                    int idState,
+                                                    string district,
+                                                    int idCity,
+                                                    int idLocality,
+                                                    string streetType,
+                                                    int idStreet,
+                                                    int numHome,
+                                                    int numCase,
+                                                    int numApartment);
 
         public Task<IEmployeeBuilder> SetEmployee(string lastName,
                                                 string firstName,
                                                 string middleName,
+                                                DateTime birthdayDate,
+                                                string nationality,
+                                                bool resident,
                                                 string phoneNum,
                                                 string jobPhoneNum,
                                                 string position,
                                                 string departmentNum);
-        public Task<Employee> GetEmployee();
+        public Employee GetEmployee();
     }
 }

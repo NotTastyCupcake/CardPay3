@@ -8,6 +8,7 @@ using Metcom.CardPay3.ApplicationCore.Specifications;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.ApplicationCore.Services.Builder
@@ -27,7 +28,7 @@ namespace Metcom.CardPay3.ApplicationCore.Services.Builder
         private DocumentItem _document;
         private Organization _organization;
         private RequisitesItem _requisites;
-        private Address _address;
+        private Address _legalAddress;
 
         public EmployeeBuilder(IRepository<Employee> employeRepository,
             IRepository<Gender> genderRepository,
@@ -48,119 +49,292 @@ namespace Metcom.CardPay3.ApplicationCore.Services.Builder
             _logger = logger; 
         }
 
-        //public async Task<IEmployeBuilder> SetGender(int idGender)
-        //{
-        //    var genderSpec = new EmployeGenderSpecification(idGender);
-        //    var gender = await _genderRepository.SingleOrDefaultAsync(genderSpec);
+        #region IEmployeeBuilderSendField
 
-        //    if (gender == null)
-        //    {
-        //        throw new Exception("Unknow gender");
-        //    }
+        public  async Task<IEmployeeBuilder> SetGender(int idGender)
+        {
+            var genderSpec = new EmployeGenderSpecification(idGender);
+            var gender = await _genderRepository.SingleOrDefaultAsync(genderSpec);
 
-        //    _gender = gender;
-        //    return this;
-        //}
+            if (gender == null)
+            {
+                throw new Exception("Unknow gender");
+            }
 
-        //public async Task<IEmployeBuilder> SetDocument(
-        //                    int idType,
-        //                    string series,
-        //                    string number,
-        //                    DateTime dataIssued,
-        //                    string issuedBy,
-        //                    string subdivisionCode)
-        //{
+            _gender = gender;
+            return this;
+        }
 
-        //    var documentSpec = new DocumentItemSpecification(series,
-        //                                                     number,
-        //                                                     idType,
-        //                                                     dataIssued);
+        async Task<IEmployeeBuilder> IEmployeeBuilderSendField.SetDocument(
+                            int idType,
+                            string series,
+                            string number,
+                            DateTime dataIssued,
+                            string issuedBy,
+                            string subdivisionCode)
+        {
 
-        //    var document = await _documentRepository.SingleOrDefaultAsync(documentSpec);
-        //    if (document == null)
-        //    {
-        //        document = new DocumentItem(idType,
-        //                                    series,
-        //                                    number,
-        //                                    dataIssued,
-        //                                    issuedBy,
-        //                                    subdivisionCode);
+            var documentSpec = new DocumentItemSpecification(series,
+                                                             number,
+                                                             idType,
+                                                             dataIssued);
+            //поиск дублей
+            var document = await _documentRepository.SingleOrDefaultAsync(documentSpec);
 
-        //        await _documentRepository.AddAsync(document);
-        //    }
+            //если схожый объект не найден, сохраняем новый в базу
+            if (document == null)
+            {
+                document = new DocumentItem(idType,
+                                            series,
+                                            number,
+                                            dataIssued,
+                                            issuedBy,
+                                            subdivisionCode);
 
-        //    _document = document;
-        //    return this;
-        //}
+                await _documentRepository.AddAsync(document);
+                await _documentRepository.SaveChangesAsync();
+            }
 
-        //public async Task<IEmployeBuilder> SetOrganization(int organizationId)
-        //{
-        //    var organization = await _organizationRepository.GetByIdAsync(organizationId);
-        //    _organization = organization;
-        //    return this;
-        //}
+            _document = document;
 
-        ////TODO: Создание реквезитов
-        //public async Task<IEmployeBuilder> SetRequisites(RequisitesItem employeRequisites)
-        //{
-        //    _requisites = employeRequisites;
-        //    return this;
-        //}
-        ////TODO: Создание аддреса
-        //public async Task<IEmployeBuilder> SetAddress(Address employeAddress)
-        //{
-        //    _address = employeAddress;
-        //    return this;
-        //}
+            if(_employee != null)
+            {
+                _employee.Document = document;
+            }
 
-        //public async Task<IEmployeBuilder> SetDocument(IDocumentItem document)
-        //{
-        //    return await this.SetDocument(document.IdType, 
-        //                                  document.Series, 
-        //                                  document.Number, 
-        //                                  document.DataIssued, 
-        //                                  document.IssuedBy, 
-        //                                  document.SubdivisionCode);
-        //}
+            return this;
+        }
 
-        //public Task<IEmployeBuilder> SetRequisites(IRequisitesItem employeRequisites)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        public async Task<IEmployeeBuilder> SetOrganization(int organizationId)
+        {
+            var organization = await _organizationRepository.GetByIdAsync(organizationId);
+            _organization = organization;
+            return this;
+        }
 
-        //public Task<IEmployeBuilder> SetAddress(IAddress employeAddress)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        async Task<IEmployeeBuilder> IEmployeeBuilderSendField.SetLegalAddress(int idCountry,
+                                                                               int postcode,
+                                                                               int idState,
+                                                                               string district,
+                                                                               int idCity,
+                                                                               int idLocality,
+                                                                               string streetType,
+                                                                               int idStreet,
+                                                                               int numHome,
+                                                                               int numCase,
+                                                                               int numApartment)
+        {
+            var newAddress = new Address(idCountry, postcode, idState, 
+                                         district, idCity, idLocality, 
+                                         streetType, idStreet, numHome,
+                                         numCase,numApartment);
+            //поиск дублей
+            var addressSpecification = new AddressSpecification(newAddress);
+            var address = await _addressRepository.SingleOrDefaultAsync(addressSpecification);
 
-        //public Task<IEmployeBuilder> SetEmploye(string lastName, string firstName, string middleName, string phoneNum, string jobPhoneNum, string position, string departmentNum)
-        //{
-        //    throw new NotImplementedException();
-        //}
+            //если схожый объект не найден, сохраняем новый в базу
+            if (address == null)
+            {
+                await _addressRepository.AddAsync(newAddress);
+                await _addressRepository.SaveChangesAsync();
+                _legalAddress = newAddress;
+                return this;
+            }
+            else
+            {
+                _legalAddress = address;
+                return this;
+            }
+        }
 
-        //public Task<IEmployeBuilder> SetEmploye(IEmploye employe)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        async Task<IEmployeeBuilder> IEmployeeBuilderSendField.SetRequisities(int inn, 
+                                                                              string insuranceNum, 
+                                                                              int idDivision, 
+                                                                              int idCurrency, 
+                                                                              int idCardType, 
 
-        //public Task<Employe> GetEmploye()
-        //{
-        //    throw new NotImplementedException();
-        //}
+                                                                              string latinFirstName = null, 
+                                                                              string latinLastName = null)
+        {
+            var newRequisities = new RequisitesItem(inn, insuranceNum, idDivision, idCurrency, idCardType, latinFirstName, latinLastName);
 
-        //public Task<IEmployeBuilder> SetRequisities(int inn, string insuranceNum, int idDivision, int idCurrency, int idCardType, int idEmployer, string latinFirstName = null, string latinLastName = null)
-        //{
-        //    throw new NotImplementedException();
-        //}
+            //поиск дублей
+            var requisitiesSpecification = new RequisitiesSpecification(newRequisities);
+            var requisite = await _requisitesRepository.SingleOrDefaultAsync(requisitiesSpecification);
 
-        //public Task<IEmployeBuilder> SetGender(Gender gender)
-        //{
-        //    throw new NotImplementedException();
-        //}
+            //если схожый объект не найден, сохраняем новый в базу
+            if (requisite == null)
+            {
+                await _requisitesRepository.AddAsync(newRequisities);
+                await _requisitesRepository.SaveChangesAsync();
+                _requisites = newRequisities;
+                return this;
+            }
+            else
+            {
+                _requisites = requisite;
+                return this;
+            }
 
-        //public Task<IEmployeBuilder> SetOrganization(Organization organization)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        }
+
+        public async Task<IEmployeeBuilder> SetEmployee(string lastName, 
+                                                string firstName, 
+                                                string middleName, 
+                                                DateTime birthdayDate, 
+                                                string nationality, 
+                                                bool resident, 
+                                                string phoneNum,
+                                                string jobPhoneNum, 
+                                                string position, 
+                                                string departmentNum)
+        {
+            Employee employee = new Employee(lastName, 
+                                            firstName, 
+                                            middleName, 
+                                            birthdayDate, 
+                                            nationality, 
+                                            resident, 
+                                            phoneNum, 
+                                            jobPhoneNum, 
+                                            position, 
+                                            departmentNum, 
+                                            _gender.Id,
+                                            _document.Id,
+                                            _organization.Id);
+
+            if(employee.Requisites == null)
+            {
+                employee.Requisites = new List<RequisitesItem>();
+            }
+            employee.Requisites.Add(_requisites);
+
+            if(employee.Addresses == null)
+            {
+                employee.Addresses = new List<Address>();
+            }
+            employee.Addresses.Add(_legalAddress);
+
+            _employee = employee;
+
+            await _employeRepository.AddAsync(employee);
+
+            await _employeRepository.SaveChangesAsync();
+
+            return this;
+        }
+
+        #endregion
+
+        #region IEmployeeBuilderSendObj
+
+        async Task<IEmployeeBuilder> IEmployeeBuilderSendObj.SetDocument(IDocumentItem document)
+        {
+            var documentSpec = new DocumentItemSpecification(document.Series,
+                                                 document.Number,
+                                                 document.IdType,
+                                                 document.DataIssued);
+            //поиск дублей
+            var item = await _documentRepository.SingleOrDefaultAsync(documentSpec);
+
+            //если схожый объект не найден, сохраняем новый в базу
+            if (item == null)
+            {
+                item = new DocumentItem(document);
+
+                await _documentRepository.AddAsync(item);
+                await _documentRepository.SaveChangesAsync();
+            }
+
+            _document = item;
+
+            if (_employee != null)
+            {
+                _employee.Document = item;
+            }
+
+
+            return this;
+        }
+
+        async Task<IEmployeeBuilder> IEmployeeBuilderSendObj.SetRequisites(IRequisitesItem employeRequisites)
+        {
+            var newRequisities = new RequisitesItem(employeRequisites);
+
+            //поиск дублей
+            var requisitiesSpecification = new RequisitiesSpecification(employeRequisites);
+            var requisite = await _requisitesRepository.SingleOrDefaultAsync(requisitiesSpecification);
+
+            //если схожый объект не найден, сохраняем новый в базу
+            if (requisite == null)
+            {
+                await _requisitesRepository.AddAsync(newRequisities);
+                await _requisitesRepository.SaveChangesAsync();
+                _requisites = newRequisities;
+                return this;
+            }
+            else
+            {
+                _requisites = requisite;
+                return this;
+            }
+        }
+
+        async Task<IEmployeeBuilder> IEmployeeBuilderSendObj.SetLegalAddress(IAddress employeAddress)
+        {
+            var newAddress = new Address(employeAddress);
+            //поиск дублей
+            var addressSpecification = new AddressSpecification(newAddress);
+            var address = await _addressRepository.SingleOrDefaultAsync(addressSpecification);
+
+            //если схожый объект не найден, сохраняем новый в базу
+            if (address == null)
+            {
+                await _addressRepository.AddAsync(newAddress);
+                await _addressRepository.SaveChangesAsync();
+                _legalAddress = newAddress;
+                return this;
+            }
+            else
+            {
+                _legalAddress = address;
+                return this;
+            }
+        }
+
+        async Task<IEmployeeBuilder> IEmployeeBuilderSendObj.SetEmployee(IEmployee employee)
+        {
+            Employee item = new Employee(employee);
+
+            if (item.Requisites == null)
+            {
+                item.Requisites = new List<RequisitesItem>();
+            }
+
+            item.Requisites.Add(_requisites);
+
+            if (employee.Addresses == null)
+            {
+                employee.Addresses = new List<Address>();
+            }
+            employee.Addresses.Add(_legalAddress);
+
+            _employee = item;
+
+            await _employeRepository.AddAsync(item);
+
+            await _employeRepository.SaveChangesAsync();
+
+            return this;
+        }
+
+
+        #endregion
+
+
+        public Employee GetEmployee()
+        {
+            return _employee;
+        }
     }
 }
