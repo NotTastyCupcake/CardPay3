@@ -20,22 +20,6 @@ namespace Metcom.CardPay3.Infrastructure.Data
             try
             {
 
-                if (!employerContext.Organizations.Any())
-                {
-                    employerContext.Organizations.AddRange(
-                        GetPreconfiguredOrganizations());
-
-                    await employerContext.SaveChangesAsync();
-                }
-
-                //if (!employerContext.Groups.Any())
-                //{
-                //    employerContext.Groups.AddRange(
-                //        GetPreconfiguredGroups());
-
-                //    await employerContext.SaveChangesAsync();
-                //}
-
                 if (!employerContext.Genders.Any())
                 {
                     employerContext.Genders.AddRange(
@@ -83,44 +67,12 @@ namespace Metcom.CardPay3.Infrastructure.Data
                     await employerContext.SaveChangesAsync();
                 }
 
-
-                if (!employerContext.Documents.Any())
-                {
-                    employerContext.Documents.AddRange(
-                        GetPreconfiguredDocuments());
-
-                    await employerContext.SaveChangesAsync();
-                }
-
-                if (!employerContext.Employers.Any())
-                {
-                    employerContext.Employers.AddRange(
-                        GetPreconfiguredEmployers());
-
-                    await employerContext.SaveChangesAsync();
-                }
-
-                if (!employerContext.Requisites.Any())
-                {
-                    employerContext.Requisites.AddRange(
-                        GetPreconfiguredRequisites());
-
-                    await employerContext.SaveChangesAsync();
-                }
-
-                if (!employerContext.Addresses.Any())
-                {
-                    employerContext.Addresses.AddRange(
-                        GetPreconfiguredAddresses());
-
-                    await employerContext.SaveChangesAsync();
-                }
             }
             catch (Exception ex)
             {
                 var log = loggerFactory.CreateLogger<EmployeContextSeed>();
                 log.LogError(ex.Message);
-                //await SeedAsync(employerContext, loggerFactory);
+                await SeedAsync(employerContext, loggerFactory);
             }
 
         }
@@ -129,28 +81,29 @@ namespace Metcom.CardPay3.Infrastructure.Data
         {
             return new List<DocumentType>()
             {
-                //TODO: Типы документов
-                //new DocumentType("Военный билет"),
-                //new DocumentType("Паспорт")
-            };
-        }
+                new DocumentType("Паспорт гражданина СССР", 1),
+                new DocumentType("Загранпаспорт гражданина СССР", 2),
+                new DocumentType("Свидетельство о рождении", 3),
+                new DocumentType("Удостоверение личности офицера", 4),
+                new DocumentType("Справка об освобождении из места лишения свободы", 5),
+                new DocumentType("Военный билет солдата (матроса, сержанта, старшины)", 7),
+                new DocumentType("Дипломатический паспорт гражданина РФ", 9),
+                new DocumentType("Иностранный паспорт", 10),
+                new DocumentType("Свидетельство о регистрации ходатайства иммигранта о признании его беженцем", 11),
+                new DocumentType("Вид на жительство", 12),
+                new DocumentType("Удостоверение беженца в РФ", 13),
+                new DocumentType("Временное удостоверение личности гражданина РФ", 14),
+                new DocumentType("Паспорт гражданина РФ", 21),
+                new DocumentType("Загранпаспорт гражданина РФ ", 22),
+                new DocumentType("Свидетельство о рождении, выданное уполномоченным органом иностранного государства", 23),
+                new DocumentType("Паспорт моряка", 26),
+                new DocumentType("Военный билет офицера запаса", 27),
+                new DocumentType("Иные документы, выдаваемые органами МВД ", 91),
+                new DocumentType("Временное удостоверение, выданное взамен военного билета ", 8),
+                new DocumentType("Разрешение на временное проживание", 15),
+                new DocumentType("Свидетельство о предоставлении временного убежища на территории Российской Федерации", 18),
+                new DocumentType("Удостоверение личности военнослужащего Российской Федерации", 24)
 
-        private static IEnumerable<DocumentItem> GetPreconfiguredDocuments()
-        {
-            return new List<DocumentItem>()
-            {
-                //TODO: Пример документа
-                //new DocumentItem(1,DateTime.Now,"TEST_ISSUED_BY","TEST_SUBDIVISION"),
-                //new DocumentItem(1,DateTime.Now,"TEST_ISSUED_BY2","TEST_SUBDIVISION2")
-            };
-        }
-
-        private static IEnumerable<Organization> GetPreconfiguredOrganizations()
-        {
-            return new List<Organization>()
-            {
-                new Organization("ПАО \"МЕТКОМБАНК\""),
-                new Organization("ОАО \"ТЕСТ\"")
             };
         }
 
@@ -169,31 +122,9 @@ namespace Metcom.CardPay3.Infrastructure.Data
             return new List<Geographic>()
             {
                 new Geographic("Российская фидерация", "RUS", 643),
-                new Geographic("TEST_STATE", "TEST_SHORT_STATE"),
-                new Geographic("TEST_CITY", "TEST_SHORT_CITY"),
-                new Geographic("TEST_LOCALITY", "TEST_SHORT_LOCALITY"),
-                new Geographic("TEST_STREET", "TEST_SHORT_STREET")
+                new Geographic("Беларуссия", "BLR", 112)
             };
 
-        }
-
-        private static IEnumerable<Address> GetPreconfiguredAddresses()
-        {
-            return new List<Address>()
-            {
-                //TODO: Создать пример адреса
-                //new Address( 1, 1, 2, "TEST_DISTRICT", 3, 4, "TEST_STREET_TYPE", 5, 1, 1, 1, 1)
-            };
-
-        }
-
-        private static IEnumerable<RequisitesItem> GetPreconfiguredRequisites()
-        {
-            return new List<RequisitesItem>()
-            {
-                //TODO: Создать пример реквезитов для отправки
-                //new RequisitesItem(1111,"", 1, 1, 1)
-            };
         }
 
         private static IEnumerable<Gender> GetPreconfiguredGenders()
@@ -212,6 +143,7 @@ namespace Metcom.CardPay3.Infrastructure.Data
                 new Group(1, "GROUP_1")
             };
         }
+
         private static IEnumerable<BankCurrency> GetPreconfiguredBankCurrencies()
         {
             return new List<BankCurrency>()
@@ -239,14 +171,5 @@ namespace Metcom.CardPay3.Infrastructure.Data
             };
         }
 
-        private static IEnumerable<Employee> GetPreconfiguredEmployers()
-        {
-            return new List<Employee>()
-            {
-                //TODO: Примеры сотрудников
-                //new Employee("Иванов", "Иван", "Иванович", "TEST_PHONE", "TEST_JOB", "TEST_POSITION", "TEST_DEPATMENT_NUM", 2, 1, 1),
-                //new Employee("Иванова", "Аня", "Ивановна", "TEST_PHONE", "TEST_JOB", "TEST_POSITION", "TEST_DEPATMENT_NUM", 1, 2, 1)
-            };
-        }
     }
 }
