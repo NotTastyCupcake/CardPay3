@@ -5,7 +5,7 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.DocumentAggregate
     /// <summary>
     /// Документ, удостоверяющий личность
     /// </summary>
-    public class DocumentItem : BaseEntity
+    public class DocumentItem : BaseEntity, IDocumentItem
     {
 
         public string FullName => $"{Type?.Name ?? "<Нет типа>"}: {SubdivisionCode}";
@@ -50,6 +50,16 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.DocumentAggregate
             DataIssued = dataIssued;
             IssuedBy = issuedBy;
             SubdivisionCode = subdivisionCode;
+        }
+
+        public DocumentItem(IDocumentItem documentItem)
+        {
+            IdType = documentItem.IdType;
+            Series = documentItem.Series;
+            Number = documentItem.Number;
+            DataIssued = documentItem.DataIssued;
+            IssuedBy = documentItem.IssuedBy;
+            SubdivisionCode = documentItem.SubdivisionCode;
         }
 
         public DocumentItem()

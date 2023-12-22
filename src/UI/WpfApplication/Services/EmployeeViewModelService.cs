@@ -11,22 +11,22 @@ using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.WpfApplication.Services
 {
-    public class EmployeViewModelService : ReactiveObject, IEmployeViewModelService
+    public class EmployeeViewModelService : ReactiveObject, IEmployeeViewModelService
     {
-        private readonly ILogger<EmployeViewModelService> _logger;
+        private readonly ILogger<EmployeeViewModelService> _logger;
 
         private readonly IRepository<Organization> _organizationRepository;
         private readonly IRepository<Gender> _genderRepository;
         private readonly IRepository<DocumentType> _documentTypeRepository;
         private readonly IRepository<Address> _addressRepository;
 
-        public EmployeViewModelService(
-            IRepository<Employe> itemRepository,
+        public EmployeeViewModelService(
+            IRepository<Employee> itemRepository,
             IRepository<Organization> organizationRepository,
             IRepository<Gender> genderRepository,
             IRepository<DocumentType> documentTypeRepository,
             IRepository<Address> addressRepository,
-            ILogger<EmployeViewModelService> logger)
+            ILogger<EmployeeViewModelService> logger)
         {
             _organizationRepository = organizationRepository;
             _documentTypeRepository = documentTypeRepository;
@@ -47,21 +47,23 @@ namespace Metcom.CardPay3.WpfApplication.Services
             return new ReadOnlyObservableCollection<Gender>(items);
         }
 
-        public ObservableCollection<Address> GetAddress(Employe employe)
+        public ObservableCollection<Address> GetAddress(Employee employee)
         {
-            _logger.LogInformation("GetGenders called.");
+            //TODO: Переделать получение адресов
+            //_logger.LogInformation("GetGenders called.");
 
-            var employes = employe.Addresses;
-            var items = new ObservableCollection<Address>(employes);
+            //var employes = employee.Addresses;
+            //var items = new ObservableCollection<Address>(employes);
 
-            return items;
+            //return items;
+            return null;
         }
 
-        public ObservableCollection<RequisitesItem> GetRequisites(Employe employe)
+        public ObservableCollection<RequisitesItem> GetRequisites(Employee employee)
         {
             _logger.LogInformation("GetGenders called.");
 
-            var employes = employe.Requisites;
+            var employes = employee.Requisites;
             var items = new ObservableCollection<RequisitesItem>(employes);
 
             return items;

@@ -7,9 +7,9 @@ namespace Metcom.CardPay3.WpfApplication.Views
     /// <summary>
     /// Логика взаимодействия для EmployeListView.xaml
     /// </summary>
-    public partial class EmployeListView
+    public partial class EmployeeListView
     {
-        public EmployeListView(EmployeeListViewModel viewModel = null)
+        public EmployeeListView(EmployeeListViewModel viewModel = null)
         {
             ViewModel = viewModel ?? Locator.Current.GetService<EmployeeListViewModel>();
             DataContext = ViewModel;

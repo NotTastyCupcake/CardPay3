@@ -44,7 +44,7 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.AccrualAggregate
 
         public void AddItem(int employerId, decimal amount)
         {
-            if (!Items.Any(i => i.IdEmployer == employerId))
+            if (!Items.Any(i => i.IdEmployee == employerId))
             {
                 _items.Add(new AccrualItem(employerId, amount));
                 return;
@@ -53,7 +53,7 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.AccrualAggregate
 
         public void RemoveEmployer(int employerId)
         {
-            _items.RemoveAll(i => i.IdEmployer == employerId);
+            _items.RemoveAll(i => i.IdEmployee == employerId);
         }
 
         public void SetNewOrganizationId(int organizationId)

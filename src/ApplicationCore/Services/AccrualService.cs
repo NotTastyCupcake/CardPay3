@@ -62,7 +62,6 @@ namespace Metcom.CardPay3.ApplicationCore.Services
             await _accrualRepository.DeleteAsync(accrual);
         }
 
-        //TODO: Создать триггер расписания Quartz
         public async Task TransferAccrualAsync(int oldIdOrganization, int newIdOrganization)
         {
             var oldAccrualSpec = new AccrualSpecification(idOrganization: oldIdOrganization.ToString());

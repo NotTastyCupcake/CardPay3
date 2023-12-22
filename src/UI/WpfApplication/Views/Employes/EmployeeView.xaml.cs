@@ -9,12 +9,12 @@ namespace Metcom.CardPay3.WpfApplication.Views.Employes
     /// <summary>
     /// Логика взаимодействия для AddEmployeWindow.xaml
     /// </summary>
-    public partial class EmployeView
+    public partial class EmployeeView
     {
 
-        public EmployeView(EmployeViewModel viewModel = null)
+        public EmployeeView(EmployeeViewModel viewModel = null)
         {
-            ViewModel = viewModel ?? Locator.Current.GetService<EmployeViewModel>();
+            ViewModel = viewModel ?? Locator.Current.GetService<EmployeeViewModel>();
             DataContext = ViewModel;
 
             InitializeComponent();
@@ -34,41 +34,41 @@ namespace Metcom.CardPay3.WpfApplication.Views.Employes
                     .DisposeWith(disposable);
 
                 this.Bind(this.ViewModel,
-                    vm => vm.Employe.FirstName,
+                    vm => vm.Employee.FirstName,
                     view => view.FirstNameBlock.Text)
                     .DisposeWith(disposable);
 
                 this.Bind(this.ViewModel,
-                    vm => vm.Employe.LastName,
+                    vm => vm.Employee.LastName,
                     view => view.LastNameBlock.Text)
                     .DisposeWith(disposable);
 
                 this.Bind(this.ViewModel,
-                    vm => vm.Employe.MiddleName,
+                    vm => vm.Employee.MiddleName,
                     view => view.MiddleNameBlock.Text)
                     .DisposeWith(disposable);
 
 
                 this.Bind(this.ViewModel,
-                    vm => vm.Employe.PhoneNumber,
+                    vm => vm.Employee.PhoneNumber,
                     view => view.PhoneNumber.Text)
                     .DisposeWith(disposable);
 
 
                 this.Bind(this.ViewModel,
-                    vm => vm.Employe.JobPhoneNumber,
+                    vm => vm.Employee.JobPhoneNumber,
                     view => view.JobPhoneNumber.Text)
                     .DisposeWith(disposable);
 
 
                 this.Bind(this.ViewModel,
-                    vm => vm.Employe.Position,
+                    vm => vm.Employee.Position,
                     view => view.Position.Text)
                     .DisposeWith(disposable);
 
 
                 this.Bind(this.ViewModel,
-                    vm => vm.Employe.DepartmentNum,
+                    vm => vm.Employee.DepartmentNum,
                     view => view.DepartmentNum.Text)
                     .DisposeWith(disposable);
 

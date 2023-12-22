@@ -21,12 +21,12 @@ namespace Metcom.CardPay3.WebApplication.Controllers
         private readonly ILogger<EmployeController> _logger;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IEmployerViewModelService _viewModelservice;
-        private readonly IEmployeBuilder _service;
+        private readonly IEmployeeBuilder _service;
 
         public EmployeController(ILogger<EmployeController> logger,
             UserManager<ApplicationUser> userManager,
             IEmployerViewModelService viewModelService,
-            IEmployeBuilder service)
+            IEmployeeBuilder service)
         {
 
             _logger = logger;
@@ -72,13 +72,13 @@ namespace Metcom.CardPay3.WebApplication.Controllers
                 {
                     var user = await _userManager.FindByNameAsync(User.Identity.Name);
 
-                    var builder = await _service.SetGender(employerModel.IdGender);
-                    await builder.SetDocument(employerModel.IdType,
-                       employerModel.DataIssued, employerModel.IssuedBy, employerModel.SubdivisionCode);
-                    await builder.SetOrganization(user.IdOrganization);
+                    //var builder = await _service.SetGender(employerModel.IdGender);
+                    //await builder.SetDocument(employerModel.IdType,
+                    //   employerModel.DataIssued, employerModel.IssuedBy, employerModel.SubdivisionCode);
+                    //await builder.SetOrganization(user.IdOrganization);
 
-                    var employer = await _service.GetEmploye(employerModel.LastName, employerModel.FirstName, employerModel.MiddleName,
-                       employerModel.PhoneNumber, employerModel.JobPhoneNumber, employerModel.Position, employerModel.DepartmentNum);
+                    //var employer = _service.GetEmploye(employerModel.LastName, employerModel.FirstName, employerModel.MiddleName,
+                    //   employerModel.PhoneNumber, employerModel.JobPhoneNumber, employerModel.Position, employerModel.DepartmentNum);
 
                     return RedirectToAction(nameof(Index));
                 }

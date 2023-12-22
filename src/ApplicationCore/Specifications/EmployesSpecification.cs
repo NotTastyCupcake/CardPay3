@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Metcom.CardPay3.ApplicationCore.Specifications
 {
-    public sealed class EmployesSpecification : Specification<Employe>, ISingleResultSpecification<Employe>
+    public sealed class EmployesSpecification : Specification<Employee>, ISingleResultSpecification<Employee>
     {
         public EmployesSpecification(params int[] ids)
         {

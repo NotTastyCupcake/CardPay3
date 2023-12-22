@@ -11,14 +11,14 @@ using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.WpfApplication.Services
 {
-    public class EmployeCollectionService : ReactiveObject, IEmployeCollectionService
+    public class EmployeeCollectionService : ReactiveObject, IEmployeeCollectionService
     {
-        private readonly ILogger<EmployeCollectionService> _logger;
-        private readonly IRepository<Employe> _repository;
+        private readonly ILogger<EmployeeCollectionService> _logger;
+        private readonly IRepository<Employee> _repository;
 
-        public EmployeCollectionService(
-            ILogger<EmployeCollectionService> logger,
-            IRepository<Employe> repository)
+        public EmployeeCollectionService(
+            ILogger<EmployeeCollectionService> logger,
+            IRepository<Employee> repository)
         {
             _logger = logger;
             _repository = repository;
@@ -47,6 +47,6 @@ namespace Metcom.CardPay3.WpfApplication.Services
             All.AddOrUpdate(employes);
         }
 
-        public SourceCache<Employe, int> All { get; } = new SourceCache<Employe, int>(e => e.Id);
+        public SourceCache<Employee, int> All { get; } = new SourceCache<Employee, int>(e => e.Id);
     }
 }

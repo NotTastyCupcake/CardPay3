@@ -75,7 +75,7 @@ namespace Metcom.CardPay3.WebApplication
 
             services.AddScoped<IAccrualService, AccrualService>();
 
-            services.AddScoped<IEmployeBuilder, EmployeBuilder>();
+            services.AddScoped<IEmployeeBuilder, EmployeeBuilder>();
 
             services.AddScoped<IAccrualViewModelService, AccrualViewModelService>();
             services.AddScoped<IEmployerViewModelService, EmployerViewModelService>();

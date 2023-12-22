@@ -7,16 +7,10 @@ namespace Metcom.CardPay3.ApplicationCore.Specifications
 {
     public class DocumentItemSpecification : Specification<DocumentItem>, ISingleResultSpecification<DocumentItem>
     {
-        public DocumentItemSpecification(int idDocument)
+        public DocumentItemSpecification(string series, string number, int idType, DateTime dateIssued)
         {
             Query
-                .Where(a => a.Id == idDocument);
-        }
-
-        public DocumentItemSpecification(string issuedBy, string subdivisionCode, int idType, DateTime dateIssued)
-        {
-            Query
-                .Where(a => a.IssuedBy == issuedBy && a.SubdivisionCode == subdivisionCode && a.IdType == idType && a.DataIssued.Date == dateIssued.Date);
+                .Where(a => a.Series == series && a.Number == number && a.IdType == idType && a.DataIssued.Date == dateIssued.Date);
         }
     }
 }

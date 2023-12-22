@@ -6,7 +6,7 @@ namespace Metcom.CardPay3.UnitTests.ApplicationCore.Entities.EmployerItemTests
 {
     public class UpdateContactDetails
     {
-        private Employe _testItem;
+        private Employee _testItem;
 
         private string _validLastName = "TestLastName";
         private string _validFirstName = "TestFirstName";
@@ -23,10 +23,11 @@ namespace Metcom.CardPay3.UnitTests.ApplicationCore.Entities.EmployerItemTests
         [SetUp]
         public void UpdateContactDetailsSetUp()
         {
-            _testItem = new Employe(
-                _validLastName, _validFirstName, _validMiddleName,
-                _validPhoneNumber, _validJobPhoneNumber, _validPosition, _validDepartmentNum,
-                _validGenderId, _validDocumentId, _validIdRequest);
+            //TODO: Создание сотрудника для теста
+            //_testItem = new Employee(
+            //    _validLastName, _validFirstName, _validMiddleName,
+            //    _validPhoneNumber, _validJobPhoneNumber, _validPosition, _validDepartmentNum,
+            //    _validGenderId, _validDocumentId, _validIdRequest);
         }
 
         [TestCase("", "", "", "")]

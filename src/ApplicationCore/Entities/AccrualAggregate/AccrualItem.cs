@@ -3,10 +3,10 @@ using System;
 
 namespace Metcom.CardPay3.ApplicationCore.Entities.AccrualAggregate
 {
-    public class AccrualItem : BaseEntity
+    public class AccrualItem : BaseEntity, IAccrualItem
     {
-        public int IdEmployer { get; private set; }
-        public virtual Employe Employer { get; private set; }
+        public int IdEmployee { get; private set; }
+        public virtual Employee Employee { get; private set; }
 
         public decimal Amount { get; private set; }
         public DateTime Date { get; private set; } = DateTime.Now;
@@ -15,8 +15,13 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.AccrualAggregate
 
         public AccrualItem(int employerId, decimal amount)
         {
-            IdEmployer = employerId;
+            IdEmployee = employerId;
             SetAmount(amount);
+        }
+        public AccrualItem(IAccrualItem item)
+        {
+            IdEmployee = item.IdEmployee;
+            SetAmount(item.Amount);
         }
 
         public AccrualItem()

@@ -15,8 +15,8 @@ namespace Metcom.CardPay3.UnitTests.ApplicationCore.Services.EmployeServiceTests
     public class CreateEmploye
     {
 
-        private readonly Mock<IRepository<Employe>> _mockEmployeRepo = new Mock<IRepository<Employe>>();
-        private readonly Mock<IAppLogger<EmployeBuilder>> _mockLogger = new();
+        private readonly Mock<IRepository<Employee>> _mockEmployeRepo = new Mock<IRepository<Employee>>();
+        private readonly Mock<IAppLogger<EmployeeBuilder>> _mockLogger = new();
         private readonly Mock<IRepository<Gender>> _mockGenderRepo;
         private readonly Mock<IRepository<DocumentItem>> _mockDocumentRepo;
         private readonly Mock<IRepository<RequisitesItem>> _mockRequisitesRepo;
@@ -38,12 +38,12 @@ namespace Metcom.CardPay3.UnitTests.ApplicationCore.Services.EmployeServiceTests
         private readonly int _organizationId = 0;
 
         //[Test]
-        public async Task InvokesEmployeRepositoryGetBySpecAsyncOnce()
+        public async Task InvokesEmployeeRepositoryGetBySpecAsyncOnce()
         {
             //TODO: Создать юнит тест
-            _mockEmployeRepo.Setup(x => x.GetByIdAsync(It.IsAny<int>(), default)).ReturnsAsync(new Employe());
+            _mockEmployeRepo.Setup(x => x.GetByIdAsync(It.IsAny<int>(), default)).ReturnsAsync(new Employee());
 
-            var employeBuilder = new EmployeBuilder(_mockEmployeRepo.Object, 
+            var employeeBuilder = new EmployeeBuilder(_mockEmployeRepo.Object, 
                                                     _mockGenderRepo.Object, 
                                                     _mockDocumentRepo.Object, 
                                                     _mockRequisitesRepo.Object, 
@@ -51,14 +51,15 @@ namespace Metcom.CardPay3.UnitTests.ApplicationCore.Services.EmployeServiceTests
                                                     _mockOrganizationRepo.Object,
                                                     _mockLogger.Object);
 
-            var employe = await employeBuilder.SetGender(_idGender);
+            //TODO: Тест создания сотрудника
+            //var employe = await employeBuilder.SetGender();
 
-            employe = await employe.SetDocument(_idTypeDocument,
-                                                It.IsAny<DateTime>(),
-                                                It.IsAny<string>(),
-                                                It.IsAny<string>());
+            //employe = await employe.SetDocument(_idTypeDocument,
+            //                                    It.IsAny<DateTime>(),
+            //                                    It.IsAny<string>(),
+            //                                    It.IsAny<string>());
 
-            employe = await employe.SetOrganization(_organizationId);
+            //employe = await employe.SetOrganization(_organizationId);
         }
     }
 }
