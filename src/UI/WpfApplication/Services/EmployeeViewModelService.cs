@@ -11,22 +11,22 @@ using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.WpfApplication.Services
 {
-    public class EmployeViewModelService : ReactiveObject, IEmployeeViewModelService
+    public class EmployeeViewModelService : ReactiveObject, IEmployeeViewModelService
     {
-        private readonly ILogger<EmployeViewModelService> _logger;
+        private readonly ILogger<EmployeeViewModelService> _logger;
 
         private readonly IRepository<Organization> _organizationRepository;
         private readonly IRepository<Gender> _genderRepository;
         private readonly IRepository<DocumentType> _documentTypeRepository;
         private readonly IRepository<Address> _addressRepository;
 
-        public EmployeViewModelService(
+        public EmployeeViewModelService(
             IRepository<Employee> itemRepository,
             IRepository<Organization> organizationRepository,
             IRepository<Gender> genderRepository,
             IRepository<DocumentType> documentTypeRepository,
             IRepository<Address> addressRepository,
-            ILogger<EmployeViewModelService> logger)
+            ILogger<EmployeeViewModelService> logger)
         {
             _organizationRepository = organizationRepository;
             _documentTypeRepository = documentTypeRepository;

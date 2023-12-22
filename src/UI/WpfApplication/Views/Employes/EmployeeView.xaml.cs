@@ -12,9 +12,9 @@ namespace Metcom.CardPay3.WpfApplication.Views.Employes
     public partial class EmployeeView
     {
 
-        public EmployeeView(EmployeViewModel viewModel = null)
+        public EmployeeView(EmployeeViewModel viewModel = null)
         {
-            ViewModel = viewModel ?? Locator.Current.GetService<EmployeViewModel>();
+            ViewModel = viewModel ?? Locator.Current.GetService<EmployeeViewModel>();
             DataContext = ViewModel;
 
             InitializeComponent();

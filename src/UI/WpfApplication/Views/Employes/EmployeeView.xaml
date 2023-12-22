@@ -6,8 +6,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vms="clr-namespace:Metcom.CardPay3.WpfApplication.ViewModels.Employes"
         xmlns:reactiveui="http://reactiveui.net"
-        d:DataContext="{d:DesignInstance Type=vms:EmployeViewModel}"
-        x:TypeArguments="vms:EmployeViewModel"
+        d:DataContext="{d:DesignInstance Type=vms:EmployeeViewModel}"
+        x:TypeArguments="vms:EmployeeViewModel"
         mc:Ignorable="d"
         d:DesignHeight="550" d:DesignWidth="800" >
     <Grid>
