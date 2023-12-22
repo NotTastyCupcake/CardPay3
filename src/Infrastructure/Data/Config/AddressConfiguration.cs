@@ -14,34 +14,18 @@ namespace Metcom.CardPay3.Infrastructure.Data.Config
     {
         public void Configure(EntityTypeBuilder<Address> builder)
         {
-            builder.HasOne(ci => ci.Country)
-                .WithMany()
-                .HasForeignKey(ci => ci.IdCountry)
-                .IsRequired(true);
+            builder.HasKey(e => e.Id);
 
-            builder.HasOne(ci => ci.State)
-                .WithMany()
-                .HasForeignKey(ci => ci.IdState)
-                .OnDelete(DeleteBehavior.Cascade)
-                .IsRequired(true);
+            builder.OwnsOne(a => a.Country, cg => { cg.ToTable("CountryGeographic"); });
 
-            builder.HasOne(ci => ci.City)
-                .WithMany()
-                .HasForeignKey(ci => ci.IdCity)
-                .OnDelete(DeleteBehavior.Cascade)
-                .IsRequired(true);
+            builder.OwnsOne(a => a.State, cg => { cg.ToTable("StateGeographic"); });
 
-            builder.HasOne(ci => ci.Locality)
-                .WithMany()
-                .HasForeignKey(ci => ci.IdLocality)
-                .OnDelete(DeleteBehavior.Cascade)
-                .IsRequired(true);
+            builder.OwnsOne(a => a.City, cg => { cg.ToTable("CityGeographic"); });
 
-            builder.HasOne(ci => ci.Street)
-                .WithMany()
-                .HasForeignKey(ci => ci.IdStreet)
-                .OnDelete(DeleteBehavior.Cascade)
-                .IsRequired(true);
+            builder.OwnsOne(a => a.Locality, cg => { cg.ToTable("LocalityGeographic"); });
+
+            builder.OwnsOne(a => a.Street, cg => { cg.ToTable("StreetGeographic"); });
+
         }
     }
 }

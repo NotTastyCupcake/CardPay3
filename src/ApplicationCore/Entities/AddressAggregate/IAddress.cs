@@ -6,7 +6,14 @@
         Geographic Country { get; }
         string District { get; }
         Employee Employee { get; }
-        string FullName { get; }
+        string FullName
+        {
+            get
+            {
+                return $"{Postcode}, {Country.Name}, {State.Name}, {City.Name},{StreetType} {Street.Name},д. {NumHome}";
+            }
+        }
+
         int IdCity { get; }
         int IdCountry { get; }
         int? IdEmployee { get; }

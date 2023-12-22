@@ -113,40 +113,17 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
         public int? IdDocument { get; set; }
         public virtual DocumentItem? Document { get; set; }
 
-        public int IdJobAddress { get; set; }
-        /// <summary>
-        /// Адрес места работы
-        /// </summary>
-        public virtual Address JobAddress { get; set; }
-
-        public int IdBirthdayAddress { get; set; }
-        /// <summary>
-        /// Место рождения
-        /// </summary>
-        public virtual Address BirthdayAddress { get; set; }
-
-        public int IdLegalAddress { get; set; }
-        public Address LegalAddress { get; set; }
-
-        public int IdPostAddress { get; set; }
-        public Address PostAddress { get; set; }
+        public virtual ICollection<Address> Addresses { get; set; }
 
         public int IdOrganization { get; set; }
         public virtual Organization Organization { get; set; }
 
-        public List<Address> Addresses
-        {
-            get
-            {
-                return new List<Address>() { LegalAddress, PostAddress, JobAddress };
-            }
-        }
 
         public int IdType { get; set; }
         /// <summary>
         /// Категория населения
         /// </summary>
-        public EmployeeType Type { get; set; }
+        public virtual EmployeeType Type { get; set; }
 #nullable disable
         #endregion
 

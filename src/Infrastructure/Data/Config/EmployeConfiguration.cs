@@ -39,6 +39,11 @@ namespace Metcom.CardPay3.Infrastructure.Data.Config
                 .HasForeignKey(ci => ci.IdOrganization)
                 .IsRequired(false);
 
+            builder.HasOne(ci => ci.Type)
+                .WithOne(o => o.Employee)
+                .HasForeignKey<Employee>(ci => ci.IdType)
+                .IsRequired(false);
+
             builder.Property(ci => ci.LastName)
                 .IsRequired(true)
                 .HasMaxLength(50);
@@ -48,7 +53,7 @@ namespace Metcom.CardPay3.Infrastructure.Data.Config
                 .HasMaxLength(50);
 
             builder.Property(ci => ci.MiddleName)
-                .IsRequired(true)
+                .IsRequired(false)
                 .HasMaxLength(50);
         }
     }

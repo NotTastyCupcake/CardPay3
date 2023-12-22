@@ -181,7 +181,8 @@ namespace Metcom.CardPay3.Infrastructure.Data
         {
             return new List<Address>()
             {
-                new Address( 1, 1, 2, "TEST_DISTRICT", 3, 4, "TEST_STREET_TYPE", 5, 1, 1, 1, 1)
+                //TODO: Создать пример адреса
+                //new Address( 1, 1, 2, "TEST_DISTRICT", 3, 4, "TEST_STREET_TYPE", 5, 1, 1, 1, 1)
             };
 
         }

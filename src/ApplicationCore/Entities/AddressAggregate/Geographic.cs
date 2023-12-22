@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Metcom.CardPay3.ApplicationCore.Entities.AddressAggregate
 {
-    public class Geographic : BaseEntity
+    public class Geographic
     {
         public string Name { get; private set; }
         public string ShortName { get; private set; }

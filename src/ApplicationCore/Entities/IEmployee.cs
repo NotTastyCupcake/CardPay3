@@ -8,36 +8,29 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
 {
     public interface IEmployee
     {
-        Address BirthdayAddress { get; }
+        ICollection<Address> Addresses { get; set; }
         DateTime BirthdayDate { get; }
-        string BonusNumber { get; }
+        string BonusNumber { get; set; }
         string DepartmentNum { get; }
-        DocumentItem Document { get; }
-        string EMail { get; }
+        DocumentItem Document { get; set; }
+        string EMail { get; set; }
         string FirstName { get; }
         string FullName { get; }
-        Gender Gender { get; }
-        int IdBirthdayAddress { get; }
-        int? IdDocument { get; }
+        Gender Gender { get; set; }
+        int? IdDocument { get; set; }
         int IdGender { get; }
-        int IdJobAddress { get; }
-        int IdLegalAddress { get; }
-        int IdOrganization { get; }
-        int IdPostAddress { get; }
-        int IdType { get; }
-        Address JobAddress { get; }
+        int IdOrganization { get; set; }
+        int IdType { get; set; }
         string JobPhoneNumber { get; }
         string LastName { get; }
-        Address LegalAddress { get; }
         string MiddleName { get; }
         string Nationality { get; }
-        Organization Organization { get; }
+        Organization Organization { get; set; }
         string PhoneNumber { get; }
         string Position { get; }
-        Address PostAddress { get; }
-        ICollection<RequisitesItem> Requisites { get;}
+        ICollection<RequisitesItem> Requisites { get; set; }
         bool Resident { get; }
-        EmployeeType Type { get; }
+        EmployeeType Type { get; set; }
 
     }
 }
