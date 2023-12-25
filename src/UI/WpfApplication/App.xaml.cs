@@ -12,6 +12,7 @@ using Metcom.CardPay3.WpfApplication.ViewModels;
 using Metcom.CardPay3.WpfApplication.ViewModels.Employes;
 using Metcom.CardPay3.WpfApplication.Views;
 using Metcom.CardPay3.WpfApplication.Views.Employes;
+using Metcom.CardPay3.WpfApplication.Views.Organization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -149,6 +150,9 @@ public partial class App// : Application
 
         //alternatively search assembly for `IRoutedViewFor` implementations
         //see https://reactiveui.net/docs/handbook/routing to learn more about routing in RxUI
+        services.AddScoped<IViewFor<CreateOrganizationViewModel>, CreateOrganizationView>();
+        services.AddScoped<CreateOrganizationViewModel>();
+
         services.AddSingleton<IViewFor<MenuViewModel>, MenuView>();
         services.AddSingleton<MenuViewModel>();
 
