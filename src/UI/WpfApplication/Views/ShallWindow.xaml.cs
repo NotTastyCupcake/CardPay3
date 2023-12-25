@@ -39,11 +39,18 @@ public partial class ShellWindow : IViewFor<HomeViewModel>
                 view => view.GoBackButton)
             .DisposeWith(disposable);
 
+            this.BindCommand(ViewModel,
+                vm => vm.DeleteOrganization,
+                view => view.DeleteOrganization)
+            .DisposeWith(disposable);
+
             // routing
             this.OneWayBind(ViewModel,
                     x => x.Router,
                     x => x.RoutedViewHost.Router)
                 .DisposeWith(disposable);
+
+
 
         });
     }

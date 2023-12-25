@@ -43,6 +43,7 @@ public class HomeViewModel : ReactiveObject, IScreen
         Router.NavigateBack.Execute(Unit.Default), canGoBack);
 
         RoutingCommand = ReactiveCommand.Create<string>(ExecuteSidebar);
+        DeleteOrganization = ReactiveCommand.Create(DeleteSelectedOrg());
 
         Task.Run(() => Initialize());
     }
@@ -72,6 +73,20 @@ public class HomeViewModel : ReactiveObject, IScreen
     public ReactiveCommand<Unit, IRoutableViewModel> RoutingGoBackCommand { get; }
 
     public ReactiveCommand<string, Unit> RoutingCommand { get; }
+    public ReactiveCommand<Unit, Unit> DeleteOrganization { get; }
+
+
+    private Action DeleteSelectedOrg()
+    {
+        return async delegate ()
+        {
+            await _repository.DeleteAsync(SelectedOrganization);
+            await _repository.SaveChangesAsync();
+
+            Organizations.Remove(SelectedOrganization);
+            SelectedOrganization = Organizations[0];
+        };
+    }
 
     private void ExecuteSidebar(string parameter)
     {
