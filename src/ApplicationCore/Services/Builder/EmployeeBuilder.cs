@@ -62,6 +62,15 @@ namespace Metcom.CardPay3.ApplicationCore.Services.Builder
             }
 
             _gender = gender;
+
+
+            if (_employee != null)
+            {
+                _employee.Gender = _gender;
+                await _employeRepository.UpdateAsync(_employee);
+                await _employeRepository.SaveChangesAsync();
+            }
+
             return this;
         }
 
@@ -100,6 +109,8 @@ namespace Metcom.CardPay3.ApplicationCore.Services.Builder
             if(_employee != null)
             {
                 _employee.Document = document;
+                await _employeRepository.UpdateAsync(_employee);
+                await _employeRepository.SaveChangesAsync();
             }
 
             return this;
@@ -109,6 +120,14 @@ namespace Metcom.CardPay3.ApplicationCore.Services.Builder
         {
             var organization = await _organizationRepository.GetByIdAsync(organizationId);
             _organization = organization;
+
+            if (_employee != null)
+            {
+                _employee.Organization = organization;
+                await _employeRepository.UpdateAsync(_employee);
+                await _employeRepository.SaveChangesAsync();
+            }
+
             return this;
         }
 
@@ -138,13 +157,21 @@ namespace Metcom.CardPay3.ApplicationCore.Services.Builder
                 await _addressRepository.AddAsync(newAddress);
                 await _addressRepository.SaveChangesAsync();
                 _legalAddress = newAddress;
-                return this;
             }
             else
             {
                 _legalAddress = address;
-                return this;
             }
+
+            if (_employee != null)
+            {
+                _employee.Addresses.Add(_legalAddress);
+                await _employeRepository.UpdateAsync(_employee);
+                await _employeRepository.SaveChangesAsync();
+            }
+
+            return this;
+
         }
 
         async Task<IEmployeeBuilder> IEmployeeBuilderSendField.SetRequisities(int inn, 
@@ -168,13 +195,20 @@ namespace Metcom.CardPay3.ApplicationCore.Services.Builder
                 await _requisitesRepository.AddAsync(newRequisities);
                 await _requisitesRepository.SaveChangesAsync();
                 _requisites = newRequisities;
-                return this;
             }
             else
             {
                 _requisites = requisite;
-                return this;
             }
+
+            if (_employee != null)
+            {
+                _employee.Requisites.Add(_requisites);
+                await _employeRepository.UpdateAsync(_employee);
+                await _employeRepository.SaveChangesAsync();
+            }
+
+            return this;
 
         }
 
@@ -251,6 +285,8 @@ namespace Metcom.CardPay3.ApplicationCore.Services.Builder
             if (_employee != null)
             {
                 _employee.Document = item;
+                await _employeRepository.UpdateAsync(_employee);
+                await _employeRepository.SaveChangesAsync();
             }
 
 
@@ -271,13 +307,22 @@ namespace Metcom.CardPay3.ApplicationCore.Services.Builder
                 await _requisitesRepository.AddAsync(newRequisities);
                 await _requisitesRepository.SaveChangesAsync();
                 _requisites = newRequisities;
-                return this;
+                
             }
             else
             {
                 _requisites = requisite;
-                return this;
+                
             }
+
+            if (_employee != null)
+            {
+                _employee.Requisites.Add(_requisites);
+                await _employeRepository.UpdateAsync(_employee);
+                await _employeRepository.SaveChangesAsync();
+            }
+
+            return this;
         }
 
         async Task<IEmployeeBuilder> IEmployeeBuilderSendObj.SetLegalAddress(IAddress employeAddress)
@@ -293,13 +338,21 @@ namespace Metcom.CardPay3.ApplicationCore.Services.Builder
                 await _addressRepository.AddAsync(newAddress);
                 await _addressRepository.SaveChangesAsync();
                 _legalAddress = newAddress;
-                return this;
             }
             else
             {
                 _legalAddress = address;
-                return this;
             }
+
+            if (_employee != null)
+            {
+                _employee.Addresses.Add(_legalAddress);
+                await _employeRepository.UpdateAsync(_employee);
+                await _employeRepository.SaveChangesAsync();
+            }
+
+            return this;
+
         }
 
         async Task<IEmployeeBuilder> IEmployeeBuilderSendObj.SetEmployee(IEmployee employee)
