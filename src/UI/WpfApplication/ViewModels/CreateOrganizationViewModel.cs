@@ -17,7 +17,6 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
 
         ILogger<CreateOrganizationViewModel> _logger;
         IRepository<Organization> _repositoryOrganization;
-        //TODO: Реализовать создание организации
 
         public CreateOrganizationViewModel(
             ILogger<CreateOrganizationViewModel> logger,
