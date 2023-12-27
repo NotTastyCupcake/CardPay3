@@ -1,4 +1,5 @@
 ﻿using Ardalis.Specification;
+using Metcom.CardPay3.ApplicationCore.Entities;
 using Metcom.CardPay3.ApplicationCore.Entities.AccrualAggregate;
 using Metcom.CardPay3.ApplicationCore.Entities.AddressAggregate;
 using System;
@@ -19,6 +20,12 @@ namespace Metcom.CardPay3.ApplicationCore.Specifications
         {
             Query
                 .Where(a => a.FullName == address.FullName);
+        }
+
+        public AddressSpecification(IEmployee employee)
+        {
+            Query
+                .Where (a => a.Employee == employee);
         }
     }
 }

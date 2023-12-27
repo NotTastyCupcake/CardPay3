@@ -138,6 +138,8 @@ public partial class App// : Application
         services.AddScoped<IEmployeeCollectionService, EmployeeCollectionService>();
 
         services.AddScoped<IEmployeeBuilder, EmployeeBuilder>();
+        services.AddScoped<IEmployeeBuilderSendObj, EmployeeBuilder>();
+        services.AddScoped<IEmployeeBuilderSendField, EmployeeBuilder>();
 
         services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
         services.AddTransient<IEmailSender, EmailSender>();
@@ -150,23 +152,18 @@ public partial class App// : Application
 
         //alternatively search assembly for `IRoutedViewFor` implementations
         //see https://reactiveui.net/docs/handbook/routing to learn more about routing in RxUI
-        services.AddScoped<IViewFor<CreateOrganizationViewModel>, CreateOrganizationView>();
-        services.AddScoped<CreateOrganizationViewModel>();
-
         services.AddSingleton<IViewFor<MenuViewModel>, MenuView>();
         services.AddSingleton<MenuViewModel>();
 
-        services.AddTransient<IViewFor<EmployeeListViewModel>, EmployeeListView>();
-        services.AddTransient<EmployeeListViewModel>();
+        services.AddTransient<IViewFor<CreateOrganizationViewModel>, CreateOrganizationView>();
+        services.AddTransient<CreateOrganizationViewModel>();
 
-        services.AddScoped<IViewFor<EmployeeViewModel>, EmployeeView>();
-        services.AddScoped<EmployeeViewModel>();
+        services.AddScoped<IViewFor<EmployeeListViewModel>, EmployeeListView>();
+        services.AddScoped<EmployeeListViewModel>();
 
-        services.AddScoped<IViewFor<AddressViewModel>, AddressView>();
-        services.AddScoped<AddressViewModel>();
+        services.AddScoped<IViewFor<CreateEmployeeViewModel>, CreateEmployeeView>();
+        services.AddScoped<CreateEmployeeViewModel>();
 
-        services.AddScoped<IViewFor<DocumentViewModel>, DocumentView>();
-        services.AddScoped<DocumentViewModel>();
     }
 
 }

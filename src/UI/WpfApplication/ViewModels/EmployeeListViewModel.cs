@@ -43,7 +43,7 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
 
             HostScreen = screen;
 
-            SelectedOrganization = Locator.Current.GetService<MenuViewModel>().SelectedOrganization;
+            SelectedOrganization = Locator.Current.GetService<HomeViewModel>().SelectedOrganization;
 
             //Init collection
             ReadOnlyObservableCollection<Employee> bindingData;
@@ -61,7 +61,8 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
             // commands
             RoutingAddEmployeeCommand = ReactiveCommand.Create(CreateEmploye());
             RoutingDeleteEmployeeCommand = ReactiveCommand.Create(DeleteEmploye());
-            RoutingEditEmployeeCommand = ReactiveCommand.Create(EditEmploye());
+            //TODO: Добавить редактирование сотрудника
+            //RoutingEditEmployeeCommand = ReactiveCommand.Create(EditEmploye());
             ExportEmployeeCommand = ReactiveCommand.Create(ExportEmployee());
         }
 
@@ -77,30 +78,8 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
         {
             return delegate ()
             {
-                var vm = Locator.Current.GetService<EmployeeViewModel>();
-                vm.Employee = new Employee();
-                vm.SelectedOperation = Constants.Operations.Create;
+                var vm = Locator.Current.GetService<CreateEmployeeViewModel>();
                 HostScreen.Router.Navigate.Execute(vm);
-
-            };
-        }
-
-        private Action EditEmploye()
-        {
-            return delegate ()
-            {
-                if (SelectedEmploye == null)
-                {
-
-                }
-                else
-                {
-                    var vm = Locator.Current.GetService<EmployeeViewModel>();
-                    //TODO: Убрать передачу, вытягивать через Locator.Current.GetService<MenuViewModel>().SelectedOrganization
-                    vm.Employee = SelectedEmploye;
-                    vm.SelectedOperation = Constants.Operations.Edit;
-                    HostScreen.Router.Navigate.Execute(vm);
-                }
 
             };
         }
