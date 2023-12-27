@@ -346,6 +346,11 @@ namespace Metcom.CardPay3.ApplicationCore.Services.Builder
 
             if (_employee != null)
             {
+                if(_employee.Addresses == null)
+                {
+                    _employee.Addresses = new List<Address>();
+                }
+
                 _employee.Addresses.Add(_legalAddress);
                 await _employeRepository.UpdateAsync(_employee);
                 await _employeRepository.SaveChangesAsync();
@@ -363,14 +368,19 @@ namespace Metcom.CardPay3.ApplicationCore.Services.Builder
             {
                 item.Requisites = new List<RequisitesItem>();
             }
-
-            item.Requisites.Add(_requisites);
+            if(_requisites != null)
+            {
+                item.Requisites.Add(_requisites);
+            }
 
             if (employee.Addresses == null)
             {
                 employee.Addresses = new List<Address>();
             }
-            employee.Addresses.Add(_legalAddress);
+            if(_legalAddress != null)
+            {
+                employee.Addresses.Add(_legalAddress);
+            }
 
             _employee = item;
 
