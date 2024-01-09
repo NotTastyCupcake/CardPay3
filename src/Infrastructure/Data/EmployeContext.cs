@@ -11,7 +11,7 @@ namespace Metcom.CardPay3.Infrastructure.Data
 {
     public class EmployeContext : DbContext
     {
-        public EmployeContext(DbContextOptions<EmployeContext> options) 
+        public EmployeContext(DbContextOptions<EmployeContext> options)
             : base(options)
         {
             Database.EnsureCreated();
@@ -22,7 +22,9 @@ namespace Metcom.CardPay3.Infrastructure.Data
 
         }
 
-        public DbSet<Employe> Employers { get; set; }
+        public DbSet<Employee> Employers { get; set; }
+        public DbSet<EmployeeType> TypeEmployers { get; set; }
+
         public DbSet<Group> Groups { get; set; }
         public DbSet<Organization> Organizations { get; set; }
         public DbSet<Gender> Genders { get; set; }
@@ -52,7 +54,7 @@ namespace Metcom.CardPay3.Infrastructure.Data
         {
             base.OnConfiguring(optionsBuilder);
             optionsBuilder.UseLazyLoadingProxies();
-        } 
+        }
     }
-    
+
 }

@@ -1,12 +1,18 @@
-﻿using Metcom.CardPay3.ApplicationCore.Interfaces.ServicesInterfaces.Builder;
+﻿using Metcom.CardPay3.ApplicationCore.Interfaces;
 using Metcom.CardPay3.ApplicationCore.Interfaces.ServicesInterfaces;
-using Metcom.CardPay3.ApplicationCore.Interfaces;
-using Metcom.CardPay3.ApplicationCore.Services.Builder;
+using Metcom.CardPay3.ApplicationCore.Interfaces.ServicesInterfaces.Builder;
 using Metcom.CardPay3.ApplicationCore.Services;
+using Metcom.CardPay3.ApplicationCore.Services.Builder;
 using Metcom.CardPay3.Infrastructure.Data;
-using Metcom.CardPay3.Infrastructure.Identity;
+using Metcom.CardPay3.Infrastructure.Logging;
+using Metcom.CardPay3.Infrastructure.Services;
+using Metcom.CardPay3.WpfApplication.Interfaces;
+using Metcom.CardPay3.WpfApplication.Services;
 using Metcom.CardPay3.WpfApplication.ViewModels;
-using Microsoft.AspNetCore.Identity;
+using Metcom.CardPay3.WpfApplication.ViewModels.Employes;
+using Metcom.CardPay3.WpfApplication.Views;
+using Metcom.CardPay3.WpfApplication.Views.Employes;
+using Metcom.CardPay3.WpfApplication.Views.Organization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,23 +23,8 @@ using Splat;
 using Splat.Microsoft.Extensions.DependencyInjection;
 using Splat.Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
-using Metcom.CardPay3.Infrastructure.Logging;
-using Metcom.CardPay3.Infrastructure.Services;
-using Metcom.CardPay3.ApplicationCore.Entities;
-using Metcom.CardPay3.ApplicationCore.Entities.AccrualAggregate;
-using Metcom.CardPay3.WpfApplication.Interfaces;
-using Metcom.CardPay3.WpfApplication.Services;
-using Metcom.CardPay3.WpfApplication.Views;
-using Metcom.CardPay3.WpfApplication.ViewModels.Employes;
-using Metcom.CardPay3.WpfApplication.Views.Employes;
-using System.Windows.Forms;
 
 namespace Metcom.CardPay3.WpfApplication;
 
@@ -43,7 +34,7 @@ namespace Metcom.CardPay3.WpfApplication;
 public partial class App// : Application
 {
 
-    public IConfiguration Configuration { get; private set;}
+    public IConfiguration Configuration { get; private set; }
 
     public IServiceProvider Container { get; private set; }
     private IHost _host;
@@ -141,13 +132,15 @@ public partial class App// : Application
         services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
 
         services.AddScoped<IAccrualService, AccrualService>();
-        services.AddScoped<IEmployeService, EmployeService>();
 
         services.AddScoped<IHomeViewModelService, HomeViewModelService>();
-        services.AddScoped<IEmployeViewModelService, EmployeViewModelService>();
-        services.AddScoped<IEmployeCollectionService, EmployeCollectionService>();
+        services.AddScoped<IEmployeeViewModelService, EmployeeViewModelService>();
+        services.AddScoped<IDocumentViewModelService, DocumentViewModelService>();
+        services.AddScoped<IEmployeeCollectionService, EmployeeCollectionService>();
 
-        services.AddScoped<IEmployeBuilder, EmployeBuilder>();
+        services.AddScoped<IEmployeeBuilder, EmployeeBuilder>();
+        services.AddScoped<IEmployeeBuilderSendObj, EmployeeBuilder>();
+        services.AddScoped<IEmployeeBuilderSendField, EmployeeBuilder>();
 
         services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
         services.AddTransient<IEmailSender, EmailSender>();
@@ -163,17 +156,17 @@ public partial class App// : Application
         services.AddSingleton<IViewFor<MenuViewModel>, MenuView>();
         services.AddSingleton<MenuViewModel>();
 
-        services.AddTransient<IViewFor<EmployeeListViewModel>, EmployeListView>();
-        services.AddTransient<EmployeeListViewModel>();
+        services.AddTransient<IViewFor<CreateOrganizationViewModel>, CreateOrganizationView>();
+        services.AddTransient<CreateOrganizationViewModel>();
 
-        services.AddScoped<IViewFor<EmployeViewModel>, EmployeView>();
-        services.AddScoped<EmployeViewModel>();
+        services.AddScoped<IViewFor<EmployeeListViewModel>, EmployeeListView>();
+        services.AddScoped<EmployeeListViewModel>();
 
-        services.AddScoped<IViewFor<AddressViewModel>, AddressView>();
-        services.AddScoped<AddressViewModel>();
+        services.AddScoped<IViewFor<CreateEmployeeViewModel>, CreateEmployeeView>();
+        services.AddScoped<CreateEmployeeViewModel>();
 
-        services.AddScoped<IViewFor<DocumentViewModel>, DocumentView>();
-        services.AddScoped<DocumentViewModel>();
+        services.AddScoped<IViewFor<CreateDocumentViewModel>, CreateDocumentView>();
+        services.AddScoped<CreateDocumentViewModel>();
     }
 
 }

@@ -1,17 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Metcom.CardPay3.ApplicationCore.Entities.DocumentAggregate
 {
     public class DocumentType : BaseEntity
     {
-        public string DocumentName { get; private set; }
-        public DocumentType(string name)
+        public string Name { get; private set; }
+        /// <summary>
+        /// Код вида документа
+        /// </summary>
+        public int Code { get; private set; }
+
+        public DocumentType(string name , int code)
         {
-            DocumentName = name;
+            Name = name;
+            Code = code;
         }
 
         public virtual ICollection<DocumentItem> Documents { get; set; }

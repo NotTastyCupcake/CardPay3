@@ -22,7 +22,7 @@ namespace Metcom.CardPay3.WebApplication.Services
         private readonly ILogger<EmployerViewModelService> _logger;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        private readonly IRepository<Employe> _itemRepository;
+        private readonly IRepository<Employee> _itemRepository;
         private readonly IRepository<Organization> _organizationRepository;
         private readonly IRepository<Gender> _genderRepository;
         private readonly IRepository<DocumentType> _documentTypeRepository;
@@ -30,7 +30,7 @@ namespace Metcom.CardPay3.WebApplication.Services
         public EmployerViewModelService(
             ILoggerFactory loggerFactory,
             UserManager<ApplicationUser> userManager,
-            IRepository<Employe> itemRepository,
+            IRepository<Employee> itemRepository,
             IRepository<Organization> organizationRepository,
             IRepository<Gender> genderRepository,
             IRepository<DocumentType> documentTypeRepository)
@@ -145,7 +145,7 @@ namespace Metcom.CardPay3.WebApplication.Services
             var items = new List<SelectListItem>();
             foreach (var type in types)
             {
-                items.Add(new SelectListItem() { Value = type.Id.ToString(), Text = type.DocumentName });
+                items.Add(new SelectListItem() { Value = type.Id.ToString(), Text = type.Name });
             }
 
             return items;

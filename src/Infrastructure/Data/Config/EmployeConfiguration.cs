@@ -1,30 +1,25 @@
 ﻿using Metcom.CardPay3.ApplicationCore.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.Infrastructure.Data.Config
 {
-    public class EmployeConfiguration : IEntityTypeConfiguration<Employe>
+    public class EmployeConfiguration : IEntityTypeConfiguration<Employee>
     {
-        public void Configure(EntityTypeBuilder<Employe> builder)
+        public void Configure(EntityTypeBuilder<Employee> builder)
         {
             builder.HasKey(ci => ci.Id);
 
             builder.HasOne(ci => ci.Document)
                 .WithOne()
-                .HasForeignKey<Employe>(ci => ci.IdDocument)
+                .HasForeignKey<Employee>(ci => ci.IdDocument)
                 .IsRequired(true);
             builder.Property(ci => ci.IdDocument)
                 .ValueGeneratedOnAdd();
 
             builder.HasMany(ci => ci.Addresses)
-                .WithOne(ci => ci.Employer)
-                .HasForeignKey(ci => ci.IdEmployer)
+                .WithOne(ci => ci.Employee)
+                .HasForeignKey(ci => ci.IdEmployee)
                 .IsRequired(false)
                 .OnDelete(DeleteBehavior.Cascade);
 
@@ -34,7 +29,7 @@ namespace Metcom.CardPay3.Infrastructure.Data.Config
                 .IsRequired(true);
 
             builder.HasMany(ci => ci.Requisites)
-                .WithOne(ci => ci.Employer)
+                .WithOne(ci => ci.Employee)
                 .HasForeignKey(ci => ci.IdEmployer)
                 .IsRequired(false)
                 .OnDelete(DeleteBehavior.Cascade);
@@ -42,6 +37,11 @@ namespace Metcom.CardPay3.Infrastructure.Data.Config
             builder.HasOne(ci => ci.Organization)
                 .WithMany(o => o.Employes)
                 .HasForeignKey(ci => ci.IdOrganization)
+                .IsRequired(false);
+
+            builder.HasOne(ci => ci.Type)
+                .WithOne(o => o.Employee)
+                .HasForeignKey<Employee>(ci => ci.IdType)
                 .IsRequired(false);
 
             builder.Property(ci => ci.LastName)
@@ -53,7 +53,7 @@ namespace Metcom.CardPay3.Infrastructure.Data.Config
                 .HasMaxLength(50);
 
             builder.Property(ci => ci.MiddleName)
-                .IsRequired(true)
+                .IsRequired(false)
                 .HasMaxLength(50);
         }
     }

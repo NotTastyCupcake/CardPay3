@@ -1,22 +1,8 @@
 ﻿using Metcom.CardPay3.WpfApplication.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using ReactiveUI;
-using System.Reactive.Disposables;
-using System.Reactive.Linq;
 using Splat;
+using System;
+using System.Reactive.Disposables;
 
 namespace Metcom.CardPay3.WpfApplication;
 /// <summary>
@@ -32,7 +18,7 @@ public partial class ShellWindow : IViewFor<HomeViewModel>
 
         InitializeComponent();
 
-        this.WhenActivated(disposable => 
+        this.WhenActivated(disposable =>
         {
 
             // Двунаправленная привязка значения позиции клапана. Конверторы значений свойства в модели и в представлении: FloatToStringConverter, StringToFloatConverter
@@ -53,11 +39,18 @@ public partial class ShellWindow : IViewFor<HomeViewModel>
                 view => view.GoBackButton)
             .DisposeWith(disposable);
 
+            this.BindCommand(ViewModel,
+                vm => vm.DeleteOrganization,
+                view => view.DeleteOrganization)
+            .DisposeWith(disposable);
+
             // routing
             this.OneWayBind(ViewModel,
                     x => x.Router,
                     x => x.RoutedViewHost.Router)
                 .DisposeWith(disposable);
+
+
 
         });
     }

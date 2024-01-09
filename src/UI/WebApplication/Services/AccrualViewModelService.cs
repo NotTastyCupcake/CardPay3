@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.WebApplication.Services
@@ -17,12 +16,12 @@ namespace Metcom.CardPay3.WebApplication.Services
     public class AccrualViewModelService : IAccrualViewModelService
     {
         private readonly IRepository<Accrual> _accrualRepository;
-        private readonly IRepository<Employe> _itemRepository;
+        private readonly IRepository<Employee> _itemRepository;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        
-        public AccrualViewModelService(IRepository<Accrual> accrualRepository, 
-            IRepository<Employe> itemRepository, UserManager<ApplicationUser> userManager)
+
+        public AccrualViewModelService(IRepository<Accrual> accrualRepository,
+            IRepository<Employee> itemRepository, UserManager<ApplicationUser> userManager)
         {
             _accrualRepository = accrualRepository;
             _itemRepository = itemRepository;
@@ -37,11 +36,11 @@ namespace Metcom.CardPay3.WebApplication.Services
             var accrualSpec = new AccrualSpecification(idOrganization: user.IdOrganization.ToString());
             var accrual = (await _accrualRepository.ListAsync(accrualSpec)).FirstOrDefault();
 
-            if(accrual == null)
+            if (accrual == null)
             {
-                return await CreateAsyncAccrualForOrganization(user.IdOrganization, 
-                    DateTime.Now.AddMonths(1), 
-                    1, 
+                return await CreateAsyncAccrualForOrganization(user.IdOrganization,
+                    DateTime.Now.AddMonths(1),
+                    1,
                     1);
             }
             return await CreateViewModelFromBasket(accrual);
@@ -80,12 +79,12 @@ namespace Metcom.CardPay3.WebApplication.Services
 
         private async Task<List<AccrualItemViewModel>> GetAsyncAccrualItems(IReadOnlyCollection<AccrualItem> accrualItems)
         {
-            var employerItemsSpecification = new EmployesSpecification(accrualItems.Select(b => b.IdEmployer).ToArray());
+            var employerItemsSpecification = new EmployesSpecification(accrualItems.Select(b => b.IdEmployee).ToArray());
             var employerItems = await _itemRepository.ListAsync(employerItemsSpecification);
 
             var items = accrualItems.Select(accrualItem =>
             {
-                var employerItem = employerItems.First(c => c.Id == accrualItem.IdEmployer);
+                var employerItem = employerItems.First(c => c.Id == accrualItem.IdEmployee);
 
                 var accrualItemViewModel = new AccrualItemViewModel
                 {

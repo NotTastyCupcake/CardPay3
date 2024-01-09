@@ -1,20 +1,14 @@
-﻿using Castle.Core.Logging;
-using DynamicData;
-using Metcom.CardPay3.ApplicationCore.Entities;
+﻿using Metcom.CardPay3.ApplicationCore.Entities;
 using Metcom.CardPay3.ApplicationCore.Interfaces;
 using Metcom.CardPay3.WpfApplication.Interfaces;
 using Microsoft.Extensions.Logging;
 using ReactiveUI;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.WpfApplication.Services
 {
-    public class HomeViewModelService :ReactiveObject , IHomeViewModelService
+    public class HomeViewModelService : ReactiveObject, IHomeViewModelService
     {
         private readonly ILogger<HomeViewModelService> _logger;
         private readonly IRepository<Organization> _organizationRepository;

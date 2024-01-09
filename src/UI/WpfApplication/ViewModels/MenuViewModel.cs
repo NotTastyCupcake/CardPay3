@@ -3,12 +3,7 @@ using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using Splat;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics.Metrics;
-using System.Linq;
 using System.Reactive;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.WpfApplication.ViewModels
 {
@@ -23,11 +18,12 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
             RoutingEmployeeCommand = ReactiveCommand.Create(delegate ()
             {
                 EmployeeListViewModel = Locator.Current.GetService<EmployeeListViewModel>();
-                EmployeeListViewModel.SelectedOrganization = SelectedOrganization;
                 HostScreen.Router.Navigate.Execute(EmployeeListViewModel);
             });
 
-            this.WhenAnyValue(vm => vm.SelectedOrganization).Subscribe(_ => UpdateIsRealOrganization());
+            SelectedOrganization = Locator.Current.GetService<HomeViewModel>().SelectedOrganization;
+
+            
         }
         #region commands
         public ReactiveCommand<Unit, Unit> RoutingEmployeeCommand { get; }
@@ -41,27 +37,6 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
 
         public EmployeeListViewModel EmployeeListViewModel { get; set; }
 
-        private void UpdateIsRealOrganization()
-        {
-            if (SelectedOrganization == null)
-            {
-                IsRealOrganization = false;
-            }
-            else if (SelectedOrganization.Name == "Создать организацию.")
-            {
-                IsRealOrganization = false;
-                HostScreen.Router.Navigate.Execute(Locator.Current.GetService<CreateOrganizationViewModel>());
-            }
-            else
-            {
-                IsRealOrganization = true;
 
-                if(EmployeeListViewModel != null)
-                {
-                    EmployeeListViewModel.SelectedOrganization = SelectedOrganization;
-                }
-
-            }
-        }
     }
 }

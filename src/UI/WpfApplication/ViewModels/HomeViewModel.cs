@@ -1,27 +1,19 @@
-﻿using Castle.Core.Logging;
-using DynamicData;
+﻿using DynamicData;
 using Metcom.CardPay3.ApplicationCore.Entities;
 using Metcom.CardPay3.ApplicationCore.Interfaces;
 using Metcom.CardPay3.WpfApplication.Interfaces;
 using Microsoft.Extensions.Logging;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
-using ReactiveUI.Wpf;
+using ReactiveUI.Validation.Extensions;
+using ReactiveUI.Validation.Helpers;
 using Splat;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
-using System.Reactive.Subjects;
-using System.Security;
-using System.Text;
-using System.Threading.Channels;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
 
 namespace Metcom.CardPay3.WpfApplication.ViewModels;
 public class HomeViewModel : ReactiveObject, IScreen
@@ -41,21 +33,38 @@ public class HomeViewModel : ReactiveObject, IScreen
         _logger = logger ?? Locator.Current.GetService<ILogger<HomeViewModel>>();
         _viewModelService = viewModelService ?? Locator.Current.GetService<IHomeViewModelService>();
 
+        //this.ValidationRule(
+        //    viewModel => viewModel.Organizations,
+        //    item => item != null && item.Count > 1, "Не возможно удалить выбранную организацию");
+
         // commands
         RoutingCreateOrganizationCommand = ReactiveCommand.Create(delegate ()
         {
             Router.Navigate.Execute(Locator.Current.GetService<CreateOrganizationViewModel>());
         });
 
+        var canDeleteOrg = this
+            .WhenAnyValue(x => x.Organizations.Count)
+            .Select(count => count > 1);
+
         var canGoBack = this
             .WhenAnyValue(x => x.Router.NavigationStack.Count)
             .Select(count => count > 1);
+
         RoutingGoBackCommand = ReactiveCommand.CreateFromObservable(() => 
-        Router.NavigateBack.Execute(Unit.Default), canGoBack);
+            { 
+                return Router.NavigateBack.Execute(Unit.Default); 
+            },
+            Observable.Merge(canDeleteOrg, canGoBack));
 
         RoutingCommand = ReactiveCommand.Create<string>(ExecuteSidebar);
 
+
+        DeleteOrganization = ReactiveCommand.Create(DeleteSelectedOrg(), canDeleteOrg);
+
         Task.Run(() => Initialize());
+
+        this.WhenAnyValue(vm => vm.SelectedOrganization).Subscribe(_ => UpdateSelectedOrganization());
     }
 
 
@@ -67,12 +76,15 @@ public class HomeViewModel : ReactiveObject, IScreen
         Organizations = await _viewModelService.GetOrganizations();
         SelectedOrganization = Organizations.FirstOrDefault();
 
-        //exec menu
-        MenuViewModel = Locator.Current.GetService<MenuViewModel>();
-        MenuViewModel.SelectedOrganization = SelectedOrganization;
-        await Router.Navigate.Execute(MenuViewModel);
-
-        this.WhenAnyValue(vm => vm.SelectedOrganization).Subscribe(_ => UpdateOrganization());
+        if(Organizations.Count > 1)
+        {
+            await Router.Navigate.Execute(Locator.Current.GetService<MenuViewModel>());
+        }
+        else
+        {
+            await Router.Navigate.Execute(Locator.Current.GetService<MenuViewModel>());
+            await Router.Navigate.Execute(Locator.Current.GetService<CreateOrganizationViewModel>());
+        }
         
     }
 
@@ -83,6 +95,20 @@ public class HomeViewModel : ReactiveObject, IScreen
     public ReactiveCommand<Unit, IRoutableViewModel> RoutingGoBackCommand { get; }
 
     public ReactiveCommand<string, Unit> RoutingCommand { get; }
+    public ReactiveCommand<Unit, Unit> DeleteOrganization { get; }
+
+
+    private Action DeleteSelectedOrg()
+    {
+        return async delegate ()
+        {
+            await _repository.DeleteAsync(SelectedOrganization);
+            await _repository.SaveChangesAsync();
+
+            Organizations.Remove(SelectedOrganization);
+            SelectedOrganization = Organizations[0];
+        };
+    }
 
     private void ExecuteSidebar(string parameter)
     {
@@ -107,6 +133,14 @@ public class HomeViewModel : ReactiveObject, IScreen
                 throw new ArgumentOutOfRangeException(nameof(parameter), parameter, null);
         }
     }
+
+    private void UpdateSelectedOrganization()
+    {
+        if (SelectedOrganization != null && SelectedOrganization.Name == "Создать организацию.")
+        {
+            Router.Navigate.Execute(Locator.Current.GetService<CreateOrganizationViewModel>());
+        }
+    }
     #endregion
 
     #region params
@@ -115,13 +149,5 @@ public class HomeViewModel : ReactiveObject, IScreen
 
     [Reactive]
     public Organization SelectedOrganization { get; set; }
-
-    public MenuViewModel MenuViewModel { get; set; }
     #endregion
-
-    private void UpdateOrganization()
-    {
-        
-        MenuViewModel.SelectedOrganization = SelectedOrganization;
-    }
 }

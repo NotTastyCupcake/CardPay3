@@ -1,11 +1,6 @@
 ﻿using Metcom.CardPay3.ApplicationCore.Entities.AccrualAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.Infrastructure.Data.Config
 {
@@ -21,9 +16,9 @@ namespace Metcom.CardPay3.Infrastructure.Data.Config
             builder.Property(bi => bi.Date)
                 .IsRequired(true);
 
-            builder.HasOne(ci => ci.Employer)
+            builder.HasOne(ci => ci.Employee)
                 .WithMany()
-                .HasForeignKey(ci => ci.IdEmployer);
+                .HasForeignKey(ci => ci.IdEmployee);
         }
     }
 }

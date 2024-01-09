@@ -25,7 +25,7 @@
         </Menu>-->
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="35"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
 
@@ -42,19 +42,32 @@
             Margin="0,10,10,0"/>
 
         <Button 
+            x:Name ="DeleteOrganization" 
+            Grid.Row="0"
+            Grid.Column="1"
+            Grid.ColumnSpan="2"
+            Content="Удалить" 
+            HorizontalAlignment="Right" 
+            VerticalAlignment="Top"
+            Width="50" Height="20" 
+            Margin="0,10,315,5"/>
+
+        <Button 
             x:Name ="GoBackButton" 
             Grid.Row="0"
             Grid.Column="0"
-            Content="GO_BACK_BUTTON" 
+            Content="Назад" 
             HorizontalAlignment="Left" 
-            Width="200"
-            VerticalAlignment="Center" 
-            Margin="10,0,0,0"/>
+            Width="200" Height="20" 
+            VerticalAlignment="Top" 
+            Margin="10,10,0,0"/>
+
+
 
         <reactiveui:RoutedViewHost
             x:Name="RoutedViewHost"
-            Grid.Row="1"
             HorizontalContentAlignment="Stretch"
-            VerticalContentAlignment="Stretch" />
+            VerticalContentAlignment="Stretch" Margin="0,35,0,0" Grid.RowSpan="2" />
+
     </Grid>
 </reactiveui:ReactiveWindow>

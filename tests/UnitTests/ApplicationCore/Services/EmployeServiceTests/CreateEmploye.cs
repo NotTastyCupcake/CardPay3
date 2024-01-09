@@ -5,13 +5,9 @@ using Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate;
 using Metcom.CardPay3.ApplicationCore.Interfaces;
 using Metcom.CardPay3.ApplicationCore.Interfaces.ServicesInterfaces.Builder;
 using Metcom.CardPay3.ApplicationCore.Services;
-using Metcom.CardPay3.ApplicationCore.Specifications;
+using Metcom.CardPay3.ApplicationCore.Services.Builder;
 using Moq;
-using NUnit.Framework;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.UnitTests.ApplicationCore.Services.EmployeServiceTests
@@ -19,13 +15,13 @@ namespace Metcom.CardPay3.UnitTests.ApplicationCore.Services.EmployeServiceTests
     public class CreateEmploye
     {
 
-        private readonly Mock<IRepository<Employe>> _mockEmployeRepo = new Mock<IRepository<Employe>>();
-        private readonly Mock<IAppLogger<EmployeService>> _mockLogger = new();
+        private readonly Mock<IRepository<Employee>> _mockEmployeRepo = new Mock<IRepository<Employee>>();
+        private readonly Mock<IAppLogger<EmployeeBuilder>> _mockLogger = new();
         private readonly Mock<IRepository<Gender>> _mockGenderRepo;
         private readonly Mock<IRepository<DocumentItem>> _mockDocumentRepo;
         private readonly Mock<IRepository<RequisitesItem>> _mockRequisitesRepo;
         private readonly Mock<IRepository<Address>> _mockAddressRepo;
-        private readonly Mock<IEmployeBuilder> _mockEmployeBuilder;
+        private readonly Mock<IRepository<Organization>> _mockOrganizationRepo;
 
         //private readonly string LastName = "Test LastName";
         //private readonly string FirstName = "Test FirstName";
@@ -42,39 +38,28 @@ namespace Metcom.CardPay3.UnitTests.ApplicationCore.Services.EmployeServiceTests
         private readonly int _organizationId = 0;
 
         //[Test]
-        public async Task InvokesEmployeRepositoryGetBySpecAsyncOnce()
+        public async Task InvokesEmployeeRepositoryGetBySpecAsyncOnce()
         {
             //TODO: Создать юнит тест
-            _mockEmployeRepo.Setup(x => x.GetByIdAsync(It.IsAny<int>(), default)).ReturnsAsync(new Employe());
+            _mockEmployeRepo.Setup(x => x.GetByIdAsync(It.IsAny<int>(), default)).ReturnsAsync(new Employee());
 
-            var employeService = new EmployeService(_mockLogger.Object, _mockEmployeRepo.Object, _mockGenderRepo.Object, _mockDocumentRepo.Object, _mockRequisitesRepo.Object, _mockAddressRepo.Object, _mockEmployeBuilder.Object);
+            var employeeBuilder = new EmployeeBuilder(_mockEmployeRepo.Object, 
+                                                    _mockGenderRepo.Object, 
+                                                    _mockDocumentRepo.Object, 
+                                                    _mockRequisitesRepo.Object, 
+                                                    _mockAddressRepo.Object, 
+                                                    _mockOrganizationRepo.Object,
+                                                    _mockLogger.Object);
 
-            //await employeService.CreateEmploye(LastName,
-            //                                   FirstName,
-            //                                   MiddleName,
-            //                                   PhoneNum,
-            //                                   JobPhoneNum,
-            //                                   Position,
-            //                                   DepartmentNum,
-            //                                   IdGender,
-            //                                   IdTypeDocument,
-            //                                   DataIssuedDocument,
-            //                                   IssuedByDocument,
-            //                                   SubdivisionCodeDocument,
-            //                                   OrganizationId);
-            await employeService.CreateEmploye(It.IsAny<string>(),
-                                               It.IsAny<string>(),
-                                               It.IsAny<string>(),
-                                               It.IsAny<string>(),
-                                               It.IsAny<string>(),
-                                               It.IsAny<string>(),
-                                               It.IsAny<string>(),
-                                               _idGender,
-                                               _idTypeDocument,
-                                               It.IsAny<DateTime>(),
-                                               It.IsAny<string>(),
-                                               It.IsAny<string>(),
-                                               _organizationId);
+            //TODO: Тест создания сотрудника
+            //var employe = await employeBuilder.SetGender();
+
+            //employe = await employe.SetDocument(_idTypeDocument,
+            //                                    It.IsAny<DateTime>(),
+            //                                    It.IsAny<string>(),
+            //                                    It.IsAny<string>());
+
+            //employe = await employe.SetOrganization(_organizationId);
         }
     }
 }
