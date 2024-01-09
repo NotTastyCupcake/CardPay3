@@ -28,6 +28,9 @@
             <TextBlock Text="Фамилия"/>
             <TextBox Name="LastNameBlock" />
             <Label Name="LastNameError" Foreground="Red"/>
+            <TextBlock Text="Дата рождения"/>
+            <DatePicker Name="BirthdayDatePicker" IsTodayHighlighted="True"/>
+            <Label Name="BirthdayError" Foreground="Red"/>
             <TextBlock Text="Отчество"/>
             <TextBox Name="MiddleNameBlock" />
             <TextBlock Text="Должность"/>
@@ -40,10 +43,6 @@
             <TextBox Name="Position" />
             <TextBlock Text="Номер депортамента"/>
             <TextBox Name="DepartmentNum" />
-            <TextBlock Text="Гендер"/>
-            <ComboBox x:Name="GendersComboBox" DisplayMemberPath="GenderName" />
-            <TextBlock Text="Категория населения"/>
-            <ComboBox x:Name="TypesComboBox" DisplayMemberPath="Name" />
 
             <!--<TextBlock Text="Аддресс"/>
             <Button Name="CreateDocument" Height="20" Content="Создать"/>-->
@@ -84,7 +83,13 @@
         <StackPanel Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Width="250">
-            
+
+            <TextBlock Text="Гендер"/>
+            <ComboBox x:Name="GendersComboBox" DisplayMemberPath="GenderName" />
+            <Label Name="GendersError" Foreground="Red"/>
+            <TextBlock Text="Категория населения"/>
+            <ComboBox x:Name="TypesComboBox" DisplayMemberPath="Name" />
+
             <TextBlock Text="Документ"/>
             <Grid>
                 <Grid.RowDefinitions>
@@ -97,6 +102,7 @@
                 <TextBlock x:Name="DocumentTextBlock" Text="Нет данных"/>
                 <Button Grid.Column="2" Name="CreateDocument" Content="Создать"/>
             </Grid>
+            <Label Name="DocumentError" Foreground="Red"/>
 
             <TextBlock Text="Адресс"/>
             <Grid>
@@ -110,7 +116,8 @@
                 <TextBlock x:Name="AddressTextBlock" Text="Нет данных"/>
                 <Button Grid.Column="2" Name="CreateAddress" Content="Создать"/>
             </Grid>
-
+            <Label Name="AddressError" Foreground="Red"/>
+            
         </StackPanel>
 
         <Button x:Name ="Create"  Grid.Row="1" Grid.ColumnSpan="2" Content="Добавить сотрудника"/>
