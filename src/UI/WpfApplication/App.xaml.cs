@@ -135,6 +135,7 @@ public partial class App// : Application
 
         services.AddScoped<IHomeViewModelService, HomeViewModelService>();
         services.AddScoped<IEmployeeViewModelService, EmployeeViewModelService>();
+        services.AddScoped<IDocumentViewModelService, DocumentViewModelService>();
         services.AddScoped<IEmployeeCollectionService, EmployeeCollectionService>();
 
         services.AddScoped<IEmployeeBuilder, EmployeeBuilder>();
@@ -164,6 +165,8 @@ public partial class App// : Application
         services.AddScoped<IViewFor<CreateEmployeeViewModel>, CreateEmployeeView>();
         services.AddScoped<CreateEmployeeViewModel>();
 
+        services.AddScoped<IViewFor<CreateDocumentViewModel>, CreateDocumentView>();
+        services.AddScoped<CreateDocumentViewModel>();
     }
 
 }

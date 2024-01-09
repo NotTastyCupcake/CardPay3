@@ -95,10 +95,10 @@ namespace Metcom.CardPay3.WpfApplication.Views.Employes
                 //    view => view.AddressTextBlock.Text)
                 //    .DisposeWith(disposable);
 
-                //this.Bind(this.ViewModel,
-                //    vm => vm.Employee.Document.FullName,
-                //    view => view.DocumentTextBlock.Text)
-                //    .DisposeWith(disposable);
+                this.Bind(this.ViewModel,
+                    vm => vm.Document.FullName,
+                    view => view.DocumentTextBlock.Text)
+                    .DisposeWith(disposable);
 
                 //this.Bind(this.ViewModel,
                 //    vm => vm.Employe.Gender,
@@ -142,6 +142,11 @@ namespace Metcom.CardPay3.WpfApplication.Views.Employes
                 this.BindCommand(this.ViewModel,
                     vm => vm.CreateEmployeeCommand,
                     view => view.Create)
+                .DisposeWith(disposable);
+
+                this.BindCommand(this.ViewModel,
+                    vm => vm.CreateDocumentCommand,
+                    view => view.CreateDocument)
                 .DisposeWith(disposable);
 
 

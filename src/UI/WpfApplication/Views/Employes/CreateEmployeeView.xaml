@@ -21,7 +21,7 @@
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    Width="250">
+                    Width="350">
             <TextBlock Text="Имя"/>
             <TextBox Name="FirstNameBlock" />
             <Label Name="FirstNameError" Foreground="Red"/>
@@ -82,7 +82,7 @@
 
         <StackPanel Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    Width="250">
+                    Width="350">
 
             <TextBlock Text="Гендер"/>
             <ComboBox x:Name="GendersComboBox" DisplayMemberPath="GenderName" />

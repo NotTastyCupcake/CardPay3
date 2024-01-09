@@ -1,0 +1,53 @@
+﻿<reactiveui:ReactiveUserControl 
+        x:Class="Metcom.CardPay3.WpfApplication.Views.Employes.CreateDocumentView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vms="clr-namespace:Metcom.CardPay3.WpfApplication.ViewModels.Employes"
+        xmlns:reactiveui="http://reactiveui.net"
+        d:DataContext="{d:DesignInstance Type=vms:CreateDocumentViewModel}"
+        x:TypeArguments="vms:CreateDocumentViewModel"
+        mc:Ignorable="d"
+        d:DesignHeight="550" d:DesignWidth="800" >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center"
+                    VerticalAlignment="Center" Width="350">
+
+            <TextBlock Text="Серия"/>
+            <TextBox Name="SeriesBlock" />
+            <Label Name="SeriesError" Foreground="Red"/>
+            
+            <TextBlock Text="Номер"/>
+            <TextBox Name="NumberBlock" />
+            <Label Name="NumberError" Foreground="Red"/>
+
+            <TextBlock Text="Дата выдачи"/>
+            <DatePicker  Name="DateIssuedPicker"/>
+            <Label Name="DateIssuedError" Foreground="Red"/>
+
+            <TextBlock Text="Кем выдан"/>
+            <TextBox  Name="IssuedByBlock"/>
+            <Label Name="IssuedByError" Foreground="Red"/>
+
+            <TextBlock Text="Код подраздиления"/>
+            <TextBox  Name="SubdivisionCodeBlock"/>
+            <Label Name="SubdivisionCodeError" Foreground="Red"/>
+
+            <TextBlock Text="Тип документа"/>
+            <ComboBox x:Name="TypesComboBox" DisplayMemberPath="Name" />
+            <Label Name="TypesError" Foreground="Red"/>
+
+        </StackPanel>
+
+        <Button x:Name ="Create"  Grid.Row="1" Grid.ColumnSpan="2" Content="Добавить документ"/>
+    </Grid>
+</reactiveui:ReactiveUserControl>
