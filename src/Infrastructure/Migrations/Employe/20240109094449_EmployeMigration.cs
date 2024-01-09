@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Metcom.CardPay3.Infrastructure.Migrations
+namespace Metcom.CardPay3.Infrastructure.Migrations.Employe
 {
     public partial class EmployeMigration : Migration
     {
@@ -213,7 +213,7 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                     IdGender = table.Column<int>(type: "int", nullable: false),
                     IdDocument = table.Column<int>(type: "int", nullable: false),
                     IdOrganization = table.Column<int>(type: "int", nullable: false),
-                    IdType = table.Column<int>(type: "int", nullable: false)
+                    IdType = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -514,7 +514,8 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                 name: "IX_Employers_IdType",
                 table: "Employers",
                 column: "IdType",
-                unique: true);
+                unique: true,
+                filter: "[IdType] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_GroupItem_GroupId",

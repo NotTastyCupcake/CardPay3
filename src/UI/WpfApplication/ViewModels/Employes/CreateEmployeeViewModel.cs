@@ -37,14 +37,14 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
 
         private readonly ILogger<CreateEmployeeViewModel> _logger;
         private readonly IEmployeeViewModelService _employeViewModelService;
-        private readonly IEmployeeBuilderSendObj _builder;
+        private readonly IEmployeeBuilder _builder;
 
         public CreateEmployeeViewModel(IRepository<Employee> repository,
             IRepository<Gender> genderRepo,
             IRepository<EmployeeType> employeeType,
             ILogger<CreateEmployeeViewModel> logger,
             IEmployeeViewModelService viewModelService,
-            IEmployeeBuilderSendObj builder,
+            IEmployeeBuilder builder,
             IScreen screen = null)
         {
             _repository = repository;
@@ -57,8 +57,43 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
 
             HostScreen = screen;
 
-            #region Validation
+            Validation();
 
+            Task.Run(async () => await Initialize());
+
+
+            #region Commands
+
+            CreateEmployeeCommand = ReactiveCommand.CreateFromTask(async () =>
+            {
+                await _builder.SetOrganization(Locator.Current.GetService<HomeViewModel>().SelectedOrganization.Id);
+                await _builder.SetGender(Gender.Id);
+                await _builder.SetDocument(Document);
+                await _builder.SetEmployee(LastName,
+                                           FirstName,
+                                           MiddleName,
+                                           BirthdayDate.Value,
+                                           Nationality,
+                                           Resident,
+                                           PhoneNumber,
+                                           JobPhoneNumber,
+                                           Position,
+                                           DepartmentNum);
+
+                HostScreen.Router.NavigateBack.Execute();
+
+            }, this.IsValid());
+
+            CreateDocumentCommand = ReactiveCommand.Create(delegate ()
+            {
+                HostScreen.Router.Navigate.Execute(Locator.Current.GetService<CreateDocumentViewModel>());
+            });
+
+            #endregion
+        }
+
+        private void Validation()
+        {
             this.ValidationRule(
                 viewModel => viewModel.FirstName,
                 item => !string.IsNullOrEmpty(item),
@@ -83,45 +118,18 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
                 viewModel => viewModel.Document,
                 item => item != null,
                 "Документ должен быть заполнен обязаительно");
-
-            #endregion
-
-            Task.Run(() => Initialize());
-
-            CreateEmployeeCommand = ReactiveCommand.CreateFromTask(async () =>
-            {
-                await _builder.SetOrganization(Organization.Id);
-                await _builder.SetEmployee(new Employee(LastName, 
-                                                        FirstName, 
-                                                        MiddleName,
-                                                        BirthdayDate.Value,
-                                                        Nationality,
-                                                        Resident,
-                                                        PhoneNumber,
-                                                        JobPhoneNumber,
-                                                        Position,
-                                                        DepartmentNum,
-                                                        IdGender,
-                                                        IdDocument,
-                                                        IdOrganization));
-
-                HostScreen.Router.NavigateBack.Execute();
-
-            }, this.IsValid());
-
         }
 
         private async Task Initialize()
         {
-            //Получаем выбранную организацию
-            Organization = Locator.Current.GetService<HomeViewModel>().SelectedOrganization;
-            
             Genders = new ObservableCollection<Gender>(await _genderRepo.ListAsync());
             EmployeeTypes = new ObservableCollection<EmployeeType>(await _employeeType.ListAsync());
         }
 
         #region Commands
         public ReactiveCommand<Unit, Unit> CreateEmployeeCommand { get; }
+        public ReactiveCommand<Unit, Unit> CreateDocumentCommand { get; }
+
         #endregion
 
         #region Model
@@ -151,13 +159,8 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
         public int IdGender { get; set; }
         [Reactive]
         public string JobPhoneNumber { get; set; }
-
         [Reactive]
         public string Nationality { get; set; }
-        [Reactive]
-        public Organization Organization { get; set; }
-        [Reactive]
-        public int IdOrganization { get; set; }
         [Reactive]
         public string PhoneNumber { get; set; }
         [Reactive]

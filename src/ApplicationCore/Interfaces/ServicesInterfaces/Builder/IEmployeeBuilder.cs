@@ -9,6 +9,7 @@ namespace Metcom.CardPay3.ApplicationCore.Interfaces.ServicesInterfaces.Builder
 {
     public interface IEmployeeBuilder : IEmployeeBuilderSendField, IEmployeeBuilderSendObj
     {
-
+        public Task<IEmployeeBuilder> SetGender(int idGender);
+        public Task<IEmployeeBuilder> SetOrganization(int organizationId);
     }
 }

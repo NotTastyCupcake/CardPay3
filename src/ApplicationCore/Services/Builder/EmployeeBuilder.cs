@@ -237,17 +237,23 @@ namespace Metcom.CardPay3.ApplicationCore.Services.Builder
                                             _document.Id,
                                             _organization.Id);
 
-            if(employee.Requisites == null)
+            if(employee.Requisites == null && _requisites != null)
             {
-                employee.Requisites = new List<RequisitesItem>();
+                employee.Requisites = new List<RequisitesItem>
+                {
+                    _requisites
+                };
             }
-            employee.Requisites.Add(_requisites);
+            
 
-            if(employee.Addresses == null)
+            if(employee.Addresses == null && _legalAddress != null)
             {
-                employee.Addresses = new List<Address>();
+                employee.Addresses = new List<Address>
+                {
+                    _legalAddress
+                };
             }
-            employee.Addresses.Add(_legalAddress);
+            
 
             _employee = employee;
 

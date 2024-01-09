@@ -18,9 +18,10 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
             RoutingEmployeeCommand = ReactiveCommand.Create(delegate ()
             {
                 EmployeeListViewModel = Locator.Current.GetService<EmployeeListViewModel>();
-                EmployeeListViewModel.SelectedOrganization = SelectedOrganization;
                 HostScreen.Router.Navigate.Execute(EmployeeListViewModel);
             });
+
+            SelectedOrganization = Locator.Current.GetService<HomeViewModel>().SelectedOrganization;
 
             this.WhenAnyValue(vm => vm.SelectedOrganization).Subscribe(_ => UpdateIsRealOrganization());
         }

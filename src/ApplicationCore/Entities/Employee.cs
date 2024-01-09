@@ -119,11 +119,11 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
         public virtual Organization Organization { get; set; }
 
 
-        public int IdType { get; set; }
+        public int? IdType { get; set; }
         /// <summary>
         /// Категория населения
         /// </summary>
-        public virtual EmployeeType Type { get; set; }
+        public virtual EmployeeType? Type { get; set; }
 #nullable disable
         #endregion
 
