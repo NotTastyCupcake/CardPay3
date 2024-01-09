@@ -61,6 +61,12 @@ namespace Metcom.CardPay3.WpfApplication.Views.Employes
 
 
                 this.Bind(this.ViewModel,
+                    vm => vm.BirthdayDate,
+                    view => view.BirthdayDatePicker.SelectedDate)
+                    .DisposeWith(disposable);
+
+
+                this.Bind(this.ViewModel,
                     vm => vm.PhoneNumber,
                     view => view.PhoneNumber.Text)
                     .DisposeWith(disposable);
@@ -114,6 +120,21 @@ namespace Metcom.CardPay3.WpfApplication.Views.Employes
                 this.BindValidation(this.ViewModel,
                     vm => vm.LastName,
                     view => view.LastNameError.Content)
+                    .DisposeWith(disposable);
+
+                this.BindValidation(this.ViewModel,
+                    vm => vm.Gender,
+                    view => view.GendersError.Content)
+                    .DisposeWith(disposable);
+
+                this.BindValidation(this.ViewModel,
+                    vm => vm.BirthdayDate,
+                    view => view.BirthdayError.Content)
+                    .DisposeWith(disposable);
+
+                this.BindValidation(this.ViewModel,
+                    vm => vm.Document,
+                    view => view.DocumentError.Content)
                     .DisposeWith(disposable);
 
                 /* Привязка команд к кнопкам */

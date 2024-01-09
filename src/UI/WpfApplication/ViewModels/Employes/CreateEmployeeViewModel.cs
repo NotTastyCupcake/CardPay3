@@ -57,6 +57,8 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
 
             HostScreen = screen;
 
+            #region Validation
+
             this.ValidationRule(
                 viewModel => viewModel.FirstName,
                 item => !string.IsNullOrEmpty(item),
@@ -67,10 +69,22 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
                 item => !string.IsNullOrEmpty(item),
                 "Фамилия должно быть заполнено обязательно");
 
-            //this.ValidationRule(
-            //    viewModel => viewModel.BirthdayDate,
-            //    item => item != DateTime.MinValue,
-            //    "Фамилия должно быть заполнено обязательно");
+            this.ValidationRule(
+                viewModel => viewModel.BirthdayDate,
+                item => item.HasValue && item.Value != DateTime.MinValue && item.Value != DateTime.Today,
+                "Дата рождения должна быть заполнена обязаительно");
+
+            this.ValidationRule(
+                viewModel => viewModel.Gender,
+                item => item != null,
+                "Гендер должен быть заполнен обязаительно");
+
+            this.ValidationRule(
+                viewModel => viewModel.Document,
+                item => item != null,
+                "Документ должен быть заполнен обязаительно");
+
+            #endregion
 
             Task.Run(() => Initialize());
 
@@ -80,7 +94,7 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
                 await _builder.SetEmployee(new Employee(LastName, 
                                                         FirstName, 
                                                         MiddleName,
-                                                        BirthdayDate,
+                                                        BirthdayDate.Value,
                                                         Nationality,
                                                         Resident,
                                                         PhoneNumber,
@@ -114,7 +128,7 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
         [Reactive]
         public ICollection<Address> Addresses { get; set; }
         [Reactive]
-        public DateTime BirthdayDate { get; set; }
+        public DateTime? BirthdayDate { get; set; }
         [Reactive]
         public string BonusNumber { get; set; }
         [Reactive]
