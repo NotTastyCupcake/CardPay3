@@ -11,8 +11,6 @@ namespace Metcom.CardPay3.ApplicationCore.Interfaces.ServicesInterfaces.Builder
 {
     public interface IEmployeeBuilderSendObj
     {
-        public Task<IEmployeeBuilder> SetGender(int idGender);
-        public Task<IEmployeeBuilder> SetOrganization(int organizationId);
         public Task<IEmployeeBuilder> SetDocument(IDocumentItem document);
         public Task<IEmployeeBuilder> SetRequisites(IRequisitesItem employeRequisites);
         public Task<IEmployeeBuilder> SetLegalAddress(IAddress employeAddress);

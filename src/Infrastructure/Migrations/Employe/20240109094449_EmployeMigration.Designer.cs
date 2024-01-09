@@ -9,10 +9,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Metcom.CardPay3.Infrastructure.Migrations
+namespace Metcom.CardPay3.Infrastructure.Migrations.Employe
 {
     [DbContext(typeof(EmployeContext))]
-    [Migration("20231222105526_EmployeMigration")]
+    [Migration("20240109094449_EmployeMigration")]
     partial class EmployeMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -242,7 +242,7 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                     b.Property<int>("IdOrganization")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdType")
+                    b.Property<int?>("IdType")
                         .HasColumnType("int");
 
                     b.Property<string>("JobPhoneNumber")
@@ -279,7 +279,8 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                     b.HasIndex("IdOrganization");
 
                     b.HasIndex("IdType")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[IdType] IS NOT NULL");
 
                     b.ToTable("Employers");
                 });

@@ -20,7 +20,7 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
         int? IdDocument { get; set; }
         int IdGender { get; }
         int IdOrganization { get; set; }
-        int IdType { get; set; }
+        int? IdType { get; set; }
         string JobPhoneNumber { get; }
         string LastName { get; }
         string MiddleName { get; }
