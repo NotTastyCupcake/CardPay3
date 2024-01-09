@@ -51,6 +51,14 @@ namespace Metcom.CardPay3.Infrastructure.Data
                     await employerContext.SaveChangesAsync();
                 }
 
+                if (!employerContext.TypeEmployers.Any())
+                {
+                    employerContext.TypeEmployers.AddRange(
+                        GetPreconfiguredTypeEmployers());
+
+                    await employerContext.SaveChangesAsync();
+                }
+
                 if (!employerContext.Operations.Any())
                 {
                     employerContext.Operations.AddRange(
@@ -76,6 +84,7 @@ namespace Metcom.CardPay3.Infrastructure.Data
             }
 
         }
+
 
         private static IEnumerable<DocumentType> GetPreconfiguredDocumentTypes()
         {
@@ -161,6 +170,17 @@ namespace Metcom.CardPay3.Infrastructure.Data
             };
         }
 
+        private static IEnumerable<EmployeeType> GetPreconfiguredTypeEmployers()
+        {
+            return new List<EmployeeType>()
+            {
+                new EmployeeType(207, "Лица, перечисляющие зарплату на счета"),
+                new EmployeeType(0, "Пенсионеры"),
+                new EmployeeType(212, "Зарплата с разрешенным овердрафтом для сотрудников банка"),
+                new EmployeeType(217, "Зарплата с разрешенным овердрафтом для сотрудников организации"),
+                new EmployeeType(218, "Студенческая (договор с учебным заведением)")
+            };
+        }
 
         private static IEnumerable<BankDivision> GetPreconfiguredBankDivision()
         {

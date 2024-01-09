@@ -15,7 +15,7 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
         DocumentItem Document { get; set; }
         string EMail { get; set; }
         string FirstName { get; }
-        string FullName { get; }
+        public string FullName => $"{LastName} {FirstName} {MiddleName}";
         Gender Gender { get; set; }
         int? IdDocument { get; set; }
         int IdGender { get; }

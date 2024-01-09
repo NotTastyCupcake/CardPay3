@@ -1,7 +1,10 @@
 ﻿using Metcom.CardPay3.WpfApplication.ViewModels.Employes;
 using ReactiveUI;
+using ReactiveUI.Validation.Extensions;
+using ReactiveUI.Validation.Formatters;
 using Splat;
 using System;
+using System.Linq;
 using System.Reactive.Disposables;
 
 namespace Metcom.CardPay3.WpfApplication.Views.Employes
@@ -9,12 +12,12 @@ namespace Metcom.CardPay3.WpfApplication.Views.Employes
     /// <summary>
     /// Логика взаимодействия для AddEmployeWindow.xaml
     /// </summary>
-    public partial class EmployeeView
+    public partial class CreateEmployeeView
     {
 
-        public EmployeeView(EmployeeViewModel viewModel = null)
+        public CreateEmployeeView(CreateEmployeeViewModel viewModel = null)
         {
-            ViewModel = viewModel ?? Locator.Current.GetService<EmployeeViewModel>();
+            ViewModel = viewModel ?? Locator.Current.GetService<CreateEmployeeViewModel>();
             DataContext = ViewModel;
 
             InitializeComponent();
@@ -22,66 +25,74 @@ namespace Metcom.CardPay3.WpfApplication.Views.Employes
 
             this.WhenActivated(disposable =>
             {
+                #region Выгрузка коллекций для создания сотрудника
                 this.OneWayBind(this.ViewModel,
                     vm => vm.Genders,
                     view => view.GendersComboBox.ItemsSource)
                     .DisposeWith(disposable);
 
+                this.OneWayBind(this.ViewModel,
+                    vm => vm.EmployeeTypes,
+                    view => view.TypesComboBox.ItemsSource)
+                    .DisposeWith(disposable); 
+                #endregion
+
 
                 this.Bind(this.ViewModel,
-                    vm => vm.SelectedGender,
+                    vm => vm.Gender,
                     view => view.GendersComboBox.SelectedItem)
                     .DisposeWith(disposable);
 
                 this.Bind(this.ViewModel,
-                    vm => vm.Employee.FirstName,
+                    vm => vm.FirstName,
                     view => view.FirstNameBlock.Text)
                     .DisposeWith(disposable);
 
+
                 this.Bind(this.ViewModel,
-                    vm => vm.Employee.LastName,
+                    vm => vm.LastName,
                     view => view.LastNameBlock.Text)
                     .DisposeWith(disposable);
 
                 this.Bind(this.ViewModel,
-                    vm => vm.Employee.MiddleName,
+                    vm => vm.MiddleName,
                     view => view.MiddleNameBlock.Text)
                     .DisposeWith(disposable);
 
 
                 this.Bind(this.ViewModel,
-                    vm => vm.Employee.PhoneNumber,
+                    vm => vm.PhoneNumber,
                     view => view.PhoneNumber.Text)
                     .DisposeWith(disposable);
 
 
                 this.Bind(this.ViewModel,
-                    vm => vm.Employee.JobPhoneNumber,
+                    vm => vm.JobPhoneNumber,
                     view => view.JobPhoneNumber.Text)
                     .DisposeWith(disposable);
 
 
                 this.Bind(this.ViewModel,
-                    vm => vm.Employee.Position,
+                    vm => vm.Position,
                     view => view.Position.Text)
                     .DisposeWith(disposable);
 
 
                 this.Bind(this.ViewModel,
-                    vm => vm.Employee.DepartmentNum,
+                    vm => vm.DepartmentNum,
                     view => view.DepartmentNum.Text)
                     .DisposeWith(disposable);
 
 
-                this.Bind(this.ViewModel,
-                    vm => vm.AddressFullName,
-                    view => view.AddressTextBlock.Text)
-                    .DisposeWith(disposable);
+                //this.Bind(this.ViewModel,
+                //    vm => vm.Employee.Addresses.FirstOrDefault().FullName,
+                //    view => view.AddressTextBlock.Text)
+                //    .DisposeWith(disposable);
 
-                this.Bind(this.ViewModel,
-                    vm => vm.DocumentFullName,
-                    view => view.DocumentTextBlock.Text)
-                    .DisposeWith(disposable);
+                //this.Bind(this.ViewModel,
+                //    vm => vm.Employee.Document.FullName,
+                //    view => view.DocumentTextBlock.Text)
+                //    .DisposeWith(disposable);
 
                 //this.Bind(this.ViewModel,
                 //    vm => vm.Employe.Gender,
@@ -95,23 +106,21 @@ namespace Metcom.CardPay3.WpfApplication.Views.Employes
                 //    .DisposeWith(disposable);
 
 
+                this.BindValidation(this.ViewModel,
+                    vm => vm.FirstName,
+                    view => view.FirstNameError.Content)
+                    .DisposeWith(disposable);
+
+                this.BindValidation(this.ViewModel,
+                    vm => vm.LastName,
+                    view => view.LastNameError.Content)
+                    .DisposeWith(disposable);
+
                 /* Привязка команд к кнопкам */
 
                 this.BindCommand(this.ViewModel,
-                    vm => vm.ActionCommand,
+                    vm => vm.CreateEmployeeCommand,
                     view => view.Create)
-                .DisposeWith(disposable);
-
-                this.BindCommand(this.ViewModel,
-                    vm => vm.CreateAddress,
-                    view => view.CreateAddress,
-                    vm => vm.Address)
-                .DisposeWith(disposable);
-
-                this.BindCommand(this.ViewModel,
-                    vm => vm.CreateDocument,
-                    view => view.CreateDocument,
-                    vm => vm.Document)
                 .DisposeWith(disposable);
 
 
