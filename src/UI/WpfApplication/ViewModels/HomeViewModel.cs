@@ -4,6 +4,8 @@ using Metcom.CardPay3.WpfApplication.Interfaces;
 using Microsoft.Extensions.Logging;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using ReactiveUI.Validation.Extensions;
+using ReactiveUI.Validation.Helpers;
 using Splat;
 using System;
 using System.Collections.ObjectModel;
@@ -30,6 +32,10 @@ public class HomeViewModel : ReactiveObject, IScreen
         _logger = logger ?? Locator.Current.GetService<ILogger<HomeViewModel>>();
         _viewModelService = viewModelService ?? Locator.Current.GetService<IHomeViewModelService>();
 
+        //this.ValidationRule(
+        //    viewModel => viewModel.Organizations,
+        //    item => item != null && item.Count > 1, "Не возможно удалить выбранную организацию");
+
         // commands
         RoutingCreateOrganizationCommand = ReactiveCommand.Create(delegate ()
         {
@@ -43,7 +49,11 @@ public class HomeViewModel : ReactiveObject, IScreen
         Router.NavigateBack.Execute(Unit.Default), canGoBack);
 
         RoutingCommand = ReactiveCommand.Create<string>(ExecuteSidebar);
-        DeleteOrganization = ReactiveCommand.Create(DeleteSelectedOrg());
+
+        var canDeleteOrg = this
+            .WhenAnyValue(x => x.Organizations.Count)
+            .Select(count => count > 1);
+        DeleteOrganization = ReactiveCommand.Create(DeleteSelectedOrg(), canDeleteOrg);
 
         Task.Run(() => Initialize());
     }
@@ -57,13 +67,15 @@ public class HomeViewModel : ReactiveObject, IScreen
         Organizations = await _viewModelService.GetOrganizations();
         SelectedOrganization = Organizations.FirstOrDefault();
 
-        //exec menu
-        MenuViewModel = Locator.Current.GetService<MenuViewModel>();
-        MenuViewModel.SelectedOrganization = SelectedOrganization;
-        await Router.Navigate.Execute(MenuViewModel);
-
-        this.WhenAnyValue(vm => vm.SelectedOrganization).Subscribe(_ => UpdateOrganization());
-
+        if(Organizations.Count > 1)
+        {
+            await Router.Navigate.Execute(Locator.Current.GetService<MenuViewModel>());
+        }
+        else
+        {
+            await Router.Navigate.Execute(Locator.Current.GetService<CreateOrganizationViewModel>());
+        }
+        
     }
 
     public RoutingState Router { get; }
@@ -119,13 +131,5 @@ public class HomeViewModel : ReactiveObject, IScreen
 
     [Reactive]
     public Organization SelectedOrganization { get; set; }
-
-    public MenuViewModel MenuViewModel { get; set; }
     #endregion
-
-    private void UpdateOrganization()
-    {
-
-        MenuViewModel.SelectedOrganization = SelectedOrganization;
-    }
 }
