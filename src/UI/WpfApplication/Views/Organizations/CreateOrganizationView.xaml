@@ -25,10 +25,11 @@
 
             <TextBlock Text="Название организации"/>
             <TextBox x:Name="Name"/>
+            <Label Name="NameError" Foreground="Red"/>
 
         </StackPanel>
 
-        <Button x:Name ="Create" Command="{Binding CreateCommand}" Grid.Row="1" Grid.ColumnSpan="2" Content="Добавить сотрудника"/>
+        <Button x:Name ="Create" Grid.Row="1" Grid.ColumnSpan="2" Content="Добавить сотрудника"/>
 
     </Grid>
 </reactiveui:ReactiveUserControl>
