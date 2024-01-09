@@ -23,7 +23,7 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
 
             SelectedOrganization = Locator.Current.GetService<HomeViewModel>().SelectedOrganization;
 
-            this.WhenAnyValue(vm => vm.SelectedOrganization).Subscribe(_ => UpdateIsRealOrganization());
+            
         }
         #region commands
         public ReactiveCommand<Unit, Unit> RoutingEmployeeCommand { get; }
@@ -37,27 +37,6 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
 
         public EmployeeListViewModel EmployeeListViewModel { get; set; }
 
-        private void UpdateIsRealOrganization()
-        {
-            if (SelectedOrganization == null)
-            {
-                IsRealOrganization = false;
-            }
-            else if (SelectedOrganization.Name == "Создать организацию.")
-            {
-                IsRealOrganization = false;
-                HostScreen.Router.Navigate.Execute(Locator.Current.GetService<CreateOrganizationViewModel>());
-            }
-            else
-            {
-                IsRealOrganization = true;
 
-                if (EmployeeListViewModel != null)
-                {
-                    EmployeeListViewModel.SelectedOrganization = SelectedOrganization;
-                }
-
-            }
-        }
     }
 }

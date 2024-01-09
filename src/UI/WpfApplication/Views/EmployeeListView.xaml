@@ -21,30 +21,30 @@
             
             <TabItem Name="PersonsTab">
                 <TabItem.Header>
-                    <TextBlock Text="EMPLOYES"/>
+                    <TextBlock Text="Сотрудники"/>
                 </TabItem.Header>
                 <TabItem.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="DELETE_COMMAND" Command="{Binding RoutingDeleteEmployeeCommand}"/>
-                        <MenuItem Header="EDIT_COMMAND" Command="{Binding RoutingEditEmployeeCommand}"/>
+                        <MenuItem Header="Удалить" Command="{Binding RoutingDeleteEmployeeCommand}"/>
+                        <MenuItem Header="Изменить" Command="{Binding RoutingEditEmployeeCommand}"/>
                     </ContextMenu>
                 </TabItem.ContextMenu>
                 <ListView ItemsSource="{Binding Employes, Mode=OneWay}" SelectedItem="{Binding SelectedEmploye, Mode=TwoWay}">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="FIRST_NAME"                                            
+                            <GridViewColumn Header="Имя"                                            
                                             DisplayMemberBinding="{Binding Path=FirstName, Mode=OneWay}"/>
-                            <GridViewColumn Header="LAST_NAME"
+                            <GridViewColumn Header="Фамилия"
                                             DisplayMemberBinding="{Binding Path=LastName, Mode=OneWay}"/>
-                            <GridViewColumn Header="MIDDLE_NAME"
+                            <GridViewColumn Header="Отчество"
                                             DisplayMemberBinding="{Binding Path=MiddleName, Mode=OneWay}"/>
-                            <GridViewColumn Header="POSITION"
+                            <GridViewColumn Header="Должность"
                                             DisplayMemberBinding="{Binding Path=Position, Mode=OneWay}"/>
-                            <GridViewColumn Header="DEPARTMENT_NUMBER"
+                            <GridViewColumn Header="Офис"
                                             DisplayMemberBinding="{Binding Path=DepartmentNum, Mode=OneWay}"/>
-                            <GridViewColumn Header="GENDER"
+                            <GridViewColumn Header="Пол"
                                             DisplayMemberBinding="{Binding Path=Gender.GenderName, Mode=OneWay}"/>
-                            <GridViewColumn Header="SUBDIVISION_CODE"
+                            <GridViewColumn Header="Код документа"
                                             DisplayMemberBinding="{Binding Path=Document.SubdivisionCode, Mode=OneWay}"/>
                         </GridView>
                     </ListView.View>
@@ -53,24 +53,24 @@
             
             <TabItem Name="PersonsStat">
                 <TabItem.Header>
-                    <TextBlock Text="STATISTIC"/>
+                    <TextBlock Text="Статистика"/>
                 </TabItem.Header>
                 <StackPanel Grid.Row="0" Orientation="Vertical"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Width="auto">
-                    <TextBlock Text="AVARAGE_SALARY"/>
-                    <TextBlock Text="{Binding AverageSalary}"/>
-                    <TextBlock Text="COUNT_PERSON:"/>
-                    <TextBlock Text="{Binding CountPerson}"/>
+                    <!--<TextBlock Text="AVARAGE_SALARY"/>
+                    <TextBlock Text="{Binding AverageSalary}"/>-->
+                    <TextBlock Text="Количество сотрудников:"/>
+                    <TextBlock Text="{Binding Employes.Count, Mode=OneWay}"/>
                 </StackPanel>
             </TabItem>
             
         </TabControl>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
-            <Button Content="CREATE_EMPLOYE" Command="{Binding RoutingAddEmployeeCommand}"/>
-            <Button Content="EXPORT_EMPLOYES" Command="{Binding ExportEmployeeCommand}"/>
+            <Button Content="Добавить сотрудника" Command="{Binding RoutingAddEmployeeCommand}"/>
+            <Button Content="Экспорт" Command="{Binding ExportEmployeeCommand}"/>
         </StackPanel>
     </Grid>
 </reactiveUi:ReactiveUserControl>

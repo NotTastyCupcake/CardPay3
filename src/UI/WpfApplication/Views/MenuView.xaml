@@ -13,7 +13,7 @@
     <Grid>
         <Button 
             x:Name ="EmployeeListButton"
-            Content="EMPLOYEE_LIST_BUTTON" 
+            Content="Список сотрудников" 
             HorizontalAlignment="Left" 
             Width="200"
             VerticalAlignment="Center" 
@@ -21,14 +21,14 @@
 
         <Button 
             x:Name ="AccryalListButton" 
-            Content="ACCRYAL_LIST_BUTTON" 
+            Content="Платежи" 
             HorizontalAlignment="Center" 
             Width="200"
             VerticalAlignment="Center"/>
 
         <Button 
             x:Name ="OceCButton" 
-            Content="1C" 
+            Content="1С" 
             HorizontalAlignment="Right" 
             VerticalAlignment="Center" 
             Width="200"

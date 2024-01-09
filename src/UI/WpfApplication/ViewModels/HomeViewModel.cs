@@ -1,4 +1,5 @@
-﻿using Metcom.CardPay3.ApplicationCore.Entities;
+﻿using DynamicData;
+using Metcom.CardPay3.ApplicationCore.Entities;
 using Metcom.CardPay3.ApplicationCore.Interfaces;
 using Metcom.CardPay3.WpfApplication.Interfaces;
 using Microsoft.Extensions.Logging;
@@ -42,20 +43,28 @@ public class HomeViewModel : ReactiveObject, IScreen
             Router.Navigate.Execute(Locator.Current.GetService<CreateOrganizationViewModel>());
         });
 
-        var canGoBack = this
-            .WhenAnyValue(x => x.Router.NavigationStack.Count)
-            .Select(count => count > 1);
-        RoutingGoBackCommand = ReactiveCommand.CreateFromObservable(() =>
-        Router.NavigateBack.Execute(Unit.Default), canGoBack);
-
-        RoutingCommand = ReactiveCommand.Create<string>(ExecuteSidebar);
-
         var canDeleteOrg = this
             .WhenAnyValue(x => x.Organizations.Count)
             .Select(count => count > 1);
+
+        var canGoBack = this
+            .WhenAnyValue(x => x.Router.NavigationStack.Count)
+            .Select(count => count > 1);
+
+        RoutingGoBackCommand = ReactiveCommand.CreateFromObservable(() => 
+            { 
+                return Router.NavigateBack.Execute(Unit.Default); 
+            },
+            Observable.Merge(canDeleteOrg, canGoBack));
+
+        RoutingCommand = ReactiveCommand.Create<string>(ExecuteSidebar);
+
+
         DeleteOrganization = ReactiveCommand.Create(DeleteSelectedOrg(), canDeleteOrg);
 
         Task.Run(() => Initialize());
+
+        this.WhenAnyValue(vm => vm.SelectedOrganization).Subscribe(_ => UpdateSelectedOrganization());
     }
 
 
@@ -73,6 +82,7 @@ public class HomeViewModel : ReactiveObject, IScreen
         }
         else
         {
+            await Router.Navigate.Execute(Locator.Current.GetService<MenuViewModel>());
             await Router.Navigate.Execute(Locator.Current.GetService<CreateOrganizationViewModel>());
         }
         
@@ -121,6 +131,14 @@ public class HomeViewModel : ReactiveObject, IScreen
             //    break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(parameter), parameter, null);
+        }
+    }
+
+    private void UpdateSelectedOrganization()
+    {
+        if (SelectedOrganization != null && SelectedOrganization.Name == "Создать организацию.")
+        {
+            Router.Navigate.Execute(Locator.Current.GetService<CreateOrganizationViewModel>());
         }
     }
     #endregion

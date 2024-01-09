@@ -29,7 +29,7 @@
 
         </StackPanel>
 
-        <Button x:Name ="Create" Grid.Row="1" Grid.ColumnSpan="2" Content="Добавить сотрудника"/>
+        <Button x:Name ="Create" Grid.Row="1" Grid.ColumnSpan="2" Content="Добавить организацию"/>
 
     </Grid>
 </reactiveui:ReactiveUserControl>
