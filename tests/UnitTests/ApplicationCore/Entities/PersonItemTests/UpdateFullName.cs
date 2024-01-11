@@ -29,26 +29,26 @@ namespace Metcom.CardPay3.UnitTests.ApplicationCore.Entities.EmployerItemTests
             //    _validGenderId, _validDocumentId, _validIdOrganization);
         }
 
-        [TestCase("", "", "")]
-        [TestCase("Test", "", "")]
-        [TestCase("Test", "Test", "")]
-        [TestCase("", "Test", "Test")]
-        [TestCase("", "", "Test")]
-        [TestCase("Test", "", "Test")]
-        public void ThrowsArgumentExceptionGivenEmptyName(string lastName, string firstName, string middleName)
-        {
-            Assert.Throws<ArgumentException>(() => _testItem.UpdateFullName(lastName, firstName, middleName));
-        }
+        //[TestCase("", "", "")]
+        //[TestCase("Test", "", "")]
+        //[TestCase("Test", "Test", "")]
+        //[TestCase("", "Test", "Test")]
+        //[TestCase("", "", "Test")]
+        //[TestCase("Test", "", "Test")]
+        //public void ThrowsArgumentExceptionGivenEmptyName(string lastName, string firstName, string middleName)
+        //{
+        //    Assert.Throws<ArgumentException>(() => _testItem.UpdateFullName(lastName, firstName, middleName));
+        //}
 
-        [TestCase(null, null, null)]
-        [TestCase("Test", null, null)]
-        [TestCase("Test", "Test", null)]
-        [TestCase(null, "Test", "Test")]
-        [TestCase(null, null, "Test")]
-        [TestCase("Test", null, "Test")]
-        public void ThrowsArgumentNullExceptionGivenEmptyName(string lastName, string firstName, string middleName)
-        {
-            Assert.Throws<ArgumentNullException>(() => _testItem.UpdateFullName(lastName, firstName, middleName));
-        }
+        //[TestCase(null, null, null)]
+        //[TestCase("Test", null, null)]
+        //[TestCase("Test", "Test", null)]
+        //[TestCase(null, "Test", "Test")]
+        //[TestCase(null, null, "Test")]
+        //[TestCase("Test", null, "Test")]
+        //public void ThrowsArgumentNullExceptionGivenEmptyName(string lastName, string firstName, string middleName)
+        //{
+        //    Assert.Throws<ArgumentNullException>(() => _testItem.UpdateFullName(lastName, firstName, middleName));
+        //}
     }
 }

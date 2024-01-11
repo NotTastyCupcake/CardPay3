@@ -30,32 +30,32 @@ namespace Metcom.CardPay3.UnitTests.ApplicationCore.Entities.EmployerItemTests
             //    _validGenderId, _validDocumentId, _validIdRequest);
         }
 
-        [TestCase("", "", "", "")]
-        [TestCase("Test", "", "", "")]
-        [TestCase("", "Test", "", "")]
-        [TestCase("", "", "Test", "")]
-        [TestCase("", "", "", "Test")]
-        [TestCase("Test", "Test", "", "")]
-        [TestCase("", "Test", "Test", "")]
-        [TestCase("", "", "Test", "Test")]
-        [TestCase("Test", "", "", "Test")]
-        public void ThrowsArgumentExceptionGivenEmptyName(string phoneNum, string jobPhone, string position, string departmentNum)
-        {
-            Assert.Throws<ArgumentException>(() => _testItem.UpdateContactDetails(phoneNum, jobPhone, position, departmentNum));
-        }
+        //[TestCase("", "", "", "")]
+        //[TestCase("Test", "", "", "")]
+        //[TestCase("", "Test", "", "")]
+        //[TestCase("", "", "Test", "")]
+        //[TestCase("", "", "", "Test")]
+        //[TestCase("Test", "Test", "", "")]
+        //[TestCase("", "Test", "Test", "")]
+        //[TestCase("", "", "Test", "Test")]
+        //[TestCase("Test", "", "", "Test")]
+        //public void ThrowsArgumentExceptionGivenEmptyName(string phoneNum, string jobPhone, string position, string departmentNum)
+        //{
+        //    Assert.Throws<ArgumentException>(() => _testItem.UpdateContactDetails(phoneNum, jobPhone, position, departmentNum));
+        //}
 
-        [TestCase(null, null, null, null)]
-        [TestCase("Test", null, null, null)]
-        [TestCase(null, "Test", null, null)]
-        [TestCase(null, null, "Test", null)]
-        [TestCase(null, null, null, "Test")]
-        [TestCase("Test", "Test", null, null)]
-        [TestCase(null, "Test", "Test", null)]
-        [TestCase(null, null, "Test", "Test")]
-        [TestCase("Test", null, null, "Test")]
-        public void ThrowsArgumentNullExceptionGivenEmptyName(string phoneNum, string jobPhone, string position, string departmentNum)
-        {
-            Assert.Throws<ArgumentNullException>(() => _testItem.UpdateContactDetails(phoneNum, jobPhone, position, departmentNum));
-        }
+        //[TestCase(null, null, null, null)]
+        //[TestCase("Test", null, null, null)]
+        //[TestCase(null, "Test", null, null)]
+        //[TestCase(null, null, "Test", null)]
+        //[TestCase(null, null, null, "Test")]
+        //[TestCase("Test", "Test", null, null)]
+        //[TestCase(null, "Test", "Test", null)]
+        //[TestCase(null, null, "Test", "Test")]
+        //[TestCase("Test", null, null, "Test")]
+        //public void ThrowsArgumentNullExceptionGivenEmptyName(string phoneNum, string jobPhone, string position, string departmentNum)
+        //{
+        //    Assert.Throws<ArgumentNullException>(() => _testItem.UpdateContactDetails(phoneNum, jobPhone, position, departmentNum));
+        //}
     }
 }

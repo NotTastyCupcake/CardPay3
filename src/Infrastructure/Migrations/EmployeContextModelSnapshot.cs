@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Metcom.CardPay3.Infrastructure.Migrations.Employe
+namespace Metcom.CardPay3.Infrastructure.Migrations
 {
     [DbContext(typeof(EmployeContext))]
     partial class EmployeContextModelSnapshot : ModelSnapshot
@@ -36,9 +36,6 @@ namespace Metcom.CardPay3.Infrastructure.Migrations.Employe
                     b.Property<DateTime>("AccrualDay")
                         .HasMaxLength(3)
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("IdAccruaType")
-                        .HasColumnType("int");
 
                     b.Property<int>("IdOperationType")
                         .HasColumnType("int");

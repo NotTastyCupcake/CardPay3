@@ -9,10 +9,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Metcom.CardPay3.Infrastructure.Migrations.Employe
+namespace Metcom.CardPay3.Infrastructure.Migrations
 {
     [DbContext(typeof(EmployeContext))]
-    [Migration("20240109094449_EmployeMigration")]
+    [Migration("20240111081822_EmployeMigration")]
     partial class EmployeMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,9 +38,6 @@ namespace Metcom.CardPay3.Infrastructure.Migrations.Employe
                     b.Property<DateTime>("AccrualDay")
                         .HasMaxLength(3)
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("IdAccruaType")
-                        .HasColumnType("int");
 
                     b.Property<int>("IdOperationType")
                         .HasColumnType("int");

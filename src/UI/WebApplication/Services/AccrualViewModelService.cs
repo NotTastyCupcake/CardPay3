@@ -59,7 +59,6 @@ namespace Metcom.CardPay3.WebApplication.Services
                 Id = accrual.Id,
                 Items = new List<AccrualItemViewModel>(),
                 AccrualDay = accrual.AccrualDay,
-                IdAccrualType = accrual.IdAccruaType,
                 OrganizationId = accrual.IdOrganization,
                 IdOperationType = accrual.IdOperationType
             };
@@ -70,7 +69,6 @@ namespace Metcom.CardPay3.WebApplication.Services
             var viewModel = new AccrualViewModel();
             viewModel.Id = accrual.Id;
             viewModel.AccrualDay = accrual.AccrualDay;
-            viewModel.IdAccrualType = accrual.IdAccruaType;
             viewModel.OrganizationId = accrual.IdOrganization;
             viewModel.IdOperationType = accrual.IdOperationType;
             viewModel.Items = await GetAsyncAccrualItems(accrual.Items);

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Metcom.CardPay3.Infrastructure.Migrations.Employe
+namespace Metcom.CardPay3.Infrastructure.Migrations
 {
     public partial class EmployeMigration : Migration
     {
@@ -152,7 +152,6 @@ namespace Metcom.CardPay3.Infrastructure.Migrations.Employe
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     IdOrganization = table.Column<int>(type: "int", nullable: false),
-                    IdAccruaType = table.Column<int>(type: "int", nullable: false),
                     IdOperationType = table.Column<int>(type: "int", nullable: false),
                     AccrualDay = table.Column<DateTime>(type: "datetime2", maxLength: 3, nullable: false)
                 },

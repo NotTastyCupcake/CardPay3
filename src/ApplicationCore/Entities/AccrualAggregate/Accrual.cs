@@ -18,8 +18,6 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.AccrualAggregate
         public int IdOrganization { get; private set; }
         public virtual Organization Organization { get; private set; }
 
-        public int IdAccruaType { get; private set; }
-
         public int IdOperationType { get; private set; }
         public virtual OperationType OperationType { get; set; }
         #endregion
@@ -33,7 +31,6 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.AccrualAggregate
         {
             IdOrganization = idOrganization;
             AccrualDay = accrualDay;
-            IdAccruaType = idAccrualType;
             IdOperationType = idOperationType;
         }
 
