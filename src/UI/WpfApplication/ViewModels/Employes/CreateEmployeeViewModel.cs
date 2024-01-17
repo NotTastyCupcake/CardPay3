@@ -23,9 +23,11 @@ using Castle.Core.Internal;
 using Metcom.CardPay3.ApplicationCore.Entities.AddressAggregate;
 using Metcom.CardPay3.ApplicationCore.Entities.DocumentAggregate;
 using Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate;
+using System.Reflection.Metadata;
 
 namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
 {
+    
     public class CreateEmployeeViewModel : ReactiveValidationObject, IRoutableViewModel
     {
         public string UrlPathSegment { get { return "CreateEmployee"; } }
@@ -61,7 +63,6 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
 
             Task.Run(async () => await Initialize());
 
-
             #region Commands
 
             CreateEmployeeCommand = ReactiveCommand.CreateFromTask(async () =>
@@ -86,10 +87,14 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
 
             CreateDocumentCommand = ReactiveCommand.Create(delegate ()
             {
-                HostScreen.Router.Navigate.Execute(Locator.Current.GetService<CreateDocumentViewModel>());
+                var vm = Locator.Current.GetService<CreateDocumentViewModel>();
+                HostScreen.Router.Navigate.Execute(vm);
+                vm.WhenAnyValue(vm => vm.Document).Subscribe(_ => Document = _);
             });
 
             #endregion
+
+            //Locator.Current.GetService<CreateDocumentViewModel>().WhenAnyValue(vm => vm.Document).Subscribe(_ => Document = _);
         }
 
         private void Validation()

@@ -21,11 +21,39 @@
 
         <StackPanel HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    Width="266">
+                    Width="350">
 
             <TextBlock Text="Название организации"/>
             <TextBox x:Name="Name"/>
             <Label Name="NameError" Foreground="Red"/>
+
+            <TextBlock Text="Дата формирования"/>
+            <DatePicker x:Name="CreateDate" FirstDayOfWeek="Monday"/>
+            <Label Name="CreateDateError" Foreground="Red"/>
+
+            <TextBlock Text="ИНН"/>
+            <TextBox x:Name="INN"/>
+            <Label Name="INNError" Foreground="Red"/>
+
+            <TextBlock Text="Номер договора"/>
+            <TextBox x:Name="AppNumber"/>
+            <Label Name="AppNumberError" Foreground="Red"/>
+
+            <TextBlock Text="Дата договора"/>
+            <DatePicker x:Name="AppDate" FirstDayOfWeek="Monday"/>
+            <Label Name="AppDateError" Foreground="Red"/>
+
+            <TextBlock Text="Расчетный счет организации"/>
+            <TextBox x:Name="Account"/>
+            <Label Name="AccountError" Foreground="Red"/>
+
+            <TextBlock Text="БИК"/>
+            <TextBox x:Name="BankCode"/>
+            <Label Name="BankCodeError" Foreground="Red"/>
+
+            <TextBlock Text="Ид первичного документа"/>
+            <TextBox x:Name="SourceId"/>
+            <Label Name="SourceIdError" Foreground="Red"/>
 
         </StackPanel>
 

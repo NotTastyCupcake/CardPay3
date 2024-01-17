@@ -18,17 +18,17 @@ using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
 {
-    public class CreateDocumentViewModel : ReactiveValidationObject, IRoutableViewModel
+    public class CreateDocumentViewModel : ReactiveValidationObject, IRoutableViewModel, IDocumentItem
     {
         public string UrlPathSegment { get { return "CreateDocument"; } }
         public IScreen HostScreen { get; protected set; }
 
         private readonly IDocumentViewModelService _service;
-        private readonly IEmployeeBuilderSendObj _builder;
+        private readonly IEmployeeBuilder _builder;
 
         public CreateDocumentViewModel(
             IDocumentViewModelService service,
-            IEmployeeBuilderSendObj builder,
+            IEmployeeBuilder builder,
             IScreen screen = null)
         {
             _service = service;
@@ -40,21 +40,17 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
 
             CreateCommand = ReactiveCommand.Create(delegate ()
             {
-                var doc = new DocumentItem(SelectedType.Id,
-                                           Series,
-                                           Number,
-                                           DataIssued.Value,
-                                           IssuedBy,
-                                           SubdivisionCode);
+                var doc = new DocumentItem(this);
 
-                var vm = Locator.Current.GetService<CreateEmployeeViewModel>();
-                vm.Document = doc;
+                Document = doc;
 
                 HostScreen.Router.NavigateBack.Execute();
 
             }, this.IsValid());
 
             Task.Run(async () => await Initialize());
+
+            this.WhenAnyValue(vm => vm.SelectedType).Subscribe(_ => IdType = SelectedType?.Id ?? 0);
         }
 
         private void Validation()
@@ -80,6 +76,10 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
         #region Model
         [Reactive]
         public DocumentType SelectedType { get; set; }
+
+        [Reactive]
+        public int IdType { get; set; }
+
         [Reactive]
         public string Series { get; set; }
         [Reactive]
@@ -94,6 +94,9 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
 
         [Reactive]
         public ReadOnlyObservableCollection<DocumentType> Types { get; set; }
+
+        [Reactive]
+        public DocumentItem Document { get; set; }
 
     }
 }

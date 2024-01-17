@@ -138,9 +138,9 @@ public partial class App// : Application
         services.AddScoped<IDocumentViewModelService, DocumentViewModelService>();
         services.AddScoped<IEmployeeCollectionService, EmployeeCollectionService>();
 
-        services.AddScoped<IEmployeeBuilder, EmployeeBuilder>();
-        services.AddScoped<IEmployeeBuilderSendObj, EmployeeBuilder>();
-        services.AddScoped<IEmployeeBuilderSendField, EmployeeBuilder>();
+        services.AddTransient<IEmployeeBuilder, EmployeeBuilder>();
+        services.AddTransient<IEmployeeBuilderSendObj, EmployeeBuilder>();
+        services.AddTransient<IEmployeeBuilderSendField, EmployeeBuilder>();
 
         services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
         services.AddTransient<IEmailSender, EmailSender>();
@@ -162,11 +162,11 @@ public partial class App// : Application
         services.AddScoped<IViewFor<EmployeeListViewModel>, EmployeeListView>();
         services.AddScoped<EmployeeListViewModel>();
 
-        services.AddScoped<IViewFor<CreateEmployeeViewModel>, CreateEmployeeView>();
-        services.AddScoped<CreateEmployeeViewModel>();
+        services.AddTransient<IViewFor<CreateEmployeeViewModel>, CreateEmployeeView>();
+        services.AddTransient<CreateEmployeeViewModel>();
 
-        services.AddScoped<IViewFor<CreateDocumentViewModel>, CreateDocumentView>();
-        services.AddScoped<CreateDocumentViewModel>();
+        services.AddTransient<IViewFor<CreateDocumentViewModel>, CreateDocumentView>();
+        services.AddTransient<CreateDocumentViewModel>();
     }
 
 }

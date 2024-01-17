@@ -3,6 +3,7 @@ using Metcom.CardPay3.ApplicationCore.Interfaces;
 using Metcom.CardPay3.WpfApplication.Interfaces;
 using Microsoft.Extensions.Logging;
 using ReactiveUI;
+using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
@@ -26,7 +27,7 @@ namespace Metcom.CardPay3.WpfApplication.Services
 
             var items = new ObservableCollection<Organization>(organizations)
             {
-                new Organization("Создать организацию.")
+                new Organization(DateTime.Now,"0","Создать организацию.", "0")
             };
 
             return items;

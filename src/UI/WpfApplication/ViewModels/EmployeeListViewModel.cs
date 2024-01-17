@@ -9,11 +9,13 @@ using Microsoft.Win32;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using Splat;
+using Splat.Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
+
 
 namespace Metcom.CardPay3.WpfApplication.ViewModels
 {
@@ -76,9 +78,10 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
 
         private Action CreateEmploye()
         {
-            return delegate ()
+            return delegate () 
             {
                 var vm = Locator.Current.GetService<CreateEmployeeViewModel>();
+
                 HostScreen.Router.Navigate.Execute(vm);
 
             };
