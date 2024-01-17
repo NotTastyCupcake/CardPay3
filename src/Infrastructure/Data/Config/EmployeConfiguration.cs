@@ -13,9 +13,8 @@ namespace Metcom.CardPay3.Infrastructure.Data.Config
             builder.HasOne(ci => ci.Document)
                 .WithOne()
                 .HasForeignKey<Employee>(ci => ci.IdDocument)
-                .IsRequired(true);
-            builder.Property(ci => ci.IdDocument)
-                .ValueGeneratedOnAdd();
+                .IsRequired(true)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasMany(ci => ci.Addresses)
                 .WithOne(ci => ci.Employee)
@@ -34,10 +33,10 @@ namespace Metcom.CardPay3.Infrastructure.Data.Config
                 .IsRequired(false)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasOne(ci => ci.Organization)
-                .WithMany(o => o.Employes)
-                .HasForeignKey(ci => ci.IdOrganization)
-                .IsRequired(false);
+            //builder.HasOne(ci => ci.Organization)
+            //    .WithMany(o => o.Employes)
+            //    .HasForeignKey(ci => ci.IdOrganization)
+            //    .IsRequired(true);
 
             builder.HasOne(ci => ci.Type)
                 .WithOne(o => o.Employee)

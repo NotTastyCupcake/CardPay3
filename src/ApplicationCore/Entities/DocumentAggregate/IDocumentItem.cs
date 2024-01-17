@@ -9,7 +9,7 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.DocumentAggregate
         public int IdType { get; }
         public string Series { get; }
         public string Number { get; }
-        public DateTime DataIssued { get; }
+        public DateTime? DataIssued { get; }
         public string IssuedBy { get; }
         public string SubdivisionCode { get; }
     }

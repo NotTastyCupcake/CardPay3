@@ -99,7 +99,14 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    INN = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ApplicationNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ApplicationDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Account = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BankCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SourceId = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -130,7 +137,7 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                     IdType = table.Column<int>(type: "int", nullable: false),
                     Series = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Number = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DataIssued = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DataIssued = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IssuedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SubdivisionCode = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -233,7 +240,8 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                         name: "FK_Employers_Organizations_IdOrganization",
                         column: x => x.IdOrganization,
                         principalTable: "Organizations",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Employers_TypeEmployers_IdType",
                         column: x => x.IdType,

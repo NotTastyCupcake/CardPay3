@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Metcom.CardPay3.Infrastructure.Migrations
 {
     [DbContext(typeof(EmployeContext))]
-    [Migration("20240111081822_EmployeMigration")]
+    [Migration("20240112123836_EmployeMigration")]
     partial class EmployeMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -158,7 +158,7 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("DataIssued")
+                    b.Property<DateTime?>("DataIssued")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("IdType")
@@ -376,7 +376,31 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("Account")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ApplicationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ApplicationNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BankCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreateDate")
+                        .IsRequired()
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("INN")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SourceId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -679,7 +703,9 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
 
                     b.HasOne("Metcom.CardPay3.ApplicationCore.Entities.Organization", "Organization")
                         .WithMany("Employes")
-                        .HasForeignKey("IdOrganization");
+                        .HasForeignKey("IdOrganization")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Metcom.CardPay3.ApplicationCore.Entities.EmployeeType", "Type")
                         .WithOne("Employee")

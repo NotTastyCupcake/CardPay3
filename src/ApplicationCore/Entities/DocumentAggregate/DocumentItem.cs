@@ -27,7 +27,7 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.DocumentAggregate
         /// <summary>
         /// Дата выдачи
         /// </summary>
-        public DateTime DataIssued { get; private set; }
+        public DateTime? DataIssued { get; private set; }
         /// <summary>
         /// Кем выдан
         /// </summary>
