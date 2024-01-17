@@ -11,7 +11,6 @@ namespace Metcom.CardPay3.Infrastructure.Data.Config
             builder.HasKey(ci => ci.Id);
 
             builder.Property(ci => ci.Id)
-                .UseHiLo("employer_group_hilo")
                 .IsRequired();
 
             var navigation = builder.Metadata.FindNavigation(nameof(Group.Items));

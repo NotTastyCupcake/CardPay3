@@ -35,10 +35,6 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate
         public RequisitesItem(IRequisitesItem item)
         {
             AccountNumber = item.AccountNumber;
-            CardType = item.CardType;
-            Currency = item.Currency;
-            Division = item.Division;
-            Employee = item.Employee;
             IdCardType = item.IdCardType;
             IdCurrency = item.IdCurrency;
             IdDivision = item.IdDivision;

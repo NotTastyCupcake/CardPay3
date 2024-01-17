@@ -117,13 +117,7 @@ public partial class App// : Application
 
     private void ConfigureMsSqlDatabases(IServiceCollection services)
     {
-        //services.AddDbContext<AppIdentityDbContext>(options =>
-        //    options.UseSqlServer(
-        //        Configuration.GetConnectionString("IdentityConnection")));
-
-        services.AddDbContext<EmployeContext>(options =>
-            options.UseSqlServer(
-                Configuration.GetConnectionString("MainConnection")));
+        Infrastructure.Dependencies.ConfigureServices(Configuration, services);
     }
 
     private void ConfigureServices(IServiceCollection services)

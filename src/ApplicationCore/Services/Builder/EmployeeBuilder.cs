@@ -379,14 +379,29 @@ namespace Metcom.CardPay3.ApplicationCore.Services.Builder
                 item.Requisites.Add(_requisites);
             }
 
-            if (employee.Addresses == null)
+            if (item.Addresses == null)
             {
-                employee.Addresses = new List<Address>();
+                item.Addresses = new List<Address>();
             }
             if(_legalAddress != null)
             {
-                employee.Addresses.Add(_legalAddress);
+                item.Addresses.Add(_legalAddress);
             }
+
+
+            if(_document != null)
+            {
+                item.Document = _document;
+            }
+            if(_organization != null)
+            {
+                item.Organization = _organization;
+            }
+            if(_gender != null)
+            { 
+                item.Gender = _gender;
+            }
+
 
             _employee = item;
 

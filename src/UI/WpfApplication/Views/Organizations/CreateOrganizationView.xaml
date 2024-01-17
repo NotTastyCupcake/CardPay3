@@ -24,7 +24,7 @@
                     Width="350">
 
             <TextBlock Text="Название организации"/>
-            <TextBox x:Name="Name"/>
+            <TextBox x:Name="NameOrg"/>
             <Label Name="NameError" Foreground="Red"/>
 
             <TextBlock Text="Дата формирования"/>

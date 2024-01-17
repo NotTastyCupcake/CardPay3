@@ -63,8 +63,7 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
             // commands
             RoutingAddEmployeeCommand = ReactiveCommand.Create(CreateEmploye());
             RoutingDeleteEmployeeCommand = ReactiveCommand.Create(DeleteEmploye());
-            //TODO: Добавить редактирование сотрудника
-            //RoutingEditEmployeeCommand = ReactiveCommand.Create(EditEmploye());
+            RoutingEditEmployeeCommand = ReactiveCommand.Create(EditEmploye());
             ExportEmployeeCommand = ReactiveCommand.Create(ExportEmployee());
         }
 
@@ -105,6 +104,23 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
             };
         }
 
+        private Action EditEmploye()
+        {
+            return async delegate ()
+            {
+                if(SelectedEmploye == null)
+                {
+
+                
+                }
+                else
+                {
+                    var vm = Locator.Current.GetService<EditEmployeeViewModel>();
+                    vm.GetEmployeeToEdit(SelectedEmploye);
+                    await HostScreen.Router.Navigate.Execute(vm);
+                }
+            };
+        }
 
         private Action ExportEmployee()
         {

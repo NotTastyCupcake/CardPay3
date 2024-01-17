@@ -63,22 +63,22 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
         }
 
         #region ФИО Сотрудника
-        public string LastName { get; private set; }
-        public string FirstName { get; private set; }
-        public string MiddleName { get; private set; }
+        public string LastName { get; set; }
+        public string FirstName { get; set; }
+        public string MiddleName { get; set; }
 
         public string FullName => $"{LastName} {FirstName} {MiddleName}";
         #endregion
 
-        public DateTime BirthdayDate { get; private set; }
+        public DateTime BirthdayDate { get; set; }
         /// <summary>
         /// Резидентность
         /// </summary>
-        public bool Resident { get; private set; }
+        public bool Resident { get; set; }
         /// <summary>
         /// Гражданство
         /// </summary>
-        public string Nationality { get; private set; }
+        public string Nationality { get; set; }
 
         /// <summary>
         /// Номер участника в бонус программе.
@@ -90,19 +90,19 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
         /// <summary>
         /// Личный телефон
         /// </summary>
-        public string PhoneNumber { get; private set; }
+        public string PhoneNumber { get; set; }
         /// <summary>
         /// Рабочий телефон
         /// </summary>
-        public string JobPhoneNumber { get; private set; }
-        public string Position { get; private set; }
-        public string DepartmentNum { get; private set; }
+        public string JobPhoneNumber { get; set; }
+        public string Position { get; set; }
+        public string DepartmentNum { get; set; }
         public string EMail { get; set; }
         #endregion
 
         #region Ссылка на объект
 #nullable enable
-        public int IdGender { get; private set; }
+        public int IdGender { get; set; }
         public virtual Gender Gender { get; set; }
 
         /// <summary>

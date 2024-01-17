@@ -3,10 +3,6 @@
     public interface IRequisitesItem
     {
         string AccountNumber { get; }
-        BankCardType CardType { get; }
-        BankCurrency Currency { get; }
-        BankDivision Division { get; }
-        Employee Employee { get; }
         int? IdCardType { get; }
         int IdCurrency { get; }
         int IdDivision { get; }

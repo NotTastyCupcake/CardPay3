@@ -61,7 +61,7 @@ namespace Metcom.CardPay3.WpfApplication.Views.Employes
 
 
                 this.Bind(this.ViewModel,
-                    vm => vm.BirthdayDate,
+                    vm => vm.BirthdayDateSelector,
                     view => view.BirthdayDatePicker.SelectedDate)
                     .DisposeWith(disposable);
 

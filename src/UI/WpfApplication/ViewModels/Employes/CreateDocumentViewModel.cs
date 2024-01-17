@@ -13,90 +13,38 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
 {
-    public class CreateDocumentViewModel : ReactiveValidationObject, IRoutableViewModel, IDocumentItem
+    public class CreateDocumentViewModel : DocumentViewModel, IRoutableViewModel
     {
         public string UrlPathSegment { get { return "CreateDocument"; } }
         public IScreen HostScreen { get; protected set; }
 
-        private readonly IDocumentViewModelService _service;
-        private readonly IEmployeeBuilder _builder;
-
         public CreateDocumentViewModel(
             IDocumentViewModelService service,
             IEmployeeBuilder builder,
-            IScreen screen = null)
+            IScreen screen = null) : base(service, builder)
         {
-            _service = service;
-            _builder = builder;
-
             HostScreen = screen;
 
-            Validation();
-
-            CreateCommand = ReactiveCommand.Create(delegate ()
+            CreateCommand = ReactiveCommand.CreateFromTask( async () =>
             {
+
                 var doc = new DocumentItem(this);
-
                 Document = doc;
-
+                await _builder.SetDocument(Document);
                 HostScreen.Router.NavigateBack.Execute();
 
             }, this.IsValid());
-
-            Task.Run(async () => await Initialize());
-
-            this.WhenAnyValue(vm => vm.SelectedType).Subscribe(_ => IdType = SelectedType?.Id ?? 0);
-        }
-
-        private void Validation()
-        {
-            this.ValidationRule(
-                viewModel => viewModel.SelectedType,
-                item => item != null,
-                "Тип документа должнен быть заполнен обязательно");
-
-            this.ValidationRule(
-                viewModel => viewModel.DataIssued,
-                item => item.HasValue,
-                "Дата должнена быть заполнена обязательно");
-        }
-
-        private async Task Initialize()
-        {
-            Types = await _service.GetDocumentTypes();
         }
 
         public ReactiveCommand<Unit, Unit> CreateCommand { get; }
 
-        #region Model
-        [Reactive]
-        public DocumentType SelectedType { get; set; }
 
-        [Reactive]
-        public int IdType { get; set; }
-
-        [Reactive]
-        public string Series { get; set; }
-        [Reactive]
-        public string Number { get; set; }
-        [Reactive]
-        public DateTime? DataIssued { get; set; }
-        [Reactive]
-        public string IssuedBy { get; set; }
-        [Reactive]
-        public string SubdivisionCode { get; set; }
-        #endregion
-
-        [Reactive]
-        public ReadOnlyObservableCollection<DocumentType> Types { get; set; }
-
-        [Reactive]
-        public DocumentItem Document { get; set; }
 
     }
 }

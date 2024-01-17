@@ -8,7 +8,7 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.DocumentAggregate
     public class DocumentItem : BaseEntity, IDocumentItem
     {
 
-        public string FullName => $"{Type?.Name ?? "<Нет типа>"}: {SubdivisionCode}";
+        public string FullName => $"{Series} {Number}";
 
         /// <summary>
         /// Вид документа, удостоверяющего личность.

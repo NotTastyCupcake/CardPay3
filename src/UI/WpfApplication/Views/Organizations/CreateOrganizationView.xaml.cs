@@ -20,7 +20,7 @@ namespace Metcom.CardPay3.WpfApplication.Views.Organization
             {
                 this.Bind(this.ViewModel,
                     vm => vm.Name,
-                    view => view.Name.Text)
+                    view => view.NameOrg.Text)
                     .DisposeWith(disposable);
 
                 this.BindValidation(this.ViewModel,
