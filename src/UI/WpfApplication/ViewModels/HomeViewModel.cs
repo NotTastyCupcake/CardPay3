@@ -10,6 +10,7 @@ using ReactiveUI.Validation.Helpers;
 using Splat;
 using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
@@ -21,6 +22,8 @@ public class HomeViewModel : ReactiveObject, IScreen
     private readonly IRepository<Organization> _repository;
     private readonly ILogger<HomeViewModel> _logger;
     private readonly IHomeViewModelService _viewModelService;
+
+    //private IObservable<bool> canGoBack;
 
     public HomeViewModel(
         IRepository<Organization> repository,
@@ -49,13 +52,13 @@ public class HomeViewModel : ReactiveObject, IScreen
 
         var canGoBack = this
             .WhenAnyValue(x => x.Router.NavigationStack.Count)
-            .Select(count => count > 1);
+        .Select(count => count > 1);
 
         RoutingGoBackCommand = ReactiveCommand.CreateFromObservable(() => 
             { 
                 return Router.NavigateBack.Execute(Unit.Default); 
             },
-            Observable.Merge(canDeleteOrg, canGoBack));
+            canGoBack);
 
         RoutingCommand = ReactiveCommand.Create<string>(ExecuteSidebar);
 
@@ -79,11 +82,6 @@ public class HomeViewModel : ReactiveObject, IScreen
         if(Organizations.Count > 1)
         {
             await Router.Navigate.Execute(Locator.Current.GetService<MenuViewModel>());
-        }
-        else
-        {
-            await Router.Navigate.Execute(Locator.Current.GetService<MenuViewModel>());
-            await Router.Navigate.Execute(Locator.Current.GetService<CreateOrganizationViewModel>());
         }
         
     }

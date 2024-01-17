@@ -1,4 +1,5 @@
 ﻿using Castle.Core.Internal;
+using DynamicData;
 using Metcom.CardPay3.ApplicationCore.Entities;
 using Metcom.CardPay3.ApplicationCore.Entities.AccrualAggregate;
 using Metcom.CardPay3.ApplicationCore.Interfaces;
@@ -68,8 +69,17 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
                 var home = Locator.Current.GetService<HomeViewModel>();
                 home.Organizations.Add(item);
                 home.SelectedOrganization = item;
+                
 
-                HostScreen.Router.NavigateBack.Execute();
+                if(HostScreen.Router.NavigationStack.Count == 1)
+                {
+                    HostScreen.Router.Navigate.Execute(Locator.Current.GetService<MenuViewModel>());
+                }
+                else
+                {
+                    HostScreen.Router.NavigateBack.Execute();
+                }
+
             }, this.IsValid());
 
         }
