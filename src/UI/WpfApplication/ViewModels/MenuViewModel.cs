@@ -21,19 +21,11 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
                 HostScreen.Router.Navigate.Execute(EmployeeListViewModel);
             });
 
-            SelectedOrganization = Locator.Current.GetService<HomeViewModel>().SelectedOrganization;
-
-            
         }
         #region commands
         public ReactiveCommand<Unit, Unit> RoutingEmployeeCommand { get; }
         public ReactiveCommand<Unit, Unit> RoutingAccrualCommand { get; }
         #endregion
-
-        [Reactive]
-        public Organization SelectedOrganization { get; set; }
-        [Reactive]
-        public bool IsRealOrganization { get; set; }
 
         public EmployeeListViewModel EmployeeListViewModel { get; set; }
 

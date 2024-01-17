@@ -74,6 +74,7 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
                 if(HostScreen.Router.NavigationStack.Count == 1)
                 {
                     HostScreen.Router.Navigate.Execute(Locator.Current.GetService<MenuViewModel>());
+                    HostScreen.Router.NavigationStack.Remove(this);
                 }
                 else
                 {

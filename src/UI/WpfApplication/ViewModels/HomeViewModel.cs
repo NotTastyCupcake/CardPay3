@@ -23,8 +23,6 @@ public class HomeViewModel : ReactiveObject, IScreen
     private readonly ILogger<HomeViewModel> _logger;
     private readonly IHomeViewModelService _viewModelService;
 
-    //private IObservable<bool> canGoBack;
-
     public HomeViewModel(
         IRepository<Organization> repository,
         ILogger<HomeViewModel> logger,
@@ -51,8 +49,8 @@ public class HomeViewModel : ReactiveObject, IScreen
             .Select(count => count > 1);
 
         var canGoBack = this
-            .WhenAnyValue(x => x.Router.NavigationStack.Count)
-        .Select(count => count > 1);
+            .WhenAnyValue(x => x.Router.NavigationStack.Count, x => x.Organizations.Count)
+        .Select(count => count.Item1 > 1 && count.Item2 > 1);
 
         RoutingGoBackCommand = ReactiveCommand.CreateFromObservable(() => 
             { 
@@ -90,6 +88,7 @@ public class HomeViewModel : ReactiveObject, IScreen
 
     #region commands
     public ReactiveCommand<Unit, Unit> RoutingCreateOrganizationCommand { get; }
+
     public ReactiveCommand<Unit, IRoutableViewModel> RoutingGoBackCommand { get; }
 
     public ReactiveCommand<string, Unit> RoutingCommand { get; }
