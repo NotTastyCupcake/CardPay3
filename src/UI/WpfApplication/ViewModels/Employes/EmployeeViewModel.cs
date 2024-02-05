@@ -55,6 +55,7 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
             Task.Run(() => Initialize());
 
             this.WhenAnyValue(vm => vm.BirthdayDateSelector).Subscribe(vm => BirthdayDate = vm.HasValue ? vm.Value : DateTime.MinValue);
+            this.WhenAnyValue(vm => vm.ResidentView).Subscribe(vm => Resident = vm.HasValue ? vm.Value : false);
         }
 
         private async Task Initialize()
@@ -89,6 +90,11 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
                 viewModel => viewModel.Document,
                 item => item != null,
                 "Документ должен быть заполнен обязательно");
+
+            this.ValidationRule(
+                viewModel => viewModel.ResidentView,
+                item => item != null,
+                "Резидентность должна быть заполнена обязательно");
         }
 
         #region property
@@ -134,8 +140,12 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
         public string Position { get; set; }
         [Reactive]
         public ICollection<RequisitesItem> Requisites { get; set; }
+
         [Reactive]
         public bool Resident { get; set; }
+        [Reactive]
+        public bool? ResidentView { get; set; }
+
         [Reactive]
         public EmployeeType Type { get; set; }
         #endregion

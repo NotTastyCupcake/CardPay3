@@ -43,7 +43,9 @@
             <TextBox Name="Position" />
             <TextBlock Text="Номер депортамента"/>
             <TextBox Name="DepartmentNum" />
-
+            <TextBlock/>
+            <CheckBox Name="Resident" Content="Резидентность"/>
+            <Label Name="ResidentError" Foreground="Red"/>
             <!--<TextBlock Text="Аддресс"/>
             <Button Name="CreateDocument" Height="20" Content="Создать"/>-->
 

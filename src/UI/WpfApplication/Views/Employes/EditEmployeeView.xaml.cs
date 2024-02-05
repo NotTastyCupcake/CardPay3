@@ -90,6 +90,11 @@ namespace Metcom.CardPay3.WpfApplication.Views.Employes
                     .DisposeWith(disposable);
 
 
+                this.Bind(this.ViewModel,
+                    vm => vm.ResidentView,
+                    view => view.Resident.IsChecked)
+                    .DisposeWith(disposable);
+
                 //this.Bind(this.ViewModel,
                 //    vm => vm.Employee.Addresses.FirstOrDefault().FullName,
                 //    view => view.AddressTextBlock.Text)
@@ -128,13 +133,18 @@ namespace Metcom.CardPay3.WpfApplication.Views.Employes
                     .DisposeWith(disposable);
 
                 this.BindValidation(this.ViewModel,
-                    vm => vm.BirthdayDate,
+                    vm => vm.BirthdayDateSelector,
                     view => view.BirthdayError.Content)
                     .DisposeWith(disposable);
 
                 this.BindValidation(this.ViewModel,
                     vm => vm.Document,
                     view => view.DocumentError.Content)
+                    .DisposeWith(disposable);
+
+                this.BindValidation(this.ViewModel,
+                    vm => vm.ResidentView,
+                    view => view.ResidentError.Content)
                     .DisposeWith(disposable);
 
                 /* Привязка команд к кнопкам */
