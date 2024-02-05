@@ -160,6 +160,9 @@ public partial class App// : Application
         services.AddTransient<IViewFor<CreateEmployeeViewModel>, CreateEmployeeView>();
         services.AddTransient<CreateEmployeeViewModel>();
 
+        services.AddTransient<IViewFor<EditEmployeeViewModel>, EditEmployeeView>();
+        services.AddTransient<EditEmployeeViewModel>();
+
         services.AddTransient<IViewFor<CreateDocumentViewModel>, CreateDocumentView>();
         services.AddTransient<CreateDocumentViewModel>();
     }

@@ -39,6 +39,9 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
 
             EditEmployeeCommand = ReactiveCommand.CreateFromTask(async () =>
             {
+                SetEmployee();
+                await repository.UpdateAsync(Employee);
+                await repository.SaveChangesAsync();
                 HostScreen.Router.NavigateBack.Execute();
 
             }, this.IsValid);
@@ -77,10 +80,31 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
             IdDocument = employee.IdDocument;
             Organization = employee.Organization;
             IdOrganization = employee.IdOrganization;
+
+            Employee = employee;
+        }
+
+        private void SetEmployee()
+        {
+            Employee.LastName = LastName;
+            Employee.FirstName = FirstName;
+            Employee.MiddleName = MiddleName;
+            Employee.BirthdayDate = BirthdayDate;
+            Employee.Resident = Resident;
+            Employee.Nationality = Nationality;
+            Employee.PhoneNumber = PhoneNumber;
+            Employee.JobPhoneNumber = JobPhoneNumber;
+            Employee.Position = Position;
+            Employee.DepartmentNum = DepartmentNum;
+            Employee.Gender = Gender;
+            Employee.IdGender = IdGender;
+            Employee.Document = Document;
+            Employee.IdDocument = IdDocument;
+            Employee.Organization = Organization;
+            Employee.IdOrganization = IdOrganization;
         }
 
         public Employee Employee { get; set; }
-        public int Id { get; set; }
 
     }
 }
