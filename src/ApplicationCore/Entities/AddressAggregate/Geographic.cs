@@ -6,9 +6,9 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.AddressAggregate
 {
     public class Geographic
     {
-        public string Name { get; private set; }
-        public string ShortName { get; private set; }
-        public int? Code { get; private set; }
+        public string Name { get; set; }
+        public string ShortName { get; set; }
+        public int? Code { get; set; }
 
         public Geographic(string name, string shortName, int? code = null)
         {
