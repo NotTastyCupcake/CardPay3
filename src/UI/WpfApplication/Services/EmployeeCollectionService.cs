@@ -26,8 +26,8 @@ namespace Metcom.CardPay3.WpfApplication.Services
             // Load the initial data from the database
             LoadEmployees();
 
-            // Subscribe to the changes in the database every 2 seconds
-            Observable.Interval(TimeSpan.FromSeconds(2), RxApp.TaskpoolScheduler)
+            // Subscribe to the changes in the database every 5 seconds
+            Observable.Interval(TimeSpan.FromSeconds(5), RxApp.TaskpoolScheduler)
                 .SelectMany(_ => _repository.ListAsync())
                 .Subscribe(employees =>
                 {

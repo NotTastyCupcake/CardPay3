@@ -6,6 +6,12 @@
         xmlns:vms="clr-namespace:Metcom.CardPay3.WpfApplication.ViewModels"
         xmlns:reactiveui="http://reactiveui.net"
         x:TypeArguments="vms:HomeViewModel"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.FontWeight="Medium"
+        TextElement.FontSize="14"
+        FontFamily="{materialDesign:MaterialDesignFont}"
         xmlns:local="clr-namespace:Metcom.CardPay3.WpfApplication.Views"
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="800" ShowInTaskbar="True">
@@ -25,7 +31,7 @@
         </Menu>-->
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="35"></RowDefinition>
+            <RowDefinition Height="55"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
 
@@ -36,7 +42,7 @@
             Grid.ColumnSpan="2"
             DisplayMemberPath="Name" 
             SelectedValuePath="Id" 
-            Width="300" Height="20" 
+            Width="300" Height="30" 
             HorizontalAlignment="Right" 
             VerticalAlignment="Top"
             Margin="0,10,10,0"/>
@@ -49,25 +55,26 @@
             Content="Удалить" 
             HorizontalAlignment="Right" 
             VerticalAlignment="Top"
-            Width="50" Height="20" 
+            Width="150" Height="30" 
             Margin="0,10,315,5"/>
 
         <Button 
             x:Name ="GoBackButton" 
             Grid.Row="0"
             Grid.Column="0"
-            Content="Назад" 
+            Content= "{materialDesign:PackIcon ChevronLeft}"
+            Style="{DynamicResource MaterialDesignToolButton}"
+            ToolTip="Icon"
             HorizontalAlignment="Left" 
-            Width="200" Height="20" 
+            Width="50" Height="30" 
             VerticalAlignment="Top" 
             Margin="10,10,0,0"/>
-
-
 
         <reactiveui:RoutedViewHost
             x:Name="RoutedViewHost"
             HorizontalContentAlignment="Stretch"
-            VerticalContentAlignment="Stretch" Margin="0,35,0,0" Grid.RowSpan="2" />
+            VerticalContentAlignment="Stretch" 
+            Grid.Row="1" />
 
     </Grid>
 </reactiveui:ReactiveWindow>
