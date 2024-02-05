@@ -13,7 +13,7 @@ namespace Metcom.CardPay3.Infrastructure.Data.Config
             builder.HasKey(ci => ci.Id);
 
             builder.HasOne(ci => ci.Type)
-                .WithMany(e => e.Documents)
+                .WithMany()
                 .HasForeignKey(d => d.IdType)
                 .IsRequired(true);
 

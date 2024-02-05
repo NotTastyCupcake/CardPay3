@@ -9,6 +9,6 @@ namespace Metcom.CardPay3.ApplicationCore.Interfaces
         /// </summary>
         /// <param name="format">Формат файла</param>
         /// <param name="path">Путь до файла</param>
-        Task ExportDataAsync(string format, string path);
+        Task ExportDataAsync(string format, string path, int organizationId);
     }
 }

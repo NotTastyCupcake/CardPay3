@@ -1,4 +1,6 @@
-﻿using Metcom.CardPay3.ApplicationCore.Interfaces;
+﻿using Metcom.CardPay3.ApplicationCore.Entities;
+using Metcom.CardPay3.ApplicationCore.Interfaces;
+using Metcom.CardPay3.ApplicationCore.Specifications;
 using Metcom.CardPay3.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -11,19 +13,20 @@ namespace Metcom.CardPay3.Infrastructure.Services
     public class DataExportService : IDataExportService
     {
         // Контекст базы данных
-        private readonly EmployeContext _context;
+        private readonly IRepository<Employee> _repository;
 
         // Конструктор, который принимает контекст базы данных
-        public DataExportService(EmployeContext context)
+        public DataExportService(IRepository<Employee> repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
         // Метод для выгрузки данных в файл
-        public async Task ExportDataAsync(string format, string path)
+        public async Task ExportDataAsync(string format, string path, int organizationId)
         {
             // Получаем данные из базы данных
-            var data = await _context.Employers.ToListAsync();
+            var spec = new EmployesSpecification(organizationId: organizationId);
+            var data = await _repository.ListAsync(spec);
 
             // Создаем поток для записи в файл
             using (var stream = File.Create(path))

@@ -6,7 +6,6 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
 {
     public class Organization : BaseEntity, IOrganization
     {
-        public virtual ICollection<Employee> Employes { get; private set; }
         /// <summary>
         /// Дата формирования
         /// </summary>

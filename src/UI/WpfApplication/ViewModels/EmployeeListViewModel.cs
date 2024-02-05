@@ -52,7 +52,7 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
 
             employeCollectionService.All.Connect()
                 .Sort(SortExpressionComparer<Employee>.Ascending(t => t.FullName))
-                .Filter(e => e.Organization == SelectedOrganization)
+                .Filter(e => e.Organization == Locator.Current.GetService<HomeViewModel>().SelectedOrganization)
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Bind(out bindingData)
                 .Subscribe();
@@ -131,7 +131,10 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
                 //"|Расширяемый язык разметки(*.xml)| *.xml"; //Не понятно как преобразовать List<Employe> в XML без атребутов
                 if (saveFile.ShowDialog() == true)
                 {
-                    await _exportService.ExportDataAsync(saveFile.SafeFileName.Split('.').LastOrDefault(), saveFile.FileName);
+                    await _exportService.ExportDataAsync(
+                        saveFile.SafeFileName.Split('.').LastOrDefault(), 
+                        saveFile.FileName, 
+                        Locator.Current.GetService<HomeViewModel>().SelectedOrganization.Id);
                 }
             };
         }

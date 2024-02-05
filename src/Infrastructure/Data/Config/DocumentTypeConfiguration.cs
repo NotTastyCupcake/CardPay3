@@ -17,10 +17,6 @@ namespace Metcom.CardPay3.Infrastructure.Data.Config
 
             builder.Property(ci => ci.Name)
                 .IsRequired(true);
-
-            builder
-                .HasMany(c => c.Documents)
-                .WithOne(e => e.Type);
         }
     }
 }
