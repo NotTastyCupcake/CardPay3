@@ -66,7 +66,7 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
                 await _repositoryOrganization.AddAsync(item);
                 await _repositoryOrganization.SaveChangesAsync();
 
-                var home = Locator.Current.GetService<HomeViewModel>();
+                var home = Locator.Current.GetService<ShallViewModel>();
                 home.Organizations.Add(item);
                 home.SelectedOrganization = item;
                 

@@ -96,7 +96,7 @@ public partial class App// : Application
     {
         await _host.StartAsync();
 
-        var mainWindow = _host.Services.GetRequiredService<IViewFor<HomeViewModel>>();
+        var mainWindow = _host.Services.GetRequiredService<IViewFor<ShallViewModel>>();
         if (mainWindow is ShellWindow window)
         {
             window.Show();
@@ -142,9 +142,9 @@ public partial class App// : Application
         services.AddTransient<IDataExportService, DataExportService>();
 
         // register your personal services here, for example
-        services.AddSingleton<HomeViewModel>(); //Implements IScreen
-        services.AddSingleton<IScreen, HomeViewModel>(x => x.GetRequiredService<HomeViewModel>());
-        services.AddSingleton<IViewFor<HomeViewModel>, ShellWindow>();
+        services.AddSingleton<ShallViewModel>(); //Implements IScreen
+        services.AddSingleton<IScreen, ShallViewModel>(x => x.GetRequiredService<ShallViewModel>());
+        services.AddSingleton<IViewFor<ShallViewModel>, ShellWindow>();
 
         //alternatively search assembly for `IRoutedViewFor` implementations
         //see https://reactiveui.net/docs/handbook/routing to learn more about routing in RxUI

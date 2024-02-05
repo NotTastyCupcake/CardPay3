@@ -48,7 +48,7 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
 
             CreateEmployeeCommand = ReactiveCommand.CreateFromTask(async () =>
             {
-                await _builder.SetOrganization(Locator.Current.GetService<HomeViewModel>().SelectedOrganization.Id);
+                await _builder.SetOrganization(Locator.Current.GetService<ShallViewModel>().SelectedOrganization.Id);
                 await _builder.SetGender(Gender.Id);
                 await _builder.SetDocument(Document);
                 await _builder.SetEmployee(this);

@@ -45,14 +45,14 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
 
             HostScreen = screen;
 
-            SelectedOrganization = Locator.Current.GetService<HomeViewModel>().SelectedOrganization;
+            SelectedOrganization = Locator.Current.GetService<ShallViewModel>().SelectedOrganization;
 
             //Init collection
             ReadOnlyObservableCollection<Employee> bindingData;
 
             employeCollectionService.All.Connect()
                 .Sort(SortExpressionComparer<Employee>.Ascending(t => t.FullName))
-                .Filter(e => e.Organization == Locator.Current.GetService<HomeViewModel>().SelectedOrganization)
+                .Filter(e => e.Organization == Locator.Current.GetService<ShallViewModel>().SelectedOrganization)
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Bind(out bindingData)
                 .Subscribe();
@@ -134,7 +134,7 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
                     await _exportService.ExportDataAsync(
                         saveFile.SafeFileName.Split('.').LastOrDefault(), 
                         saveFile.FileName, 
-                        Locator.Current.GetService<HomeViewModel>().SelectedOrganization.Id);
+                        Locator.Current.GetService<ShallViewModel>().SelectedOrganization.Id);
                 }
             };
         }

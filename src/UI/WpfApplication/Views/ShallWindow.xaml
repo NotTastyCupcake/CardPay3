@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vms="clr-namespace:Metcom.CardPay3.WpfApplication.ViewModels"
         xmlns:reactiveui="http://reactiveui.net"
-        x:TypeArguments="vms:HomeViewModel"
+        x:TypeArguments="vms:ShallViewModel"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"

@@ -8,12 +8,12 @@ namespace Metcom.CardPay3.WpfApplication;
 /// <summary>
 /// Interaction logic for MainWindow.xaml
 /// </summary>
-public partial class ShellWindow : IViewFor<HomeViewModel>
+public partial class ShellWindow : IViewFor<ShallViewModel>
 {
 
-    public ShellWindow(HomeViewModel viewModel = null)
+    public ShellWindow(ShallViewModel viewModel = null)
     {
-        ViewModel = viewModel ?? Locator.Current.GetService<HomeViewModel>();
+        ViewModel = viewModel ?? Locator.Current.GetService<ShallViewModel>();
         DataContext = ViewModel;
 
         InitializeComponent();

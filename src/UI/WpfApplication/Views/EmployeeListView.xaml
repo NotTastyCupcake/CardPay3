@@ -51,7 +51,7 @@
                 </ListView>
             </TabItem>
             
-            <TabItem Name="PersonsStat">
+            <!--<TabItem Name="PersonsStat">
                 <TabItem.Header>
                     <TextBlock Text="Статистика"/>
                 </TabItem.Header>
@@ -59,12 +59,12 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Width="auto">
-                    <!--<TextBlock Text="AVARAGE_SALARY"/>
-                    <TextBlock Text="{Binding AverageSalary}"/>-->
+                    --><!--<TextBlock Text="AVARAGE_SALARY"/>
+                    <TextBlock Text="{Binding AverageSalary}"/>--><!--
                     <TextBlock Text="Количество сотрудников:"/>
                     <TextBlock Text="{Binding Employes.Count, Mode=OneWay}"/>
                 </StackPanel>
-            </TabItem>
+            </TabItem>-->
             
         </TabControl>
 

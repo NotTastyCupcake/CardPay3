@@ -17,21 +17,21 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.WpfApplication.ViewModels;
-public class HomeViewModel : ReactiveObject, IScreen
+public class ShallViewModel : ReactiveObject, IScreen
 {
     private readonly IRepository<Organization> _repository;
-    private readonly ILogger<HomeViewModel> _logger;
+    private readonly ILogger<ShallViewModel> _logger;
     private readonly IHomeViewModelService _viewModelService;
 
-    public HomeViewModel(
+    public ShallViewModel(
         IRepository<Organization> repository,
-        ILogger<HomeViewModel> logger,
+        ILogger<ShallViewModel> logger,
         IHomeViewModelService viewModelService)
     {
         Router = new RoutingState();
 
         _repository = repository ?? Locator.Current.GetService<IRepository<Organization>>();
-        _logger = logger ?? Locator.Current.GetService<ILogger<HomeViewModel>>();
+        _logger = logger ?? Locator.Current.GetService<ILogger<ShallViewModel>>();
         _viewModelService = viewModelService ?? Locator.Current.GetService<IHomeViewModelService>();
 
         //this.ValidationRule(
