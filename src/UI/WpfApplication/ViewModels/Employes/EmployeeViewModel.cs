@@ -78,17 +78,17 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
             this.ValidationRule(
                 viewModel => viewModel.BirthdayDateSelector,
                 item => item.HasValue && item.Value != DateTime.MinValue && item.Value != DateTime.Today,
-                "Дата рождения должна быть заполнена обязаительно");
+                "Дата рождения должна быть заполнена обязательно");
 
             this.ValidationRule(
                 viewModel => viewModel.Gender,
                 item => item != null,
-                "Гендер должен быть заполнен обязаительно");
+                "Гендер должен быть заполнен обязательно");
 
             this.ValidationRule(
                 viewModel => viewModel.Document,
                 item => item != null,
-                "Документ должен быть заполнен обязаительно");
+                "Документ должен быть заполнен обязательно");
         }
 
         #region property
