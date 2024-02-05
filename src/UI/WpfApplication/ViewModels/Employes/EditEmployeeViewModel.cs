@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Reactive;
 using Splat;
 using Metcom.CardPay3.Infrastructure.Data;
+using Metcom.CardPay3.WpfApplication.ViewModels.Employes.DocumentCRUD;
 
 namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
 {

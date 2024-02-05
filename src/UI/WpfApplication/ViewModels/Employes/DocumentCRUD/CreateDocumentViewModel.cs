@@ -1,23 +1,16 @@
-﻿using Metcom.CardPay3.ApplicationCore.Entities;
-using Metcom.CardPay3.ApplicationCore.Entities.DocumentAggregate;
-using Metcom.CardPay3.ApplicationCore.Interfaces;
-using Metcom.CardPay3.ApplicationCore.Interfaces.ServicesInterfaces.Builder;
+﻿using Metcom.CardPay3.ApplicationCore.Interfaces.ServicesInterfaces.Builder;
 using Metcom.CardPay3.WpfApplication.Interfaces;
-using ReactiveUI;
-using ReactiveUI.Fody.Helpers;
 using ReactiveUI.Validation.Extensions;
-using ReactiveUI.Validation.Helpers;
-using Splat;
+using ReactiveUI;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive;
-using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
+using Metcom.CardPay3.ApplicationCore.Entities.DocumentAggregate;
 
-namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
+namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes.DocumentCRUD
 {
     public class CreateDocumentViewModel : DocumentViewModel, IRoutableViewModel
     {
@@ -31,7 +24,7 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
         {
             HostScreen = screen;
 
-            CreateCommand = ReactiveCommand.CreateFromTask( async () =>
+            CreateCommand = ReactiveCommand.CreateFromTask(async () =>
             {
 
                 var doc = new DocumentItem(this);
@@ -43,7 +36,6 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
         }
 
         public ReactiveCommand<Unit, Unit> CreateCommand { get; }
-
 
 
     }

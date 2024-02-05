@@ -24,6 +24,7 @@ using Metcom.CardPay3.ApplicationCore.Entities.AddressAggregate;
 using Metcom.CardPay3.ApplicationCore.Entities.DocumentAggregate;
 using Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate;
 using System.Reflection.Metadata;
+using Metcom.CardPay3.WpfApplication.ViewModels.Employes.DocumentCRUD;
 
 namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
 {

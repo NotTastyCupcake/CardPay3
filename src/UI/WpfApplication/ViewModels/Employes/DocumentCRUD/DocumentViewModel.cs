@@ -12,7 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
+namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes.DocumentCRUD
 {
     public class DocumentViewModel : ReactiveValidationObject, IDocumentItem
     {
@@ -25,7 +25,7 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
             IDocumentViewModelService service,
             IEmployeeBuilder builder)
         {
-            IsValid = ValidatableViewModelExtensions.IsValid(this);
+            IsValid = this.IsValid();
 
             _service = service;
             _builder = builder;

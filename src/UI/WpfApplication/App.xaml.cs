@@ -10,6 +10,7 @@ using Metcom.CardPay3.WpfApplication.Interfaces;
 using Metcom.CardPay3.WpfApplication.Services;
 using Metcom.CardPay3.WpfApplication.ViewModels;
 using Metcom.CardPay3.WpfApplication.ViewModels.Employes;
+using Metcom.CardPay3.WpfApplication.ViewModels.Employes.DocumentCRUD;
 using Metcom.CardPay3.WpfApplication.Views;
 using Metcom.CardPay3.WpfApplication.Views.Employes;
 using Metcom.CardPay3.WpfApplication.Views.Organization;

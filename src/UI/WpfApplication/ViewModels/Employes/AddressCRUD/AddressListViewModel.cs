@@ -15,7 +15,7 @@ using System.Diagnostics.Metrics;
 using DynamicData;
 using System.Reactive.Linq;
 
-namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
+namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes.AddressCRUD
 {
     public class AddressListViewModel : ReactiveObject, IRoutableViewModel
     {

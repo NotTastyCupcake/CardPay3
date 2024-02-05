@@ -1,4 +1,5 @@
 ﻿using Metcom.CardPay3.WpfApplication.ViewModels.Employes;
+using Metcom.CardPay3.WpfApplication.ViewModels.Employes.DocumentCRUD;
 using ReactiveUI;
 using ReactiveUI.Validation.Extensions;
 using Splat;
