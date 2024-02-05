@@ -40,6 +40,11 @@ public partial class ShellWindow : IViewFor<HomeViewModel>
             .DisposeWith(disposable);
 
             this.BindCommand(ViewModel,
+                vm => vm.RoutingCreateOrganizationCommand,
+                view => view.CreateOrganization)
+            .DisposeWith(disposable);
+
+            this.BindCommand(ViewModel,
                 vm => vm.DeleteOrganization,
                 view => view.DeleteOrganization)
             .DisposeWith(disposable);

@@ -39,14 +39,9 @@ public class HomeViewModel : ReactiveObject, IScreen
         //    item => item != null && item.Count > 1, "Не возможно удалить выбранную организацию");
 
         // commands
-        RoutingCreateOrganizationCommand = ReactiveCommand.Create(delegate ()
-        {
-            Router.Navigate.Execute(Locator.Current.GetService<CreateOrganizationViewModel>());
-        });
-
         var canDeleteOrg = this
-            .WhenAnyValue(x => x.Organizations.Count)
-            .Select(count => count > 1);
+            .WhenAnyValue(x => x.Organizations.Count, x => x.SelectedOrganization.Name)
+            .Select(obj => obj.Item1 > 1 && obj.Item2 != "Создать организацию.");
 
         var canGoBack = this
             .WhenAnyValue(x => x.Router.NavigationStack.Count, x => x.Organizations.Count)
@@ -54,6 +49,11 @@ public class HomeViewModel : ReactiveObject, IScreen
 
         RoutingGoBackCommand = ReactiveCommand.CreateFromObservable(() => 
             { 
+                if(SelectedOrganization.Name == "Создать организацию.")
+                {
+                    SelectedOrganization = Organizations.First(x => x.Name != "Создать организацию.");
+                }
+
                 return Router.NavigateBack.Execute(Unit.Default); 
             },
             canGoBack);
@@ -62,6 +62,11 @@ public class HomeViewModel : ReactiveObject, IScreen
 
 
         DeleteOrganization = ReactiveCommand.Create(DeleteSelectedOrg(), canDeleteOrg);
+
+        RoutingCreateOrganizationCommand = ReactiveCommand.Create(delegate ()
+        {
+            Router.Navigate.Execute(Locator.Current.GetService<CreateOrganizationViewModel>());
+        }, canDeleteOrg);
 
         Task.Run(() => Initialize());
 
