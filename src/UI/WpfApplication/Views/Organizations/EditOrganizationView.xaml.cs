@@ -7,11 +7,11 @@ using System.Reactive.Disposables;
 
 namespace Metcom.CardPay3.WpfApplication.Views.Organization
 {
-    public partial class CreateOrganizationView
+    public partial class EditOrganizationView
     {
-        public CreateOrganizationView(CreateOrganizationViewModel viewModel = null)
+        public EditOrganizationView(EditOrganizationViewModel viewModel = null)
         {
-            ViewModel = viewModel ?? Locator.Current.GetService<CreateOrganizationViewModel>();
+            ViewModel = viewModel ?? Locator.Current.GetService<EditOrganizationViewModel>();
             DataContext = ViewModel;
 
             InitializeComponent();
@@ -115,8 +115,8 @@ namespace Metcom.CardPay3.WpfApplication.Views.Organization
 
 
                 this.BindCommand(this.ViewModel,
-                    vm => vm.CreateCommand,
-                    view => view.Create
+                    vm => vm.EditCommand,
+                    view => view.EditButton
                     ).DisposeWith(disposable);
 
             });

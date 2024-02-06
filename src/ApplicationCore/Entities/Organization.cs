@@ -9,13 +9,13 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
         /// <summary>
         /// Дата формирования
         /// </summary>
-        public DateTime? CreateDate { get; private set; }
-        public string Name { get; private set; }
+        public DateTime? CreateDate { get; set; }
+        public string Name { get; set; }
         public string INN { get; set; }
         /// <summary>
         /// Номер договора
         /// </summary>
-        public string ApplicationNumber { get; private set; }
+        public string ApplicationNumber { get; set; }
         public DateTime? ApplicationDate { get; set; }
         public string Account { get; set; }
         /// <summary>
@@ -25,7 +25,7 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
         /// <summary> 
         /// Ид первичного документа
         /// </summary>
-        public string SourceId { get; private set; }
+        public string SourceId { get; set; }
 
         public Organization(DateTime createDate, string appNumber, string name, string sourceId)
         {

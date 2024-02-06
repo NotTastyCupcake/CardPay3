@@ -2,6 +2,7 @@
 using Metcom.CardPay3.ApplicationCore.Entities;
 using Metcom.CardPay3.ApplicationCore.Interfaces;
 using Metcom.CardPay3.WpfApplication.Interfaces;
+using Metcom.CardPay3.WpfApplication.ViewModels.Organizations;
 using Microsoft.Extensions.Logging;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -60,12 +61,18 @@ public class ShallViewModel : ReactiveObject, IScreen
 
         RoutingCommand = ReactiveCommand.Create<string>(ExecuteSidebar);
 
-
         DeleteOrganization = ReactiveCommand.Create(DeleteSelectedOrg(), canDeleteOrg);
 
         RoutingCreateOrganizationCommand = ReactiveCommand.Create(delegate ()
         {
             Router.Navigate.Execute(Locator.Current.GetService<CreateOrganizationViewModel>());
+        }, canDeleteOrg);
+
+        RoutingEditOrganizationCommand = ReactiveCommand.Create(delegate ()
+        {
+            var vm =  Locator.Current.GetService<EditOrganizationViewModel>();
+            vm.GetOrganizationToEdit(SelectedOrganization);
+            Router.Navigate.Execute(vm);
         }, canDeleteOrg);
 
         Task.Run(() => Initialize());
@@ -93,6 +100,7 @@ public class ShallViewModel : ReactiveObject, IScreen
 
     #region commands
     public ReactiveCommand<Unit, Unit> RoutingCreateOrganizationCommand { get; }
+    public ReactiveCommand<Unit, Unit> RoutingEditOrganizationCommand { get; }
 
     public ReactiveCommand<Unit, IRoutableViewModel> RoutingGoBackCommand { get; }
 
