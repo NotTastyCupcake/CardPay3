@@ -3,7 +3,6 @@ using DynamicData.Binding;
 using Metcom.CardPay3.ApplicationCore.Entities;
 using Metcom.CardPay3.ApplicationCore.Interfaces;
 using Metcom.CardPay3.WpfApplication.Interfaces;
-using Metcom.CardPay3.WpfApplication.ViewModels.Employes;
 using Microsoft.Extensions.Logging;
 using Microsoft.Win32;
 using ReactiveUI;
@@ -17,7 +16,7 @@ using System.Reactive;
 using System.Reactive.Linq;
 
 
-namespace Metcom.CardPay3.WpfApplication.ViewModels
+namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
 {
     public class EmployeeListViewModel : ReactiveObject, IRoutableViewModel
     {
@@ -77,7 +76,7 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
 
         private Action CreateEmploye()
         {
-            return delegate () 
+            return delegate ()
             {
                 var vm = Locator.Current.GetService<CreateEmployeeViewModel>();
 
@@ -108,10 +107,10 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
         {
             return async delegate ()
             {
-                if(SelectedEmploye == null)
+                if (SelectedEmploye == null)
                 {
 
-                
+
                 }
                 else
                 {
@@ -132,8 +131,8 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
                 if (saveFile.ShowDialog() == true)
                 {
                     await _exportService.ExportDataAsync(
-                        saveFile.SafeFileName.Split('.').LastOrDefault(), 
-                        saveFile.FileName, 
+                        saveFile.SafeFileName.Split('.').LastOrDefault(),
+                        saveFile.FileName,
                         Locator.Current.GetService<ShallViewModel>().SelectedOrganization.Id);
                 }
             };

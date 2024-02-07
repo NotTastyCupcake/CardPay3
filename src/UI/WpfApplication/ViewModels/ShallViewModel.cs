@@ -2,6 +2,7 @@
 using Metcom.CardPay3.ApplicationCore.Entities;
 using Metcom.CardPay3.ApplicationCore.Interfaces;
 using Metcom.CardPay3.WpfApplication.Interfaces;
+using Metcom.CardPay3.WpfApplication.ViewModels.Employes;
 using Metcom.CardPay3.WpfApplication.ViewModels.Organizations;
 using Microsoft.Extensions.Logging;
 using ReactiveUI;

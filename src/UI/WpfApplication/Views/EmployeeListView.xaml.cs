@@ -1,4 +1,4 @@
-﻿using Metcom.CardPay3.WpfApplication.ViewModels;
+﻿using Metcom.CardPay3.WpfApplication.ViewModels.Employes;
 using Splat;
 using System;
 

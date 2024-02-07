@@ -1,4 +1,5 @@
 ﻿using Metcom.CardPay3.ApplicationCore.Entities;
+using Metcom.CardPay3.WpfApplication.ViewModels.Employes;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using Splat;
