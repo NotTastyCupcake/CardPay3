@@ -54,6 +54,11 @@ public partial class ShellWindow : IViewFor<ShallViewModel>
                 view => view.DeleteOrganization)
             .DisposeWith(disposable);
 
+            this.BindCommand(ViewModel,
+                vm => vm.RoutingSettingsCommand,
+                view => view.Settings)
+            .DisposeWith(disposable);
+
             // routing
             this.OneWayBind(ViewModel,
                     x => x.Router,

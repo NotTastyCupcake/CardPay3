@@ -76,6 +76,11 @@ public class ShallViewModel : ReactiveObject, IScreen
             Router.Navigate.Execute(vm);
         }, canDeleteOrg);
 
+        RoutingSettingsCommand = ReactiveCommand.Create(delegate ()
+        {
+            Router.Navigate.Execute(Locator.Current.GetService<SettingsViewModel>());
+        });
+
         Task.Run(() => Initialize());
 
         this.WhenAnyValue(vm => vm.SelectedOrganization).Subscribe(_ => UpdateSelectedOrganization());
@@ -102,11 +107,14 @@ public class ShallViewModel : ReactiveObject, IScreen
     #region commands
     public ReactiveCommand<Unit, Unit> RoutingCreateOrganizationCommand { get; }
     public ReactiveCommand<Unit, Unit> RoutingEditOrganizationCommand { get; }
+    public ReactiveCommand<Unit, Unit> DeleteOrganization { get; }
+
+    public ReactiveCommand<Unit, Unit> RoutingSettingsCommand { get; }
 
     public ReactiveCommand<Unit, IRoutableViewModel> RoutingGoBackCommand { get; }
 
     public ReactiveCommand<string, Unit> RoutingCommand { get; }
-    public ReactiveCommand<Unit, Unit> DeleteOrganization { get; }
+    
 
 
     private Action DeleteSelectedOrg()

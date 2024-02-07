@@ -133,6 +133,7 @@ public partial class App// : Application
         services.AddScoped<IEmployeeViewModelService, EmployeeViewModelService>();
         services.AddScoped<IDocumentViewModelService, DocumentViewModelService>();
         services.AddScoped<IEmployeeCollectionService, EmployeeCollectionService>();
+        services.AddScoped<ISettingService, SettingService>();
 
         services.AddTransient<IEmployeeBuilder, EmployeeBuilder>();
         services.AddTransient<IEmployeeBuilderSendObj, EmployeeBuilder>();
@@ -152,18 +153,18 @@ public partial class App// : Application
         services.AddSingleton<IViewFor<MenuViewModel>, MenuView>();
         services.AddSingleton<MenuViewModel>();
 
+        services.AddSingleton<IViewFor<SettingsViewModel>, SettingsView>();
+        services.AddSingleton<SettingsViewModel>();
+
         services.AddTransient<IViewFor<CreateOrganizationViewModel>, CreateOrganizationView>();
         services.AddTransient<CreateOrganizationViewModel>();
-
         services.AddTransient<IViewFor<EditOrganizationViewModel>, EditOrganizationView>();
         services.AddTransient<EditOrganizationViewModel>();
 
         services.AddScoped<IViewFor<EmployeeListViewModel>, EmployeeListView>();
         services.AddScoped<EmployeeListViewModel>();
-
         services.AddTransient<IViewFor<CreateEmployeeViewModel>, CreateEmployeeView>();
         services.AddTransient<CreateEmployeeViewModel>();
-
         services.AddTransient<IViewFor<EditEmployeeViewModel>, EditEmployeeView>();
         services.AddTransient<EditEmployeeViewModel>();
 

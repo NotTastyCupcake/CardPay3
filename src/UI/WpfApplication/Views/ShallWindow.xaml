@@ -14,7 +14,7 @@
         FontFamily="{materialDesign:MaterialDesignFont}"
         xmlns:local="clr-namespace:Metcom.CardPay3.WpfApplication.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="800" ShowInTaskbar="True">
+        Title="MainWindow" Height="700" Width="800" ShowInTaskbar="True">
 
     <Window.Resources>
         
@@ -111,6 +111,12 @@
 
                 
                 <Separator />
+                
+                <MenuItem x:Name ="Settings" Header="Настройки">
+                    <MenuItem.Icon>
+                        <materialDesign:PackIcon Kind="Cog" />
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
 
         </Menu>
