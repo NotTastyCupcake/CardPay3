@@ -68,9 +68,9 @@
             
         </TabControl>
 
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
             <Button Content="Добавить сотрудника" Command="{Binding RoutingAddEmployeeCommand}"/>
-            <Button Content="Экспорт" Command="{Binding ExportEmployeeCommand}"/>
+            <Button Content="Экспорт" Margin="10,0,0,0" Command="{Binding ExportEmployeeCommand}"/>
         </StackPanel>
     </Grid>
 </reactiveUi:ReactiveUserControl>

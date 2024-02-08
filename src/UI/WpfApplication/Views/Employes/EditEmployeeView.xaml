@@ -28,11 +28,11 @@
             <TextBlock Text="Фамилия"/>
             <TextBox Name="LastNameBlock" />
             <Label Name="LastNameError" Foreground="Red"/>
+            <TextBlock Text="Отчество"/>
+            <TextBox Name="MiddleNameBlock" />
             <TextBlock Text="Дата рождения"/>
             <DatePicker Name="BirthdayDatePicker" IsTodayHighlighted="True"/>
             <Label Name="BirthdayError" Foreground="Red"/>
-            <TextBlock Text="Отчество"/>
-            <TextBox Name="MiddleNameBlock" />
             <TextBlock Text="Должность"/>
             <TextBox Name="PositionBlock"/>
             <TextBlock Text="Номер телефона"/>
@@ -95,11 +95,11 @@
             <TextBlock Text="Документ"/>
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="35"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition Width="100"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock x:Name="DocumentTextBlock" Text="Нет данных"/>
                 <Button Grid.Column="2" Name="CreateDocument" Content="Изменить"/>
@@ -109,11 +109,11 @@
             <TextBlock Text="Адресс"/>
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="35"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition Width="100"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock x:Name="AddressTextBlock" Text="Нет данных"/>
                 <Button Grid.Column="2" Name="CreateAddress" Content="Изменить"/>
