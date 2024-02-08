@@ -68,6 +68,8 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
             FirstName = employee.FirstName;
             MiddleName = employee.MiddleName;
             BirthdayDate = employee.BirthdayDate;
+            BirthdayDateSelected = employee.BirthdayDate;
+            ResidentSelected = employee.Resident;
             Resident = employee.Resident;
             Nationality = employee.Nationality;
             PhoneNumber = employee.PhoneNumber;

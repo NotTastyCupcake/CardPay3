@@ -54,8 +54,8 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
 
             Task.Run(() => Initialize());
 
-            this.WhenAnyValue(vm => vm.BirthdayDateSelector).Subscribe(vm => BirthdayDate = vm.HasValue ? vm.Value : DateTime.MinValue);
-            this.WhenAnyValue(vm => vm.ResidentView).Subscribe(vm => Resident = vm.HasValue ? vm.Value : false);
+            this.WhenAnyValue(vm => vm.BirthdayDateSelected).Subscribe(vm => BirthdayDate = vm.HasValue ? vm.Value : DateTime.MinValue);
+            this.WhenAnyValue(vm => vm.ResidentSelected).Subscribe(vm => Resident = vm.HasValue ? vm.Value : false);
         }
 
         private async Task Initialize()
@@ -77,7 +77,7 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
                 "Фамилия должно быть заполнено обязательно");
 
             this.ValidationRule(
-                viewModel => viewModel.BirthdayDateSelector,
+                viewModel => viewModel.BirthdayDateSelected,
                 item => item.HasValue && item.Value != DateTime.MinValue && item.Value != DateTime.Today,
                 "Дата рождения должна быть заполнена обязательно");
 
@@ -92,7 +92,7 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
                 "Документ должен быть заполнен обязательно");
 
             this.ValidationRule(
-                viewModel => viewModel.ResidentView,
+                viewModel => viewModel.ResidentSelected,
                 item => item != null,
                 "Резидентность должна быть заполнена обязательно");
         }
@@ -103,7 +103,7 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
         [Reactive]
         public DateTime BirthdayDate { get; set; }
         [Reactive]
-        public DateTime? BirthdayDateSelector { get; set; }
+        public DateTime? BirthdayDateSelected { get; set; }
         [Reactive]
         public string BonusNumber { get; set; }
         [Reactive]
@@ -144,7 +144,7 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
         [Reactive]
         public bool Resident { get; set; }
         [Reactive]
-        public bool? ResidentView { get; set; }
+        public bool? ResidentSelected { get; set; }
 
         [Reactive]
         public EmployeeType Type { get; set; }

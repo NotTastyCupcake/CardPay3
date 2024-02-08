@@ -61,7 +61,7 @@ namespace Metcom.CardPay3.WpfApplication.Views.Employes
 
 
                 this.Bind(this.ViewModel,
-                    vm => vm.BirthdayDateSelector,
+                    vm => vm.BirthdayDateSelected,
                     view => view.BirthdayDatePicker.SelectedDate)
                     .DisposeWith(disposable);
 
@@ -91,7 +91,7 @@ namespace Metcom.CardPay3.WpfApplication.Views.Employes
 
 
                 this.Bind(this.ViewModel,
-                    vm => vm.ResidentView,
+                    vm => vm.ResidentSelected,
                     view => view.Resident.IsChecked)
                     .DisposeWith(disposable);
 
@@ -133,7 +133,7 @@ namespace Metcom.CardPay3.WpfApplication.Views.Employes
                     .DisposeWith(disposable);
 
                 this.BindValidation(this.ViewModel,
-                    vm => vm.BirthdayDateSelector,
+                    vm => vm.BirthdayDateSelected,
                     view => view.BirthdayError.Content)
                     .DisposeWith(disposable);
 
@@ -143,7 +143,7 @@ namespace Metcom.CardPay3.WpfApplication.Views.Employes
                     .DisposeWith(disposable);
 
                 this.BindValidation(this.ViewModel,
-                    vm => vm.ResidentView,
+                    vm => vm.ResidentSelected,
                     view => view.ResidentError.Content)
                     .DisposeWith(disposable);
 
