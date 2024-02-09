@@ -1,9 +1,12 @@
 ﻿using DynamicData;
 using Metcom.CardPay3.ApplicationCore.Entities;
 using Metcom.CardPay3.ApplicationCore.Interfaces;
+using Metcom.CardPay3.ApplicationCore.Specifications;
 using Metcom.CardPay3.WpfApplication.Interfaces;
+using Metcom.CardPay3.WpfApplication.ViewModels;
 using Microsoft.Extensions.Logging;
 using ReactiveUI;
+using Splat;
 using System;
 using System.Linq;
 using System.Reactive.Linq;
@@ -28,7 +31,8 @@ namespace Metcom.CardPay3.WpfApplication.Services
 
             // Subscribe to the changes in the database every 5 seconds
             Observable.Interval(TimeSpan.FromSeconds(5), RxApp.TaskpoolScheduler)
-                .SelectMany(async _ => await _repository.ListAsync())
+                .SelectMany(async _ => await _repository.ListAsync(new EmployesSpecification(organizationId: Locator.Current.GetService<ShallViewModel>().SelectedOrganization.Id)))
+                .Where(employees => !employees.SequenceEqual(All.Items))
                 .Subscribe(employees =>
                 {
                     // Update the source cache with the latest data

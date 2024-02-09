@@ -28,11 +28,11 @@
             <TextBlock Text="Фамилия"/>
             <TextBox Name="LastNameBlock" />
             <Label Name="LastNameError" Foreground="Red"/>
+            <TextBlock Text="Отчество"/>
+            <TextBox Name="MiddleNameBlock" />
             <TextBlock Text="Дата рождения"/>
             <DatePicker Name="BirthdayDatePicker" IsTodayHighlighted="True"/>
             <Label Name="BirthdayError" Foreground="Red"/>
-            <TextBlock Text="Отчество"/>
-            <TextBox Name="MiddleNameBlock" />
             <TextBlock Text="Должность"/>
             <TextBox Name="PositionBlock"/>
             <TextBlock Text="Номер телефона"/>
@@ -74,12 +74,12 @@
                 <TextBlock x:Name="AddressTextBlock" Text="Нет данных"/>
                 <Button Grid.Column="2" Name="CreateAddress" Content="Создать"/>
             </Grid>-->
-            
+
             <!--<reactiveui:RoutedViewHost
             x:Name="RoutedViewHost"
             HorizontalContentAlignment="Stretch"
             VerticalContentAlignment="Stretch" Margin="0,35,0,0" Grid.Column="2" Grid.Row="1" />-->
-            
+
         </StackPanel>
 
         <StackPanel Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center"
@@ -95,31 +95,31 @@
             <TextBlock Text="Документ"/>
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="35"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition Width="100"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock x:Name="DocumentTextBlock" Text="Нет данных"/>
-                <Button Grid.Column="2" Name="CreateDocument" Content="Создать"/>
+                <Button Grid.Column="2" Name="CreateDocument" Content="Изменить"/>
             </Grid>
             <Label Name="DocumentError" Foreground="Red"/>
 
             <TextBlock Text="Адресс"/>
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="35"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition Width="100"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock x:Name="AddressTextBlock" Text="Нет данных"/>
-                <Button Grid.Column="2" Name="CreateAddress" Content="Создать"/>
+                <Button Grid.Column="2" Name="CreateAddress" Content="Изменить"/>
             </Grid>
             <Label Name="AddressError" Foreground="Red"/>
-            
+
         </StackPanel>
 
         <Button x:Name ="Create"  Grid.Row="1" Grid.ColumnSpan="2" Content="Добавить сотрудника"/>

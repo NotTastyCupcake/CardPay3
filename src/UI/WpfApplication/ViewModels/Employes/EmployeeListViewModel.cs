@@ -51,7 +51,6 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
 
             employeCollectionService.All.Connect()
                 .Sort(SortExpressionComparer<Employee>.Ascending(t => t.FullName))
-                .Filter(e => e.Organization == Locator.Current.GetService<ShallViewModel>().SelectedOrganization)
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Bind(out bindingData)
                 .Subscribe();
