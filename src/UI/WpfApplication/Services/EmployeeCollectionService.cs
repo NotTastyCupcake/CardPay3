@@ -26,30 +26,35 @@ namespace Metcom.CardPay3.WpfApplication.Services
             _logger = logger;
             _repository = repository;
 
+            //TODO: Обновление списка сотрудников за определенный интервал
             // Load the initial data from the database
-            LoadEmployees();
 
-            // Subscribe to the changes in the database every 5 seconds
-            Observable.Interval(TimeSpan.FromSeconds(5), RxApp.TaskpoolScheduler)
-                .SelectMany(async _ => await _repository.ListAsync(new EmployesSpecification(organizationId: Locator.Current.GetService<ShallViewModel>().SelectedOrganization.Id)))
-                .Where(employees => !employees.SequenceEqual(All.Items))
-                .Subscribe(employees =>
-                {
-                    // Update the source cache with the latest data
-                    All.Edit(innerList =>
-                    {
-                        innerList.Clear();
-                        innerList.AddOrUpdate(employees);
-                    });
-                });
+            //// Subscribe to the changes in the database every 5 seconds
+            //var obs = Observable.Interval(TimeSpan.FromSeconds(5), RxApp.TaskpoolScheduler)
+            //    .SelectMany(_ => _repository.ListAsync()))
+            //    .Where(employees => !employees.SequenceEqual(All.Items));
 
+            //obs.Subscribe(employees =>
+            //{
+            //    // Update the source cache with the latest data
+            //    All.Clear();
+            //    All.AddOrUpdate(employees);
+            //});
         }
 
-        private void LoadEmployees()
+        public async Task LoadOrUpdateEmployeesCollection()
         {
-            var employes = Task.Run(() => _repository.ListAsync()).Result;
+
+            var spec = new EmployesSpecification(organizationId: Locator.Current.GetService<ShallViewModel>().SelectedOrganization.Id);
+
+            var employes = await _repository.ListAsync(spec);
+
+            All.Clear();
             All.AddOrUpdate(employes);
+
         }
+
+
 
         public SourceCache<Employee, int> All { get; } = new SourceCache<Employee, int>(e => e.Id);
     }

@@ -44,9 +44,9 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
 
             HostScreen = screen;
 
-            SelectedOrganization = Locator.Current.GetService<ShallViewModel>().SelectedOrganization;
-
             //Init collection
+            employeCollectionService.LoadOrUpdateEmployeesCollection();
+
             ReadOnlyObservableCollection<Employee> bindingData;
 
             employeCollectionService.All.Connect()
@@ -143,9 +143,6 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
 
         [Reactive]
         public Employee SelectedEmploye { get; set; }
-
-        [Reactive]
-        public Organization SelectedOrganization { get; set; }
         #endregion
     }
 }

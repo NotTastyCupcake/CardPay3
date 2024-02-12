@@ -3,6 +3,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:vms="clr-namespace:Metcom.CardPay3.WpfApplication.ViewModels.Employes"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              x:TypeArguments="vms:EmployeeListViewModel"
              xmlns:reactiveUi="http://reactiveui.net"
              xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
@@ -11,62 +12,56 @@
              xmlns:model="clr-namespace:Metcom.CardPay3.ApplicationCore.Entities;assembly=ApplicationCore"
              mc:Ignorable="d" 
              d:DesignHeight="550" d:DesignWidth="800">
+
+    <UserControl.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.SelectAll"
+                        Executed="SelectAllExecuted" />
+    </UserControl.CommandBindings>
+
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
-        <TabControl Grid.Row="1">
-            
-            <TabItem Name="PersonsTab">
-                <TabItem.Header>
-                    <TextBlock Text="Сотрудники"/>
-                </TabItem.Header>
-                <TabItem.ContextMenu>
-                    <ContextMenu>
-                        <MenuItem Header="Удалить" Command="{Binding RoutingDeleteEmployeeCommand}"/>
-                        <MenuItem Header="Изменить" Command="{Binding RoutingEditEmployeeCommand}"/>
-                    </ContextMenu>
-                </TabItem.ContextMenu>
-                <ListView ItemsSource="{Binding Employes, Mode=OneWay}" SelectedItem="{Binding SelectedEmploye, Mode=TwoWay}">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Header="Имя"                                            
-                                            DisplayMemberBinding="{Binding Path=FirstName, Mode=OneWay}"/>
-                            <GridViewColumn Header="Фамилия"
-                                            DisplayMemberBinding="{Binding Path=LastName, Mode=OneWay}"/>
-                            <GridViewColumn Header="Отчество"
-                                            DisplayMemberBinding="{Binding Path=MiddleName, Mode=OneWay}"/>
-                            <GridViewColumn Header="Должность"
+
+        <Button  
+            Command="{Binding UpdateEmployeesCollectionCommand}"
+            Content= "{materialDesign:PackIcon Refresh}"
+            Style="{DynamicResource MaterialDesignToolButton}"
+            ToolTip="Обновление"
+            HorizontalAlignment="Right" 
+            Width="50" Height="30" 
+            VerticalAlignment="Top" 
+            Margin="0,10,10,5"
+            Grid.Row="0" />
+        
+        <ListView x:Name="employeeListView" Grid.Row="1" ItemsSource="{Binding Employes, Mode=OneWay}" SelectedItem="{Binding SelectedEmploye, Mode=TwoWay}" SelectionMode="Multiple">
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Удалить" Command="{Binding RoutingDeleteEmployeeCommand}"/>
+                    <MenuItem Header="Изменить" Command="{Binding RoutingEditEmployeeCommand}"/>
+                </ContextMenu>
+            </ListView.ContextMenu>
+            <ListView.InputBindings>
+                <KeyBinding Command="ApplicationCommands.SelectAll"
+                    Modifiers="Ctrl"
+                    Key="A" />
+            </ListView.InputBindings>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="250" Header="ФИО"                                            
+                                            DisplayMemberBinding="{Binding Path=FullName, Mode=OneWay}"/>
+                    <GridViewColumn Width="200" Header="Должность"
                                             DisplayMemberBinding="{Binding Path=Position, Mode=OneWay}"/>
-                            <GridViewColumn Header="Офис"
+                    <GridViewColumn Width="200" Header="Офис"
                                             DisplayMemberBinding="{Binding Path=DepartmentNum, Mode=OneWay}"/>
-                            <GridViewColumn Header="Пол"
+                    <GridViewColumn Header="Пол"
                                             DisplayMemberBinding="{Binding Path=Gender.GenderName, Mode=OneWay}"/>
-                            <GridViewColumn Header="Код документа"
-                                            DisplayMemberBinding="{Binding Path=Document.SubdivisionCode, Mode=OneWay}"/>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-            </TabItem>
-            
-            <!--<TabItem Name="PersonsStat">
-                <TabItem.Header>
-                    <TextBlock Text="Статистика"/>
-                </TabItem.Header>
-                <StackPanel Grid.Row="0" Orientation="Vertical"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Width="auto">
-                    --><!--<TextBlock Text="AVARAGE_SALARY"/>
-                    <TextBlock Text="{Binding AverageSalary}"/>--><!--
-                    <TextBlock Text="Количество сотрудников:"/>
-                    <TextBlock Text="{Binding Employes.Count, Mode=OneWay}"/>
-                </StackPanel>
-            </TabItem>-->
-            
-        </TabControl>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
             <Button Content="Добавить сотрудника" Command="{Binding RoutingAddEmployeeCommand}"/>

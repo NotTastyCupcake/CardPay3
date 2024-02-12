@@ -1,6 +1,7 @@
 ﻿using Metcom.CardPay3.WpfApplication.ViewModels.Employes;
 using Splat;
 using System;
+using System.Windows.Input;
 
 namespace Metcom.CardPay3.WpfApplication.Views
 {
@@ -15,6 +16,19 @@ namespace Metcom.CardPay3.WpfApplication.Views
             DataContext = ViewModel;
 
             InitializeComponent();
+        }
+
+        private void SelectAllExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+
+            if(employeeListView.SelectedItems.Count > 0 )
+            {
+                employeeListView.UnselectAll();
+            }
+            else
+            {
+                employeeListView.SelectAll();
+            }
         }
     }
 }
