@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive;
+using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -35,12 +36,12 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Organizations
 
                 if (HostScreen.Router.NavigationStack.Count == 1)
                 {
-                    HostScreen.Router.Navigate.Execute(Locator.Current.GetService<MenuViewModel>());
+                    await HostScreen.Router.Navigate.Execute(Locator.Current.GetService<MenuViewModel>());
                     HostScreen.Router.NavigationStack.Remove(this);
                 }
                 else
                 {
-                    HostScreen.Router.NavigateBack.Execute();
+                    await HostScreen.Router.NavigateBack.Execute();
                 }
 
             }, this.IsValid());

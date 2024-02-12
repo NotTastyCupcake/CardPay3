@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive;
+using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -35,7 +36,7 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
             SelectedDataBaseType = settings.DataBaseType;
             ConnectionString = settings.ConnectionString;
 
-            SaveCommand = ReactiveCommand.Create(delegate ()
+            SaveCommand = ReactiveCommand.CreateFromTask(async delegate ()
             {
                 service.SaveChange(new SettingModel() 
                 { 
@@ -43,7 +44,7 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
                     DataBaseType = SelectedDataBaseType
                 });
                 MessageBox.Show("Чтобы применить настройки, перезапустите приложение.");
-                HostScreen.Router.NavigateBack.Execute();
+                await HostScreen.Router.NavigateBack.Execute();
             });
 
             DBTypes = new ObservableCollection<string>()

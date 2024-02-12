@@ -49,16 +49,13 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
             _employeViewModelService = viewModelService;
             _builder = builder;
 
-
             Validation();
-
-            Task.Run(() => Initialize());
 
             this.WhenAnyValue(vm => vm.BirthdayDateSelected).Subscribe(vm => BirthdayDate = vm.HasValue ? vm.Value : DateTime.MinValue);
             this.WhenAnyValue(vm => vm.ResidentSelected).Subscribe(vm => Resident = vm.HasValue ? vm.Value : false);
         }
 
-        private async Task Initialize()
+        public async Task InitializeAsync()
         {
             Genders = new ObservableCollection<Gender>(await _genderRepo.ListAsync());
             EmployeeTypes = new ObservableCollection<EmployeeType>(await _employeeType.ListAsync());

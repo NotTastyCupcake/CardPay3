@@ -13,6 +13,7 @@ using System.Reactive;
 using Splat;
 using Metcom.CardPay3.Infrastructure.Data;
 using Metcom.CardPay3.WpfApplication.ViewModels.Employes.DocumentCRUD;
+using System.Reactive.Linq;
 
 namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
 {
@@ -28,6 +29,7 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
             IRepository<EmployeeType> employeeType,
             ILogger<CreateEmployeeViewModel> logger,
             IEmployeeViewModelService viewModelService,
+            IEmployeeCollectionService collectionService,
             IEmployeeBuilder builder,
             IRepository<Employee> repository,
             IScreen screen = null) : base(genderRepo, employeeType, logger, viewModelService, builder)
@@ -42,14 +44,16 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
                 SetEmployee();
                 await repository.UpdateAsync(Employee);
                 await repository.SaveChangesAsync();
-                HostScreen.Router.NavigateBack.Execute();
+                await HostScreen.Router.NavigateBack.Execute();
+                await collectionService.LoadOrUpdateEmployeesCollection();
 
             }, this.IsValid);
 
-            EditDocumentCommand = ReactiveCommand.Create(delegate ()
+            EditDocumentCommand = ReactiveCommand.CreateFromTask(async delegate ()
             {
                 var vm = Locator.Current.GetService<CreateDocumentViewModel>();
-                HostScreen.Router.Navigate.Execute(vm);
+                await vm.InitializeAsync();
+                await HostScreen.Router.Navigate.Execute(vm);
                 vm.WhenAnyValue(vm => vm.Document).Subscribe(_ => Document = _);
             });
 

@@ -29,9 +29,6 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes.DocumentCRUD
 
             _service = service;
             _builder = builder;
-
-            Task.Run(() => Initialize());
-
             Validation();
 
             this.WhenAnyValue(vm => vm.SelectedType).Subscribe(_ => IdType = SelectedType?.Id ?? 0);
@@ -55,7 +52,7 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes.DocumentCRUD
                 "Серия должна быть заполнена обязательно");
         }
 
-        private async Task Initialize()
+        public async Task InitializeAsync()
         {
             Types = await _service.GetDocumentTypes();
         }

@@ -16,6 +16,7 @@ using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
+using System.Reflection.Metadata;
 using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.WpfApplication.ViewModels;
@@ -50,35 +51,62 @@ public class ShallViewModel : ReactiveObject, IScreen
         .Select(count => count.Item1 > 1 && count.Item2 > 1);
 
         RoutingGoBackCommand = ReactiveCommand.CreateFromObservable(() => 
-            { 
-                if(SelectedOrganization.Name == "Создать организацию.")
-                {
-                    SelectedOrganization = Organizations.First(x => x.Name != "Создать организацию.");
-                }
+        { 
+            if(SelectedOrganization.Name == "Создать организацию.")
+            {
+                SelectedOrganization = Organizations.First(x => x.Name != "Создать организацию.");
+            }
 
-                return Router.NavigateBack.Execute(Unit.Default); 
-            },
-            canGoBack);
+            return Router.NavigateBack.Execute(Unit.Default); 
+        },
+        canGoBack);
 
-        RoutingCommand = ReactiveCommand.Create<string>(ExecuteSidebar);
+        RoutingCommand = ReactiveCommand.Create<string>(async delegate(string parameter)    {
+            switch (parameter)
+            {
+                //case Constants.RoutingIDs.Mods:
+                //    Router.Navigate.Execute(Locator.Current.GetService<ModListViewModel>());
+                //    break;
+                case "AccrualList":
+                    await Router.Navigate.Execute(Locator.Current.GetService<AccrualListViewModel>());
+                    break;
+                case "EmployeeList":
+                    await Router.Navigate.Execute(Locator.Current.GetService<EmployeeListViewModel>());
+                    break;
+                case "Menu":
+                    await Router.Navigate.Execute(Locator.Current.GetService<MenuViewModel>());
+                    break;
+                //case Constants.RoutingIDs.Search:
+                //    Router.Navigate.Execute(Locator.Current.GetService<SearchViewModel>());
+                //    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(parameter), parameter, null);
+            }
+        });
 
-        DeleteOrganization = ReactiveCommand.Create(DeleteSelectedOrg(), canDeleteOrg);
-
-        RoutingCreateOrganizationCommand = ReactiveCommand.Create(delegate ()
+        DeleteOrganization = ReactiveCommand.CreateFromTask(async delegate ()
         {
-            Router.Navigate.Execute(Locator.Current.GetService<CreateOrganizationViewModel>());
+            await _repository.DeleteAsync(SelectedOrganization);
+            await _repository.SaveChangesAsync();
+
+            Organizations.Remove(SelectedOrganization);
+            SelectedOrganization = Organizations[0];
+
         }, canDeleteOrg);
 
-        RoutingEditOrganizationCommand = ReactiveCommand.Create(delegate ()
+        RoutingCreateOrganizationCommand = ReactiveCommand.CreateFromTask(async delegate ()
         {
-            var vm =  Locator.Current.GetService<EditOrganizationViewModel>();
-            vm.GetOrganizationToEdit(SelectedOrganization);
-            Router.Navigate.Execute(vm);
+            await Router.Navigate.Execute(Locator.Current.GetService<CreateOrganizationViewModel>());
         }, canDeleteOrg);
 
-        RoutingSettingsCommand = ReactiveCommand.Create(delegate ()
+        RoutingEditOrganizationCommand = ReactiveCommand.CreateFromTask(async delegate()
         {
-            Router.Navigate.Execute(Locator.Current.GetService<SettingsViewModel>());
+            await Router.Navigate.Execute(Locator.Current.GetService<EditOrganizationViewModel>());
+        }, canDeleteOrg);
+
+        RoutingSettingsCommand = ReactiveCommand.CreateFromTask(async delegate ()
+        {
+            await Router.Navigate.Execute(Locator.Current.GetService<SettingsViewModel>());
         });
 
         Task.Run(() => Initialize());
@@ -114,44 +142,6 @@ public class ShallViewModel : ReactiveObject, IScreen
     public ReactiveCommand<Unit, IRoutableViewModel> RoutingGoBackCommand { get; }
 
     public ReactiveCommand<string, Unit> RoutingCommand { get; }
-    
-
-
-    private Action DeleteSelectedOrg()
-    {
-        return async delegate ()
-        {
-            await _repository.DeleteAsync(SelectedOrganization);
-            await _repository.SaveChangesAsync();
-
-            Organizations.Remove(SelectedOrganization);
-            SelectedOrganization = Organizations[0];
-        };
-    }
-
-    private void ExecuteSidebar(string parameter)
-    {
-        switch (parameter)
-        {
-            //case Constants.RoutingIDs.Mods:
-            //    Router.Navigate.Execute(Locator.Current.GetService<ModListViewModel>());
-            //    break;
-            case "AccrualList":
-                Router.Navigate.Execute(Locator.Current.GetService<AccrualListViewModel>());
-                break;
-            case "EmployeeList":
-                Router.Navigate.Execute(Locator.Current.GetService<EmployeeListViewModel>());
-                break;
-            case "Menu":
-                Router.Navigate.Execute(Locator.Current.GetService<MenuViewModel>());
-                break;
-            //case Constants.RoutingIDs.Search:
-            //    Router.Navigate.Execute(Locator.Current.GetService<SearchViewModel>());
-            //    break;
-            default:
-                throw new ArgumentOutOfRangeException(nameof(parameter), parameter, null);
-        }
-    }
 
     private void UpdateSelectedOrganization()
     {

@@ -57,36 +57,20 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
 
             Employes = bindingData;
 
+            #region commands
+            UpdateEmployeesCollectionCommand = ReactiveCommand.CreateFromTask(async delegate ()
+            {
+                await employeCollectionService.LoadOrUpdateEmployeesCollection();
+            });
 
-            // commands
-            RoutingAddEmployeeCommand = ReactiveCommand.Create(CreateEmploye());
-            RoutingDeleteEmployeeCommand = ReactiveCommand.Create(DeleteEmploye());
-            RoutingEditEmployeeCommand = ReactiveCommand.Create(EditEmploye());
-            ExportEmployeeCommand = ReactiveCommand.Create(ExportEmployee());
-        }
-
-
-        #region commands
-        public ReactiveCommand<Unit, Unit> RoutingEditEmployeeCommand { get; }
-        public ReactiveCommand<Unit, Unit> RoutingAddEmployeeCommand { get; }
-        public ReactiveCommand<Unit, Unit> RoutingDeleteEmployeeCommand { get; }
-
-        public ReactiveCommand<Unit, Unit> ExportEmployeeCommand { get; }
-
-        private Action CreateEmploye()
-        {
-            return delegate ()
+            RoutingAddEmployeeCommand = ReactiveCommand.CreateFromTask(async delegate() 
             {
                 var vm = Locator.Current.GetService<CreateEmployeeViewModel>();
+                await vm.InitializeAsync();
+                await HostScreen.Router.Navigate.Execute(vm);
+            });
 
-                HostScreen.Router.Navigate.Execute(vm);
-
-            };
-        }
-
-        private Action DeleteEmploye()
-        {
-            return async delegate ()
+            RoutingDeleteEmployeeCommand = ReactiveCommand.CreateFromTask(async delegate ()
             {
                 if (SelectedEmploye == null)
                 {
@@ -98,13 +82,9 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
                     await _itemRepository.SaveChangesAsync();
                     System.Windows.Forms.MessageBox.Show("Выбранный сотрудник, удален!");
                 }
+            });
 
-            };
-        }
-
-        private Action EditEmploye()
-        {
-            return async delegate ()
+            RoutingEditEmployeeCommand = ReactiveCommand.CreateFromTask(async delegate ()
             {
                 if (SelectedEmploye == null)
                 {
@@ -114,15 +94,13 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
                 else
                 {
                     var vm = Locator.Current.GetService<EditEmployeeViewModel>();
+                    await vm.InitializeAsync();
                     vm.GetEmployeeToEdit(SelectedEmploye);
                     await HostScreen.Router.Navigate.Execute(vm);
                 }
-            };
-        }
+            });
 
-        private Action ExportEmployee()
-        {
-            return async delegate ()
+            ExportEmployeeCommand = ReactiveCommand.CreateFromTask(async delegate ()
             {
                 SaveFileDialog saveFile = new SaveFileDialog();
                 saveFile.Filter = "Расширяемый язык разметки(*.json)| *.json";
@@ -134,8 +112,17 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
                         saveFile.FileName,
                         Locator.Current.GetService<ShallViewModel>().SelectedOrganization.Id);
                 }
-            };
+            });
+            #endregion
         }
+
+        #region commands
+        public ReactiveCommand<Unit, Unit> RoutingEditEmployeeCommand { get; }
+        public ReactiveCommand<Unit, Unit> RoutingAddEmployeeCommand { get; }
+        public ReactiveCommand<Unit, Unit> RoutingDeleteEmployeeCommand { get; }
+        public ReactiveCommand<Unit, Unit> UpdateEmployeesCollectionCommand { get; }
+
+        public ReactiveCommand<Unit, Unit> ExportEmployeeCommand { get; }
         #endregion
 
         #region Properties

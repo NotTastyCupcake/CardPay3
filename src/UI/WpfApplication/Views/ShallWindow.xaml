@@ -46,7 +46,7 @@
             Grid.Column="0"
             Content= "{materialDesign:PackIcon ChevronLeft}"
             Style="{DynamicResource MaterialDesignToolButton}"
-            ToolTip="Icon"
+            ToolTip="Назад"
             HorizontalAlignment="Left" 
             Width="50" Height="30" 
             VerticalAlignment="Top" 

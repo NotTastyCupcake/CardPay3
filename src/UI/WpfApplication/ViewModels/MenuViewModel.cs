@@ -5,6 +5,7 @@ using ReactiveUI.Fody.Helpers;
 using Splat;
 using System;
 using System.Reactive;
+using System.Reactive.Linq;
 
 namespace Metcom.CardPay3.WpfApplication.ViewModels
 {
@@ -16,10 +17,9 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
         {
             HostScreen = screen;
 
-            RoutingEmployeeCommand = ReactiveCommand.Create(delegate ()
+            RoutingEmployeeCommand = ReactiveCommand.CreateFromTask(async delegate()
             {
-                EmployeeListViewModel = Locator.Current.GetService<EmployeeListViewModel>();
-                HostScreen.Router.Navigate.Execute(EmployeeListViewModel);
+                await HostScreen.Router.Navigate.Execute(Locator.Current.GetService<EmployeeListViewModel>());
             });
 
         }
@@ -27,9 +27,5 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
         public ReactiveCommand<Unit, Unit> RoutingEmployeeCommand { get; }
         public ReactiveCommand<Unit, Unit> RoutingAccrualCommand { get; }
         #endregion
-
-        public EmployeeListViewModel EmployeeListViewModel { get; set; }
-
-
     }
 }
