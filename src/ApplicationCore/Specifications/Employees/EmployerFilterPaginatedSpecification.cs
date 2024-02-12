@@ -2,7 +2,7 @@
 using Metcom.CardPay3.ApplicationCore.Entities;
 using System.Linq;
 
-namespace Metcom.CardPay3.ApplicationCore.Specifications
+namespace Metcom.CardPay3.ApplicationCore.Specifications.Employees
 {
     public class EmployerFilterPaginatedSpecification : Specification<Employee>
     {
@@ -14,7 +14,7 @@ namespace Metcom.CardPay3.ApplicationCore.Specifications
                 take = int.MaxValue;
             }
             Query
-                .Where(i => (!organizationId.HasValue || i.IdOrganization == organizationId))
+                .Where(i => !organizationId.HasValue || i.IdOrganization == organizationId)
                 .Skip(skip).Take(take);
         }
     }

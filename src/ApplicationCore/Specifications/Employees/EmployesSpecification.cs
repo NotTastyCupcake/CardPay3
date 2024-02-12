@@ -3,9 +3,9 @@ using Metcom.CardPay3.ApplicationCore.Entities;
 using System;
 using System.Linq;
 
-namespace Metcom.CardPay3.ApplicationCore.Specifications
+namespace Metcom.CardPay3.ApplicationCore.Specifications.Employees
 {
-    public sealed class EmployesSpecification : Specification<Employee>, ISingleResultSpecification<Employee>
+    public sealed class EmployesSpecification : Specification<Employee>
     {
         public EmployesSpecification(params int[] ids)
         {
@@ -14,7 +14,7 @@ namespace Metcom.CardPay3.ApplicationCore.Specifications
 
         public EmployesSpecification(int? organizationId)
         {
-            Query.Where(p => (!organizationId.HasValue || p.IdOrganization == organizationId));
+            Query.Where(p => !organizationId.HasValue || p.IdOrganization == organizationId);
         }
     }
 }
