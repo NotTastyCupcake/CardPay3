@@ -1,6 +1,7 @@
 ﻿using Metcom.CardPay3.ApplicationCore.Entities;
 using Metcom.CardPay3.ApplicationCore.Interfaces;
 using Metcom.CardPay3.ApplicationCore.Specifications;
+using Metcom.CardPay3.ApplicationCore.Specifications.Employees;
 using Metcom.CardPay3.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;

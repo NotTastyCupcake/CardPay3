@@ -53,8 +53,7 @@ namespace Metcom.CardPay3.ApplicationCore.Services.Builder
 
         public  async Task<IEmployeeBuilder> SetGender(int idGender)
         {
-            var genderSpec = new EmployeGenderSpecification(idGender);
-            var gender = await _genderRepository.SingleOrDefaultAsync(genderSpec);
+            var gender = await _genderRepository.GetByIdAsync(idGender);
 
             if (gender == null)
             {
