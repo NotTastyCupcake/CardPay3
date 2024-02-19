@@ -10,6 +10,6 @@
         string InsuranceNumber { get; }
         string LatinFirstName { get; }
         string LatinLastName { get; }
-        Status Status { get; set; }
+        int IdStatus { get; set; }
     }
 }

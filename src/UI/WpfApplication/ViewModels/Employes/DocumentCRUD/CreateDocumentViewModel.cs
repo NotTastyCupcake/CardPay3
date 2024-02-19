@@ -9,6 +9,7 @@ using System.Reactive;
 using System.Text;
 using System.Threading.Tasks;
 using Metcom.CardPay3.ApplicationCore.Entities.DocumentAggregate;
+using System.Reactive.Linq;
 
 namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes.DocumentCRUD
 {
@@ -26,11 +27,8 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes.DocumentCRUD
 
             CreateCommand = ReactiveCommand.CreateFromTask(async () =>
             {
-
-                var doc = new DocumentItem(this);
-                Document = doc;
-                await _builder.SetDocument(Document);
-                HostScreen.Router.NavigateBack.Execute();
+                Document = new DocumentItem(this);
+                await HostScreen.Router.NavigateBack.Execute();
 
             }, this.IsValid());
         }

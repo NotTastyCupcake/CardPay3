@@ -20,6 +20,7 @@ namespace Metcom.CardPay3.ApplicationCore.Interfaces.ServicesInterfaces.Builder
                                                     int idDivision,
                                                     int idCurrency,
                                                     int idCardType,
+                                                    int idStatus,
 
                                                     string latinFirstName = null,
                                                     string latinLastName = null);

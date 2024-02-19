@@ -20,8 +20,7 @@ namespace Metcom.CardPay3.ApplicationCore.Specifications
                        && a.InsuranceNumber == insuranceNum 
                        && a.IdDivision == idDivision 
                        && a.IdCurrency == idCurrency
-                       && a.IdCardType == idCardType
-                       && a.Status == Entities.Status.New);
+                       && a.IdCardType == idCardType);
         }
 
         /// <summary>
@@ -35,8 +34,7 @@ namespace Metcom.CardPay3.ApplicationCore.Specifications
                        && a.InsuranceNumber == requisites.InsuranceNumber
                        && a.IdDivision == requisites.IdDivision
                        && a.IdCurrency == requisites.IdCurrency
-                       && a.IdCardType == requisites.IdCardType
-                       && a.Status ==  Entities.Status.New) 
+                       && a.IdCardType == requisites.IdCardType) 
                        ||
                        (a.IdCardType == requisites.IdCardType 
                        && a.AccountNumber == requisites.AccountNumber

@@ -85,7 +85,7 @@ namespace Metcom.CardPay3.WpfApplication.Views.Employes.Requisities
                 .DisposeWith(disposable);
 
             this.Bind(this.ViewModel,
-                vm => vm.Status,
+                vm => vm.SelectedStatus,
                 view => view.StatusComboBox.SelectedItem)
                 .DisposeWith(disposable);
 
@@ -133,7 +133,7 @@ namespace Metcom.CardPay3.WpfApplication.Views.Employes.Requisities
                 .DisposeWith(disposable);
 
             this.BindValidation(this.ViewModel,
-                vm => vm.Status,
+                vm => vm.SelectedStatus,
                 view => view.StatusesError.Content)
                 .DisposeWith(disposable);
 

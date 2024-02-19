@@ -106,9 +106,13 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
         public virtual Gender Gender { get; set; }
 
         /// <summary>
-        /// Реквизиты документов человека
+        /// Реквизиты счета, данные для открытия
         /// </summary>
-        public virtual ICollection<RequisitesItem> Requisites { get; set; }
+        public int IdRequisite { get; set; }
+        /// <summary>
+        /// Реквизиты счета, данные для открытия
+        /// </summary>
+        public virtual RequisitesItem Requisite { get; set; }
 
         public int? IdDocument { get; set; }
         public virtual DocumentItem? Document { get; set; }

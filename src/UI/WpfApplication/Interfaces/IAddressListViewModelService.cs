@@ -12,6 +12,8 @@ namespace Metcom.CardPay3.WpfApplication.Interfaces
 {
     public interface IAddressListViewModelService
     {
-        Task<SourceCache<Address, int>> GetAddressByEmployee(Employee employee);
+        Task LoadAddress(Employee employee);
+
+        SourceCache<Address, int> Addresses { get; }
     }
 }

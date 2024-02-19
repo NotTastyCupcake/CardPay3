@@ -22,12 +22,12 @@
         <StackPanel Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Width="350">
-            <TextBlock Text="Имя"/>
-            <TextBox Name="FirstNameBlock" />
-            <Label Name="FirstNameError" Foreground="Red"/>
             <TextBlock Text="Фамилия"/>
             <TextBox Name="LastNameBlock" />
             <Label Name="LastNameError" Foreground="Red"/>
+            <TextBlock Text="Имя"/>
+            <TextBox Name="FirstNameBlock" />
+            <Label Name="FirstNameError" Foreground="Red"/>
             <TextBlock Text="Отчество"/>
             <TextBox Name="MiddleNameBlock" />
             <TextBlock Text="Дата рождения"/>
@@ -46,39 +46,6 @@
             <TextBlock/>
             <CheckBox Name="Resident" Content="Резидентность"/>
             <Label Name="ResidentError" Foreground="Red"/>
-            <!--<TextBlock Text="Аддресс"/>
-            <Button Name="CreateDocument" Height="20" Content="Создать"/>-->
-
-            <!--<TextBlock Text="Документ"/>
-            <Grid Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="20"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="70"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock x:Name="DocumentTextBlock" Text="Нет данных"/>
-                <Button Grid.Column="2" Name="CreateDocument" Content="Создать"/>
-            </Grid>
-
-            <TextBlock Text="Адресс"/>
-            <Grid Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="20"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="70"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock x:Name="AddressTextBlock" Text="Нет данных"/>
-                <Button Grid.Column="2" Name="CreateAddress" Content="Создать"/>
-            </Grid>-->
-
-            <!--<reactiveui:RoutedViewHost
-            x:Name="RoutedViewHost"
-            HorizontalContentAlignment="Stretch"
-            VerticalContentAlignment="Stretch" Margin="0,35,0,0" Grid.Column="2" Grid.Row="1" />-->
 
         </StackPanel>
 
@@ -102,11 +69,11 @@
                     <ColumnDefinition Width="100"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock x:Name="DocumentTextBlock" Text="Нет данных"/>
-                <Button Grid.Column="2" Name="CreateDocument" Content="Изменить"/>
+                <Button Grid.Column="2" Name="CreateDocumentButton" Content="Создать"/>
             </Grid>
             <Label Name="DocumentError" Foreground="Red"/>
 
-            <TextBlock Text="Адресс"/>
+            <TextBlock Text="Реквизиты"/>
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="35"/>
@@ -115,14 +82,15 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="100"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock x:Name="AddressTextBlock" Text="Нет данных"/>
-                <Button Grid.Column="2" Name="CreateAddress" Content="Изменить"/>
+                <TextBlock x:Name="RequisitTextBlock" Text="Нет данных"/>
+                <Button Grid.Column="2" Name="CreateRequisitButton" Content="Создать"/>
+                
             </Grid>
-            <Label Name="AddressError" Foreground="Red"/>
+            <Label Name="RequisitError" Foreground="Red"/>
 
         </StackPanel>
 
-        <Button x:Name ="Create"  Grid.Row="1" Grid.ColumnSpan="2" Content="Добавить сотрудника"/>
+        <Button x:Name ="CreateEmployeeButton"  Grid.Row="1" Grid.ColumnSpan="2" Content="Добавить сотрудника"/>
 
     </Grid>
 </reactiveui:ReactiveUserControl>

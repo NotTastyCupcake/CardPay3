@@ -58,15 +58,5 @@ namespace Metcom.CardPay3.WpfApplication.Services
             //return items;
             return null;
         }
-
-        public ObservableCollection<RequisitesItem> GetRequisites(Employee employee)
-        {
-            _logger.LogInformation("GetGenders called.");
-
-            var employes = employee.Requisites;
-            var items = new ObservableCollection<RequisitesItem>(employes);
-
-            return items;
-        }
     }
 }

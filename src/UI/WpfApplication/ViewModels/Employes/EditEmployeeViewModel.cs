@@ -49,21 +49,12 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
 
             }, this.IsValid);
 
-            EditDocumentCommand = ReactiveCommand.CreateFromTask(async delegate ()
-            {
-                var vm = Locator.Current.GetService<CreateDocumentViewModel>();
-                await vm.InitializeAsync();
-                await HostScreen.Router.Navigate.Execute(vm);
-                vm.WhenAnyValue(vm => vm.Document).Subscribe(_ => Document = _);
-            });
-
             #endregion
         }
 
 
         #region Commands
         public ReactiveCommand<Unit, Unit> EditEmployeeCommand { get; }
-        public ReactiveCommand<Unit, Unit> EditDocumentCommand { get; }
         #endregion
 
         public void GetEmployeeToEdit(Employee employee)
@@ -87,6 +78,8 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
             Organization = employee.Organization;
             IdOrganization = employee.IdOrganization;
 
+            Requisite = employee.Requisite;
+
             Employee = employee;
         }
 
@@ -104,10 +97,15 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
             Employee.DepartmentNum = DepartmentNum;
             Employee.Gender = Gender;
             Employee.IdGender = IdGender;
+
             Employee.Document = Document;
             Employee.IdDocument = IdDocument;
+
             Employee.Organization = Organization;
             Employee.IdOrganization = IdOrganization;
+            
+            Employee.Requisite = Requisite;
+            Employee.IdRequisite = IdRequisite;
         }
 
         public Employee Employee { get; set; }

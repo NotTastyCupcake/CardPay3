@@ -25,7 +25,8 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
         string Nationality { get; set; }
         string PhoneNumber { get; set; }
         string Position { get; set; }
-        ICollection<RequisitesItem> Requisites { get; set; }
+        int IdRequisite { get; set; }
+        RequisitesItem Requisite { get; set; }
         bool Resident { get; set; }
 
     }

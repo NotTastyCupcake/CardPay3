@@ -178,11 +178,12 @@ namespace Metcom.CardPay3.ApplicationCore.Services.Builder
                                                                               int idDivision, 
                                                                               int idCurrency, 
                                                                               int idCardType, 
+                                                                              int idStatus,
 
                                                                               string latinFirstName = null, 
                                                                               string latinLastName = null)
         {
-            var newRequisities = new RequisitesItem(inn, insuranceNum, idDivision, idCurrency, idCardType, latinFirstName, latinLastName);
+            var newRequisities = new RequisitesItem(inn, insuranceNum, idDivision, idCurrency, idCardType, idStatus, latinFirstName, latinLastName);
 
             //поиск дублей
             var requisitiesSpecification = new RequisitiesSpecification(newRequisities);
@@ -202,7 +203,7 @@ namespace Metcom.CardPay3.ApplicationCore.Services.Builder
 
             if (_employee != null)
             {
-                _employee.Requisites.Add(_requisites);
+                _employee.Requisite = _requisites;
                 await _employeRepository.UpdateAsync(_employee);
                 await _employeRepository.SaveChangesAsync();
             }
@@ -236,12 +237,9 @@ namespace Metcom.CardPay3.ApplicationCore.Services.Builder
                                             _document.Id,
                                             _organization.Id);
 
-            if(employee.Requisites == null && _requisites != null)
+            if(employee.Requisite == null && _requisites != null)
             {
-                employee.Requisites = new List<RequisitesItem>
-                {
-                    _requisites
-                };
+                employee.Requisite = _requisites;
             }
             
 
@@ -322,7 +320,7 @@ namespace Metcom.CardPay3.ApplicationCore.Services.Builder
 
             if (_employee != null)
             {
-                _employee.Requisites.Add(_requisites);
+                _employee.Requisite = _requisites;
                 await _employeRepository.UpdateAsync(_employee);
                 await _employeRepository.SaveChangesAsync();
             }
@@ -369,13 +367,9 @@ namespace Metcom.CardPay3.ApplicationCore.Services.Builder
         {
             Employee item = new Employee(employee);
 
-            if (item.Requisites == null)
-            {
-                item.Requisites = new List<RequisitesItem>();
-            }
             if(_requisites != null)
             {
-                item.Requisites.Add(_requisites);
+                item.Requisite = _requisites;
             }
 
             if (item.Addresses == null)

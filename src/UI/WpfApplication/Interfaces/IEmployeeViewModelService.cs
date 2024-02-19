@@ -13,6 +13,5 @@ namespace Metcom.CardPay3.WpfApplication.Interfaces
     {
         Task<ReadOnlyObservableCollection<Gender>> GetGenders();
         ObservableCollection<Address> GetAddress(Employee employee);
-        ObservableCollection<RequisitesItem> GetRequisites(Employee employee);
     }
 }

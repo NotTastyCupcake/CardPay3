@@ -56,9 +56,10 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes.RequisitiesCRUD
             this.WhenAnyValue(vm => vm.SelectedDivisions).Subscribe(vm => IdDivision = vm != null ? vm.Id : 0);
             this.WhenAnyValue(vm => vm.SelectedINN).Subscribe(vm => INN = vm.HasValue ? vm.Value : 0);
             // Включить видимость поля счет если статус реквизита "Добавлен"
-            this.WhenAnyValue(vm => vm.Status).WhereNotNull().Subscribe(vm => 
+            this.WhenAnyValue(vm => vm.SelectedStatus).WhereNotNull().Subscribe(vm => 
             { 
-                VisibleAccountNumber = vm.Name.Contains("Добавлен"); 
+                VisibleAccountNumber = vm.Name.Contains("Добавлен");
+                IdStatus = SelectedStatus.Id;
             });
         }
 
@@ -89,7 +90,7 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes.RequisitiesCRUD
                 "Отделение банка должно быть выбрано обязательно");
 
             this.ValidationRule(
-                viewModel => viewModel.Status,
+                viewModel => viewModel.SelectedStatus,
                 item => item != null,
                 "Статус счета должен быть выбран обязательно.");
 
@@ -103,16 +104,19 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes.RequisitiesCRUD
         public string AccountNumber { get; set; }
         [Reactive]
         public bool VisibleAccountNumber { get; set; }
+
         [Reactive]
         public ReadOnlyCollection<BankCardType> CardTypes { get; set; }
         [Reactive]
         public BankCardType SelectedCardType { get; set; }
         public int? IdCardType { get; set; }
+
         [Reactive]
         public ReadOnlyCollection<BankCurrency> Currencys { get; set; }
         [Reactive]
         public BankCurrency SelectedBankCurrency { get; set; }
         public int IdCurrency { get; set; }
+
         [Reactive]
         public ReadOnlyCollection<BankDivision> Divisions { get; set; }
         [Reactive]
@@ -133,6 +137,8 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes.RequisitiesCRUD
         [Reactive]
         public ReadOnlyCollection<Status> Statuses { get; set; }
         [Reactive]
-        public Status Status { get; set; }
+        public Status SelectedStatus { get; set; }
+        [Reactive]
+        public int IdStatus { get; set; }
     }
 }

@@ -33,7 +33,6 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
     public class CreateEmployeeViewModel : EmployeeViewModel, IRoutableViewModel
     {
         public string UrlPathSegment { get { return "CreateEmployee"; } }
-        public IScreen HostScreen { get; protected set; }
 
         public CreateEmployeeViewModel(
             IRepository<Gender> genderRepo,
@@ -42,10 +41,8 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
             IEmployeeViewModelService viewModelService,
             IEmployeeCollectionService collectionService,
             IEmployeeBuilder builder,
-            IScreen screen = null) : base(genderRepo, employeeType, logger, viewModelService, builder)
+            IScreen screen = null) : base(genderRepo, employeeType, logger, viewModelService, builder, screen)
         {
-            HostScreen = screen;
-
             #region Commands
 
             CreateEmployeeCommand = ReactiveCommand.CreateFromTask(async () =>
@@ -53,21 +50,15 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
                 await _builder.SetOrganization(Locator.Current.GetService<ShallViewModel>().SelectedOrganization.Id);
                 await _builder.SetGender(Gender.Id);
                 await _builder.SetDocument(Document);
+                await _builder.SetRequisites(Requisite);
+                //await _builder.SetLegalAddress(Addresses.FirstOrDefault());
                 await _builder.SetEmployee(this);
 
                 await HostScreen.Router.NavigateBack.Execute();
 
                 await collectionService.LoadOrUpdateEmployeesCollection();
 
-            }, this.IsValid);
-
-            CreateDocumentCommand = ReactiveCommand.CreateFromTask(async () =>
-            {
-                var vm = Locator.Current.GetService<CreateDocumentViewModel>();
-                await vm.InitializeAsync();
-                await HostScreen.Router.Navigate.Execute(vm);
-                vm.WhenAnyValue(vm => vm.Document).Subscribe(_ => Document = _);
-            });
+            }, this.IsValid());
 
             #endregion
         }
@@ -75,7 +66,6 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
 
         #region Commands
         public ReactiveCommand<Unit, Unit> CreateEmployeeCommand { get; }
-        public ReactiveCommand<Unit, Unit> CreateDocumentCommand { get; }
         #endregion
 
     }
