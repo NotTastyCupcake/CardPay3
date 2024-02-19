@@ -36,6 +36,7 @@ namespace Metcom.CardPay3.Infrastructure.Data
         public DbSet<BankCurrency> Currencies { get; set; }
         public DbSet<BankCardType> CardTypes { get; set; }
         public DbSet<RequisitesItem> Requisites { get; set; }
+        public DbSet<Status> Statuses { get; set; }
 
         public DbSet<Address> Addresses { get; set; }
 

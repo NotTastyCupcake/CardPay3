@@ -75,6 +75,15 @@ namespace Metcom.CardPay3.Infrastructure.Data
                     await employerContext.SaveChangesAsync();
                 }
 
+                if (!employerContext.Statuses.Any())
+                {
+                    employerContext.Statuses.AddRange(
+                        GetPreconfiguredStatuses());
+
+                    await employerContext.SaveChangesAsync();
+                }
+
+
             }
             catch (Exception ex)
             {
@@ -85,6 +94,16 @@ namespace Metcom.CardPay3.Infrastructure.Data
 
         }
 
+        private static IEnumerable<Status> GetPreconfiguredStatuses()
+        {
+            return new List<Status>()
+            {
+                new Status("Черновик", ""),
+                new Status("Обрабатывается банком", "Отправлена заявка на открытие счета."),
+                new Status("Добавлен", "Получен результат открытия счета в банке."),
+                new Status("Уволен", "")
+            };
+        }
 
         private static IEnumerable<DocumentType> GetPreconfiguredDocumentTypes()
         {
@@ -142,14 +161,6 @@ namespace Metcom.CardPay3.Infrastructure.Data
             {
                 new Gender("Мужчика","М"),
                 new Gender("Женшина","Ж")
-            };
-        }
-
-        private static IEnumerable<Group> GetPreconfiguredGroups()
-        {
-            return new List<Group>()
-            {
-                new Group(1, "GROUP_1")
             };
         }
 
