@@ -6,8 +6,8 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate
     public class RequisitesItem : BaseEntity, IRequisitesItem
     {
 #nullable enable
-        public int? IdEmployer { get; set; }
-        public virtual Employee? Employee { get; set; }
+        public int? IdEmployer { get; private set; }
+        public virtual Employee? Employee { get; private set; }
 #nullable disable
 
         public RequisitesItem(int inn,
@@ -15,6 +15,7 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate
                               int idDivision,
                               int idCurrency,
                               int? idCardType,
+                              int idStatus,
 
                               string latinFirstName = null,
                               string latinLastName = null
@@ -25,11 +26,10 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate
             IdDivision = idDivision;
             IdCurrency = idCurrency;
             IdCardType = idCardType;
+            IdStatus = idStatus;
 
             LatinFirstName = latinFirstName;
             LatinLastName = latinLastName;
-
-            Status = Status.New;
         }
 
         public RequisitesItem(IRequisitesItem item)
@@ -38,7 +38,6 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate
             IdCardType = item.IdCardType;
             IdCurrency = item.IdCurrency;
             IdDivision = item.IdDivision;
-            IdEmployer = item.IdEmployer;
             INN = item.INN;
             InsuranceNumber = item.InsuranceNumber;
             LatinFirstName = item.LatinFirstName;
@@ -52,37 +51,38 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate
             // required by EF
         }
 
-        public virtual BankDivision Division { get; private set; }
-        public int IdDivision { get; private set; }
-        public virtual BankCurrency Currency { get; private set; }
-        public int IdCurrency { get; private set; }
+        public virtual BankDivision Division { get; set; }
+        public int IdDivision { get; set; }
+        public virtual BankCurrency Currency { get; set; }
+        public int IdCurrency { get; set; }
 
 
-        public int INN { get; private set; }
+        public int INN { get; set; }
         /// <summary>
         /// Страховой номер
         /// </summary>
-        public string InsuranceNumber { get; private set; }
+        public string InsuranceNumber { get; set; }
 
         #region Данные о карте сотрудника
         /// <summary>
         /// Имя в латинице
         /// </summary>
-        public string LatinFirstName { get; private set; }
+        public string LatinFirstName { get; set; }
         /// <summary>
         /// Фамилия в латинице
         /// </summary>
-        public string LatinLastName { get; private set; }
-        public string AccountNumber { get; private set; }
+        public string LatinLastName { get; set; }
+        public string AccountNumber { get; set; }
 
 #nullable enable
-        public virtual BankCardType? CardType { get; private set; }
-        public int? IdCardType { get; private set; }
+        public virtual BankCardType? CardType { get; set; }
+        public int? IdCardType { get; set; }
 #nullable disable
 
         #endregion
 
-        public Status Status { get; set; }
+        public virtual Status Status { get; set; }
+        public int IdStatus { get; set; }
 
         public void UpdateCard(string accountNumber, int idCardType)
         {
@@ -91,13 +91,6 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate
 
             AccountNumber = accountNumber;
             IdCardType = idCardType;
-
-            Status = Status.Success;
-        }
-
-        public void UpdateStatus(Status status)
-        {
-            Status = status;
         }
 
         public void FullUpdateCardData(string lastName, string firstName, string accountNumber, int idCardType)

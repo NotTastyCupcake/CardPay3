@@ -1,0 +1,58 @@
+﻿<reactiveui:ReactiveUserControl
+        x:Class="Metcom.CardPay3.WpfApplication.Views.Employes.Requisities.CreateRequisitiesView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vms="clr-namespace:Metcom.CardPay3.WpfApplication.ViewModels.Employes.RequisitiesCRUD"
+        xmlns:reactiveui="http://reactiveui.net"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        d:DataContext="{d:DesignInstance Type=vms:CreateRequisitiesViewModel}"
+        x:TypeArguments="vms:CreateRequisitiesViewModel"
+        mc:Ignorable="d" 
+        d:DesignHeight="700" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center"
+                    VerticalAlignment="Center" Width="350">
+
+            <TextBlock Text="Тип карты"/>
+            <ComboBox x:Name="CardTypeComboBox" DisplayMemberPath="NameType" />
+            <Label x:Name="TypesError" Foreground="Red"/>
+
+            <TextBlock Text="Валюта"/>
+            <ComboBox x:Name="CurrencyComboBox" DisplayMemberPath="NameCurrency" />
+            <Label x:Name="CurrencysError" Foreground="Red"/>
+
+            <TextBlock Text="Точка продажи"/>
+            <ComboBox x:Name="DivisionComboBox" DisplayMemberPath="DivisionName" />
+            <Label x:Name="DivisionsError" Foreground="Red"/>
+
+            <TextBlock Text="Статус счета"/>
+            <ComboBox x:Name="StatusComboBox" DisplayMemberPath="Name" />
+            <Label x:Name="StatusesError" Foreground="Red"/>
+
+            <TextBlock Text="ИНН"/>
+            <TextBox  Name="INNBlock" />
+            <Label x:Name="INNError" Foreground="Red"/>
+
+            <TextBlock Text="Страховая"/>
+            <TextBox  Name="InsuranceNumberBlock"/>
+            <Label x:Name="InsuranceNumberError" Foreground="Red"/>
+
+            <TextBlock x:Name="AccountNumberLabel" Text="Счет"/>
+            <TextBox  x:Name="AccountNumberBlock"/>
+            <Label x:Name="AccountNumberError" Foreground="Red"/>
+
+        </StackPanel>
+
+        <Button x:Name ="Create"  Grid.Row="1" Grid.ColumnSpan="2" Content="Добавить реквезит"/>
+    </Grid>
+</reactiveui:ReactiveUserControl>

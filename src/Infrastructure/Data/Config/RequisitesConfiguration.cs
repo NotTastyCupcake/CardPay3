@@ -11,18 +11,23 @@ namespace Metcom.CardPay3.Infrastructure.Data.Config
             builder.HasKey(ci => ci.Id);
 
             builder.HasOne(ci => ci.Division)
-                .WithOne()
-                .HasForeignKey<RequisitesItem>(ci => ci.IdDivision)
+                .WithMany()
+                .HasForeignKey(ci => ci.IdDivision)
                 .IsRequired(true);
 
             builder.HasOne(ci => ci.Currency)
-                .WithOne()
-                .HasForeignKey<RequisitesItem>(ci => ci.IdCurrency)
+                .WithMany()
+                .HasForeignKey(ci => ci.IdCurrency)
                 .IsRequired(true);
 
             builder.HasOne(ci => ci.CardType)
-                .WithOne()
-                .HasForeignKey<RequisitesItem>(ci => ci.IdCardType)
+                .WithMany()
+                .HasForeignKey(ci => ci.IdCardType)
+                .IsRequired(true);
+
+            builder.HasOne(ci => ci.Status)
+                .WithMany()
+                .HasForeignKey(ci => ci.IdStatus)
                 .IsRequired(true);
         }
     }

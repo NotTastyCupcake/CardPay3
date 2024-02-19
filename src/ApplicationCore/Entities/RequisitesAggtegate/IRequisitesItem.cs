@@ -6,7 +6,6 @@
         int? IdCardType { get; }
         int IdCurrency { get; }
         int IdDivision { get; }
-        int? IdEmployer { get; }
         int INN { get; }
         string InsuranceNumber { get; }
         string LatinFirstName { get; }

@@ -11,9 +11,11 @@ using Metcom.CardPay3.WpfApplication.Services;
 using Metcom.CardPay3.WpfApplication.ViewModels;
 using Metcom.CardPay3.WpfApplication.ViewModels.Employes;
 using Metcom.CardPay3.WpfApplication.ViewModels.Employes.DocumentCRUD;
+using Metcom.CardPay3.WpfApplication.ViewModels.Employes.RequisitiesCRUD;
 using Metcom.CardPay3.WpfApplication.ViewModels.Organizations;
 using Metcom.CardPay3.WpfApplication.Views;
 using Metcom.CardPay3.WpfApplication.Views.Employes;
+using Metcom.CardPay3.WpfApplication.Views.Employes.Requisities;
 using Metcom.CardPay3.WpfApplication.Views.Organization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -170,6 +172,9 @@ public partial class App// : Application
 
         services.AddTransient<IViewFor<CreateDocumentViewModel>, CreateDocumentView>();
         services.AddTransient<CreateDocumentViewModel>();
+
+        services.AddTransient<IViewFor<CreateRequisitiesViewModel>, CreateRequisitiesView>();
+        services.AddTransient<CreateRequisitiesViewModel>();
     }
 
 }
