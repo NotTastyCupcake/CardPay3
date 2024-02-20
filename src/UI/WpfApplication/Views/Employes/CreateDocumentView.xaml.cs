@@ -70,7 +70,7 @@ namespace Metcom.CardPay3.WpfApplication.Views.Employes
                 .DisposeWith(disposable);
 
             this.Bind(this.ViewModel,
-                vm => vm.DataIssued,
+                vm => vm.SelectedDataIssued,
                 view => view.DateIssuedPicker.SelectedDate)
                 .DisposeWith(disposable);
 
@@ -103,7 +103,7 @@ namespace Metcom.CardPay3.WpfApplication.Views.Employes
                 .DisposeWith(disposable);
 
             this.BindValidation(this.ViewModel,
-                vm => vm.DataIssued,
+                vm => vm.SelectedDataIssued,
                 view => view.DateIssuedError.Content)
                 .DisposeWith(disposable);
 

@@ -27,7 +27,7 @@ namespace Metcom.CardPay3.WpfApplication.Services
 
             var items = new ObservableCollection<Organization>(organizations)
             {
-                new Organization(DateTime.Now,"0","Создать организацию.", "0")
+                new Organization("Создать организацию.")
             };
 
             return items;

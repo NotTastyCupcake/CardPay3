@@ -6,17 +6,20 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
 {
     public class Organization : BaseEntity, IOrganization
     {
+
+        public virtual ICollection<Employee> Employees { get; private set; }
+
         /// <summary>
         /// Дата формирования
         /// </summary>
-        public DateTime? CreateDate { get; set; }
+        public DateTime CreateDate { get; set; }
         public string Name { get; set; }
         public string INN { get; set; }
         /// <summary>
         /// Номер договора
         /// </summary>
         public string ApplicationNumber { get; set; }
-        public DateTime? ApplicationDate { get; set; }
+        public DateTime ApplicationDate { get; set; }
         public string Account { get; set; }
         /// <summary>
         /// Рекомендуется заполнять. БИК банка, с которым заключен зарплатный договор
@@ -27,12 +30,9 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
         /// </summary>
         public string SourceId { get; set; }
 
-        public Organization(DateTime createDate, string appNumber, string name, string sourceId)
+        public Organization(string name)
         {
-            CreateDate = createDate;
-            ApplicationNumber = appNumber;
             Name = name;
-            SourceId = sourceId;
         }
 
         public Organization(IOrganization organization)

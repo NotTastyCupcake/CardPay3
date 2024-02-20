@@ -31,12 +31,12 @@ namespace Metcom.CardPay3.WpfApplication.Views.Organization
 
 
                 this.Bind(this.ViewModel,
-                    vm => vm.CreateDate,
+                    vm => vm.SelectedCreateDate,
                     view => view.CreateDate.SelectedDate)
                     .DisposeWith(disposable);
 
                 this.BindValidation(this.ViewModel,
-                    vm => vm.CreateDate,
+                    vm => vm.SelectedCreateDate,
                     view => view.CreateDateError.Content)
                     .DisposeWith(disposable);
 
@@ -67,12 +67,12 @@ namespace Metcom.CardPay3.WpfApplication.Views.Organization
 
 
                 this.Bind(this.ViewModel,
-                    vm => vm.ApplicationDate,
+                    vm => vm.SelectedApplicationDate,
                     view => view.AppDate.SelectedDate)
                     .DisposeWith(disposable);
 
                 this.BindValidation(this.ViewModel,
-                    vm => vm.ApplicationDate,
+                    vm => vm.SelectedApplicationDate,
                     view => view.AppDateError.Content)
                     .DisposeWith(disposable);
 

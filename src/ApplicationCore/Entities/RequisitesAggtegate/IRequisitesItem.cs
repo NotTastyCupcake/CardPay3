@@ -3,7 +3,7 @@
     public interface IRequisitesItem
     {
         string AccountNumber { get; }
-        int? IdCardType { get; }
+        int IdCardType { get; }
         int IdCurrency { get; }
         int IdDivision { get; }
         int INN { get; }

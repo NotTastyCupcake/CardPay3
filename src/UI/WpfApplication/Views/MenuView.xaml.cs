@@ -24,6 +24,11 @@ namespace Metcom.CardPay3.WpfApplication.Views
                     vm => vm.RoutingEmployeeCommand,
                     view => view.EmployeeListButton)
                     .DisposeWith(disposable);
+
+                this.BindCommand(this.ViewModel,
+                    vm => vm.RoutingOneCCommand,
+                    view => view.OneCButton)
+                    .DisposeWith(disposable);
             });
 
 

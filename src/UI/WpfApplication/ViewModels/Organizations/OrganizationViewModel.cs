@@ -1,6 +1,8 @@
 ﻿using Metcom.CardPay3.ApplicationCore.Entities;
 using Metcom.CardPay3.ApplicationCore.Interfaces;
 using Microsoft.Extensions.Logging;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.Mapping;
+using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using ReactiveUI.Validation.Extensions;
 using ReactiveUI.Validation.Helpers;
@@ -28,12 +30,14 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Organizations
             IsValid = ValidatableViewModelExtensions.IsValid(this);
             Validation();
 
+            this.WhenAnyValue(vm => vm.SelectedCreateDate).WhereNotNull().Subscribe(d => CreateDate = d.Value);
+            this.WhenAnyValue(vm => vm.SelectedApplicationDate).WhereNotNull().Subscribe(d => ApplicationDate = d.Value);
         }
 
         private void Validation()
         {
             this.ValidationRule(
-                viewModel => viewModel.CreateDate,
+                viewModel => viewModel.SelectedCreateDate,
                 item => item.HasValue,
                 "Дата формирования должна быть заполнена обязательно");
 
@@ -60,7 +64,11 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Organizations
         /// Дата формирования
         /// </summary>
         [Reactive]
-        public DateTime? CreateDate { get; set; }
+        public DateTime CreateDate { get; set; }
+        [Reactive]
+        public DateTime? SelectedCreateDate { get; set; }
+
+        [Reactive]
         public string INN { get; set; }
         /// <summary>
         /// Номер договора
@@ -68,7 +76,10 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Organizations
         [Reactive]
         public string ApplicationNumber { get; set; }
         [Reactive]
-        public DateTime? ApplicationDate { get; set; }
+        public DateTime ApplicationDate { get; set; }
+        [Reactive]
+        public DateTime? SelectedApplicationDate { get; set; }
+
         [Reactive]
         public string Account { get; set; }
         /// <summary>

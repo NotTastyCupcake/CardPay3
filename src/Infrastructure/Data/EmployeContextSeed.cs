@@ -168,8 +168,8 @@ namespace Metcom.CardPay3.Infrastructure.Data
         {
             return new List<BankCurrency>()
             {
-               new BankCurrency("Рубли"),
-               new BankCurrency("Тэнге")
+               new BankCurrency("Рубли", "643"),
+               new BankCurrency("Тэнге", "398")
             };
         }
 

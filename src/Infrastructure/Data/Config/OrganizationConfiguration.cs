@@ -23,7 +23,7 @@ namespace Metcom.CardPay3.Infrastructure.Data.Config
             builder.Property(on => on.SourceId)
                 .IsRequired(true);
 
-            builder.HasMany<Employee>()
+            builder.HasMany(o => o.Employees)
                 .WithOne(on => on.Organization)
                 .HasForeignKey(ci => ci.IdOrganization)
                 .IsRequired(true)

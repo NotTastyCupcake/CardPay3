@@ -32,6 +32,7 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes.DocumentCRUD
             Validation();
 
             this.WhenAnyValue(vm => vm.SelectedType).Subscribe(_ => IdType = SelectedType?.Id ?? 0);
+            this.WhenAnyValue(vm => vm.SelectedDataIssued).WhereNotNull().Subscribe(d => DataIssued = d.Value);
         }
 
         private void Validation()
@@ -42,7 +43,7 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes.DocumentCRUD
                 "Тип документа должнен быть заполнен обязательно");
 
             this.ValidationRule(
-                viewModel => viewModel.DataIssued,
+                viewModel => viewModel.SelectedDataIssued,
                 item => item.HasValue,
                 "Дата должнена быть заполнена обязательно");
 
@@ -69,7 +70,10 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes.DocumentCRUD
         [Reactive]
         public string Number { get; set; }
         [Reactive]
-        public DateTime? DataIssued { get; set; }
+        public DateTime DataIssued { get; set; }
+        [Reactive]
+        public DateTime? SelectedDataIssued { get; set; }
+
         [Reactive]
         public string IssuedBy { get; set; }
         [Reactive]

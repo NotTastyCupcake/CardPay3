@@ -58,7 +58,7 @@
             VerticalAlignment="Center"/>
 
         <Button 
-            x:Name ="OceCButton" 
+            x:Name ="OneCButton" 
             Content="1С" 
             HorizontalAlignment="Right" 
             VerticalAlignment="Center" 

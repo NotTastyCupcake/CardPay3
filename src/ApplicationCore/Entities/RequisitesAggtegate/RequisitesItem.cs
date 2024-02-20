@@ -14,7 +14,7 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate
                               string insuranceNum,
                               int idDivision,
                               int idCurrency,
-                              int? idCardType,
+                              int idCardType,
                               int idStatus,
 
                               string latinFirstName = null,
@@ -74,10 +74,8 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate
         public string LatinLastName { get; set; }
         public string AccountNumber { get; set; }
 
-#nullable enable
-        public virtual BankCardType? CardType { get; set; }
-        public int? IdCardType { get; set; }
-#nullable disable
+        public virtual BankCardType CardType { get; set; }
+        public int IdCardType { get; set; }
 
         #endregion
 

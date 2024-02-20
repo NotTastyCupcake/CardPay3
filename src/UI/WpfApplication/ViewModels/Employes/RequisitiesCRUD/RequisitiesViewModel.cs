@@ -109,7 +109,7 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes.RequisitiesCRUD
         public ReadOnlyCollection<BankCardType> CardTypes { get; set; }
         [Reactive]
         public BankCardType SelectedCardType { get; set; }
-        public int? IdCardType { get; set; }
+        public int IdCardType { get; set; }
 
         [Reactive]
         public ReadOnlyCollection<BankCurrency> Currencys { get; set; }
