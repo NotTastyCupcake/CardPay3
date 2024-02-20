@@ -3,6 +3,7 @@ using DynamicData.Binding;
 using Metcom.CardPay3.ApplicationCore.Entities;
 using Metcom.CardPay3.ApplicationCore.Interfaces;
 using Metcom.CardPay3.WpfApplication.Interfaces;
+using Metcom.CardPay3.WpfApplication.Services;
 using Microsoft.Extensions.Logging;
 using Microsoft.Win32;
 using ReactiveUI;
@@ -14,6 +15,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
+using System.Threading.Tasks;
 
 
 namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
@@ -27,6 +29,7 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
         private readonly ILogger<EmployeeListViewModel> _logger;
         private readonly IDataExportService _exportService;
         private readonly IEmployeeViewModelService _employeViewModelService;
+        private readonly IEmployeeCollectionService _employeCollectionService;
 
         public EmployeeListViewModel(
             IEmployeeViewModelService viewModelService,
@@ -37,6 +40,7 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
             IScreen screen = null)
         {
             _employeViewModelService = viewModelService;
+            _employeCollectionService = employeCollectionService;
             _logger = logger;
             _exportService = exportService;
 
@@ -45,22 +49,22 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
             HostScreen = screen;
 
             //Init collection
-            employeCollectionService.LoadOrUpdateEmployeesCollection();
-
             ReadOnlyObservableCollection<Employee> bindingData;
 
-            employeCollectionService.All.Connect()
+            _employeCollectionService.All.Connect()
                 .Sort(SortExpressionComparer<Employee>.Ascending(t => t.FullName))
+                .Filter(e => FilterStatus == null || e.Requisite.Status == FilterStatus)
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Bind(out bindingData)
                 .Subscribe();
 
             Employes = bindingData;
 
+
             #region commands
             UpdateEmployeesCollectionCommand = ReactiveCommand.CreateFromTask(async delegate ()
             {
-                await employeCollectionService.LoadOrUpdateEmployeesCollection();
+                await _employeCollectionService.LoadOrUpdateEmployeesCollection();
             });
 
             RoutingAddEmployeeCommand = ReactiveCommand.CreateFromTask(async delegate() 
@@ -114,6 +118,14 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
                 }
             });
             #endregion
+
+            this.WhenAnyValue(vm => vm.FilterStatus).WhereNotNull().Subscribe(async vm => await _employeCollectionService.LoadOrUpdateEmployeesCollection());
+        }
+
+        public async Task InitializeAsync()
+        {
+            FilterStatuses = await _employeCollectionService.GetStatusesCollection();
+            FilterStatus = FilterStatuses.FirstOrDefault();
         }
 
         #region commands
@@ -127,9 +139,13 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
 
         #region Properties
         public ReadOnlyObservableCollection<Employee> Employes { get; }
-
         [Reactive]
         public Employee SelectedEmploye { get; set; }
+
+        [Reactive]
+        public ReadOnlyCollection<Status> FilterStatuses { get; set; }
+        [Reactive]
+        public Status FilterStatus { get; set; }
         #endregion
     }
 }

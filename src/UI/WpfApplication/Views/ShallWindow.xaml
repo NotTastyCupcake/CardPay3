@@ -19,26 +19,13 @@
     <Window.Resources>
         
     </Window.Resources>
-    
-    <Grid>
-        <!--<Menu Height="25" VerticalAlignment="Top">
-            <MenuItem Header="File">
-                <MenuItem Header="New Project" ></MenuItem>
-                <MenuItem Header="Open Project" >
-                    <MenuItem Header="WinForms"></MenuItem>
-                    <MenuItem Header="WPF" ></MenuItem>
-                </MenuItem>
-                <Separator />
-                <MenuItem Header="Exit" ></MenuItem>
-            </MenuItem>
-            <MenuItem Header="Edit" ></MenuItem>
-            <MenuItem Header="View" ></MenuItem>
-        </Menu>-->
 
+    <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="55"></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="55"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        
 
         <Button 
             x:Name ="GoBackButton" 
@@ -78,7 +65,6 @@
 
         <Menu Grid.Row="0"
             Grid.Column="1"
-            Grid.ColumnSpan="2"
             HorizontalAlignment="Right" 
             VerticalAlignment="Top"
             Margin="0,0,10,5">

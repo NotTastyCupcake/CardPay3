@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using ReactiveUI;
 using Splat;
 using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
@@ -19,28 +20,16 @@ namespace Metcom.CardPay3.WpfApplication.Services
     {
         private readonly ILogger<EmployeeCollectionService> _logger;
         private readonly IRepository<Employee> _repository;
+        private readonly IRepository<Status> _statusRepo;
 
         public EmployeeCollectionService(
             ILogger<EmployeeCollectionService> logger,
-            IRepository<Employee> repository)
+            IRepository<Employee> repository,
+            IRepository<Status> statusRepo)
         {
             _logger = logger;
             _repository = repository;
-
-            //TODO: Обновление списка сотрудников за определенный интервал
-            // Load the initial data from the database
-
-            //// Subscribe to the changes in the database every 5 seconds
-            //var obs = Observable.Interval(TimeSpan.FromSeconds(5), RxApp.TaskpoolScheduler)
-            //    .SelectMany(_ => _repository.ListAsync()))
-            //    .Where(employees => !employees.SequenceEqual(All.Items));
-
-            //obs.Subscribe(employees =>
-            //{
-            //    // Update the source cache with the latest data
-            //    All.Clear();
-            //    All.AddOrUpdate(employees);
-            //});
+            _statusRepo = statusRepo;
         }
 
         public async Task LoadOrUpdateEmployeesCollection()
@@ -55,7 +44,10 @@ namespace Metcom.CardPay3.WpfApplication.Services
 
         }
 
-
+        public async Task<ReadOnlyCollection<Status>> GetStatusesCollection()
+        {
+            return new ReadOnlyCollection<Status>(await _statusRepo.ListAsync());
+        }
 
         public SourceCache<Employee, int> All { get; } = new SourceCache<Employee, int>(e => e.Id);
     }

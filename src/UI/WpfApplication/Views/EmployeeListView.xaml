@@ -20,52 +20,105 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
 
-        <Button  
-            Command="{Binding UpdateEmployeesCollectionCommand}"
-            Content= "{materialDesign:PackIcon Refresh}"
-            Style="{DynamicResource MaterialDesignToolButton}"
-            ToolTip="Обновление"
-            HorizontalAlignment="Right" 
-            Width="50" Height="30" 
-            VerticalAlignment="Top" 
-            Margin="0,10,10,5"
-            Grid.Row="0" />
+        <Grid>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="100"/>
+            </Grid.ColumnDefinitions>
+
+            <Expander 
+                Header="Фильтр"
+                HorizontalAlignment="Center"
+                Width="400"
+                >
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="300"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock 
+                    Grid.Column="0" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center"
+                    Text="Статус счета:"/>
+
+                    <ComboBox
+                       Grid.Column="1"
+                       x:Name="FilterStatusComboBox"
+                       ItemsSource="{Binding FilterStatuses}"
+                       SelectedItem="{Binding FilterStatus, Mode=TwoWay}"
+                       DisplayMemberPath="Name" />
+                </Grid>
+            </Expander>
+
+            <Button  
+                Grid.Column="2"
+                Command="{Binding UpdateEmployeesCollectionCommand}"
+                Content= "{materialDesign:PackIcon Refresh}"
+                Style="{DynamicResource MaterialDesignToolButton}"
+                ToolTip="Обновление"
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center"/>
+
+        </Grid>
         
-        <ListView x:Name="employeeListView" Grid.Row="1" ItemsSource="{Binding Employes, Mode=OneWay}" SelectedItem="{Binding SelectedEmploye, Mode=TwoWay}" SelectionMode="Multiple">
-            <ListView.ContextMenu>
-                <ContextMenu>
-                    <MenuItem Header="Удалить" Command="{Binding RoutingDeleteEmployeeCommand}"/>
-                    <MenuItem Header="Изменить" Command="{Binding RoutingEditEmployeeCommand}"/>
-                </ContextMenu>
-            </ListView.ContextMenu>
-            <ListView.InputBindings>
-                <KeyBinding Command="ApplicationCommands.SelectAll"
+
+        
+        <UniformGrid Grid.Row="1" >
+
+            <ListView x:Name="employeeListView"
+                  ItemsSource="{Binding Employes, Mode=OneWay}" 
+                  SelectedItem="{Binding SelectedEmploye, Mode=TwoWay}" 
+                  SelectionMode="Multiple">
+                <ListView.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Удалить" 
+                              Command="{Binding RoutingDeleteEmployeeCommand}"/>
+                        <MenuItem Header="Изменить" 
+                              Command="{Binding RoutingEditEmployeeCommand}"/>
+                    </ContextMenu>
+                </ListView.ContextMenu>
+                <ListView.InputBindings>
+                    <KeyBinding 
+                    Command="ApplicationCommands.SelectAll"
                     Modifiers="Ctrl"
                     Key="A" />
-            </ListView.InputBindings>
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Width="250" Header="ФИО"                                            
-                                            DisplayMemberBinding="{Binding Path=FullName, Mode=OneWay}"/>
-                    <GridViewColumn Width="200" Header="Должность"
-                                            DisplayMemberBinding="{Binding Path=Position, Mode=OneWay}"/>
-                    <GridViewColumn Width="200" Header="Офис"
-                                            DisplayMemberBinding="{Binding Path=DepartmentNum, Mode=OneWay}"/>
-                    <GridViewColumn Header="Пол"
-                                            DisplayMemberBinding="{Binding Path=Gender.GenderName, Mode=OneWay}"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
+                </ListView.InputBindings>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Width="250" Header="ФИО"                                            
+                                    DisplayMemberBinding="{Binding Path=FullName, Mode=OneWay}"/>
+                        <GridViewColumn Width="200" Header="Должность"
+                                    DisplayMemberBinding="{Binding Path=Position, Mode=OneWay}"/>
+                        <GridViewColumn Width="200" Header="Офис"
+                                    DisplayMemberBinding="{Binding Path=DepartmentNum, Mode=OneWay}"/>
+                        <GridViewColumn Header="Пол"
+                                    DisplayMemberBinding="{Binding Path=Gender.GenderName, Mode=OneWay}"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </UniformGrid>
 
 
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
-            <Button Content="Добавить сотрудника" Command="{Binding RoutingAddEmployeeCommand}"/>
-            <Button Content="Экспорт" Margin="10,0,0,0" Command="{Binding ExportEmployeeCommand}"/>
+        <StackPanel 
+            Grid.Row="2" 
+            Orientation="Horizontal" 
+            HorizontalAlignment="Right" 
+            Margin="5">
+            <Button 
+                Content="Добавить сотрудника" 
+                Command="{Binding RoutingAddEmployeeCommand}"/>
+            <Button 
+                Content="Экспорт" 
+                Margin="10,0,0,0" 
+                Command="{Binding ExportEmployeeCommand}"/>
         </StackPanel>
     </Grid>
 </reactiveUi:ReactiveUserControl>

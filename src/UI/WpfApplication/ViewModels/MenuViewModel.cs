@@ -19,7 +19,9 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
 
             RoutingEmployeeCommand = ReactiveCommand.CreateFromTask(async delegate()
             {
-                await HostScreen.Router.Navigate.Execute(Locator.Current.GetService<EmployeeListViewModel>());
+                var vm = Locator.Current.GetService<EmployeeListViewModel>();
+                await vm.InitializeAsync();
+                await HostScreen.Router.Navigate.Execute(vm);
             });
 
         }
