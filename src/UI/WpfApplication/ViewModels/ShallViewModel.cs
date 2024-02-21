@@ -1,4 +1,5 @@
 ﻿using DynamicData;
+using MaterialDesignThemes.Wpf;
 using Metcom.CardPay3.ApplicationCore.Entities;
 using Metcom.CardPay3.ApplicationCore.Interfaces;
 using Metcom.CardPay3.WpfApplication.Interfaces;
@@ -18,6 +19,7 @@ using System.Reactive;
 using System.Reactive.Linq;
 using System.Reflection.Metadata;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Metcom.CardPay3.WpfApplication.ViewModels;
 public class ShallViewModel : ReactiveObject, IScreen
@@ -106,7 +108,13 @@ public class ShallViewModel : ReactiveObject, IScreen
 
         RoutingSettingsCommand = ReactiveCommand.CreateFromTask(async delegate ()
         {
-            await Router.Navigate.Execute(Locator.Current.GetService<SettingsViewModel>());
+            var settingsWindow = Locator.Current.GetService<IViewFor<SettingsViewModel>>();
+
+            if(settingsWindow is Window window )
+            {
+                window.Show();
+            }
+            
         });
 
         Task.Run(() => Initialize());

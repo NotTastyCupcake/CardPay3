@@ -1,14 +1,20 @@
-﻿<reactiveui:ReactiveUserControl x:Class="Metcom.CardPay3.WpfApplication.Views.SettingsView"
+﻿<reactiveui:ReactiveWindow x:Class="Metcom.CardPay3.WpfApplication.Views.SettingsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:reactiveui="http://reactiveui.net"
              xmlns:vms="clr-namespace:Metcom.CardPay3.WpfApplication.ViewModels"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+             Background="{DynamicResource MaterialDesignPaper}"
+             TextElement.FontWeight="Medium"
+             TextElement.FontSize="14"
+             FontFamily="{materialDesign:MaterialDesignFont}"
              x:TypeArguments="vms:SettingsViewModel"
              xmlns:local="clr-namespace:Metcom.CardPay3.WpfApplication.Views" 
              mc:Ignorable="d" 
-             d:DesignHeight="500" d:DesignWidth="600">
+             Title="CardPay - Settings" Height="500" Width="600">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -35,4 +41,4 @@
         <Button x:Name ="SaveButton" Grid.Row="1" Grid.ColumnSpan="2" Content="Применить"/>
 
     </Grid>
-</reactiveui:ReactiveUserControl>
+</reactiveui:ReactiveWindow>

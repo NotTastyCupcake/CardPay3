@@ -14,7 +14,7 @@
         FontFamily="{materialDesign:MaterialDesignFont}"
         xmlns:local="clr-namespace:Metcom.CardPay3.WpfApplication.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="700" Width="800" ShowInTaskbar="True">
+        Title="CardPay" Height="700" Width="800" ShowInTaskbar="True" Icon="/Views/metcom_logo_64x64.png">
 
     <Window.Resources>
         

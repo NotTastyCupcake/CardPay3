@@ -25,11 +25,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Configuration;
 using ReactiveUI;
 using Splat;
 using Splat.Microsoft.Extensions.DependencyInjection;
 using Splat.Microsoft.Extensions.Logging;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Windows;
 
@@ -72,6 +74,8 @@ public partial class App// : Application
             })
             .ConfigureLogging(loggingBuilder =>
             {
+                loggingBuilder.AddConfiguration(Configuration);
+                loggingBuilder.AddEventLog();
                 loggingBuilder.AddSplat();
             })
             //.UseEnvironment(Environments.Development)
@@ -102,11 +106,24 @@ public partial class App// : Application
     {
         await _host.StartAsync();
 
-        var mainWindow = _host.Services.GetRequiredService<IViewFor<ShallViewModel>>();
-        if (mainWindow is ShellWindow window)
+        if (_host.Services.GetService<EmployeContext>().Database.CanConnect())
         {
-            window.Show();
+            var mainWindow = _host.Services.GetRequiredService<IViewFor<ShallViewModel>>();
+            if (mainWindow is ShellWindow window)
+            {
+                window.Show();
+            }
         }
+        else
+        {
+            var mainWindow = _host.Services.GetRequiredService<IViewFor<SettingsViewModel>>();
+            if (mainWindow is Window window)
+            {
+                window.Show();
+            }
+        }
+
+
 
         base.OnStartup(e);
     }
@@ -117,12 +134,12 @@ public partial class App// : Application
         //ConfigureInMemoryDatabases(services);
 
         // use real ms database
-        ConfigureMsSqlDatabases(services);
+        ConfigureSqlDatabases(services);
 
         ConfigureServices(services);
     }
 
-    private void ConfigureMsSqlDatabases(IServiceCollection services)
+    private void ConfigureSqlDatabases(IServiceCollection services)
     {
         Infrastructure.Dependencies.ConfigureServices(Configuration, services);
     }
@@ -155,6 +172,9 @@ public partial class App// : Application
         services.AddSingleton<ShallViewModel>(); //Implements IScreen
         services.AddSingleton<IScreen, ShallViewModel>(x => x.GetRequiredService<ShallViewModel>());
         services.AddSingleton<IViewFor<ShallViewModel>, ShellWindow>();
+
+        services.AddSingleton<SettingsViewModel>();
+        services.AddSingleton<IViewFor<SettingsViewModel>, SettingsView>();
 
         //alternatively search assembly for `IRoutedViewFor` implementations
         //see https://reactiveui.net/docs/handbook/routing to learn more about routing in RxUI

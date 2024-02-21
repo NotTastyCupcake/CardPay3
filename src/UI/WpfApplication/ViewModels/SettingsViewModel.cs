@@ -9,6 +9,7 @@ using ReactiveUI.Fody.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
@@ -18,25 +19,20 @@ using System.Windows.Forms;
 
 namespace Metcom.CardPay3.WpfApplication.ViewModels
 {
-    public class SettingsViewModel : ReactiveObject, IRoutableViewModel
+    public class SettingsViewModel : ReactiveObject
     {
-        public string UrlPathSegment { get { return "Setting"; } }
-        public IScreen HostScreen { get; protected set; }
-
         private readonly ISettingService _service;
 
-        public SettingsViewModel(ISettingService service ,IScreen screen = null)
+        public SettingsViewModel(ISettingService service)
         {
             _service = service;
-
-            HostScreen = screen;
 
             var settings = service.GetSetting();
 
             SelectedDataBaseType = settings.DataBaseType;
             ConnectionString = settings.ConnectionString;
 
-            SaveCommand = ReactiveCommand.CreateFromTask(async delegate ()
+            SaveCommand = ReactiveCommand.Create(delegate ()
             {
                 service.SaveChange(new SettingModel() 
                 { 
@@ -44,7 +40,6 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
                     DataBaseType = SelectedDataBaseType
                 });
                 MessageBox.Show("Чтобы применить настройки, перезапустите приложение.");
-                await HostScreen.Router.NavigateBack.Execute();
             });
 
             DBTypes = new ObservableCollection<string>()

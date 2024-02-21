@@ -39,7 +39,7 @@ namespace Metcom.CardPay3.WpfApplication.Services
 
             foreach (var item in settings)
             {
-                if(item.Key == "ConnectionString:MainConnection")
+                if(item.Key == "ConnectionStrings:MainConnection")
                 {
                     settingsCollection.Add(item.Key, newSetting.ConnectionString);
                 }
@@ -47,7 +47,7 @@ namespace Metcom.CardPay3.WpfApplication.Services
                 {
                     settingsCollection.Add(item.Key, newSetting.DataBaseType);
                 }
-                else
+                else if(item.Key.Contains("Logging"))
                 {
                     settingsCollection.Add(item.Key, item.Value);
                 }
