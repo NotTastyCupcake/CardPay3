@@ -13,6 +13,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Views\metcom_logo_64x64.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="DynamicData" Version="7.5.2" />
     <PackageReference Include="MaterialDesignColors" Version="2.1.4" />
     <PackageReference Include="MaterialDesignExtensions" Version="3.3.0" />
@@ -56,6 +60,10 @@
   <ItemGroup>
     <ProjectReference Include="..\..\ApplicationCore\ApplicationCore.csproj" />
     <ProjectReference Include="..\..\Infrastructure\Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Views\metcom_logo_64x64.png" />
   </ItemGroup>
 
   <ItemGroup>

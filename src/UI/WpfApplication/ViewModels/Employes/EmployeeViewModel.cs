@@ -180,7 +180,7 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
         [Reactive]
         public RequisitesItem Requisite { get; set; }
 
-        public string RequisitFullName => $"{Requisite?.Status?.Name ?? "<Нет статуса>"}, {Requisite?.Currency?.NameCurrency ?? "<Нет валюты>"}";
+        public string RequisitFullName => $"{Requisite?.Status?.Name ?? ""} {Requisite?.Currency?.NameCurrency ?? ""}";
 
         [Reactive]
         public bool Resident { get; set; }

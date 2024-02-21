@@ -29,7 +29,6 @@ namespace Metcom.CardPay3.WpfApplication.Views.Organization
                     .DisposeWith(disposable);
 
 
-
                 this.Bind(this.ViewModel,
                     vm => vm.SelectedCreateDate,
                     view => view.CreateDate.SelectedDate)
@@ -39,7 +38,6 @@ namespace Metcom.CardPay3.WpfApplication.Views.Organization
                     vm => vm.SelectedCreateDate,
                     view => view.CreateDateError.Content)
                     .DisposeWith(disposable);
-
 
 
                 this.Bind(this.ViewModel,

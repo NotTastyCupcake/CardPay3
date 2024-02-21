@@ -17,6 +17,12 @@ namespace Metcom.CardPay3.Infrastructure.Data
         public async static Task SeedAsync(EmployeContext employerContext,
             ILoggerFactory loggerFactory)
         {
+
+            if(!employerContext.Database.CanConnect())
+            {
+                return;
+            }
+
             try
             {
 
@@ -82,7 +88,6 @@ namespace Metcom.CardPay3.Infrastructure.Data
 
                     await employerContext.SaveChangesAsync();
                 }
-
 
             }
             catch (Exception ex)
@@ -159,8 +164,8 @@ namespace Metcom.CardPay3.Infrastructure.Data
         {
             return new List<Gender>()
             {
-                new Gender("Мужчика","М"),
-                new Gender("Женшина","Ж")
+                new Gender("Мужчина","М"),
+                new Gender("Женщина","Ж")
             };
         }
 

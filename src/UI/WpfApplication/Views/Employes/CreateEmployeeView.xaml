@@ -30,21 +30,27 @@
             <Label Name="FirstNameError" Foreground="Red"/>
             <TextBlock Text="Отчество"/>
             <TextBox Name="MiddleNameBlock" />
+            <Label Name="MiddleNameError" Foreground="Red"/>
             <TextBlock Text="Дата рождения"/>
             <DatePicker Name="BirthdayDatePicker" IsTodayHighlighted="True"/>
             <Label Name="BirthdayError" Foreground="Red"/>
             <TextBlock Text="Должность"/>
             <TextBox Name="PositionBlock"/>
+            <Label Foreground="Red"/>
             <TextBlock Text="Номер телефона"/>
             <TextBox Name="PhoneNumber"/>
+            <Label Foreground="Red"/>
             <TextBlock Text="Рабочий номер телефона"/>
             <TextBox Name="JobPhoneNumber"/>
+            <Label Foreground="Red"/>
             <TextBlock Text="Позиция"/>
             <TextBox Name="Position" />
+            <Label Foreground="Red"/>
             <TextBlock Text="Номер депортамента"/>
             <TextBox Name="DepartmentNum" />
+            <Label Foreground="Red"/>
             <TextBlock/>
-            <CheckBox Name="Resident" Content="Резидентность"/>
+            <CheckBox Name="Resident" Content="Резидент"/>
             <Label Name="ResidentError" Foreground="Red"/>
 
         </StackPanel>
@@ -58,6 +64,7 @@
             <Label Name="GendersError" Foreground="Red"/>
             <TextBlock Text="Категория населения"/>
             <ComboBox x:Name="TypesComboBox" DisplayMemberPath="Name" />
+            <Label Foreground="Red"/>
 
             <TextBlock Text="Документ"/>
             <Grid>
@@ -68,7 +75,7 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="100"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock x:Name="DocumentTextBlock" Text="Нет данных"/>
+                <TextBlock x:Name="DocumentTextBlock"/>
                 <Button Grid.Column="2" Name="CreateDocumentButton" Content="Создать"/>
             </Grid>
             <Label Name="DocumentError" Foreground="Red"/>
@@ -82,7 +89,7 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="100"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock x:Name="RequisitTextBlock" Text="Нет данных"/>
+                <TextBlock x:Name="RequisitTextBlock"/>
                 <Button Grid.Column="2" Name="CreateRequisitButton" Content="Создать"/>
                 
             </Grid>
