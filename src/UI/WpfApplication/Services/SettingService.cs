@@ -37,21 +37,36 @@ namespace Metcom.CardPay3.WpfApplication.Services
             var settings = _configuration.AsEnumerable();
             var settingsCollection = new Dictionary<string, string>();
 
-            foreach (var item in settings)
+            if(settings != null && settings
+                                    .Select(s => s.Key)
+                                    .Contains("ConnectionStrings:MainConnection")
+                                && settings
+                                    .Select(s => s.Key)
+                                    .Contains("DataBaseType"))
             {
-                if(item.Key == "ConnectionStrings:MainConnection")
+                foreach (var item in settings)
                 {
-                    settingsCollection.Add(item.Key, newSetting.ConnectionString);
-                }
-                else if(item.Key == "DataBaseType")
-                {
-                    settingsCollection.Add(item.Key, newSetting.DataBaseType);
-                }
-                else if(item.Key.Contains("Logging"))
-                {
-                    settingsCollection.Add(item.Key, item.Value);
+                    if (item.Key == "ConnectionStrings:MainConnection")
+                    {
+                        settingsCollection.Add(item.Key, newSetting.ConnectionString);
+                    }
+                    else if (item.Key == "DataBaseType")
+                    {
+                        settingsCollection.Add(item.Key, newSetting.DataBaseType);
+                    }
+                    else if (item.Key.Contains("Logging"))
+                    {
+                        settingsCollection.Add(item.Key, item.Value);
+                    }
                 }
             }
+            else
+            {
+                settingsCollection.Add("ConnectionStrings:MainConnection", newSetting.ConnectionString);
+                settingsCollection.Add("DataBaseType", newSetting.DataBaseType);
+            }
+
+
 
             File.WriteAllText(_settingsFile, JsonConvert.SerializeObject(settingsCollection, Formatting.Indented));
         }

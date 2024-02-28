@@ -14,16 +14,7 @@ namespace Metcom.CardPay3.Infrastructure.Data
         public EmployeContext(DbContextOptions<EmployeContext> options)
             : base(options)
         {
-            if (Database.CanConnect())
-            {
-                Database.EnsureCreated();
-            }
-            
-        }
-
-        public EmployeContext()
-        {
-
+            Database.EnsureCreated();
         }
 
         public DbSet<Employee> Employers { get; set; }

@@ -57,10 +57,10 @@ public partial class App// : Application
     {
         var builder = new ConfigurationBuilder()
              .SetBasePath(Directory.GetCurrentDirectory())
-             .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+             .AddJsonFile("appsettings.json", optional: false);
 
         Configuration = builder.Build();
-
+         
         _host = Host
             .CreateDefaultBuilder()
             .ConfigureServices(services =>
@@ -106,7 +106,9 @@ public partial class App// : Application
     {
         await _host.StartAsync();
 
-        if (_host.Services.GetService<EmployeContext>().Database.CanConnect())
+        var dbContext = _host.Services.GetService<EmployeContext>();
+
+        if (dbContext != null && dbContext.Database.CanConnect())
         {
             var mainWindow = _host.Services.GetRequiredService<IViewFor<ShallViewModel>>();
             if (mainWindow is ShellWindow window)

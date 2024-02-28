@@ -15,7 +15,7 @@ namespace Metcom.CardPay3.Infrastructure
     {
         public static void ConfigureServices(IConfiguration configuration, IServiceCollection services)
         {
-            string dataBaseType = "MSSQL";
+            string dataBaseType = null;
 
             if (configuration["DataBaseType"] != null)
             {
