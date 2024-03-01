@@ -9,6 +9,7 @@ using Metcom.CardPay3.Infrastructure.Logging;
 using Metcom.CardPay3.Infrastructure.Services;
 using Metcom.CardPay3.Integration.Interfaces;
 using Metcom.CardPay3.Integration.Services;
+using Metcom.CardPay3.WpfApplication.Configuration;
 using Metcom.CardPay3.WpfApplication.Interfaces;
 using Metcom.CardPay3.WpfApplication.Services;
 using Metcom.CardPay3.WpfApplication.ViewModels;
@@ -31,6 +32,7 @@ using Splat;
 using Splat.Microsoft.Extensions.DependencyInjection;
 using Splat.Microsoft.Extensions.Logging;
 using System;
+using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
@@ -42,11 +44,8 @@ namespace Metcom.CardPay3.WpfApplication;
 /// </summary>
 public partial class App// : Application
 {
+    protected IHost _host;
 
-    public IConfiguration Configuration { get; private set; }
-
-    public IServiceProvider Container { get; private set; }
-    private IHost _host;
     public App()
     {
         Initialize();
@@ -55,34 +54,25 @@ public partial class App// : Application
 
     private async void Initialize()
     {
-        var builder = new ConfigurationBuilder()
-             .SetBasePath(Directory.GetCurrentDirectory())
-             .AddJsonFile("appsettings.json", optional: false);
 
-        Configuration = builder.Build();
-         
-        _host = Host
-            .CreateDefaultBuilder()
-            .ConfigureServices(services =>
-            {
-                services.UseMicrosoftDependencyResolver();
-                var resolver = Locator.CurrentMutable;
-                resolver.InitializeSplat();
-                resolver.InitializeReactiveUI();
+        var builder = Host.CreateApplicationBuilder();
 
-                ConfigureDevelopmentServices(services);
-            })
-            .ConfigureLogging(loggingBuilder =>
-            {
-                loggingBuilder.AddConfiguration(Configuration);
-                loggingBuilder.AddEventLog();
-                loggingBuilder.AddSplat();
-            })
-            //.UseEnvironment(Environments.Development)
-            .Build();
+        if (builder.Environment.IsDevelopment())
+        {
+            builder.Logging.AddSimpleConsole();
+        }
 
-        Container = _host.Services;
-        Container.UseMicrosoftDependencyResolver();
+        builder.Logging.AddEventLog();
+        builder.Logging.AddSplat();
+
+        builder.Services.UseMicrosoftDependencyResolver();
+        var resolver = Locator.CurrentMutable;
+        resolver.InitializeSplat();
+        resolver.InitializeReactiveUI();
+
+        ConfigureDevelopmentServices(builder.Services, builder.Configuration);
+
+        _host = builder.Build();
 
         using (var scope = _host.Services.CreateScope())
         {
@@ -126,49 +116,29 @@ public partial class App// : Application
         }
 
 
-
         base.OnStartup(e);
     }
 
-    private void ConfigureDevelopmentServices(IServiceCollection services)
+    private void ConfigureDevelopmentServices(IServiceCollection services, IConfiguration configuration)
     {
         // use in-memory database
         //ConfigureInMemoryDatabases(services);
 
         // use real ms database
-        ConfigureSqlDatabases(services);
+        ConfigureSqlDatabases(services, configuration);
 
-        ConfigureServices(services);
+        ConfigureServices(services, configuration);
     }
 
-    private void ConfigureSqlDatabases(IServiceCollection services)
+    private void ConfigureSqlDatabases(IServiceCollection services, IConfiguration configuration)
     {
-        Infrastructure.Dependencies.ConfigureServices(Configuration, services);
+        Infrastructure.Dependencies.ConfigureServices(configuration, services);
     }
 
-    private void ConfigureServices(IServiceCollection services)
+    private void ConfigureServices(IServiceCollection services, IConfiguration configuration)
     {
-        services.AddScoped(typeof(IReadRepository<>), typeof(EfRepository<>));
-        services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
-
-        services.AddScoped<IAccrualService, AccrualService>();
-
-        services.AddScoped<IHomeViewModelService, HomeViewModelService>();
-        services.AddScoped<IEmployeeViewModelService, EmployeeViewModelService>();
-        services.AddScoped<IDocumentViewModelService, DocumentViewModelService>();
-        services.AddScoped<IEmployeeCollectionService, EmployeeCollectionService>();
-        services.AddScoped<ISettingService, SettingService>();
-        services.AddScoped<IOneCMappingService, OneCMappingService>();
-        services.AddScoped<IOneCSerializeService, OneCSerializeService>();
-        services.AddScoped<IOneCService,  OneCService>();
-
-        services.AddTransient<IEmployeeBuilder, EmployeeBuilder>();
-        services.AddTransient<IEmployeeBuilderSendObj, EmployeeBuilder>();
-        services.AddTransient<IEmployeeBuilderSendField, EmployeeBuilder>();
-
-        services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
-        services.AddTransient<IEmailSender, EmailSender>();
-        services.AddTransient<IDataExportService, DataExportService>();
+        services.AddCoreServices(configuration);
+        services.AddWpfServices(configuration);
 
         // register your personal services here, for example
         services.AddSingleton<ShallViewModel>(); //Implements IScreen
