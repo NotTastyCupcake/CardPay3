@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.WpfApplication.ViewModels.Organizations
@@ -43,7 +44,7 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Organizations
 
             this.ValidationRule(
                 viewModel => viewModel.ApplicationNumber,
-                item => !string.IsNullOrWhiteSpace(item),
+                item => !string.IsNullOrWhiteSpace(item) && !new Regex("[^0-9.-]+").IsMatch(item),
                 "Номер договора должнен быть заполнен обязательно");
 
             this.ValidationRule(
@@ -53,7 +54,7 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Organizations
 
             this.ValidationRule(
                 viewModel => viewModel.SourceId,
-                item => !string.IsNullOrWhiteSpace(item),
+                item => !string.IsNullOrWhiteSpace(item) && !new Regex("[^0-9.-]+").IsMatch(item),
                 "Ид первичного документа должно быть заполнено обязательно");
         }
 

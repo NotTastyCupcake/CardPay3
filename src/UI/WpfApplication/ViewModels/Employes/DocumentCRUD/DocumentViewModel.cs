@@ -44,7 +44,7 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes.DocumentCRUD
 
             this.ValidationRule(
                 viewModel => viewModel.SelectedDataIssued,
-                item => item.HasValue,
+                item => item.HasValue && item.Value < DateTime.Now,
                 "Дата должнена быть заполнена обязательно");
 
             this.ValidationRule(

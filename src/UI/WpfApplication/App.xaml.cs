@@ -35,6 +35,7 @@ using System;
 using System.Configuration;
 using System.Diagnostics;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace Metcom.CardPay3.WpfApplication;
@@ -48,19 +49,13 @@ public partial class App// : Application
 
     public App()
     {
-        Initialize();
+        Initialize().GetAwaiter().GetResult();
         /* Some other initialization stuff */
     }
 
-    private async void Initialize()
+    private async Task Initialize()
     {
-
-        var builder = Host.CreateApplicationBuilder();
-
-        if (builder.Environment.IsDevelopment())
-        {
-            builder.Logging.AddSimpleConsole();
-        }
+        var builder = Host.CreateApplicationBuilder(Environment.GetCommandLineArgs());
 
         builder.Logging.AddEventLog();
         builder.Logging.AddSplat();
@@ -71,6 +66,12 @@ public partial class App// : Application
         resolver.InitializeReactiveUI();
 
         ConfigureDevelopmentServices(builder.Services, builder.Configuration);
+
+        if (builder.Environment.IsDevelopment())
+        {
+            builder.Logging.AddSimpleConsole();
+            builder.Services.BuildServiceProvider(new ServiceProviderOptions { ValidateScopes = false, ValidateOnBuild = false });
+        }
 
         _host = builder.Build();
 
@@ -92,9 +93,9 @@ public partial class App// : Application
 
     }
 
-    protected override async void OnStartup(StartupEventArgs e)
+    protected override void OnStartup(StartupEventArgs e)
     {
-        await _host.StartAsync();
+        _host.Start();
 
         var dbContext = _host.Services.GetService<EmployeContext>();
 
