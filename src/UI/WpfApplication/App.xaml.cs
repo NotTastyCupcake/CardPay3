@@ -151,29 +151,29 @@ public partial class App// : Application
 
         //alternatively search assembly for `IRoutedViewFor` implementations
         //see https://reactiveui.net/docs/handbook/routing to learn more about routing in RxUI
-        services.AddSingleton<IViewFor<MenuViewModel>, MenuView>();
         services.AddSingleton<MenuViewModel>();
+        services.AddSingleton<IViewFor<MenuViewModel>, MenuView>();
 
-        services.AddSingleton<IViewFor<SettingsViewModel>, SettingsView>();
         services.AddSingleton<SettingsViewModel>();
+        services.AddSingleton<IViewFor<SettingsViewModel>, SettingsView>();
 
-        services.AddTransient<IViewFor<CreateOrganizationViewModel>, CreateOrganizationView>();
         services.AddTransient<CreateOrganizationViewModel>();
-        services.AddTransient<IViewFor<EditOrganizationViewModel>, EditOrganizationView>();
+        services.AddTransient<IViewFor<CreateOrganizationViewModel>, CreateOrganizationView>();
         services.AddTransient<EditOrganizationViewModel>();
+        services.AddTransient<IViewFor<EditOrganizationViewModel>, EditOrganizationView>();
 
-        services.AddScoped<IViewFor<EmployeeListViewModel>, EmployeeListView>();
         services.AddScoped<EmployeeListViewModel>();
-        services.AddTransient<IViewFor<CreateEmployeeViewModel>, CreateEmployeeView>();
+        services.AddScoped<IViewFor<EmployeeListViewModel>, EmployeeListView>();
         services.AddTransient<CreateEmployeeViewModel>();
-        services.AddTransient<IViewFor<EditEmployeeViewModel>, EditEmployeeView>();
+        services.AddTransient<IViewFor<CreateEmployeeViewModel>, CreateEmployeeView>();
         services.AddTransient<EditEmployeeViewModel>();
+        services.AddTransient<IViewFor<EditEmployeeViewModel>, EditEmployeeView>();
 
-        services.AddTransient<IViewFor<CreateDocumentViewModel>, CreateDocumentView>();
         services.AddTransient<CreateDocumentViewModel>();
+        services.AddTransient<IViewFor<CreateDocumentViewModel>, CreateDocumentView>();
 
-        services.AddTransient<IViewFor<CreateRequisitiesViewModel>, CreateRequisitiesView>();
         services.AddTransient<CreateRequisitiesViewModel>();
+        services.AddTransient<IViewFor<CreateRequisitiesViewModel>, CreateRequisitiesView>();
     }
 
 }

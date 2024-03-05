@@ -4,7 +4,7 @@ using Splat;
 using System;
 using System.Reactive.Disposables;
 
-namespace Metcom.CardPay3.WpfApplication;
+namespace Metcom.CardPay3.WpfApplication.Views;
 /// <summary>
 /// Interaction logic for MainWindow.xaml
 /// </summary>

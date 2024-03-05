@@ -3,7 +3,7 @@ using Splat;
 using System;
 using System.Windows.Input;
 
-namespace Metcom.CardPay3.WpfApplication.Views
+namespace Metcom.CardPay3.WpfApplication.Views.Employes
 {
     /// <summary>
     /// Логика взаимодействия для EmployeListView.xaml
