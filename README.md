@@ -12,24 +12,9 @@
 
 ### Настройка образца для использования SQL Server
 
-1. Обновите метод `Startup.cs` `ConfigureDevelopmentServices` следующим образом:
+1. Убедитесь, что ваши строки подключения в `appsettings.json` указывают на локальный экземпляр SQL Server.
 
-```
-        public void ConfigureDevelopmentServices(IServiceCollection services)
-        {
-            // use in-memory database
-            //ConfigureInMemoryDatabases(services);
-
-            // use real ms database
-            ConfigureMsSqlDatabases(services);
-
-            ConfigureServices(services);
-
-        }
-```
-2. Убедитесь, что ваши строки подключения в `appsettings.json` указывают на локальный экземпляр SQL Server.
-
-3. Откройте командную строку в папке Web и выполните следующие команды:
+2. Откройте командную строку в папке Web и выполните следующие команды:
 
 ```
 Update-Database -Context EmployeContext -Project Infrastructure -StartupProject WebApplication
@@ -38,7 +23,7 @@ Update-Database -Context AppIdentityDbContext -Project Infrastructure -StartupPr
 
 Эти команды создадут две отдельные базы данных: одну для данных каталога магазина и информации о корзине покупок, а другую для учетных данных пользователя и идентификационных данных приложения.
 
-4. Запустите приложение.
+3. Запустите приложение.
 
 При первом запуске приложения оно заполнит обе базы данных такими данными, что вы должны увидеть продукты в магазине, и вы сможете войти в систему, используя учетную запись demouser@microsoft.com.
 

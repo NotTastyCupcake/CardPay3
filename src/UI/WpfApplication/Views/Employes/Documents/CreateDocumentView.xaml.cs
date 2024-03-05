@@ -19,7 +19,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Metcom.CardPay3.WpfApplication.Views.Employes
+namespace Metcom.CardPay3.WpfApplication.Views.Employes.Documents
 {
     /// <summary>
     /// Логика взаимодействия для CreateDocumentView.xaml

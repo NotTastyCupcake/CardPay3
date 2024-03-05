@@ -19,6 +19,7 @@ using Metcom.CardPay3.WpfApplication.ViewModels.Employes.RequisitiesCRUD;
 using Metcom.CardPay3.WpfApplication.ViewModels.Organizations;
 using Metcom.CardPay3.WpfApplication.Views;
 using Metcom.CardPay3.WpfApplication.Views.Employes;
+using Metcom.CardPay3.WpfApplication.Views.Employes.Documents;
 using Metcom.CardPay3.WpfApplication.Views.Employes.Requisities;
 using Metcom.CardPay3.WpfApplication.Views.Organization;
 using Microsoft.EntityFrameworkCore;
