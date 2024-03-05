@@ -33,6 +33,7 @@ using Splat;
 using Splat.Microsoft.Extensions.DependencyInjection;
 using Splat.Microsoft.Extensions.Logging;
 using System;
+using System.ComponentModel;
 using System.Configuration;
 using System.Diagnostics;
 using System.IO;
@@ -46,6 +47,10 @@ namespace Metcom.CardPay3.WpfApplication;
 /// </summary>
 public partial class App// : Application
 {
+    public IConfiguration Configuration { get; private set; }
+
+    public IServiceProvider Container { get; private set; }
+
     protected IHost _host;
 
     public App()
@@ -56,25 +61,35 @@ public partial class App// : Application
 
     private async Task Initialize()
     {
-        var builder = Host.CreateApplicationBuilder(Environment.GetCommandLineArgs());
 
-        builder.Logging.AddEventLog();
-        builder.Logging.AddSplat();
+        var builder = new ConfigurationBuilder()
+             .SetBasePath(Directory.GetCurrentDirectory())
+             .AddJsonFile("appsettings.json", optional: false);
 
-        builder.Services.UseMicrosoftDependencyResolver();
-        var resolver = Locator.CurrentMutable;
-        resolver.InitializeSplat();
-        resolver.InitializeReactiveUI();
+        Configuration = builder.Build();
 
-        ConfigureDevelopmentServices(builder.Services, builder.Configuration);
+        _host = Host
+            .CreateDefaultBuilder(Environment.GetCommandLineArgs())
+            .ConfigureServices(services =>
+            {
+                services.UseMicrosoftDependencyResolver();
+                var resolver = Locator.CurrentMutable;
+                resolver.InitializeSplat();
+                resolver.InitializeReactiveUI();
 
-        if (builder.Environment.IsDevelopment())
-        {
-            builder.Logging.AddSimpleConsole();
-            builder.Services.BuildServiceProvider(new ServiceProviderOptions { ValidateScopes = false, ValidateOnBuild = false });
-        }
+                ConfigureDevelopmentServices(services);
+            })
+            .ConfigureLogging(loggingBuilder =>
+            {
+                loggingBuilder.AddConfiguration(Configuration);
+                loggingBuilder.AddEventLog();
+                loggingBuilder.AddSplat();
+            })
+            //.UseEnvironment(Environments.Development)
+            .Build();
 
-        _host = builder.Build();
+        Container = _host.Services;
+        Container.UseMicrosoftDependencyResolver();
 
         using (var scope = _host.Services.CreateScope())
         {
@@ -121,15 +136,15 @@ public partial class App// : Application
         base.OnStartup(e);
     }
 
-    private void ConfigureDevelopmentServices(IServiceCollection services, IConfiguration configuration)
+    private void ConfigureDevelopmentServices(IServiceCollection services)
     {
         // use in-memory database
         //ConfigureInMemoryDatabases(services);
 
         // use real ms database
-        ConfigureSqlDatabases(services, configuration);
+        ConfigureSqlDatabases(services, Configuration);
 
-        ConfigureServices(services, configuration);
+        ConfigureServices(services, Configuration);
     }
 
     private void ConfigureSqlDatabases(IServiceCollection services, IConfiguration configuration)
