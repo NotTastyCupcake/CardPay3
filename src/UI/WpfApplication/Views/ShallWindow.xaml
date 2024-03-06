@@ -17,9 +17,8 @@
         Title="CardPay" Height="700" Width="800" ShowInTaskbar="True" Icon="/Views/metcom_logo_64x64.png">
 
     <Window.Resources>
-        
-    </Window.Resources>
 
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="55"/>
@@ -103,6 +102,15 @@
                         <materialDesign:PackIcon Kind="Cog" />
                     </MenuItem.Icon>
                 </MenuItem>
+
+                <Separator />
+
+                <MenuItem x:Name ="ExportButton" Header="Экспорт">
+                    <MenuItem.Icon>
+                        <materialDesign:PackIcon Kind="Export" />
+                    </MenuItem.Icon>
+                </MenuItem>
+
             </MenuItem>
 
         </Menu>

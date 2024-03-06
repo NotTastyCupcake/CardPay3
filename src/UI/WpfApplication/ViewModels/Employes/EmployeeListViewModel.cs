@@ -3,9 +3,8 @@ using DynamicData.Binding;
 using Metcom.CardPay3.ApplicationCore.Entities;
 using Metcom.CardPay3.ApplicationCore.Interfaces;
 using Metcom.CardPay3.WpfApplication.Interfaces;
-using Metcom.CardPay3.WpfApplication.Services;
 using Microsoft.Extensions.Logging;
-using Microsoft.Win32;
+
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using Splat;
@@ -27,7 +26,6 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
 
         private readonly IRepository<Employee> _itemRepository;
         private readonly ILogger<EmployeeListViewModel> _logger;
-        private readonly IDataExportService _exportService;
         private readonly IEmployeeViewModelService _employeViewModelService;
         private readonly IEmployeeCollectionService _employeCollectionService;
 
@@ -35,14 +33,13 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
             IEmployeeViewModelService viewModelService,
             IEmployeeCollectionService employeCollectionService,
             ILogger<EmployeeListViewModel> logger,
-            IDataExportService exportService,
             IRepository<Employee> itemRepository,
             IScreen screen = null)
         {
             _employeViewModelService = viewModelService;
             _employeCollectionService = employeCollectionService;
             _logger = logger;
-            _exportService = exportService;
+            
 
             _itemRepository = itemRepository;
 
@@ -90,19 +87,6 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
                 await HostScreen.Router.Navigate.Execute(vm);
             });
 
-            ExportEmployeeCommand = ReactiveCommand.CreateFromTask(async delegate ()
-            {
-                SaveFileDialog saveFile = new SaveFileDialog();
-                saveFile.Filter = "Расширяемый язык разметки(*.json)| *.json";
-                //"|Расширяемый язык разметки(*.xml)| *.xml"; //Не понятно как преобразовать List<Employe> в XML без атребутов
-                if (saveFile.ShowDialog() == true)
-                {
-                    await _exportService.ExportDataAsync(
-                        saveFile.SafeFileName.Split('.').LastOrDefault(),
-                        saveFile.FileName,
-                        Locator.Current.GetService<ShallViewModel>().SelectedOrganization.Id);
-                }
-            });
             #endregion
 
             this.WhenAnyValue(vm => vm.FilterStatus).WhereNotNull().Subscribe(async vm => await _employeCollectionService.LoadOrUpdateEmployeesCollection());
@@ -120,8 +104,6 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
         public ReactiveCommand<Employee, Unit> RoutingEditEmployeeCommand { get; }
         public ReactiveCommand<Employee, Unit> RoutingDeleteEmployeeCommand { get; }
         public ReactiveCommand<Unit, Unit> UpdateEmployeesCollectionCommand { get; }
-
-        public ReactiveCommand<Unit, Unit> ExportEmployeeCommand { get; }
         #endregion
 
         #region Properties

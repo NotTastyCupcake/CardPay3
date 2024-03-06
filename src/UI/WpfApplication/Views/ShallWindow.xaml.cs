@@ -59,6 +59,11 @@ public partial class ShellWindow : IViewFor<ShallViewModel>
                 view => view.Settings)
             .DisposeWith(disposable);
 
+            this.BindCommand(ViewModel,
+                vm => vm.ExportOrganizationCommand,
+                view => view.ExportButton)
+            .DisposeWith(disposable);
+
             // routing
             this.OneWayBind(ViewModel,
                     x => x.Router,

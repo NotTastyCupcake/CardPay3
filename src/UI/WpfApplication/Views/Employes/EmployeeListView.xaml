@@ -101,25 +101,31 @@
                                     DisplayMemberBinding="{Binding Path=DepartmentNum, Mode=OneWay}"/>
                         <GridViewColumn Header="Пол"
                                     DisplayMemberBinding="{Binding Path=Gender.GenderName, Mode=OneWay}"/>
-                        <GridViewColumn Width="90" Header="Опции">
+                        <GridViewColumn Width="150" Header="Опции">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <Menu>
                                         <MenuItem>
                                             <MenuItem.Header>
                                                 <StackPanel>
-                                                    <materialDesign:PackIcon Kind="AccountCog" ToolTip="Опции" HorizontalAlignment="Center" Height="20" Width="20" />
+                                                    <materialDesign:PackIcon Kind="AccountCog" ToolTip="Опции" 
+                                                                             HorizontalAlignment="Center" 
+                                                                             Height="20" Width="20" />
                                                 </StackPanel>
                                             </MenuItem.Header>
                                             <MenuItem Header="Удалить" 
-                                                      Command="{Binding Path=DataContext.RoutingDeleteEmployeeCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}}"
+                                                      Command="{Binding Path=DataContext.RoutingDeleteEmployeeCommand, 
+                                                                        RelativeSource={RelativeSource FindAncestor, 
+                                                                                                       AncestorType={x:Type ListView}}}"
                                                       CommandParameter="{Binding}">
                                                 <MenuItem.Icon>
                                                     <materialDesign:PackIcon Kind="AccountRemove" />
                                                 </MenuItem.Icon>
                                             </MenuItem>
                                             <MenuItem Header="Изменить" 
-                                                      Command="{Binding Path=DataContext.RoutingEditEmployeeCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}}"
+                                                      Command="{Binding Path=DataContext.RoutingEditEmployeeCommand, 
+                                                                        RelativeSource={RelativeSource FindAncestor, 
+                                                                                                       AncestorType={x:Type ListView}}}"
                                                       CommandParameter="{Binding}">
                                                 <MenuItem.Icon>
                                                     <materialDesign:PackIcon Kind="AccountEdit" />
@@ -142,12 +148,11 @@
             HorizontalAlignment="Right" 
             Margin="5">
             <Button 
-                Content="Добавить сотрудника" 
+                Content="{materialDesign:PackIcon Kind=AccountPlus}"
+                Style="{DynamicResource MaterialDesignFlatButton}"
+                ToolTip="Добавить сотрудника"
                 Command="{Binding RoutingAddEmployeeCommand}"/>
-            <Button 
-                Content="Экспорт" 
-                Margin="10,0,0,0" 
-                Command="{Binding ExportEmployeeCommand}"/>
+            
         </StackPanel>
     </Grid>
 </reactiveUi:ReactiveUserControl>

@@ -6,6 +6,7 @@ using Metcom.CardPay3.WpfApplication.Interfaces;
 using Metcom.CardPay3.WpfApplication.ViewModels.Employes;
 using Metcom.CardPay3.WpfApplication.ViewModels.Organizations;
 using Microsoft.Extensions.Logging;
+using Microsoft.Win32;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using ReactiveUI.Validation.Extensions;
@@ -27,17 +28,20 @@ public class ShallViewModel : ReactiveObject, IScreen
     private readonly IRepository<Organization> _repository;
     private readonly ILogger<ShallViewModel> _logger;
     private readonly IHomeViewModelService _viewModelService;
+    private readonly IDataExportService _exportService;
 
     public ShallViewModel(
         IRepository<Organization> repository,
         ILogger<ShallViewModel> logger,
-        IHomeViewModelService viewModelService)
+        IHomeViewModelService viewModelService,
+        IDataExportService exportService)
     {
         Router = new RoutingState();
 
         _repository = repository ?? Locator.Current.GetService<IRepository<Organization>>();
         _logger = logger ?? Locator.Current.GetService<ILogger<ShallViewModel>>();
         _viewModelService = viewModelService ?? Locator.Current.GetService<IHomeViewModelService>();
+        _exportService = exportService ?? Locator.Current.GetService<IDataExportService>();
 
         //this.ValidationRule(
         //    viewModel => viewModel.Organizations,
@@ -117,6 +121,20 @@ public class ShallViewModel : ReactiveObject, IScreen
             
         });
 
+        ExportOrganizationCommand = ReactiveCommand.CreateFromTask(async delegate ()
+        {
+            SaveFileDialog saveFile = new SaveFileDialog();
+            saveFile.Filter = "Расширяемый язык разметки(*.json)| *.json";
+            //"|Расширяемый язык разметки(*.xml)| *.xml"; //Не понятно как преобразовать List<Employe> в XML без атребутов
+            if (saveFile.ShowDialog() == true)
+            {
+                await _exportService.ExportDataAsync(
+                    saveFile.SafeFileName.Split('.').LastOrDefault(),
+                    saveFile.FileName,
+                    SelectedOrganization.Id);
+            }
+        });
+
         Task.Run(() => Initialize());
 
         this.WhenAnyValue(vm => vm.SelectedOrganization).Subscribe(_ => UpdateSelectedOrganization());
@@ -150,6 +168,8 @@ public class ShallViewModel : ReactiveObject, IScreen
     public ReactiveCommand<Unit, IRoutableViewModel> RoutingGoBackCommand { get; }
 
     public ReactiveCommand<string, Unit> RoutingCommand { get; }
+
+    public ReactiveCommand<Unit, Unit> ExportOrganizationCommand { get; }
 
     private void UpdateSelectedOrganization()
     {
