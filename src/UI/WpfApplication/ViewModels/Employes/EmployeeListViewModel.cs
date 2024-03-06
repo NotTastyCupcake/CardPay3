@@ -74,34 +74,20 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
                 await HostScreen.Router.Navigate.Execute(vm);
             });
 
-            RoutingDeleteEmployeeCommand = ReactiveCommand.CreateFromTask(async delegate ()
+            RoutingDeleteEmployeeCommand = ReactiveCommand.CreateFromTask<Employee>(async employee =>
             {
-                if (SelectedEmploye == null)
-                {
-
-                }
-                else
-                {
-                    await _itemRepository.DeleteAsync(SelectedEmploye);
-                    await _itemRepository.SaveChangesAsync();
-                    System.Windows.Forms.MessageBox.Show("Выбранный сотрудник, удален!");
-                }
+                await _itemRepository.DeleteAsync(employee);
+                await _itemRepository.SaveChangesAsync();
+                System.Windows.Forms.MessageBox.Show("Выбранный сотрудник, удален!");
+                await _employeCollectionService.LoadOrUpdateEmployeesCollection();
             });
 
-            RoutingEditEmployeeCommand = ReactiveCommand.CreateFromTask(async delegate ()
+            RoutingEditEmployeeCommand = ReactiveCommand.CreateFromTask<Employee>(async employee =>
             {
-                if (SelectedEmploye == null)
-                {
-
-
-                }
-                else
-                {
-                    var vm = Locator.Current.GetService<EditEmployeeViewModel>();
-                    await vm.InitializeAsync();
-                    vm.GetEmployeeToEdit(SelectedEmploye);
-                    await HostScreen.Router.Navigate.Execute(vm);
-                }
+                var vm = Locator.Current.GetService<EditEmployeeViewModel>();
+                await vm.InitializeAsync();
+                vm.GetEmployeeToEdit(employee);
+                await HostScreen.Router.Navigate.Execute(vm);
             });
 
             ExportEmployeeCommand = ReactiveCommand.CreateFromTask(async delegate ()
@@ -129,9 +115,10 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
         }
 
         #region commands
-        public ReactiveCommand<Unit, Unit> RoutingEditEmployeeCommand { get; }
+        
         public ReactiveCommand<Unit, Unit> RoutingAddEmployeeCommand { get; }
-        public ReactiveCommand<Unit, Unit> RoutingDeleteEmployeeCommand { get; }
+        public ReactiveCommand<Employee, Unit> RoutingEditEmployeeCommand { get; }
+        public ReactiveCommand<Employee, Unit> RoutingDeleteEmployeeCommand { get; }
         public ReactiveCommand<Unit, Unit> UpdateEmployeesCollectionCommand { get; }
 
         public ReactiveCommand<Unit, Unit> ExportEmployeeCommand { get; }

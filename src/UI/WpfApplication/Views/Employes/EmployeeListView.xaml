@@ -68,9 +68,9 @@
                 VerticalAlignment="Center"/>
 
         </Grid>
-        
 
-        
+
+
         <UniformGrid Grid.Row="1" >
 
             <ListView x:Name="employeeListView"
@@ -79,10 +79,10 @@
                   SelectionMode="Multiple">
                 <ListView.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="Удалить" 
-                              Command="{Binding RoutingDeleteEmployeeCommand}"/>
-                        <MenuItem Header="Изменить" 
-                              Command="{Binding RoutingEditEmployeeCommand}"/>
+                        <!--<MenuItem Header="Удалить" 
+                              Command="{Binding RoutingDeleteEmployeeCommand}"/>-->
+                        <!--<MenuItem Header="Изменить" 
+                              Command="{Binding RoutingEditEmployeeCommand}"/>-->
                     </ContextMenu>
                 </ListView.ContextMenu>
                 <ListView.InputBindings>
@@ -95,12 +95,41 @@
                     <GridView>
                         <GridViewColumn Width="250" Header="ФИО"                                            
                                     DisplayMemberBinding="{Binding Path=FullName, Mode=OneWay}"/>
-                        <GridViewColumn Width="200" Header="Должность"
+                        <GridViewColumn Width="150" Header="Должность"
                                     DisplayMemberBinding="{Binding Path=Position, Mode=OneWay}"/>
-                        <GridViewColumn Width="200" Header="Офис"
+                        <GridViewColumn Width="150" Header="Офис"
                                     DisplayMemberBinding="{Binding Path=DepartmentNum, Mode=OneWay}"/>
                         <GridViewColumn Header="Пол"
                                     DisplayMemberBinding="{Binding Path=Gender.GenderName, Mode=OneWay}"/>
+                        <GridViewColumn Width="90" Header="Опции">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Menu>
+                                        <MenuItem>
+                                            <MenuItem.Header>
+                                                <StackPanel>
+                                                    <materialDesign:PackIcon Kind="AccountCog" ToolTip="Опции" HorizontalAlignment="Center" Height="20" Width="20" />
+                                                </StackPanel>
+                                            </MenuItem.Header>
+                                            <MenuItem Header="Удалить" 
+                                                      Command="{Binding Path=DataContext.RoutingDeleteEmployeeCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}}"
+                                                      CommandParameter="{Binding}">
+                                                <MenuItem.Icon>
+                                                    <materialDesign:PackIcon Kind="AccountRemove" />
+                                                </MenuItem.Icon>
+                                            </MenuItem>
+                                            <MenuItem Header="Изменить" 
+                                                      Command="{Binding Path=DataContext.RoutingEditEmployeeCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}}"
+                                                      CommandParameter="{Binding}">
+                                                <MenuItem.Icon>
+                                                    <materialDesign:PackIcon Kind="AccountEdit" />
+                                                </MenuItem.Icon>
+                                            </MenuItem>
+                                        </MenuItem>
+                                    </Menu>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
                     </GridView>
                 </ListView.View>
             </ListView>
