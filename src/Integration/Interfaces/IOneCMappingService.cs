@@ -10,7 +10,7 @@ namespace Metcom.CardPay3.Integration.Interfaces
 {
     public interface IOneCMappingService
     {
-        public СчетПК MapToOneC(Organization organization, СчетПК.ItemChoiceType type);
+        public СчетПК MapToOneC(Organization organization, ICollection<Employee> employees, СчетПК.ItemChoiceType type);
         public Employee MapFromOneC(СчетПК item);
     }
 }

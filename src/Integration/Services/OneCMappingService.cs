@@ -21,7 +21,7 @@ namespace Metcom.CardPay3.Integration.Services
             throw new NotImplementedException();
         }
 
-        public СчетПК MapToOneC(Organization organization, СчетПК.ItemChoiceType type)
+        public СчетПК MapToOneC(Organization organization, ICollection<Employee> employees, СчетПК.ItemChoiceType type)
         {
 
             if(type == СчетПК.ItemChoiceType.ОткрытиеСчетов)
@@ -38,7 +38,7 @@ namespace Metcom.CardPay3.Integration.Services
                     ИдПервичногоДокумента = organization.SourceId,
                     //НомерРеестра = organization.
                     ДатаРеестра = DateTime.Now,
-                    Item = ConvertToOpenAccount(organization.Employees.Where(e => e.Requisite.IdStatus == 1))
+                    Item = ConvertToOpenAccount(employees.Where(e => e.Requisite.IdStatus == 1))
                 };
             }
             else

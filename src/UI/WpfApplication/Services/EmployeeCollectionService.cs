@@ -4,6 +4,7 @@ using Metcom.CardPay3.ApplicationCore.Interfaces;
 using Metcom.CardPay3.ApplicationCore.Specifications;
 using Metcom.CardPay3.ApplicationCore.Specifications.Employees;
 using Metcom.CardPay3.WpfApplication.Interfaces;
+using Metcom.CardPay3.WpfApplication.Models;
 using Metcom.CardPay3.WpfApplication.ViewModels;
 using Microsoft.Extensions.Logging;
 using ReactiveUI;
@@ -40,7 +41,7 @@ namespace Metcom.CardPay3.WpfApplication.Services
             var employes = await _repository.ListAsync(spec);
 
             All.Clear();
-            All.AddOrUpdate(employes);
+            All.AddOrUpdate(employes.Select(e => new SelectableItemWrapper<Employee>() { Item = e, IsSelected = false }));
 
         }
 
@@ -49,6 +50,6 @@ namespace Metcom.CardPay3.WpfApplication.Services
             return new ReadOnlyCollection<Status>(await _statusRepo.ListAsync());
         }
 
-        public SourceCache<Employee, int> All { get; } = new SourceCache<Employee, int>(e => e.Id);
+        public SourceCache<SelectableItemWrapper<Employee>, int> All { get; } = new SourceCache<SelectableItemWrapper<Employee>, int>(e => e.Item.Id);
     }
 }

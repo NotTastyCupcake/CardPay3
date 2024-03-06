@@ -75,14 +75,19 @@
 
             <ListView x:Name="employeeListView"
                   ItemsSource="{Binding Employes, Mode=OneWay}" 
-                  SelectedItem="{Binding SelectedEmploye, Mode=TwoWay}" 
-                  SelectionMode="Multiple">
+                  SelectedItem="{Binding SelectedEmployees, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                  SelectionMode="Multiple" >
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}" >
+                        <Setter Property="IsSelected" Value="{Binding Mode=TwoWay, Path=IsSelected}"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
                 <ListView.ContextMenu>
                     <ContextMenu>
                         <!--<MenuItem Header="Удалить" 
                               Command="{Binding RoutingDeleteEmployeeCommand}"/>-->
-                        <!--<MenuItem Header="Изменить" 
-                              Command="{Binding RoutingEditEmployeeCommand}"/>-->
+                        <MenuItem Header="Открыть счет" 
+                              Command="{Binding OpenAccountsCommand}"/>
                     </ContextMenu>
                 </ListView.ContextMenu>
                 <ListView.InputBindings>
@@ -94,13 +99,13 @@
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Width="250" Header="ФИО"                                            
-                                    DisplayMemberBinding="{Binding Path=FullName, Mode=OneWay}"/>
+                                    DisplayMemberBinding="{Binding Path=Item.FullName, Mode=OneWay}"/>
                         <GridViewColumn Width="150" Header="Должность"
-                                    DisplayMemberBinding="{Binding Path=Position, Mode=OneWay}"/>
+                                    DisplayMemberBinding="{Binding Path=Item.Position, Mode=OneWay}"/>
                         <GridViewColumn Width="150" Header="Офис"
-                                    DisplayMemberBinding="{Binding Path=DepartmentNum, Mode=OneWay}"/>
+                                    DisplayMemberBinding="{Binding Path=Item.DepartmentNum, Mode=OneWay}"/>
                         <GridViewColumn Header="Пол"
-                                    DisplayMemberBinding="{Binding Path=Gender.GenderName, Mode=OneWay}"/>
+                                    DisplayMemberBinding="{Binding Path=Item.Gender.GenderName, Mode=OneWay}"/>
                         <GridViewColumn Width="150" Header="Опции">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
@@ -117,7 +122,7 @@
                                                       Command="{Binding Path=DataContext.RoutingDeleteEmployeeCommand, 
                                                                         RelativeSource={RelativeSource FindAncestor, 
                                                                                                        AncestorType={x:Type ListView}}}"
-                                                      CommandParameter="{Binding}">
+                                                      CommandParameter="{Binding Item}">
                                                 <MenuItem.Icon>
                                                     <materialDesign:PackIcon Kind="AccountRemove" />
                                                 </MenuItem.Icon>
@@ -126,7 +131,7 @@
                                                       Command="{Binding Path=DataContext.RoutingEditEmployeeCommand, 
                                                                         RelativeSource={RelativeSource FindAncestor, 
                                                                                                        AncestorType={x:Type ListView}}}"
-                                                      CommandParameter="{Binding}">
+                                                      CommandParameter="{Binding Item}">
                                                 <MenuItem.Icon>
                                                     <materialDesign:PackIcon Kind="AccountEdit" />
                                                 </MenuItem.Icon>

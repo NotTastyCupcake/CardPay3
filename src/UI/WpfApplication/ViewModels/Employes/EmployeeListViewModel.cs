@@ -2,14 +2,18 @@
 using DynamicData.Binding;
 using Metcom.CardPay3.ApplicationCore.Entities;
 using Metcom.CardPay3.ApplicationCore.Interfaces;
+using Metcom.CardPay3.ApplicationCore.Interfaces.OneC;
 using Metcom.CardPay3.WpfApplication.Interfaces;
+using Metcom.CardPay3.WpfApplication.Models;
+using Metcom.CardPay3.WpfApplication.Views;
 using Microsoft.Extensions.Logging;
-
+using Microsoft.Win32;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using Splat;
 using Splat.Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive;
@@ -28,29 +32,30 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
         private readonly ILogger<EmployeeListViewModel> _logger;
         private readonly IEmployeeViewModelService _employeViewModelService;
         private readonly IEmployeeCollectionService _employeCollectionService;
+        private readonly IOneCService _cService;
 
         public EmployeeListViewModel(
             IEmployeeViewModelService viewModelService,
             IEmployeeCollectionService employeCollectionService,
-            ILogger<EmployeeListViewModel> logger,
             IRepository<Employee> itemRepository,
+            IOneCService cService,
+            ILogger<EmployeeListViewModel> logger,
             IScreen screen = null)
         {
             _employeViewModelService = viewModelService;
             _employeCollectionService = employeCollectionService;
-            _logger = logger;
-            
-
             _itemRepository = itemRepository;
+            _cService = cService;
+            _logger = logger;
 
             HostScreen = screen;
 
             //Init collection
-            ReadOnlyObservableCollection<Employee> bindingData;
+            ReadOnlyObservableCollection<SelectableItemWrapper<Employee>> bindingData;
 
             _employeCollectionService.All.Connect()
-                .Sort(SortExpressionComparer<Employee>.Ascending(t => t.FullName))
-                .Filter(e => FilterStatus == null || e.Requisite.Status == FilterStatus)
+                .Sort(SortExpressionComparer<SelectableItemWrapper<Employee>>.Ascending(t => t.Item.FullName))
+                .Filter(e => FilterStatus == null || e.Item.Requisite.Status == FilterStatus)
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Bind(out bindingData)
                 .Subscribe();
@@ -87,6 +92,22 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
                 await HostScreen.Router.Navigate.Execute(vm);
             });
 
+            #region collection commands
+            OpenAccountsCommand = ReactiveCommand.CreateFromTask(async delegate ()
+            {
+                SaveFileDialog saveFile = new SaveFileDialog();
+                saveFile.Filter = "Расширяемый язык разметки(*.xml)| *.xml";
+                if (saveFile.ShowDialog() == true)
+                {
+                    await _cService.OpenAccounts(Locator.Current.GetService<ShallViewModel>().SelectedOrganization,
+                                                Employes.Where(c => c.IsSelected == true)
+                                                        .Select(c => c.Item)
+                                                        .ToList(),
+                                                saveFile.FileName);
+                }
+            });
+            #endregion
+
             #endregion
 
             this.WhenAnyValue(vm => vm.FilterStatus).WhereNotNull().Subscribe(async vm => await _employeCollectionService.LoadOrUpdateEmployeesCollection());
@@ -104,12 +125,12 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
         public ReactiveCommand<Employee, Unit> RoutingEditEmployeeCommand { get; }
         public ReactiveCommand<Employee, Unit> RoutingDeleteEmployeeCommand { get; }
         public ReactiveCommand<Unit, Unit> UpdateEmployeesCollectionCommand { get; }
+
+        public ReactiveCommand<Unit, Unit> OpenAccountsCommand { get; }
         #endregion
 
         #region Properties
-        public ReadOnlyObservableCollection<Employee> Employes { get; }
-        [Reactive]
-        public Employee SelectedEmploye { get; set; }
+        public ReadOnlyObservableCollection<SelectableItemWrapper<Employee>> Employes { get; }
 
         [Reactive]
         public ReadOnlyCollection<Status> FilterStatuses { get; set; }

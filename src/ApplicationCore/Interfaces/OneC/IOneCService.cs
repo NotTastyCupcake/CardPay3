@@ -9,8 +9,8 @@ namespace Metcom.CardPay3.ApplicationCore.Interfaces.OneC
 {
     public interface IOneCService
     {
-        public Task OpenAccounts(Organization employee, string path);
+        public Task OpenAccounts(Organization organization, ICollection<Employee> employees, string path);
         public Task SaveResultOpenAccounts(Stream stream);
-        public Task CloseAccounts(Organization employee, string path);
+        public Task CloseAccounts(Organization organization, ICollection<Employee> employees, string path);
     }
 }

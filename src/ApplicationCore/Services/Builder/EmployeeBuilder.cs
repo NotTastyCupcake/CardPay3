@@ -300,23 +300,23 @@ namespace Metcom.CardPay3.ApplicationCore.Services.Builder
         {
             var newRequisities = new RequisitesItem(employeRequisites);
 
-            //поиск дублей
-            var requisitiesSpecification = new RequisitiesSpecification(employeRequisites);
-            var requisite = await _requisitesRepository.SingleOrDefaultAsync(requisitiesSpecification);
+            ////поиск дублей
+            //var requisitiesSpecification = new RequisitiesSpecification(employeRequisites);
+            //var requisite = await _requisitesRepository.SingleOrDefaultAsync(requisitiesSpecification);
 
-            //если схожый объект не найден, сохраняем новый в базу
-            if (requisite == null)
-            {
-                await _requisitesRepository.AddAsync(newRequisities);
-                await _requisitesRepository.SaveChangesAsync();
-                _requisites = newRequisities;
-                
-            }
-            else
-            {
-                _requisites = requisite;
-                
-            }
+            ////если схожый объект не найден, сохраняем новый в базу
+            //if (requisite == null)
+            //{
+            await _requisitesRepository.AddAsync(newRequisities);
+            await _requisitesRepository.SaveChangesAsync();
+            _requisites = newRequisities;
+
+            //}
+            //else
+            //{
+            //    _requisites = requisite;
+
+            //}
 
             if (_employee != null)
             {

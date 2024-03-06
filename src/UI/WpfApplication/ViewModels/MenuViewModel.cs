@@ -28,7 +28,7 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels
 
             RoutingOneCCommand = ReactiveCommand.CreateFromTask(async delegate ()
             {
-                await cService.OpenAccounts(Locator.Current.GetService<ShallViewModel>().SelectedOrganization, "СчетПК.xml");
+
             });
 
         }
