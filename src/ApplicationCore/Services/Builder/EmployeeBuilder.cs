@@ -267,27 +267,25 @@ namespace Metcom.CardPay3.ApplicationCore.Services.Builder
 
         async Task<IEmployeeBuilder> IEmployeeBuilderSendObj.SetDocument(IDocumentItem document)
         {
-            var documentSpec = new DocumentItemSpecification(document.Series,
-                                                 document.Number,
-                                                 document.IdType,
-                                                 document.DataIssued);
-            //поиск дублей
-            var item = await _documentRepository.SingleOrDefaultAsync(documentSpec);
+            var newDocument = new DocumentItem(document);
 
-            //если схожый объект не найден, сохраняем новый в базу
-            if (item == null)
-            {
-                item = new DocumentItem(document);
+            //var documentSpec = new DocumentItemSpecification(newDocument.Series, newDocument.Number, newDocument.IdType, newDocument.DataIssued);
+            ////поиск дублей
+            //var doc = await _documentRepository.SingleOrDefaultAsync(documentSpec);
 
-                await _documentRepository.AddAsync(item);
-                await _documentRepository.SaveChangesAsync();
-            }
+            ////если схожый объект не найден, сохраняем новый в базу
+            //if (doc == null)
+            //{
+            await _documentRepository.AddAsync(newDocument);
+            await _documentRepository.SaveChangesAsync();
+            _document = newDocument;
+            //}
 
-            _document = item;
+            //_document = doc;
 
             if (_employee != null)
             {
-                _employee.Document = item;
+                _employee.Document = _document;
                 await _employeRepository.UpdateAsync(_employee);
                 await _employeRepository.SaveChangesAsync();
             }
@@ -331,21 +329,21 @@ namespace Metcom.CardPay3.ApplicationCore.Services.Builder
         async Task<IEmployeeBuilder> IEmployeeBuilderSendObj.SetLegalAddress(IAddress employeAddress)
         {
             var newAddress = new Address(employeAddress);
-            //поиск дублей
-            var addressSpecification = new AddressSpecification(newAddress);
-            var address = await _addressRepository.SingleOrDefaultAsync(addressSpecification);
+            ////поиск дублей
+            //var addressSpecification = new AddressSpecification(newAddress);
+            //var address = await _addressRepository.SingleOrDefaultAsync(addressSpecification);
 
-            //если схожый объект не найден, сохраняем новый в базу
-            if (address == null)
-            {
-                await _addressRepository.AddAsync(newAddress);
-                await _addressRepository.SaveChangesAsync();
-                _legalAddress = newAddress;
-            }
-            else
-            {
-                _legalAddress = address;
-            }
+            ////если схожый объект не найден, сохраняем новый в базу
+            //if (address == null)
+            //{
+            await _addressRepository.AddAsync(newAddress);
+            await _addressRepository.SaveChangesAsync();
+            _legalAddress = newAddress;
+            //}
+            //else
+            //{
+            //    _legalAddress = address;
+            //}
 
             if (_employee != null)
             {
