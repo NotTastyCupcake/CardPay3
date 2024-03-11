@@ -106,6 +106,19 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
                                                 saveFile.FileName);
                 }
             });
+            OpenAccountsCommand = ReactiveCommand.CreateFromTask(async delegate ()
+            {
+                SaveFileDialog saveFile = new SaveFileDialog();
+                saveFile.Filter = "Расширяемый язык разметки(*.xml)| *.xml";
+                if (saveFile.ShowDialog() == true)
+                {
+                    await _cService.OpenAccounts(Locator.Current.GetService<ShallViewModel>().SelectedOrganization,
+                                                Employes.Where(c => c.IsSelected == true)
+                                                        .Select(c => c.Item)
+                                                        .ToList(),
+                                                saveFile.FileName);
+                }
+            });
             #endregion
 
             #endregion

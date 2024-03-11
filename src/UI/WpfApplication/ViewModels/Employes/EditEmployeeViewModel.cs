@@ -20,8 +20,6 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
     public class EditEmployeeViewModel : EmployeeViewModel, IRoutableViewModel
     {
         public string UrlPathSegment { get { return "EditEmployee"; } }
-        public IScreen HostScreen { get; protected set; }
-
         private readonly IRepository<Employee> _repository;
 
         public EditEmployeeViewModel(
@@ -32,10 +30,9 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
             IEmployeeCollectionService collectionService,
             IEmployeeBuilder builder,
             IRepository<Employee> repository,
-            IScreen screen = null) : base(genderRepo, employeeType, logger, viewModelService, builder)
+            IScreen screen = null) : base(genderRepo, employeeType, logger, viewModelService, builder, screen)
         {
             _repository = repository;
-            HostScreen = screen;
 
             #region Commands
 

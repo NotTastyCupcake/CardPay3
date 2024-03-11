@@ -24,36 +24,44 @@ namespace Metcom.CardPay3.Integration.Services
         public СчетПК MapToOneC(Organization organization, ICollection<Employee> employees, СчетПК.ItemChoiceType type)
         {
 
-            if(type == СчетПК.ItemChoiceType.ОткрытиеСчетов)
+            var item = new СчетПК()
             {
-                return new СчетПК()
-                {
-                    ДатаФормирования = organization.CreateDate,
-                    НомерДоговора = organization.ApplicationNumber,
-                    ДатаДоговора = organization.ApplicationDate,
-                    НаименованиеОрганизации = organization.Name,
-                    ИНН = organization.INN,
-                    РасчетныйСчетОрганизации = organization.Account,
-                    БИК = organization.BankCode,
-                    ИдПервичногоДокумента = organization.SourceId,
-                    //НомерРеестра = organization.
-                    ДатаРеестра = DateTime.Now,
-                    Item = ConvertToOpenAccount(employees.Where(e => e.Requisite.IdStatus == 1))
-                };
+                ДатаФормирования = organization.CreateDate,
+                НомерДоговора = organization.ApplicationNumber,
+                ДатаДоговора = organization.ApplicationDate,
+                НаименованиеОрганизации = organization.Name,
+                ИНН = organization.INN,
+                РасчетныйСчетОрганизации = organization.Account,
+                БИК = organization.BankCode,
+                ИдПервичногоДокумента = organization.SourceId,
+                //НомерРеестра = organization.
+                ДатаРеестра = DateTime.Now
+            };
+
+
+            if (type == СчетПК.ItemChoiceType.ОткрытиеСчетов)
+            {
+                item.Item = ConvertToOpenAccount(employees);
+            }
+            else if (type == СчетПК.ItemChoiceType.СписокУвольнений)
+            {
+                item.Item = ConvertToDeleteAccount(employees);
             }
             else
             {
-                return new СчетПК();
+                throw new ArgumentException();
             }
+
+            return item;
 
         }
 
         private ОткрытиеСчетов ConvertToOpenAccount(IEnumerable<Employee> employees)
         {
-            return new ОткрытиеСчетов() 
-            { 
+            return new ОткрытиеСчетов()
+            {
                 Сотрудник = employees
-                                .Select(e => new ОткрытиеСчетовСотрудник() 
+                                .Select(e => new ОткрытиеСчетовСотрудник()
                                 {
                                     Фамилия = e.LastName,
                                     Имя = e.FirstName,
@@ -71,10 +79,10 @@ namespace Metcom.CardPay3.Integration.Services
                                     //АдресПрописки = ConvertAddress(e.Addresses)
                                     РабочийТелефон = new string[] { e.JobPhoneNumber },
                                     //ДомашнийТелефон = new string[] { e.PhoneNumber },
-                                    ЭмбоссированныйТекст = new ОткрытиеСчетовСотрудникЭмбоссированныйТекст() 
-                                    { 
-                                        Поле1 = e.Requisite.LatinFirstName, 
-                                        Поле2 = e.Requisite.LatinLastName 
+                                    ЭмбоссированныйТекст = string.IsNullOrEmpty(e.Requisite.LatinFirstName) ? null : new ОткрытиеСчетовСотрудникЭмбоссированныйТекст()
+                                    {
+                                        Поле1 = e.Requisite.LatinFirstName,
+                                        Поле2 = e.Requisite.LatinLastName
                                     },
                                     //Сумма = 
                                     //Код валют =
@@ -88,21 +96,40 @@ namespace Metcom.CardPay3.Integration.Services
                                     МобильныйТелефон = e.PhoneNumber,
                                     //ПередачаБКИ = e.
                                     //КонтрольнаяИнформация = e.
-                                }).ToArray() 
+                                }).ToArray()
             };
         }
 
-        private УдостоверениеЛичности ConverDocument(DocumentItem document)
+
+        private СписокУвольнений ConvertToDeleteAccount(IEnumerable<Employee> employees)
+        {
+            return new СписокУвольнений()
+            {
+                Сотрудник = employees
+                                .Select(e => new СписокУвольненийСотрудник()
+                                {
+                                    Фамилия = e.LastName,
+                                    Имя = e.FirstName,
+                                    Отчество = e.MiddleName,
+                                    //TODO: Обязательность заполнения определяется Банком
+                                    ОтделениеБанка = e.Requisite.Division.DivisionName,
+                                    ФилиалОтделенияБанка = "",
+                                    НомерСчета = e.Requisite.AccountNumber,
+                                }).ToArray()
+            };
+        }
+
+        private УдостоверениеЛичности ConverDocument(DocumentItem? document)
         {
             return new УдостоверениеЛичности()
             {
-                ВидДокумента = document.Type.Name,
-                Серия = document.Series,
-                Номер = document.Number,
-                ДатаВыдачи = document.DataIssued,
-                КемВыдан = document.IssuedBy,
-                КодВидаДокумента = document.Type.Code.ToString(),
-                КодПодразделения = document.SubdivisionCode,
+                ВидДокумента = document?.Type.Name ?? "",
+                Серия = document?.Series ?? "",
+                Номер = document?.Number ?? "",
+                ДатаВыдачи = document?.DataIssued ?? DateTime.MinValue,
+                КемВыдан = document?.IssuedBy ?? "",
+                КодВидаДокумента = document?.Type.Code.ToString() ?? "",
+                КодПодразделения = document?.SubdivisionCode ?? "",
             };
         }
 

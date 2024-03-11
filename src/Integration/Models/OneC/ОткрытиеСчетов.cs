@@ -63,7 +63,7 @@ namespace Metcom.CardPay3.Integration.Models.OneC
 
         private string[] домашнийТелефонField;
 
-        private ОткрытиеСчетовСотрудникЭмбоссированныйТекст эмбоссированныйТекстField;
+        private ОткрытиеСчетовСотрудникЭмбоссированныйТекст? эмбоссированныйТекстField;
 
         private decimal суммаField;
 
@@ -284,7 +284,7 @@ namespace Metcom.CardPay3.Integration.Models.OneC
         }
 
         /// <remarks/>
-        public ОткрытиеСчетовСотрудникЭмбоссированныйТекст ЭмбоссированныйТекст
+        public ОткрытиеСчетовСотрудникЭмбоссированныйТекст? ЭмбоссированныйТекст
         {
             get
             {

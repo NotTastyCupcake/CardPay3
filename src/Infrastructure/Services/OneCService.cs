@@ -36,13 +36,15 @@ namespace Metcom.CardPay3.Infrastructure.Services
 
         public async Task CloseAccounts(Organization organization, ICollection<Employee> employees, string path)
         {
-            //TODO: Увольнение сотрудников
-            throw new NotImplementedException();
+            var item = _mappingService.MapToOneC(organization, employees, Integration.Models.СчетПК.ItemChoiceType.СписокУвольнений);
+
+            await _serializeService.SaveXML(item, path);
         }
 
         public async Task SaveResultOpenAccounts(Stream stream)
         {
             //TODO: Обработка файла открытия счета
+            //_mappingService.MapFromOneC()
             throw new NotImplementedException();
         }
     }
