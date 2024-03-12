@@ -48,9 +48,9 @@ public class ShallViewModel : ReactiveObject, IScreen
         //    item => item != null && item.Count > 1, "Не возможно удалить выбранную организацию");
 
         // commands
-        var canDeleteOrg = this
-            .WhenAnyValue(x => x.Organizations.Count, x => x.SelectedOrganization.Name)
-            .Select(obj => obj.Item1 > 1 && obj.Item2 != "Создать организацию.");
+        var isRealOrg = this
+            .WhenAnyValue(x => x.Organizations.Count, x => x.SelectedOrganization)
+            .Select(obj => obj.Item1 > 1 && obj.Item2 != Constants.EmptyOrganization);
 
         var canGoBack = this
             .WhenAnyValue(x => x.Router.NavigationStack.Count, x => x.Organizations.Count)
@@ -58,9 +58,9 @@ public class ShallViewModel : ReactiveObject, IScreen
 
         RoutingGoBackCommand = ReactiveCommand.CreateFromObservable(() => 
         { 
-            if(SelectedOrganization.Name == "Создать организацию.")
+            if(SelectedOrganization == Constants.EmptyOrganization)
             {
-                SelectedOrganization = Organizations.First(x => x.Name != "Создать организацию.");
+                SelectedOrganization = Organizations.First(x => x != Constants.EmptyOrganization);
             }
 
             return Router.NavigateBack.Execute(Unit.Default); 
@@ -98,17 +98,24 @@ public class ShallViewModel : ReactiveObject, IScreen
             Organizations.Remove(SelectedOrganization);
             SelectedOrganization = Organizations[0];
 
-        }, canDeleteOrg);
+        }, isRealOrg);
 
         RoutingCreateOrganizationCommand = ReactiveCommand.CreateFromTask(async delegate ()
         {
             await Router.Navigate.Execute(Locator.Current.GetService<CreateOrganizationViewModel>());
-        }, canDeleteOrg);
+        }, isRealOrg);
 
         RoutingEditOrganizationCommand = ReactiveCommand.CreateFromTask(async delegate()
         {
-            await Router.Navigate.Execute(Locator.Current.GetService<EditOrganizationViewModel>());
-        }, canDeleteOrg);
+            var vm = Locator.Current.GetService<EditOrganizationViewModel>();
+            vm.Name = SelectedOrganization.Name;
+            vm.SelectedCreateDate = SelectedOrganization.CreateDate;
+            vm.ApplicationNumber = SelectedOrganization.ApplicationNumber;
+            vm.SelectedApplicationDate = SelectedOrganization.ApplicationDate;
+            vm.SourceId = SelectedOrganization.SourceId;
+            await Router.Navigate.Execute(vm);
+
+        }, isRealOrg);
 
         RoutingSettingsCommand = ReactiveCommand.CreateFromTask(async delegate ()
         {
@@ -133,7 +140,7 @@ public class ShallViewModel : ReactiveObject, IScreen
                     saveFile.FileName,
                     SelectedOrganization.Id);
             }
-        });
+        }, isRealOrg);
 
         Task.Run(() => Initialize());
 
@@ -173,7 +180,7 @@ public class ShallViewModel : ReactiveObject, IScreen
 
     private void UpdateSelectedOrganization()
     {
-        if (SelectedOrganization != null && SelectedOrganization.Name == "Создать организацию.")
+        if (SelectedOrganization != null && SelectedOrganization == Constants.EmptyOrganization)
         {
             Router.Navigate.Execute(Locator.Current.GetService<CreateOrganizationViewModel>());
         }

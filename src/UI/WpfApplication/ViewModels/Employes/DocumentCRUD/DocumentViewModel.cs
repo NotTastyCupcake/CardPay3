@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes.DocumentCRUD
 {
-    public class DocumentViewModel : ReactiveValidationObject, IDocumentItem
+    public class DocumentViewModel : ReactiveValidationObject
     {
         protected readonly IDocumentViewModelService _service;
         protected readonly IEmployeeBuilder _builder;
@@ -31,8 +31,14 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes.DocumentCRUD
             _builder = builder;
             Validation();
 
-            this.WhenAnyValue(vm => vm.SelectedType).Subscribe(_ => IdType = SelectedType?.Id ?? 0);
-            this.WhenAnyValue(vm => vm.SelectedDataIssued).WhereNotNull().Subscribe(d => DataIssued = d.Value);
+            //this.WhenAnyValue(vm => vm.SelectedType).WhereNotNull().Subscribe(vm => Document.IdType = vm?.Id ?? 0);
+            //this.WhenAnyValue(vm => vm.Series).WhereNotNull().Subscribe(vm => Document.Series = vm);
+            //this.WhenAnyValue(vm => vm.SelectedDataIssued).WhereNotNull().Subscribe(vm => Document.DataIssued = vm.Value);
+
+        }
+        public async Task InitializeAsync()
+        {
+            Types = await _service.GetDocumentTypes();
         }
 
         private void Validation()
@@ -53,35 +59,45 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes.DocumentCRUD
                 "Серия должна быть заполнена обязательно");
         }
 
-        public async Task InitializeAsync()
-        {
-            Types = await _service.GetDocumentTypes();
-        }
+
 
         #region Model
+
         [Reactive]
         public DocumentType SelectedType { get; set; }
 
         [Reactive]
-        public int IdType { get; set; }
-
-        [Reactive]
         public string Series { get; set; }
-        [Reactive]
-        public string Number { get; set; }
-        [Reactive]
-        public DateTime DataIssued { get; set; }
+
+
         [Reactive]
         public DateTime? SelectedDataIssued { get; set; }
-
-        [Reactive]
-        public string IssuedBy { get; set; }
-        [Reactive]
-        public string SubdivisionCode { get; set; }
         #endregion
 
-        [Reactive]
-        public ReadOnlyObservableCollection<DocumentType> Types { get; set; }
+        public ReadOnlyObservableCollection<DocumentType> Types { get; private set; }
+
+        /// <summary>
+        /// Вид документа, удостоверяющего личность.
+        /// </summary>
+        public int IdType { get; set; }
+
+        /// <summary>
+        /// Номер
+        /// </summary>
+        public string Number { get; set; }
+        /// <summary>
+        /// Дата выдачи
+        /// </summary>
+        public DateTime DataIssued { get; set; }
+        /// <summary>
+        /// Кем выдан
+        /// </summary>
+        public string IssuedBy { get; set; }
+        /// <summary>
+        /// Код подразделения
+        /// </summary>
+        public string SubdivisionCode { get; set; }
+
 
         [Reactive]
         public DocumentItem Document { get; set; }

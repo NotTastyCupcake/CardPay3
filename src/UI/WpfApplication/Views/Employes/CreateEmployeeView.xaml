@@ -95,6 +95,24 @@
             </Grid>
             <Label Name="RequisitError" Foreground="Red"/>
 
+            <TextBlock Text="Адреса"/>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="35"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="100"/>
+                </Grid.ColumnDefinitions>
+
+                <ListView x:Name="AddressListView" />
+
+                <TextBlock x:Name="AddressTextBlock"/>
+                <Button Grid.Column="2" Name="CreateAddressButton" Content="Создать"/>
+
+            </Grid>
+            <Label Name="AddressError" Foreground="Red"/>
+
         </StackPanel>
 
         <Button x:Name ="CreateEmployeeButton"  Grid.Row="1" Grid.ColumnSpan="2" Content="Добавить сотрудника"/>

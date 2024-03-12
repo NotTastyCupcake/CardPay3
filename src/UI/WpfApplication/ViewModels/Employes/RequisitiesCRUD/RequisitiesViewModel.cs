@@ -15,60 +15,51 @@ using System.Threading.Tasks;
 using ReactiveUI.Fody.Helpers;
 using System.Collections.ObjectModel;
 using Metcom.CardPay3.Infrastructure.Data;
+using Microsoft.Win32;
+using Metcom.CardPay3.WpfApplication.Services;
 
 namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes.RequisitiesCRUD
 {
-    public class RequisitiesViewModel : ReactiveValidationObject, IRequisitesItem
+    public class RequisitiesViewModel : ReactiveValidationObject
     {
         protected readonly ILogger<RequisitiesViewModel> _logger;
-        protected readonly IRepository<RequisitesItem> _repository;
-        protected readonly IRepository<BankCardType> _typeRepository;
-        protected readonly IRepository<BankCurrency> _currencyRepository;
-        protected readonly IRepository<BankDivision> _divisionRepository;
-        protected readonly IRepository<Status> _statusRepository;
+        protected readonly IRequisitiesViewModelService _service;
         protected readonly IEmployeeBuilder _builder;
 
         protected readonly IObservable<bool> IsValid;
 
         public RequisitiesViewModel(
             ILogger<RequisitiesViewModel> logger,
-            IRepository<RequisitesItem> repository,
-            IRepository<BankCardType> typeRepository,
-            IRepository<BankCurrency> currencyRepository,
-            IRepository<BankDivision> divisionRepository,
-            IRepository<Status> statusRepository,
+            IRequisitiesViewModelService service,
             IEmployeeBuilder builder)
         {
             IsValid = ValidatableViewModelExtensions.IsValid(this);
 
-            _repository = repository;
-            _typeRepository = typeRepository;
-            _currencyRepository = currencyRepository;
-            _divisionRepository = divisionRepository;
-            _statusRepository = statusRepository;
+            _service = service;
             _builder = builder;
             _logger = logger;
 
             Validation();
 
-            this.WhenAnyValue(vm => vm.SelectedCardType).Subscribe(vm => IdCardType = vm != null ? vm.Id : 0);
-            this.WhenAnyValue(vm => vm.SelectedBankCurrency).Subscribe(vm => IdCurrency = vm != null ? vm.Id : 0);
-            this.WhenAnyValue(vm => vm.SelectedDivisions).Subscribe(vm => IdDivision = vm != null ? vm.Id : 0);
-            this.WhenAnyValue(vm => vm.SelectedINN).Subscribe(vm => INN = vm.HasValue ? vm.Value : 0);
+            //this.WhenAnyValue(vm => vm.SelectedCardType).WhereNotNull().Subscribe(vm => Requisites.IdCardType = vm != null ? vm.Id : 0);
+            //this.WhenAnyValue(vm => vm.SelectedBankCurrency).WhereNotNull().Subscribe(vm => Requisites.IdCurrency = vm != null ? vm.Id : 0);
+            //this.WhenAnyValue(vm => vm.SelectedDivisions).WhereNotNull().Subscribe(vm => Requisites.IdDivision = vm != null ? vm.Id : 0);
+            //this.WhenAnyValue(vm => vm.SelectedINN).WhereNotNull().Subscribe(vm => Requisites.INN = vm.HasValue ? vm.Value : 0);
+            //this.WhenAnyValue(vm => vm.AccountNumber).WhereNotNull().Subscribe(vm => Requisites.AccountNumber = vm);
+
             // Включить видимость поля счет если статус реквизита "Добавлен"
-            this.WhenAnyValue(vm => vm.SelectedStatus).WhereNotNull().Subscribe(vm => 
-            { 
-                VisibleAccountNumber = vm.Name.Contains("Добавлен");
-                IdStatus = SelectedStatus.Id;
+            this.WhenAnyValue(vm => vm.SelectedStatus).WhereNotNull().Subscribe(vm =>
+            {
+                VisibleAccountNumber = vm.Name == StatusList.Added.Name;
             });
         }
 
         public async Task InitializeAsync()
         {
-            CardTypes = new ReadOnlyCollection<BankCardType>(await _typeRepository.ListAsync());
-            Currencys = new ReadOnlyCollection<BankCurrency>(await _currencyRepository.ListAsync());
-            Divisions = new ReadOnlyCollection<BankDivision>(await _divisionRepository.ListAsync());
-            Statuses = new ReadOnlyCollection<Status>(await _statusRepository.ListAsync());
+            CardTypes = await _service.GetTypes();
+            Currencys = await _service.GetCurrencies();
+            Divisions = await _service.GetDivisions();
+            Statuses = await _service.GetStatuses();
         }
 
         private void Validation()
@@ -105,28 +96,25 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes.RequisitiesCRUD
         [Reactive]
         public bool VisibleAccountNumber { get; set; }
 
-        [Reactive]
-        public ReadOnlyCollection<BankCardType> CardTypes { get; set; }
+        public ReadOnlyCollection<BankCardType> CardTypes { get; private set; }
         [Reactive]
         public BankCardType SelectedCardType { get; set; }
-        public int IdCardType { get; set; }
 
-        [Reactive]
-        public ReadOnlyCollection<BankCurrency> Currencys { get; set; }
+        public ReadOnlyCollection<BankCurrency> Currencys { get; private set; }
         [Reactive]
         public BankCurrency SelectedBankCurrency { get; set; }
-        public int IdCurrency { get; set; }
 
-        [Reactive]
-        public ReadOnlyCollection<BankDivision> Divisions { get; set; }
+        public ReadOnlyCollection<BankDivision> Divisions { get; private set; }
         [Reactive]
         public BankDivision SelectedDivisions { get; set; }
-        public int IdDivision { get; set; }
 
         [Reactive]
-        public int INN { get; set; }
-        [Reactive]
         public int? SelectedINN { get; set; }
+
+        public ReadOnlyCollection<Status> Statuses { get; private set; }
+        [Reactive]
+        public Status SelectedStatus { get; set; }
+
         [Reactive]
         public string InsuranceNumber { get; set; }
         [Reactive]
@@ -135,10 +123,7 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes.RequisitiesCRUD
         public string LatinLastName { get; set; }
 
         [Reactive]
-        public ReadOnlyCollection<Status> Statuses { get; set; }
-        [Reactive]
-        public Status SelectedStatus { get; set; }
-        [Reactive]
-        public int IdStatus { get; set; }
+        public RequisitesItem Requisites { get; set; }
+
     }
 }

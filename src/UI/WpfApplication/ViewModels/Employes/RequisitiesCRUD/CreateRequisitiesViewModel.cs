@@ -1,7 +1,9 @@
 ﻿using Metcom.CardPay3.ApplicationCore.Entities;
+using Metcom.CardPay3.ApplicationCore.Entities.DocumentAggregate;
 using Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate;
 using Metcom.CardPay3.ApplicationCore.Interfaces;
 using Metcom.CardPay3.ApplicationCore.Interfaces.ServicesInterfaces.Builder;
+using Metcom.CardPay3.WpfApplication.Interfaces;
 using Microsoft.Extensions.Logging;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -23,19 +25,27 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes.RequisitiesCRUD
 
         public CreateRequisitiesViewModel(
             ILogger<RequisitiesViewModel> logger,
-            IRepository<RequisitesItem> repository, 
-            IRepository<BankCardType> typeRepository, 
-            IRepository<BankCurrency> currencyRepository, 
-            IRepository<BankDivision> divisionRepository, 
-            IRepository<Status> statusRepository,
+            IRequisitiesViewModelService service,
             IEmployeeBuilder builder,
-            IScreen screen = null) : base(logger, repository, typeRepository, currencyRepository, divisionRepository, statusRepository, builder)
+            IScreen screen = null) : base(logger, service, builder)
         {
             HostScreen = screen;
 
             CreateRequisiteCommand = ReactiveCommand.CreateFromTask(async () =>
             {
-                Item = new RequisitesItem(this);
+                base.Requisites = new RequisitesItem()
+                {
+                    AccountNumber = base.AccountNumber,
+                    CardType = base.SelectedCardType,
+                    Currency = base.SelectedBankCurrency,
+                    Division = base.SelectedDivisions,
+                    Status = base.SelectedStatus,
+                    INN = base.SelectedINN,
+                    InsuranceNumber = base.InsuranceNumber,
+                    LatinFirstName = base.LatinFirstName,
+                    LatinLastName = base.LatinLastName
+                };
+
                 await HostScreen.Router.NavigateBack.Execute();
 
             }, IsValid);
@@ -45,8 +55,6 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes.RequisitiesCRUD
         #region Commands
         public ReactiveCommand<Unit, Unit> CreateRequisiteCommand { get; }
         #endregion
-        [Reactive]
-        public RequisitesItem Item { get; set; }
 
     }
 }

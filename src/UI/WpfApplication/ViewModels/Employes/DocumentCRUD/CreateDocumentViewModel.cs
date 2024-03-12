@@ -27,7 +27,17 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes.DocumentCRUD
 
             CreateCommand = ReactiveCommand.CreateFromTask(async () =>
             {
-                Document = new DocumentItem(this);
+                Document = new DocumentItem()
+                {
+                    DataIssued = base.DataIssued,
+                    IssuedBy = base.IssuedBy,
+                    Number = base.Number,
+                    Series = base.Series,
+                    SubdivisionCode = base.SubdivisionCode,
+                    Type = base.SelectedType,
+                    IdType = base.IdType
+                };
+
                 await HostScreen.Router.NavigateBack.Execute();
 
             }, this.IsValid());

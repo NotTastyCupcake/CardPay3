@@ -31,9 +31,9 @@ namespace Metcom.CardPay3.WpfApplication.Services
 
         public async Task LoadAddress(Employee employee)
         {
-            var addressSpec = new AddressSpecification(employee);
-            var addresses = await _repository.ListAsync(addressSpec);
-            Addresses.AddOrUpdate(addresses);
+            //var addressSpec = new AddressSpecification(employee);
+            //var addresses = await _repository.ListAsync(addressSpec);
+            //Addresses.AddOrUpdate(addresses);
         }
 
         public SourceCache<Address, int> Addresses { get; } = new SourceCache<Address, int>(e => e.Id);

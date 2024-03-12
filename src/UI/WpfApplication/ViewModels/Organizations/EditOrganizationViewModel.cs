@@ -29,8 +29,6 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Organizations
 
             EditCommand = ReactiveCommand.CreateFromTask(async () =>
             {
-                SetOrganization();
-
                 await _repositoryOrganization.UpdateAsync(Organization);
                 await _repositoryOrganization.SaveChangesAsync();
 
@@ -46,34 +44,6 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Organizations
 
             }, this.IsValid());
         }
-
-        public void GetOrganizationToEdit(Organization organization)
-        {
-            Name = organization.Name;
-            CreateDate = organization.CreateDate;
-            INN = organization.INN;
-            ApplicationNumber = organization.ApplicationNumber;
-            ApplicationDate = organization.ApplicationDate;
-            Account = organization.Account;
-            BankCode = organization.BankCode;
-            SourceId = organization.SourceId;
-
-            Organization = organization;
-        }
-
-        private void SetOrganization()
-        {
-            Organization.Name = Name;
-            Organization.CreateDate = CreateDate;
-            Organization.INN = INN;
-            Organization.ApplicationNumber = ApplicationNumber;
-            Organization.ApplicationDate = ApplicationDate;
-            Organization.Account = Account;
-            Organization.BankCode = BankCode;
-            Organization.SourceId = SourceId;
-        }
-
-        public Organization Organization { get; set; }
 
         public ReactiveCommand<Unit, Unit> EditCommand { get; set; }
     }

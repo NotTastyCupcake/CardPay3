@@ -38,7 +38,6 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
 
             EditEmployeeCommand = ReactiveCommand.CreateFromTask(async () =>
             {
-                SetEmployee();
                 await repository.UpdateAsync(Employee);
                 await repository.SaveChangesAsync();
                 await HostScreen.Router.NavigateBack.Execute();
@@ -49,63 +48,9 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
             #endregion
         }
 
-
         #region Commands
         public ReactiveCommand<Unit, Unit> EditEmployeeCommand { get; }
         #endregion
-
-        public void GetEmployeeToEdit(Employee employee)
-        {
-            LastName = employee.LastName;
-            FirstName = employee.FirstName;
-            MiddleName = employee.MiddleName;
-            BirthdayDate = employee.BirthdayDate;
-            BirthdayDateSelected = employee.BirthdayDate;
-            ResidentSelected = employee.Resident;
-            Resident = employee.Resident;
-            Nationality = employee.Nationality;
-            PhoneNumber = employee.PhoneNumber;
-            JobPhoneNumber = employee.JobPhoneNumber;
-            Position = employee.Position;
-            DepartmentNum = employee.DepartmentNum;
-            Gender = employee.Gender;
-            IdGender = employee.IdGender;
-            Document = employee.Document;
-            IdDocument = employee.IdDocument;
-            Organization = employee.Organization;
-            IdOrganization = employee.IdOrganization;
-
-            Requisite = employee.Requisite;
-
-            Employee = employee;
-        }
-
-        private void SetEmployee()
-        {
-            Employee.LastName = LastName;
-            Employee.FirstName = FirstName;
-            Employee.MiddleName = MiddleName;
-            Employee.BirthdayDate = BirthdayDate;
-            Employee.Resident = Resident;
-            Employee.Nationality = Nationality;
-            Employee.PhoneNumber = PhoneNumber;
-            Employee.JobPhoneNumber = JobPhoneNumber;
-            Employee.Position = Position;
-            Employee.DepartmentNum = DepartmentNum;
-            Employee.Gender = Gender;
-            Employee.IdGender = IdGender;
-
-            Employee.Document = Document;
-            Employee.IdDocument = IdDocument;
-
-            Employee.Organization = Organization;
-            Employee.IdOrganization = IdOrganization;
-            
-            Employee.Requisite = Requisite;
-            Employee.IdRequisite = IdRequisite;
-        }
-
-        public Employee Employee { get; set; }
 
     }
 }

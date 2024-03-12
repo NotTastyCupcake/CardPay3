@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Metcom.CardPay3.WpfApplication.ViewModels.Organizations
 {
-    public class OrganizationViewModel : ReactiveValidationObject, IOrganization
+    public class OrganizationViewModel : ReactiveValidationObject
     {
         protected readonly IObservable<bool> IsValid;
 
@@ -31,8 +31,11 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Organizations
             IsValid = ValidatableViewModelExtensions.IsValid(this);
             Validation();
 
-            this.WhenAnyValue(vm => vm.SelectedCreateDate).WhereNotNull().Subscribe(d => CreateDate = d.Value);
-            this.WhenAnyValue(vm => vm.SelectedApplicationDate).WhereNotNull().Subscribe(d => ApplicationDate = d.Value);
+            this.WhenAnyValue(vm => vm.SelectedCreateDate).WhereNotNull().Subscribe(d => Organization.CreateDate = d.Value);
+            this.WhenAnyValue(vm => vm.SelectedApplicationDate).WhereNotNull().Subscribe(d => Organization.ApplicationDate = d.Value);
+            this.WhenAnyValue(vm => vm.ApplicationNumber).WhereNotNull().Subscribe(d => Organization.ApplicationNumber = d);
+            this.WhenAnyValue(vm => vm.Name).WhereNotNull().Subscribe(d => Organization.Name = d);
+            this.WhenAnyValue(vm => vm.SourceId).WhereNotNull().Subscribe(d => Organization.SourceId = d);
         }
 
         private void Validation()
@@ -61,38 +64,26 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Organizations
         [Reactive]
         public string Name { get; set; }
 
-        /// <summary>
-        /// Дата формирования
-        /// </summary>
-        [Reactive]
-        public DateTime CreateDate { get; set; }
         [Reactive]
         public DateTime? SelectedCreateDate { get; set; }
 
-        [Reactive]
-        public string INN { get; set; }
         /// <summary>
         /// Номер договора
         /// </summary>
         [Reactive]
         public string ApplicationNumber { get; set; }
-        [Reactive]
-        public DateTime ApplicationDate { get; set; }
+
         [Reactive]
         public DateTime? SelectedApplicationDate { get; set; }
 
-        [Reactive]
-        public string Account { get; set; }
-        /// <summary>
-        /// Рекомендуется заполнять. БИК банка, с которым заключен зарплатный договор
-        /// </summary>
-        [Reactive]
-        public string BankCode { get; set; }
         /// <summary> 
         /// Ид первичного документа
         /// </summary>
         [Reactive]
         public string SourceId { get; set; }
+
+        [Reactive]
+        public Organization Organization { get; set; } = new Organization();
 
     }
 }

@@ -14,11 +14,13 @@ using Metcom.CardPay3.WpfApplication.Interfaces;
 using Metcom.CardPay3.WpfApplication.Services;
 using Metcom.CardPay3.WpfApplication.ViewModels;
 using Metcom.CardPay3.WpfApplication.ViewModels.Employes;
+using Metcom.CardPay3.WpfApplication.ViewModels.Employes.AddressCRUD;
 using Metcom.CardPay3.WpfApplication.ViewModels.Employes.DocumentCRUD;
 using Metcom.CardPay3.WpfApplication.ViewModels.Employes.RequisitiesCRUD;
 using Metcom.CardPay3.WpfApplication.ViewModels.Organizations;
 using Metcom.CardPay3.WpfApplication.Views;
 using Metcom.CardPay3.WpfApplication.Views.Employes;
+using Metcom.CardPay3.WpfApplication.Views.Employes.Address;
 using Metcom.CardPay3.WpfApplication.Views.Employes.Documents;
 using Metcom.CardPay3.WpfApplication.Views.Employes.Requisities;
 using Metcom.CardPay3.WpfApplication.Views.Organization;
@@ -190,6 +192,9 @@ public partial class App// : Application
 
         services.AddTransient<CreateRequisitiesViewModel>();
         services.AddTransient<IViewFor<CreateRequisitiesViewModel>, CreateRequisitiesView>();
+
+        services.AddTransient<CreateAddressViewModel>();
+        services.AddTransient<IViewFor<CreateAddressViewModel>, CreateAddressView>();
     }
 
 }

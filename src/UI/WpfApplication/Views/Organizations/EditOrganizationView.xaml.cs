@@ -43,12 +43,12 @@ namespace Metcom.CardPay3.WpfApplication.Views.Organization
 
 
                 this.Bind(this.ViewModel,
-                    vm => vm.INN,
+                    vm => vm.Organization.INN,
                     view => view.INN.Text)
                     .DisposeWith(disposable);
 
                 this.BindValidation(this.ViewModel,
-                    vm => vm.INN,
+                    vm => vm.Organization.INN,
                     view => view.INNError.Content)
                     .DisposeWith(disposable);
 
@@ -79,19 +79,19 @@ namespace Metcom.CardPay3.WpfApplication.Views.Organization
 
 
                 this.Bind(this.ViewModel,
-                    vm => vm.Account,
+                    vm => vm.Organization.Account,
                     view => view.Account.Text)
                     .DisposeWith(disposable);
 
                 this.BindValidation(this.ViewModel,
-                    vm => vm.Account,
+                    vm => vm.Organization.Account,
                     view => view.AccountError.Content)
                     .DisposeWith(disposable);
 
 
 
                 this.Bind(this.ViewModel,
-                    vm => vm.BankCode,
+                    vm => vm.Organization.BankCode,
                     view => view.BankCode.Text)
                     .DisposeWith(disposable);
 

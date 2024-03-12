@@ -35,7 +35,7 @@ namespace Metcom.CardPay3.Integration.Services
                 БИК = organization.BankCode,
                 ИдПервичногоДокумента = organization.SourceId,
                 //НомерРеестра = organization.
-                ДатаРеестра = DateTime.Now
+                //ДатаРеестра = DateTime.Now
             };
 
 

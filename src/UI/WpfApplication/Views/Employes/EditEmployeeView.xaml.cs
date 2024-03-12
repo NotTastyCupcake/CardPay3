@@ -23,7 +23,7 @@ namespace Metcom.CardPay3.WpfApplication.Views.Employes
 
             InitializeComponent();
 
-                        this.WhenActivated(disposable =>
+            this.WhenActivated(disposable =>
             {
                 #region Выгрузка коллекций для создания сотрудника
                 this.OneWayBind(this.ViewModel,
@@ -61,11 +61,10 @@ namespace Metcom.CardPay3.WpfApplication.Views.Employes
 
             });
         }
-
         private void BindModel(CompositeDisposable disposable)
         {
             this.Bind(this.ViewModel,
-                vm => vm.Gender,
+                vm => vm.GenderSelected,
                 view => view.GendersComboBox.SelectedItem)
                 .DisposeWith(disposable);
 
@@ -81,7 +80,7 @@ namespace Metcom.CardPay3.WpfApplication.Views.Employes
                 .DisposeWith(disposable);
 
             this.Bind(this.ViewModel,
-                vm => vm.MiddleName,
+                vm => vm.Employee.MiddleName,
                 view => view.MiddleNameBlock.Text)
                 .DisposeWith(disposable);
 
@@ -93,25 +92,25 @@ namespace Metcom.CardPay3.WpfApplication.Views.Employes
 
 
             this.Bind(this.ViewModel,
-                vm => vm.PhoneNumber,
+                vm => vm.Employee.PhoneNumber,
                 view => view.PhoneNumber.Text)
                 .DisposeWith(disposable);
 
 
             this.Bind(this.ViewModel,
-                vm => vm.JobPhoneNumber,
+                vm => vm.Employee.JobPhoneNumber,
                 view => view.JobPhoneNumber.Text)
                 .DisposeWith(disposable);
 
 
             this.Bind(this.ViewModel,
-                vm => vm.Position,
+                vm => vm.Employee.Position,
                 view => view.Position.Text)
                 .DisposeWith(disposable);
 
 
             this.Bind(this.ViewModel,
-                vm => vm.DepartmentNum,
+                vm => vm.Employee.DepartmentNum,
                 view => view.DepartmentNum.Text)
                 .DisposeWith(disposable);
 
@@ -121,14 +120,10 @@ namespace Metcom.CardPay3.WpfApplication.Views.Employes
                 .DisposeWith(disposable);
 
             this.Bind(this.ViewModel,
-                vm => vm.Document.FullName,
+                vm => vm.DocumentViewModel.FullName,
                 view => view.DocumentTextBlock.Text)
                 .DisposeWith(disposable);
 
-            this.Bind(this.ViewModel,
-                vm => vm.RequisitFullName,
-                view => view.RequisitTextBlock.Text)
-                .DisposeWith(disposable);
         }
 
         private void BindValidationModel(CompositeDisposable disposable)
@@ -144,7 +139,7 @@ namespace Metcom.CardPay3.WpfApplication.Views.Employes
                 .DisposeWith(disposable);
 
             this.BindValidation(this.ViewModel,
-                vm => vm.Gender,
+                vm => vm.GenderSelected,
                 view => view.GendersError.Content)
                 .DisposeWith(disposable);
 
@@ -154,7 +149,7 @@ namespace Metcom.CardPay3.WpfApplication.Views.Employes
                 .DisposeWith(disposable);
 
             this.BindValidation(this.ViewModel,
-                vm => vm.Document,
+                vm => vm.DocumentViewModel,
                 view => view.DocumentError.Content)
                 .DisposeWith(disposable);
 
@@ -164,7 +159,7 @@ namespace Metcom.CardPay3.WpfApplication.Views.Employes
                 .DisposeWith(disposable);
 
             this.BindValidation(this.ViewModel,
-                vm => vm.Requisite,
+                vm => vm.RequisiteViewModel,
                 view => view.RequisitError.Content)
                 .DisposeWith(disposable);
         }

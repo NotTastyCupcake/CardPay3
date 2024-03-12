@@ -30,15 +30,12 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Organizations
 
             CreateCommand = ReactiveCommand.CreateFromTask(async () =>
             {
-                var item = new Organization(this);
-
-                await _repositoryOrganization.AddAsync(item);
+                await _repositoryOrganization.AddAsync(Organization);
                 await _repositoryOrganization.SaveChangesAsync();
 
                 var home = Locator.Current.GetService<ShallViewModel>();
-                home.Organizations.Add(item);
-                home.SelectedOrganization = item;
-
+                home.Organizations.Add(Organization);
+                home.SelectedOrganization = Organization;
 
                 if (HostScreen.Router.NavigationStack.Count == 1)
                 {

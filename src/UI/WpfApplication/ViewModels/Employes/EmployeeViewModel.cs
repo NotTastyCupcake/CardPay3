@@ -28,7 +28,7 @@ using Metcom.CardPay3.WpfApplication.ViewModels.Employes.RequisitiesCRUD;
 
 namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
 {
-    public class EmployeeViewModel : ReactiveValidationObject, IEmployee
+    public class EmployeeViewModel : ReactiveValidationObject
     {
         protected readonly IRepository<Gender> _genderRepo;
         protected readonly IRepository<EmployeeType> _employeeType;
@@ -67,21 +67,23 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
                 var vm = Locator.Current.GetService<CreateDocumentViewModel>();
                 await vm.InitializeAsync();
                 await HostScreen.Router.Navigate.Execute(vm);
-                vm.WhenAnyValue(vm => vm.Document).Subscribe(d => Document = d);
+                vm.WhenAnyValue(vm => vm.Document).Subscribe(d => DocumentViewModel = d);
             });
             CreateRequisitCommand = ReactiveCommand.CreateFromTask(async () =>
             {
                 var vm = Locator.Current.GetService<CreateRequisitiesViewModel>();
                 await vm.InitializeAsync();
                 await HostScreen.Router.Navigate.Execute(vm);
-                vm.WhenAnyValue(vm => vm.Item).Subscribe(r => Requisite = r);
+                vm.WhenAnyValue(vm => vm.Requisites).Subscribe(r => RequisiteViewModel = r);
             });
             #endregion
 
-
-            this.WhenAnyValue(vm => vm.BirthdayDateSelected).Subscribe(vm => BirthdayDate = vm.HasValue ? vm.Value : DateTime.MinValue);
-            this.WhenAnyValue(vm => vm.ResidentSelected).Subscribe(vm => Resident = vm.HasValue ? vm.Value : false);
-            this.WhenAnyValue(vm => vm.RequisitFullName).Subscribe();
+            this.WhenAnyValue(vm => vm.FirstName).Subscribe(vm => Employee.FirstName = vm);
+            this.WhenAnyValue(vm => vm.LastName).Subscribe(vm => Employee.LastName = vm);
+            this.WhenAnyValue(vm => vm.GenderSelected).Subscribe(vm => Employee.Gender = vm);
+            this.WhenAnyValue(vm => vm.DocumentViewModel).Subscribe(vm => Employee.Document = vm);
+            this.WhenAnyValue(vm => vm.BirthdayDateSelected).Subscribe(vm => Employee.BirthdayDate = vm.HasValue ? vm.Value : DateTime.MinValue);
+            this.WhenAnyValue(vm => vm.ResidentSelected).Subscribe(vm => Employee.Resident = vm.HasValue ? vm.Value : false);
         }
 
         public async Task InitializeAsync()
@@ -108,12 +110,12 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
                 "Дата рождения должна быть заполнена обязательно");
 
             this.ValidationRule(
-                viewModel => viewModel.Gender,
+                viewModel => viewModel.GenderSelected,
                 item => item != null,
                 "Гендер должен быть заполнен обязательно");
 
             this.ValidationRule(
-                viewModel => viewModel.Document,
+                viewModel => viewModel.DocumentViewModel,
                 item => item != null,
                 "Документ должен быть заполнен обязательно");
 
@@ -123,7 +125,7 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
                 "Резидентность должна быть заполнена обязательно");
 
             this.ValidationRule(
-                viewModel => viewModel.Requisite,
+                viewModel => viewModel.RequisiteViewModel,
                 item => item != null,
                 "Реквизит должен быть заполнен обязательно");
         }
@@ -135,66 +137,36 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
 
         #region property
         [Reactive]
-        public ICollection<Address> Addresses { get; set; }
-        [Reactive]
-        public DateTime BirthdayDate { get; set; }
-        [Reactive]
-        public DateTime? BirthdayDateSelected { get; set; }
-        [Reactive]
-        public string BonusNumber { get; set; }
-        [Reactive]
-        public string DepartmentNum { get; set; }
-        [Reactive]
-        public DocumentItem Document { get; set; }
-        [Reactive]
-        public string EMail { get; set; }
+        public Employee Employee { get; set; } = new Employee();
+
         [Reactive]
         public string FirstName { get; set; }
-        [Reactive]
-        public Gender Gender { get; set; }
-        [Reactive]
-        public int? IdDocument { get; set; }
-        [Reactive]
-        public int IdGender { get; set; }
-        [Reactive]
-        public int IdOrganization { get; set; }
-        [Reactive]
-        public int? IdType { get; set; }
-        [Reactive]
-        public string JobPhoneNumber { get; set; }
+
         [Reactive]
         public string LastName { get; set; }
-        [Reactive]
-        public string MiddleName { get; set; }
-        [Reactive]
-        public string Nationality { get; set; }
-        [Reactive]
-        public Organization Organization { get; set; }
-        [Reactive]
-        public string PhoneNumber { get; set; }
-        [Reactive]
-        public string Position { get; set; }
 
         [Reactive]
-        public int IdRequisite { get; set; }
-        [Reactive]
-        public RequisitesItem Requisite { get; set; }
-
-        public string RequisitFullName => $"{Requisite?.Status?.Name ?? ""} {Requisite?.Currency?.NameCurrency ?? ""}";
+        public Gender GenderSelected { get; set; }
 
         [Reactive]
-        public bool Resident { get; set; }
+        public DateTime? BirthdayDateSelected { get; set; }
+
+        [Reactive]
+        public DocumentItem DocumentViewModel { get; set; }
+
+        [Reactive]
+        public RequisitesItem RequisiteViewModel { get; set; }
+
         [Reactive]
         public bool? ResidentSelected { get; set; }
 
         [Reactive]
-        public EmployeeType Type { get; set; }
+        public EmployeeType TypeSelected { get; set; }
         #endregion
+        
+        public ReadOnlyCollection<Gender> Genders { get; private set; }
 
-        [Reactive]
-        public ReadOnlyCollection<Gender> Genders { get; set; }
-        [Reactive]
-        public ReadOnlyCollection<EmployeeType> EmployeeTypes { get; set; }
+        public ReadOnlyCollection<EmployeeType> EmployeeTypes { get; private set; }
 
     }
 }

@@ -34,8 +34,6 @@ namespace Metcom.CardPay3.WpfApplication.Configuration
             services.AddScoped<IOneCService, OneCService>();
 
             services.AddTransient<IEmployeeBuilder, EmployeeBuilder>();
-            services.AddTransient<IEmployeeBuilderSendObj, EmployeeBuilder>();
-            services.AddTransient<IEmployeeBuilderSendField, EmployeeBuilder>();
 
             services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
             services.AddTransient<IEmailSender, EmailSender>();

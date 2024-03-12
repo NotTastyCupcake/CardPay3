@@ -48,11 +48,11 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
             CreateEmployeeCommand = ReactiveCommand.CreateFromTask(async () =>
             {
                 await _builder.SetOrganization(Locator.Current.GetService<ShallViewModel>().SelectedOrganization.Id);
-                await _builder.SetGender(Gender.Id);
-                await _builder.SetDocument(Document);
-                await _builder.SetRequisites(Requisite);
-                //await _builder.SetLegalAddress(Addresses.FirstOrDefault());
-                await _builder.SetEmployee(this);
+                await _builder.SetGender(GenderSelected.Id);
+                await _builder.SetDocument(DocumentViewModel);
+                await _builder.SetRequisities(RequisiteViewModel);
+                //await _builder.AddAddress(Addresses.FirstOrDefault());
+                await _builder.SetEmployee(Employee);
 
                 await HostScreen.Router.NavigateBack.Execute();
 

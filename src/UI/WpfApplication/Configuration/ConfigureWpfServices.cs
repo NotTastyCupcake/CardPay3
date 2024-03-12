@@ -13,6 +13,7 @@ namespace Metcom.CardPay3.WpfApplication.Configuration
             services.AddScoped<IHomeViewModelService, HomeViewModelService>();
             services.AddScoped<IEmployeeViewModelService, EmployeeViewModelService>();
             services.AddScoped<IDocumentViewModelService, DocumentViewModelService>();
+            services.AddScoped<IRequisitiesViewModelService, RequisitiesViewModelService>();
             services.AddScoped<IEmployeeCollectionService, EmployeeCollectionService>();
             services.AddScoped<ISettingService, SettingService>();
 

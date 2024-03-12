@@ -1,6 +1,8 @@
 ﻿using DynamicData;
 using DynamicData.Binding;
 using Metcom.CardPay3.ApplicationCore.Entities;
+using Metcom.CardPay3.ApplicationCore.Entities.DocumentAggregate;
+using Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate;
 using Metcom.CardPay3.ApplicationCore.Interfaces;
 using Metcom.CardPay3.ApplicationCore.Interfaces.OneC;
 using Metcom.CardPay3.WpfApplication.Interfaces;
@@ -88,7 +90,17 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
             {
                 var vm = Locator.Current.GetService<EditEmployeeViewModel>();
                 await vm.InitializeAsync();
-                vm.GetEmployeeToEdit(employee);
+                //TODO: Придумать как упростить передачу в View существующих данных
+                vm.Employee = employee;
+                vm.FirstName = employee.FirstName;
+                vm.LastName = employee.LastName;
+                vm.GenderSelected = employee.Gender;
+                vm.BirthdayDateSelected = employee.BirthdayDate;
+                vm.DocumentViewModel = employee.Document;
+                vm.RequisiteViewModel = employee.Requisite;
+                vm.ResidentSelected = employee.Resident;
+                vm.TypeSelected = employee.Type;
+
                 await HostScreen.Router.Navigate.Execute(vm);
             });
 
