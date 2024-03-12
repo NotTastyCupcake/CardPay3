@@ -34,6 +34,7 @@ namespace Metcom.CardPay3.Infrastructure.Data
         public DbSet<Status> Statuses { get; set; }
 
         public DbSet<Address> Addresses { get; set; }
+        public DbSet<AddressType> AddressTypes { get; set; }
 
         public DbSet<Accrual> Accruals { get; set; }
         public DbSet<AccrualItem> AccrualItems { get; set; }

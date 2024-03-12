@@ -49,9 +49,7 @@ namespace Metcom.CardPay3.ApplicationCore.Services.Builder
             _logger = logger; 
         }
 
-        #region IEmployeeBuilderSendField
-
-        public  async Task<IEmployeeBuilder> SetGender(int idGender)
+        public async Task<IEmployeeBuilder> SetGender(int idGender)
         {
             var gender = await _genderRepository.GetByIdAsync(idGender);
 
@@ -66,48 +64,6 @@ namespace Metcom.CardPay3.ApplicationCore.Services.Builder
             if (_employee != null)
             {
                 _employee.Gender = _gender;
-                await _employeRepository.UpdateAsync(_employee);
-                await _employeRepository.SaveChangesAsync();
-            }
-
-            return this;
-        }
-
-        async Task<IEmployeeBuilder> IEmployeeBuilderSendField.SetDocument(
-                            int idType,
-                            string series,
-                            string number,
-                            DateTime dataIssued,
-                            string issuedBy,
-                            string subdivisionCode)
-        {
-
-            var documentSpec = new DocumentItemSpecification(series,
-                                                             number,
-                                                             idType,
-                                                             dataIssued);
-            //поиск дублей
-            var document = await _documentRepository.SingleOrDefaultAsync(documentSpec);
-
-            //если схожый объект не найден, сохраняем новый в базу
-            if (document == null)
-            {
-                document = new DocumentItem(idType,
-                                            series,
-                                            number,
-                                            dataIssued,
-                                            issuedBy,
-                                            subdivisionCode);
-
-                await _documentRepository.AddAsync(document);
-                await _documentRepository.SaveChangesAsync();
-            }
-
-            _document = document;
-
-            if(_employee != null)
-            {
-                _employee.Document = document;
                 await _employeRepository.UpdateAsync(_employee);
                 await _employeRepository.SaveChangesAsync();
             }
@@ -130,158 +86,13 @@ namespace Metcom.CardPay3.ApplicationCore.Services.Builder
             return this;
         }
 
-        async Task<IEmployeeBuilder> IEmployeeBuilderSendField.SetLegalAddress(int idCountry,
-                                                                               int postcode,
-                                                                               int idState,
-                                                                               string district,
-                                                                               int idCity,
-                                                                               int idLocality,
-                                                                               string streetType,
-                                                                               int idStreet,
-                                                                               int numHome,
-                                                                               int numCase,
-                                                                               int numApartment)
+
+        public async Task<IEmployeeBuilder> SetDocument(DocumentItem document)
         {
-            var newAddress = new Address(idCountry, postcode, idState, 
-                                         district, idCity, idLocality, 
-                                         streetType, idStreet, numHome,
-                                         numCase,numApartment);
-            //поиск дублей
-            var addressSpecification = new AddressSpecification(newAddress);
-            var address = await _addressRepository.SingleOrDefaultAsync(addressSpecification);
 
-            //если схожый объект не найден, сохраняем новый в базу
-            if (address == null)
-            {
-                await _addressRepository.AddAsync(newAddress);
-                await _addressRepository.SaveChangesAsync();
-                _legalAddress = newAddress;
-            }
-            else
-            {
-                _legalAddress = address;
-            }
-
-            if (_employee != null)
-            {
-                _employee.Addresses.Add(_legalAddress);
-                await _employeRepository.UpdateAsync(_employee);
-                await _employeRepository.SaveChangesAsync();
-            }
-
-            return this;
-
-        }
-
-        async Task<IEmployeeBuilder> IEmployeeBuilderSendField.SetRequisities(int inn, 
-                                                                              string insuranceNum, 
-                                                                              int idDivision, 
-                                                                              int idCurrency, 
-                                                                              int idCardType, 
-                                                                              int idStatus,
-
-                                                                              string latinFirstName = null, 
-                                                                              string latinLastName = null)
-        {
-            var newRequisities = new RequisitesItem(inn, insuranceNum, idDivision, idCurrency, idCardType, idStatus, latinFirstName, latinLastName);
-
-            //поиск дублей
-            var requisitiesSpecification = new RequisitiesSpecification(newRequisities);
-            var requisite = await _requisitesRepository.SingleOrDefaultAsync(requisitiesSpecification);
-
-            //если схожый объект не найден, сохраняем новый в базу
-            if (requisite == null)
-            {
-                await _requisitesRepository.AddAsync(newRequisities);
-                await _requisitesRepository.SaveChangesAsync();
-                _requisites = newRequisities;
-            }
-            else
-            {
-                _requisites = requisite;
-            }
-
-            if (_employee != null)
-            {
-                _employee.Requisite = _requisites;
-                await _employeRepository.UpdateAsync(_employee);
-                await _employeRepository.SaveChangesAsync();
-            }
-
-            return this;
-
-        }
-
-        public async Task<IEmployeeBuilder> SetEmployee(string lastName, 
-                                                string firstName, 
-                                                string middleName, 
-                                                DateTime birthdayDate, 
-                                                string nationality, 
-                                                bool resident, 
-                                                string phoneNum,
-                                                string jobPhoneNum, 
-                                                string position, 
-                                                string departmentNum)
-        {
-            Employee employee = new Employee(lastName, 
-                                            firstName, 
-                                            middleName, 
-                                            birthdayDate, 
-                                            nationality, 
-                                            resident, 
-                                            phoneNum, 
-                                            jobPhoneNum, 
-                                            position, 
-                                            departmentNum, 
-                                            _gender.Id,
-                                            _document.Id,
-                                            _organization.Id);
-
-            if(employee.Requisite == null && _requisites != null)
-            {
-                employee.Requisite = _requisites;
-            }
-            
-
-            if(employee.Addresses == null && _legalAddress != null)
-            {
-                employee.Addresses = new List<Address>
-                {
-                    _legalAddress
-                };
-            }
-            
-
-            _employee = employee;
-
-            await _employeRepository.AddAsync(employee);
-
-            await _employeRepository.SaveChangesAsync();
-
-            return this;
-        }
-
-        #endregion
-
-        #region IEmployeeBuilderSendObj
-
-        async Task<IEmployeeBuilder> IEmployeeBuilderSendObj.SetDocument(IDocumentItem document)
-        {
-            var newDocument = new DocumentItem(document);
-
-            //var documentSpec = new DocumentItemSpecification(newDocument.Series, newDocument.Number, newDocument.IdType, newDocument.DataIssued);
-            ////поиск дублей
-            //var doc = await _documentRepository.SingleOrDefaultAsync(documentSpec);
-
-            ////если схожый объект не найден, сохраняем новый в базу
-            //if (doc == null)
-            //{
-            await _documentRepository.AddAsync(newDocument);
+            await _documentRepository.AddAsync(document);
             await _documentRepository.SaveChangesAsync();
-            _document = newDocument;
-            //}
-
-            //_document = doc;
+            _document = document;
 
             if (_employee != null)
             {
@@ -290,31 +101,15 @@ namespace Metcom.CardPay3.ApplicationCore.Services.Builder
                 await _employeRepository.SaveChangesAsync();
             }
 
-
             return this;
         }
 
-        async Task<IEmployeeBuilder> IEmployeeBuilderSendObj.SetRequisites(IRequisitesItem employeRequisites)
+        public async Task<IEmployeeBuilder> SetRequisities(RequisitesItem requisites)
         {
-            var newRequisities = new RequisitesItem(employeRequisites);
-
-            ////поиск дублей
-            //var requisitiesSpecification = new RequisitiesSpecification(employeRequisites);
-            //var requisite = await _requisitesRepository.SingleOrDefaultAsync(requisitiesSpecification);
-
-            ////если схожый объект не найден, сохраняем новый в базу
-            //if (requisite == null)
-            //{
-            await _requisitesRepository.AddAsync(newRequisities);
+            await _requisitesRepository.AddAsync(requisites);
             await _requisitesRepository.SaveChangesAsync();
-            _requisites = newRequisities;
+            _requisites = requisites;
 
-            //}
-            //else
-            //{
-            //    _requisites = requisite;
-
-            //}
 
             if (_employee != null)
             {
@@ -326,28 +121,15 @@ namespace Metcom.CardPay3.ApplicationCore.Services.Builder
             return this;
         }
 
-        async Task<IEmployeeBuilder> IEmployeeBuilderSendObj.SetLegalAddress(IAddress employeAddress)
+        public async Task<IEmployeeBuilder> AddAddress(Address address)
         {
-            var newAddress = new Address(employeAddress);
-            ////поиск дублей
-            //var addressSpecification = new AddressSpecification(newAddress);
-            //var address = await _addressRepository.SingleOrDefaultAsync(addressSpecification);
-
-            ////если схожый объект не найден, сохраняем новый в базу
-            //if (address == null)
-            //{
-            await _addressRepository.AddAsync(newAddress);
+            await _addressRepository.AddAsync(address);
             await _addressRepository.SaveChangesAsync();
-            _legalAddress = newAddress;
-            //}
-            //else
-            //{
-            //    _legalAddress = address;
-            //}
+            _legalAddress = address;
 
             if (_employee != null)
             {
-                if(_employee.Addresses == null)
+                if (_employee.Addresses == null)
                 {
                     _employee.Addresses = new List<Address>();
                 }
@@ -358,58 +140,52 @@ namespace Metcom.CardPay3.ApplicationCore.Services.Builder
             }
 
             return this;
-
         }
 
-        async Task<IEmployeeBuilder> IEmployeeBuilderSendObj.SetEmployee(IEmployee employee)
+        public async Task<IEmployeeBuilder> SetEmployee(Employee employee)
         {
-            Employee item = new Employee(employee);
-
-            if(_requisites != null)
+            if (_requisites != null)
             {
-                item.Requisite = _requisites;
+                employee.Requisite = _requisites;
             }
 
-            if (item.Addresses == null)
+            if (employee.Addresses == null)
             {
-                item.Addresses = new List<Address>();
+                employee.Addresses = new List<Address>();
             }
-            if(_legalAddress != null)
+            if (_legalAddress != null)
             {
-                item.Addresses.Add(_legalAddress);
+                employee.Addresses.Add(_legalAddress);
             }
 
 
-            if(_document != null)
+            if (_document != null)
             {
-                item.Document = _document;
+                employee.Document = _document;
             }
-            if(_organization != null)
+            if (_organization != null)
             {
-                item.Organization = _organization;
+                employee.Organization = _organization;
             }
-            if(_gender != null)
-            { 
-                item.Gender = _gender;
+            if (_gender != null)
+            {
+                employee.Gender = _gender;
             }
 
 
-            _employee = item;
+            _employee = employee;
 
-            await _employeRepository.AddAsync(item);
+            await _employeRepository.AddAsync(employee);
 
             await _employeRepository.SaveChangesAsync();
 
             return this;
         }
 
-
-        #endregion
-
-
         public Employee GetEmployee()
         {
             return _employee;
         }
+
     }
 }

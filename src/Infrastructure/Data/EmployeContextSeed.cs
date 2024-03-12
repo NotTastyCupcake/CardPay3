@@ -57,6 +57,14 @@ namespace Metcom.CardPay3.Infrastructure.Data
                     await employerContext.SaveChangesAsync();
                 }
 
+                if (!employerContext.AddressTypes.Any())
+                {
+                    employerContext.AddressTypes.AddRange(
+                        GetPreconfiguredAddressTypes());
+
+                    await employerContext.SaveChangesAsync();
+                }
+
                 if (!employerContext.TypeEmployers.Any())
                 {
                     employerContext.TypeEmployers.AddRange(
@@ -99,16 +107,30 @@ namespace Metcom.CardPay3.Infrastructure.Data
 
         }
 
+
         private static IEnumerable<Status> GetPreconfiguredStatuses()
         {
             return new List<Status>()
             {
-                new Status("Черновик", ""),
-                new Status("Обрабатывается банком", "Отправлена заявка на открытие счета."),
-                new Status("Добавлен", "Получен результат открытия счета в банке."),
-                new Status("Уволен", "")
+                StatusList.Draft,
+                StatusList.Processing,
+                StatusList.Added,
+                StatusList.Fired,
             };
         }
+
+        private static IEnumerable<AddressType> GetPreconfiguredAddressTypes()
+        {
+            return new List<AddressType>()
+            {
+                new AddressType("Место работы"),
+                new AddressType("Место рождения"),
+                new AddressType("Прописка"),
+                new AddressType("Проживания"),
+                new AddressType("Информирования")
+            };
+        }
+
 
         private static IEnumerable<DocumentType> GetPreconfiguredDocumentTypes()
         {

@@ -1,4 +1,5 @@
-﻿using Metcom.CardPay3.ApplicationCore.Entities.AccrualAggregate;
+﻿using Metcom.CardPay3.ApplicationCore.Entities;
+using Metcom.CardPay3.ApplicationCore.Entities.AccrualAggregate;
 using Metcom.CardPay3.ApplicationCore.Entities.AddressAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -26,6 +27,10 @@ namespace Metcom.CardPay3.Infrastructure.Data.Config
 
             builder.OwnsOne(a => a.Street, cg => { cg.ToTable("StreetGeographic"); });
 
+            builder.HasOne(e => e.Type)
+                .WithMany()
+                .HasForeignKey(a => a.IdType)
+                .IsRequired(true);
         }
     }
 }

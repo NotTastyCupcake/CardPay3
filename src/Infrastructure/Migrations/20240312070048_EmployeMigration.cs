@@ -10,6 +10,19 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "AddressTypes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AddressTypes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Banks",
                 columns: table => new
                 {
@@ -116,12 +129,13 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Statuses", x => x.Id);
+                    table.UniqueConstraint("AK_Statuses_Name", x => x.Name);
                 });
 
             migrationBuilder.CreateTable(
@@ -219,7 +233,7 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                     IdEmployer = table.Column<int>(type: "int", nullable: false),
                     IdDivision = table.Column<int>(type: "int", nullable: false),
                     IdCurrency = table.Column<int>(type: "int", nullable: false),
-                    INN = table.Column<int>(type: "int", nullable: false),
+                    INN = table.Column<int>(type: "int", nullable: true),
                     InsuranceNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LatinFirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LatinLastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -377,11 +391,18 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                     IdStreet = table.Column<int>(type: "int", nullable: false),
                     NumHome = table.Column<int>(type: "int", nullable: false),
                     NumCase = table.Column<int>(type: "int", nullable: false),
-                    NumApartment = table.Column<int>(type: "int", nullable: false)
+                    NumApartment = table.Column<int>(type: "int", nullable: false),
+                    IdType = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Addresses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Addresses_AddressTypes_IdType",
+                        column: x => x.IdType,
+                        principalTable: "AddressTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Addresses_Employers_IdEmployee",
                         column: x => x.IdEmployee,
@@ -516,6 +537,11 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                 column: "IdEmployee");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Addresses_IdType",
+                table: "Addresses",
+                column: "IdType");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Documents_IdType",
                 table: "Documents",
                 column: "IdType");
@@ -614,6 +640,9 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Operations");
+
+            migrationBuilder.DropTable(
+                name: "AddressTypes");
 
             migrationBuilder.DropTable(
                 name: "Employers");

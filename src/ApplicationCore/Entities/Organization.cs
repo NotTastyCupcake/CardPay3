@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Metcom.CardPay3.ApplicationCore.Entities
 {
-    public class Organization : BaseEntity, IOrganization
+    public class Organization : BaseEntity
     {
 
         public virtual ICollection<Employee> Employees { get; private set; }
@@ -35,21 +35,9 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
             Name = name;
         }
 
-        public Organization(IOrganization organization)
-        {
-            CreateDate = organization.CreateDate;
-            INN = organization.INN;
-            ApplicationNumber = organization.ApplicationNumber;
-            ApplicationDate = organization.ApplicationDate;
-            Account = organization.Account;
-            BankCode = organization.BankCode;
-            Name = organization.Name;
-            SourceId = organization.SourceId;
-        }
-
         public Organization()
         {
-            // required by EF
+
         }
 
         public void UpdateNameGroup(string newNameOrganization)

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Metcom.CardPay3.Infrastructure.Migrations
 {
     [DbContext(typeof(EmployeContext))]
-    [Migration("20240220121925_EmployeMigration")]
+    [Migration("20240312070048_EmployeMigration")]
     partial class EmployeMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -125,6 +125,9 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                     b.Property<int>("IdStreet")
                         .HasColumnType("int");
 
+                    b.Property<int>("IdType")
+                        .HasColumnType("int");
+
                     b.Property<int>("NumApartment")
                         .HasColumnType("int");
 
@@ -144,7 +147,26 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
 
                     b.HasIndex("IdEmployee");
 
+                    b.HasIndex("IdType");
+
                     b.ToTable("Addresses");
+                });
+
+            modelBuilder.Entity("Metcom.CardPay3.ApplicationCore.Entities.AddressAggregate.AddressType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AddressTypes");
                 });
 
             modelBuilder.Entity("Metcom.CardPay3.ApplicationCore.Entities.DocumentAggregate.DocumentItem", b =>
@@ -472,7 +494,7 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                     b.Property<string>("AccountNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("INN")
+                    b.Property<int?>("INN")
                         .HasColumnType("int");
 
                     b.Property<int>("IdCardType")
@@ -524,9 +546,12 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasAlternateKey("Name");
 
                     b.ToTable("Statuses");
                 });
@@ -571,6 +596,12 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                         .WithMany("Addresses")
                         .HasForeignKey("IdEmployee")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Metcom.CardPay3.ApplicationCore.Entities.AddressAggregate.AddressType", "Type")
+                        .WithMany()
+                        .HasForeignKey("IdType")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.OwnsOne("Metcom.CardPay3.ApplicationCore.Entities.AddressAggregate.Geographic", "City", b1 =>
                         {
@@ -693,6 +724,8 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                     b.Navigation("State");
 
                     b.Navigation("Street");
+
+                    b.Navigation("Type");
                 });
 
             modelBuilder.Entity("Metcom.CardPay3.ApplicationCore.Entities.DocumentAggregate.DocumentItem", b =>

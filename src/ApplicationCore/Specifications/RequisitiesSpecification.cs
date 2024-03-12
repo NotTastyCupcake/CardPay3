@@ -22,23 +22,5 @@ namespace Metcom.CardPay3.ApplicationCore.Specifications
                        && a.IdCurrency == idCurrency
                        && a.IdCardType == idCardType);
         }
-
-        /// <summary>
-        /// Поиск схожих заявок на открытие счета и существующих счетов по типу карты и её номеру
-        /// </summary>
-        public RequisitiesSpecification(IRequisitesItem requisites)
-        {
-            Query
-                .Where(a =>
-                       (a.INN == requisites.INN
-                       && a.InsuranceNumber == requisites.InsuranceNumber
-                       && a.IdDivision == requisites.IdDivision
-                       && a.IdCurrency == requisites.IdCurrency
-                       && a.IdCardType == requisites.IdCardType) 
-                       ||
-                       (a.IdCardType == requisites.IdCardType 
-                       && a.AccountNumber == requisites.AccountNumber
-                       && a.INN == requisites.INN));
-        }
     }
 }

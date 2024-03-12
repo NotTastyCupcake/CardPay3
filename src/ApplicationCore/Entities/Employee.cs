@@ -7,59 +7,11 @@ using System.Collections.Generic;
 
 namespace Metcom.CardPay3.ApplicationCore.Entities
 {
-    public class Employee : BaseEntity, IEmployee
+    public class Employee : BaseEntity
     {
-
-        public Employee(
-            string lastName,
-            string firstName,
-            string middleName,
-            DateTime birthdayDate,
-            string nationality,
-            bool resident,
-            string phoneNum,
-            string jobPhoneNum,
-            string position,
-            string departmentNum,
-            int genderId,
-            int documentId,
-            int organizationId)
-        {
-            LastName = lastName;
-            FirstName = firstName;
-            MiddleName = middleName;
-            BirthdayDate = birthdayDate;
-            Resident = resident;
-            Nationality = nationality;
-            PhoneNumber = phoneNum;
-            JobPhoneNumber = jobPhoneNum;
-            Position = position;
-            DepartmentNum = departmentNum;
-            IdGender = genderId;
-            IdDocument = documentId;
-            IdOrganization = organizationId;
-        }
-
-        public Employee(IEmployee employee)
-        {
-            LastName = employee.LastName;
-            FirstName = employee.FirstName;
-            MiddleName = employee.MiddleName;
-            BirthdayDate = employee.BirthdayDate;
-            Resident = employee.Resident;
-            Nationality = employee.Nationality;
-            PhoneNumber = employee.PhoneNumber;
-            JobPhoneNumber = employee.JobPhoneNumber;
-            Position = employee.Position;
-            DepartmentNum = employee.DepartmentNum;
-            IdGender = employee.IdGender;
-            IdDocument = employee.IdDocument;
-            IdOrganization = employee.IdOrganization;
-        }
-
         public Employee()
         {
-            // required by EF
+
         }
 
         #region ФИО Сотрудника
@@ -130,30 +82,6 @@ namespace Metcom.CardPay3.ApplicationCore.Entities
         public virtual EmployeeType? Type { get; set; }
 #nullable disable
         #endregion
-
-        public void UpdateFullName(string lastName, string firstName, string middleName)
-        {
-            Guard.Against.NullOrEmpty(lastName, nameof(lastName));
-            Guard.Against.NullOrEmpty(firstName, nameof(firstName));
-            Guard.Against.NullOrEmpty(middleName, nameof(middleName));
-
-            LastName = lastName;
-            FirstName = firstName;
-            MiddleName = middleName;
-        }
-
-        public void UpdateContactDetails(string phoneNum, string jobPhoneNum, string position, string departmentNum)
-        {
-            Guard.Against.NullOrEmpty(phoneNum, nameof(phoneNum));
-            Guard.Against.NullOrEmpty(jobPhoneNum, nameof(jobPhoneNum));
-            Guard.Against.NullOrEmpty(position, nameof(position));
-            Guard.Against.NullOrEmpty(departmentNum, nameof(departmentNum));
-
-            PhoneNumber = phoneNum;
-            JobPhoneNumber = jobPhoneNum;
-            Position = position;
-            DepartmentNum = departmentNum;
-        }
 
     }
 }

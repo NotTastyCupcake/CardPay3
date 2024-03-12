@@ -3,52 +3,16 @@ using System;
 
 namespace Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate
 {
-    public class RequisitesItem : BaseEntity, IRequisitesItem
+    public class RequisitesItem : BaseEntity
     {
 #nullable enable
         public int IdEmployer { get; set; }
         public virtual Employee Employee { get; set; }
 #nullable disable
 
-        public RequisitesItem(int inn,
-                              string insuranceNum,
-                              int idDivision,
-                              int idCurrency,
-                              int idCardType,
-                              int idStatus,
-
-                              string latinFirstName = null,
-                              string latinLastName = null
-                              )
-        {
-            INN = inn;
-            InsuranceNumber = insuranceNum;
-            IdDivision = idDivision;
-            IdCurrency = idCurrency;
-            IdCardType = idCardType;
-            IdStatus = idStatus;
-
-            LatinFirstName = latinFirstName;
-            LatinLastName = latinLastName;
-        }
-
-        public RequisitesItem(IRequisitesItem item)
-        {
-            AccountNumber = item.AccountNumber;
-            IdCardType = item.IdCardType;
-            IdCurrency = item.IdCurrency;
-            IdDivision = item.IdDivision;
-            INN = item.INN;
-            InsuranceNumber = item.InsuranceNumber;
-            LatinFirstName = item.LatinFirstName;
-            LatinLastName = item.LatinLastName;
-            IdStatus = item.IdStatus;
-        }
-
-        [Obsolete]
         public RequisitesItem()
         {
-            // required by EF
+
         }
 
         public virtual BankDivision Division { get; set; }
@@ -57,7 +21,7 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate
         public int IdCurrency { get; set; }
 
 
-        public int INN { get; set; }
+        public int? INN { get; set; }
         /// <summary>
         /// Страховой номер
         /// </summary>

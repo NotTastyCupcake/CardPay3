@@ -15,17 +15,5 @@ namespace Metcom.CardPay3.ApplicationCore.Specifications
             Query
                 .Where(a => a.FullName == fullName);
         }
-
-        public AddressSpecification(IAddress address)
-        {
-            Query
-                .Where(a => a.FullName == address.FullName);
-        }
-
-        public AddressSpecification(IEmployee employee)
-        {
-            Query
-                .Where (a => a.Employee == employee);
-        }
     }
 }

@@ -5,7 +5,7 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.DocumentAggregate
     /// <summary>
     /// Документ, удостоверяющий личность
     /// </summary>
-    public class DocumentItem : BaseEntity, IDocumentItem
+    public class DocumentItem : BaseEntity
     {
 
         public string FullName => $"{Series} {Number}";
@@ -13,58 +13,28 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.DocumentAggregate
         /// <summary>
         /// Вид документа, удостоверяющего личность.
         /// </summary>
-        public virtual DocumentType Type { get; private set; }
-        public int IdType { get; private set; }
+        public virtual DocumentType Type { get; set; }
+        public int IdType { get; set; }
 
         /// <summary>
         /// Серия
         /// </summary>
-        public string Series { get; private set; }
+        public string Series { get; set; }
         /// <summary>
         /// Номер
         /// </summary>
-        public string Number { get; private set; }
+        public string Number { get; set; }
         /// <summary>
         /// Дата выдачи
         /// </summary>
-        public DateTime DataIssued { get; private set; }
+        public DateTime DataIssued { get; set; }
         /// <summary>
         /// Кем выдан
         /// </summary>
-        public string IssuedBy { get; private set; }
+        public string IssuedBy { get; set; }
         /// <summary>
         /// Код подразделения
         /// </summary>
-        public string SubdivisionCode { get; private set; }
-
-        public DocumentItem(int idType, 
-                            string series, 
-                            string number, 
-                            DateTime dataIssued, 
-                            string issuedBy,
-                            string subdivisionCode)
-        {
-            IdType = idType;
-            Series = series;
-            Number = number;
-            DataIssued = dataIssued;
-            IssuedBy = issuedBy;
-            SubdivisionCode = subdivisionCode;
-        }
-
-        public DocumentItem(IDocumentItem documentItem)
-        {
-            IdType = documentItem.IdType;
-            Series = documentItem.Series;
-            Number = documentItem.Number;
-            DataIssued = documentItem.DataIssued;
-            IssuedBy = documentItem.IssuedBy;
-            SubdivisionCode = documentItem.SubdivisionCode;
-        }
-
-        public DocumentItem()
-        {
-            // required by EF
-        }
+        public string SubdivisionCode { get; set; }
     }
 }

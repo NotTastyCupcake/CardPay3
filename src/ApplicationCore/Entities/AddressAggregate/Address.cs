@@ -2,7 +2,7 @@
 
 namespace Metcom.CardPay3.ApplicationCore.Entities.AddressAggregate
 {
-    public class Address : BaseEntity, IAddress
+    public class Address : BaseEntity
     {
 #nullable enable
         public int? IdEmployee { get; set; }
@@ -61,42 +61,14 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.AddressAggregate
         /// Номер квартиры
         /// </summary>
         public int NumApartment { get; set; }
+
+        public virtual AddressType Type { get; set; }
+        public int IdType { get; set; }
         #endregion
 
-        public Address(int idCountry, int postcode, int idState, string district, int idCity, int idLocality, string streetType, int idStreet, int numHome, int numCase, int numApartment)
-        {
-            IdCountry = idCountry;
-            Postcode = postcode;
-            IdState = idState;
-            District = district;
-            IdCity = idCity;
-            IdLocality = idLocality;
-            StreetType = streetType;
-            IdStreet = idStreet;
-            NumHome = numHome;
-            NumCase = numCase;
-            NumApartment = numApartment;
-        }
-
-        public Address(IAddress address)
-        {
-            IdCountry = address.IdCountry;
-            Postcode = address.Postcode;
-            IdState = address.IdState;
-            District = address.District;
-            IdCity = address.IdCity;
-            IdLocality = address.IdLocality;
-            IdStreet = address.IdStreet;
-            NumHome = address.NumHome;
-            NumCase = address.NumCase;
-            NumApartment = address.NumApartment;
-            IdEmployee = address.IdEmployee;
-        }
-
-        [Obsolete]
         public Address()
         {
-            // required by EF
+
         }
 
     }
