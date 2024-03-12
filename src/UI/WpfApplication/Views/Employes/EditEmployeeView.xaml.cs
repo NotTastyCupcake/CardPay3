@@ -35,6 +35,11 @@ namespace Metcom.CardPay3.WpfApplication.Views.Employes
                     vm => vm.EmployeeTypes,
                     view => view.TypesComboBox.ItemsSource)
                     .DisposeWith(disposable);
+
+                this.OneWayBind(this.ViewModel,
+                    vm => vm.AddressesCollection,
+                    view => view.AddressListView.ItemsSource)
+                    .DisposeWith(disposable);
                 #endregion
 
                 BindModel(disposable);
@@ -50,14 +55,29 @@ namespace Metcom.CardPay3.WpfApplication.Views.Employes
 
                 this.BindCommand(this.ViewModel,
                     vm => vm.CreateDocumentCommand,
-                    view => view.EditDocumentButton)
+                    view => view.CreateDocumentButton)
                 .DisposeWith(disposable);
 
                 this.BindCommand(this.ViewModel,
                     vm => vm.CreateRequisitCommand,
-                    view => view.EditRequisitButton)
+                    view => view.CreateDocumentButton)
                 .DisposeWith(disposable);
 
+
+                this.BindCommand(this.ViewModel,
+                    vm => vm.CreateAddressCommand,
+                    view => view.CreateAddressButton)
+                .DisposeWith(disposable);
+
+                this.BindCommand(this.ViewModel,
+                    vm => vm.EditAddressCommand,
+                    view => view.EditAddressButton)
+                .DisposeWith(disposable);
+
+                this.BindCommand(this.ViewModel,
+                    vm => vm.DeleteAddressCommand,
+                    view => view.DeleteAddressButton)
+                .DisposeWith(disposable);
 
             });
         }
@@ -66,6 +86,11 @@ namespace Metcom.CardPay3.WpfApplication.Views.Employes
             this.Bind(this.ViewModel,
                 vm => vm.GenderSelected,
                 view => view.GendersComboBox.SelectedItem)
+                .DisposeWith(disposable);
+
+            this.Bind(this.ViewModel,
+                vm => vm.SelectedAddress,
+                view => view.AddressListView.SelectedItem)
                 .DisposeWith(disposable);
 
             this.Bind(this.ViewModel,
@@ -122,6 +147,12 @@ namespace Metcom.CardPay3.WpfApplication.Views.Employes
             this.Bind(this.ViewModel,
                 vm => vm.DocumentViewModel.FullName,
                 view => view.DocumentTextBlock.Text)
+                .DisposeWith(disposable);
+
+
+            this.Bind(this.ViewModel,
+                vm => vm.RequisiteViewModel.FullName,
+                view => view.RequisitTextBlock.Text)
                 .DisposeWith(disposable);
 
         }

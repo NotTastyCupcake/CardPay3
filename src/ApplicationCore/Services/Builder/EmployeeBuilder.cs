@@ -28,7 +28,7 @@ namespace Metcom.CardPay3.ApplicationCore.Services.Builder
         private DocumentItem _document;
         private Organization _organization;
         private RequisitesItem _requisites;
-        private Address _legalAddress;
+        private ICollection<Address> _addressCollection;
 
         public EmployeeBuilder(IRepository<Employee> employeRepository,
             IRepository<Gender> genderRepository,
@@ -90,8 +90,6 @@ namespace Metcom.CardPay3.ApplicationCore.Services.Builder
         public async Task<IEmployeeBuilder> SetDocument(DocumentItem document)
         {
 
-            await _documentRepository.AddAsync(document);
-            await _documentRepository.SaveChangesAsync();
             _document = document;
 
             if (_employee != null)
@@ -100,16 +98,19 @@ namespace Metcom.CardPay3.ApplicationCore.Services.Builder
                 await _employeRepository.UpdateAsync(_employee);
                 await _employeRepository.SaveChangesAsync();
             }
+            else
+            {
+                await _documentRepository.AddAsync(document);
+                await _documentRepository.SaveChangesAsync();
+            }
 
             return this;
         }
 
         public async Task<IEmployeeBuilder> SetRequisities(RequisitesItem requisites)
         {
-            await _requisitesRepository.AddAsync(requisites);
-            await _requisitesRepository.SaveChangesAsync();
-            _requisites = requisites;
 
+            _requisites = requisites;
 
             if (_employee != null)
             {
@@ -117,15 +118,24 @@ namespace Metcom.CardPay3.ApplicationCore.Services.Builder
                 await _employeRepository.UpdateAsync(_employee);
                 await _employeRepository.SaveChangesAsync();
             }
+            else
+            {
+                await _requisitesRepository.AddAsync(requisites);
+                await _requisitesRepository.SaveChangesAsync();
+            }
+            
 
             return this;
         }
 
         public async Task<IEmployeeBuilder> AddAddress(Address address)
         {
-            await _addressRepository.AddAsync(address);
-            await _addressRepository.SaveChangesAsync();
-            _legalAddress = address;
+            if (_addressCollection == null)
+            {
+                _addressCollection = new List<Address>();
+            }
+
+            _addressCollection.Add(address);
 
             if (_employee != null)
             {
@@ -134,7 +144,7 @@ namespace Metcom.CardPay3.ApplicationCore.Services.Builder
                     _employee.Addresses = new List<Address>();
                 }
 
-                _employee.Addresses.Add(_legalAddress);
+                _employee.Addresses.Add(address);
                 await _employeRepository.UpdateAsync(_employee);
                 await _employeRepository.SaveChangesAsync();
             }
@@ -149,24 +159,21 @@ namespace Metcom.CardPay3.ApplicationCore.Services.Builder
                 employee.Requisite = _requisites;
             }
 
-            if (employee.Addresses == null)
+            if (_addressCollection != null)
             {
-                employee.Addresses = new List<Address>();
+                employee.Addresses = _addressCollection;
             }
-            if (_legalAddress != null)
-            {
-                employee.Addresses.Add(_legalAddress);
-            }
-
 
             if (_document != null)
             {
                 employee.Document = _document;
             }
+
             if (_organization != null)
             {
                 employee.Organization = _organization;
             }
+
             if (_gender != null)
             {
                 employee.Gender = _gender;

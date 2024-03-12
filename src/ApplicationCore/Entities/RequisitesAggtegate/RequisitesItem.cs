@@ -15,6 +15,8 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate
 
         }
 
+        public string FullName => $"{CardType.NameType}: {AccountNumber}";
+
         public virtual BankDivision Division { get; set; }
         public int IdDivision { get; set; }
         public virtual BankCurrency Currency { get; set; }

@@ -1,6 +1,7 @@
 ﻿using DynamicData;
 using DynamicData.Binding;
 using Metcom.CardPay3.ApplicationCore.Entities;
+using Metcom.CardPay3.ApplicationCore.Entities.AddressAggregate;
 using Metcom.CardPay3.ApplicationCore.Entities.DocumentAggregate;
 using Metcom.CardPay3.ApplicationCore.Entities.RequisitesAggtegate;
 using Metcom.CardPay3.ApplicationCore.Interfaces;
@@ -100,6 +101,7 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
                 vm.RequisiteViewModel = employee.Requisite;
                 vm.ResidentSelected = employee.Resident;
                 vm.TypeSelected = employee.Type;
+                vm.AddressesCollection.AddRange(employee.Addresses);
 
                 await HostScreen.Router.Navigate.Execute(vm);
             });

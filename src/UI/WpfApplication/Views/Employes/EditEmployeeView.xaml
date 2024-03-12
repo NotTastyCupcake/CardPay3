@@ -23,7 +23,7 @@
                     VerticalAlignment="Center"
                     Width="350">
             <TextBlock Text="Фамилия"/>
-            <TextBox Name="LastNameBlock" />
+            <TextBox Name="LastNameBlock"/>
             <Label Name="LastNameError" Foreground="Red"/>
             <TextBlock Text="Имя"/>
             <TextBox Name="FirstNameBlock" />
@@ -76,7 +76,7 @@
                     <ColumnDefinition Width="100"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock x:Name="DocumentTextBlock"/>
-                <Button Grid.Column="2" Name="EditDocumentButton" Content="Изменить"/>
+                <Button Style="{DynamicResource MaterialDesignFlatButton}" Grid.Column="1" Name="CreateDocumentButton" Content="Создать"/>
             </Grid>
             <Label Name="DocumentError" Foreground="Red"/>
 
@@ -90,13 +90,52 @@
                     <ColumnDefinition Width="100"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock x:Name="RequisitTextBlock"/>
-                <Button Grid.Column="2" Name="EditRequisitButton" Content="Изменить"/>
+                <Button Style="{DynamicResource MaterialDesignFlatButton}" Grid.Column="1" Name="CreateRequisitButton" Content="Создать"/>
 
             </Grid>
             <Label Name="RequisitError" Foreground="Red"/>
 
+            <TextBlock Text="Адреса"/>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="150"/>
+                    <RowDefinition Height="35"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <ListView Grid.Row="0" x:Name="AddressListView" 
+                          ItemsSource="{Binding AddressesCollection, Mode=OneWay}" 
+                          SelectedItem="{Binding SelectedAddress, Mode=TwoWay}" >
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Width="200" Header="Адрес"                                            
+                                    DisplayMemberBinding="{Binding Path=FullName, Mode=OneWay}"/>
+                            <GridViewColumn Header="Тип адреса"
+                                    DisplayMemberBinding="{Binding Path=Type.Name, Mode=OneWay}"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.Column="0" Style="{DynamicResource MaterialDesignFlatButton}" Name="EditAddressButton" Content="Изменить"/>
+                    <Button Grid.Column="1" Style="{DynamicResource MaterialDesignFlatButton}" Name="DeleteAddressButton" Content="Удалить"/>
+                    <Button Grid.Column="2" Style="{DynamicResource MaterialDesignFlatButton}" Name="CreateAddressButton" Content="Создать"/>
+
+                </Grid>
+
+            </Grid>
+            <Label Name="AddressError" Foreground="Red"/>
+
         </StackPanel>
-        
+
         <Button x:Name ="EditEmployeeButton"  Grid.Row="1" Grid.ColumnSpan="2" Content="Добавить сотрудника"/>
 
     </Grid>

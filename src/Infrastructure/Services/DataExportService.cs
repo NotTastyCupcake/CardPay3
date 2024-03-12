@@ -14,10 +14,10 @@ namespace Metcom.CardPay3.Infrastructure.Services
     public class DataExportService : IDataExportService
     {
         // Контекст базы данных
-        private readonly IRepository<Employee> _repository;
+        private readonly IRepository<Organization> _repository;
 
         // Конструктор, который принимает контекст базы данных
-        public DataExportService(IRepository<Employee> repository)
+        public DataExportService(IRepository<Organization> repository)
         {
             _repository = repository;
         }
@@ -26,7 +26,7 @@ namespace Metcom.CardPay3.Infrastructure.Services
         public async Task ExportDataAsync(string format, string path, int organizationId)
         {
             // Получаем данные из базы данных
-            var spec = new EmployesSpecification(organizationId: organizationId);
+            var spec = new OrganizationSpecification(organizationId);
             var data = await _repository.ListAsync(spec);
 
             // Создаем поток для записи в файл

@@ -7,65 +7,64 @@ namespace Metcom.CardPay3.ApplicationCore.Entities.AddressAggregate
 #nullable enable
         public int? IdEmployee { get; set; }
         public virtual Employee? Employee { get; set; }
-#nullable disable
 
         #region Поля
 
-        public string FullName => $"{Postcode}, {Country.Name}, {State.Name}, {City.Name},{StreetType} {Street.Name},д. {NumHome}";
+        public string FullName => $"{Postcode}, {Country.Name}, {State?.Name + "," ?? ""} {City?.Name ?? Locality?.Name ?? ""},{StreetType} {Street?.Name},д. {NumHome} {"/" + NumCase ?? ""}";
         /// <summary>
         /// Индекс
         /// </summary>
-        public int Postcode { get; set; }
+        public int? Postcode { get; set; }
 
         public int IdCountry { get; set; }
         public virtual Geographic Country { get; set; }
 
-        public int IdState { get; set; }
+        public int? IdState { get; set; }
         /// <summary>
         /// Регион
         /// </summary>
-        public virtual Geographic State { get; set; }
+        public virtual Geographic? State { get; set; }
 
         /// <summary>
         /// Район
         /// </summary>
         public string District { get; set; }
 
-        public int IdCity { get; set; }
-        public virtual Geographic City { get; set; }
+        public int? IdCity { get; set; }
+        public virtual Geographic? City { get; set; }
 
 
-        public int IdLocality { get; set; }
+        public int? IdLocality { get; set; }
         /// <summary>
         /// Населенный пункт
         /// </summary>
-        public virtual Geographic Locality { get; set; }
+        public virtual Geographic? Locality { get; set; }
 
         /// <summary>
         /// Тип улицы
         /// </summary>
         public string StreetType { get; set; }
 
-        public int IdStreet { get; set; }
-        public virtual Geographic Street { get; set; }
+        public int? IdStreet { get; set; }
+        public virtual Geographic? Street { get; set; }
 
         /// <summary>
         /// Номер дома
         /// </summary>
-        public int NumHome { get; set; }
+        public int? NumHome { get; set; }
         /// <summary>
         /// Номер корпуса
         /// </summary>
-        public int NumCase { get; set; }
+        public int? NumCase { get; set; }
         /// <summary>
         /// Номер квартиры
         /// </summary>
-        public int NumApartment { get; set; }
+        public int? NumApartment { get; set; }
 
         public virtual AddressType Type { get; set; }
         public int IdType { get; set; }
         #endregion
-
+#nullable disable
         public Address()
         {
 

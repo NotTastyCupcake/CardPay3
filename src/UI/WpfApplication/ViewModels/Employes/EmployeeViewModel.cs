@@ -25,6 +25,8 @@ using Metcom.CardPay3.WpfApplication.ViewModels.Employes.DocumentCRUD;
 using Splat;
 using System.Reactive.Linq;
 using Metcom.CardPay3.WpfApplication.ViewModels.Employes.RequisitiesCRUD;
+using Metcom.CardPay3.WpfApplication.ViewModels.Employes.AddressCRUD;
+using ReactiveUI.Validation.States;
 
 namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
 {
@@ -60,22 +62,53 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
 
             Validation();
 
-
             #region commands
             CreateDocumentCommand = ReactiveCommand.CreateFromTask(async () =>
             {
                 var vm = Locator.Current.GetService<CreateDocumentViewModel>();
                 await vm.InitializeAsync();
                 await HostScreen.Router.Navigate.Execute(vm);
-                vm.WhenAnyValue(vm => vm.Document).Subscribe(d => DocumentViewModel = d);
+                vm.WhenAnyValue(vm => vm.Document).WhereNotNull().Subscribe(d => DocumentViewModel = d);
             });
             CreateRequisitCommand = ReactiveCommand.CreateFromTask(async () =>
             {
                 var vm = Locator.Current.GetService<CreateRequisitiesViewModel>();
                 await vm.InitializeAsync();
                 await HostScreen.Router.Navigate.Execute(vm);
-                vm.WhenAnyValue(vm => vm.Requisites).Subscribe(r => RequisiteViewModel = r);
+                vm.WhenAnyValue(vm => vm.Requisites).WhereNotNull().Subscribe(r => RequisiteViewModel = r);
             });
+
+
+            var isRealAddress = this
+            .WhenAnyValue(x => x.SelectedAddress)
+            .Select(obj => obj != null);
+
+
+            CreateAddressCommand = ReactiveCommand.CreateFromTask(async () =>
+            {
+                var vm = Locator.Current.GetService<CreateAddressViewModel>();
+                await vm.InitializeAsync();
+                await HostScreen.Router.Navigate.Execute(vm);
+                vm.WhenAnyValue(vm => vm.Address).WhereNotNull().Subscribe(r => 
+                { 
+                    _builder.AddAddress(r);
+                    AddressesCollection.Add(r); 
+                });
+            });
+            EditAddressCommand = ReactiveCommand.CreateFromTask(async () =>
+            {
+                //var vm = Locator.Current.GetService<CreateAddressViewModel>();
+                //await vm.InitializeAsync();
+                //await HostScreen.Router.Navigate.Execute(vm);
+                //vm.WhenAnyValue(vm => vm.Address).WhereNotNull().Subscribe(r => AddressesCollection.Add(r));
+            }, isRealAddress);
+            DeleteAddressCommand = ReactiveCommand.CreateFromTask(async () =>
+            {
+                //var vm = Locator.Current.GetService<CreateAddressViewModel>();
+                //await vm.InitializeAsync();
+                //await HostScreen.Router.Navigate.Execute(vm);
+                //vm.WhenAnyValue(vm => vm.Address).WhereNotNull().Subscribe(r => AddressesCollection.Add(r));
+            }, isRealAddress);
             #endregion
 
             this.WhenAnyValue(vm => vm.FirstName).Subscribe(vm => Employee.FirstName = vm);
@@ -84,6 +117,7 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
             this.WhenAnyValue(vm => vm.DocumentViewModel).Subscribe(vm => Employee.Document = vm);
             this.WhenAnyValue(vm => vm.BirthdayDateSelected).Subscribe(vm => Employee.BirthdayDate = vm.HasValue ? vm.Value : DateTime.MinValue);
             this.WhenAnyValue(vm => vm.ResidentSelected).Subscribe(vm => Employee.Resident = vm.HasValue ? vm.Value : false);
+            //this.WhenAnyValue(vm => vm.SelectedAddress).Subscribe();
         }
 
         public async Task InitializeAsync()
@@ -133,6 +167,11 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
         #region commands
         public ReactiveCommand<Unit, Unit> CreateDocumentCommand { get; }
         public ReactiveCommand<Unit, Unit> CreateRequisitCommand { get; }
+
+
+        public ReactiveCommand<Unit, Unit> CreateAddressCommand { get; }
+        public ReactiveCommand<Unit, Unit> EditAddressCommand { get; }
+        public ReactiveCommand<Unit, Unit> DeleteAddressCommand { get; }
         #endregion
 
         #region property
@@ -168,5 +207,9 @@ namespace Metcom.CardPay3.WpfApplication.ViewModels.Employes
 
         public ReadOnlyCollection<EmployeeType> EmployeeTypes { get; private set; }
 
+        public ObservableCollection<Address> AddressesCollection { get; set; } = new ObservableCollection<Address>();
+
+        [Reactive]
+        public Address SelectedAddress { get; set; }
     }
 }

@@ -12,6 +12,82 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center"
+                    VerticalAlignment="Center" Width="350">
+
+            <TextBlock Text="Тип адреса"/>
+            <ComboBox x:Name="TypeComboBox" DisplayMemberPath="Name" />
+            <Label Name="TypeError" Foreground="Red"/>
             
+            <TextBlock Text="Индекс"/>
+            <TextBox Name="PostcodeBlock" />
+            <Label Name="PostCodeError" Foreground="Red"/>
+            
+            <TextBlock Text="Название страны"/>
+            <TextBox Name="CountryNameBlock" />
+            <Label Name="CountryNameError" Foreground="Red"/>
+            
+            <TextBlock Text="Короткое название страны"/>
+            <TextBox Name="CountryShortNameBlock" />
+            <Label Name="CountryShortNameError" Foreground="Red"/>
+            
+            <TextBlock Text="Код страны"/>
+            <TextBox Name="CountryCodeBlock" />
+            <Label Name="CountryCodeError" Foreground="Red"/>
+            
+            <TextBlock Text="Регион"/>
+            <TextBox Name="StateBlock" />
+            <Label Name="StateError" Foreground="Red"/>
+            
+            <TextBlock Text="Район"/>
+            <TextBox Name="DistrictBlock" />
+            <Label Name="DistrictError" Foreground="Red"/>
+            
+            
+        </StackPanel>
+
+        <StackPanel Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center"
+                    VerticalAlignment="Center" Width="350">
+            
+            <TextBlock Text="Город"/>
+            <TextBox Name="CityNameBlock" />
+            <Label Name="CityNameError" Foreground="Red"/>
+
+            <TextBlock Text="Населенный пункт"/>
+            <TextBox Name="LocalityNameBlock" />
+            <Label Name="LocalityNameError" Foreground="Red"/>
+            
+            <TextBlock Text="Тип улицы"/>
+            <TextBox Name="StreetTypeBlock" />
+            <Label Name="StreetTypeError" Foreground="Red"/>
+            
+            <TextBlock Text="Улица"/>
+            <TextBox Name="StreetNameBlock" />
+            <Label Name="StreetNameError" Foreground="Red"/>
+            
+            <TextBlock Text="Дом"/>
+            <TextBox Name="NumHomeBlock" />
+            <Label Name="NumHomeError" Foreground="Red"/>
+            
+            <TextBlock Text="Корпус"/>
+            <TextBox Name="NumCaseBlock" />
+            <Label Name="NumCaseError" Foreground="Red"/>
+            
+            <TextBlock Text="Квартира"/>
+            <TextBox Name="NumApartBlock" />
+            <Label Name="NumApartError" Foreground="Red"/>
+            
+        </StackPanel>
+
+        <Button x:Name ="CreateButton"  Grid.Row="1" Grid.ColumnSpan="2" Content="Добавить адрес"/>
     </Grid>
 </reactiveui:ReactiveUserControl>

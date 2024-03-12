@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Metcom.CardPay3.Infrastructure.Migrations
 {
     [DbContext(typeof(EmployeContext))]
-    [Migration("20240312070048_EmployeMigration")]
+    [Migration("20240312105753_EmployeMigration")]
     partial class EmployeMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -105,9 +105,10 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("District")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("IdCity")
+                    b.Property<int?>("IdCity")
                         .HasColumnType("int");
 
                     b.Property<int>("IdCountry")
@@ -116,31 +117,32 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
                     b.Property<int?>("IdEmployee")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdLocality")
+                    b.Property<int?>("IdLocality")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdState")
+                    b.Property<int?>("IdState")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdStreet")
+                    b.Property<int?>("IdStreet")
                         .HasColumnType("int");
 
                     b.Property<int>("IdType")
                         .HasColumnType("int");
 
-                    b.Property<int>("NumApartment")
+                    b.Property<int?>("NumApartment")
                         .HasColumnType("int");
 
-                    b.Property<int>("NumCase")
+                    b.Property<int?>("NumCase")
                         .HasColumnType("int");
 
-                    b.Property<int>("NumHome")
+                    b.Property<int?>("NumHome")
                         .HasColumnType("int");
 
-                    b.Property<int>("Postcode")
+                    b.Property<int?>("Postcode")
                         .HasColumnType("int");
 
                     b.Property<string>("StreetType")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -715,7 +717,8 @@ namespace Metcom.CardPay3.Infrastructure.Migrations
 
                     b.Navigation("City");
 
-                    b.Navigation("Country");
+                    b.Navigation("Country")
+                        .IsRequired();
 
                     b.Navigation("Employee");
 
